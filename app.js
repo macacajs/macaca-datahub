@@ -7,8 +7,9 @@ const Sequelize = require('sequelize');
 
 module.exports = app => {
   const tempDir = path.join(app.config.HOME, `.${app.config.pkg.name}`);
-  _.mkdir(tempDir);
   const storageDir = process.env.DATAHUB_STORE_PATH || path.join(tempDir, `common-${app.config.pkg.name}.data`);
+
+  _.mkdir(path.dirname(storageDir))
 
   delete process.env.DATAHUB_STORE_PATH;
 
@@ -80,4 +81,3 @@ module.exports = app => {
   app.ProjectModel = ProjectModel;
   app.DataModel = DataModel;
 };
-
