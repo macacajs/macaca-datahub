@@ -15,6 +15,24 @@ class ProjectService extends Service {
     });
   }
 
+  async updateByProjectId(data) {
+    return await this.ctx.app.ProjectModel.update({
+      ...data,
+    }, {
+      where: {
+        identifer: data.identifer,
+      },
+    });
+  }
+
+  async queryByProjectId(projectId) {
+    return await this.ctx.app.ProjectModel.findAll({
+      where: {
+        identifer: projectId,
+      },
+    });
+  }
+
   async removeById(identifer) {
     return await this.ctx.app.ProjectModel.destroy({
       where: {
