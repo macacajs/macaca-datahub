@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const program = require('commander');
+
+const DataHub = require('..');
+
+program
+  .option('--verbose', 'show more debugging information')
+  .parse(process.argv);
+
+const datahub = new DataHub();
+
+datahub.startServer(() => {
+  console.log('ready');
+});

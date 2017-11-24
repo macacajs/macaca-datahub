@@ -1,0 +1,57 @@
+{
+  "name": "macaca-datahub",
+  "version": "1.0.0",
+  "description": "datahub",
+  "bin": {
+    "datahub": "./bin/datahub"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "commander": "^2.9.0",
+    "datahub-view": "^1.0.0",
+    "detect-port": "^1.2.2",
+    "egg": "^1.11.0",
+    "sequelize": "^4.22.8",
+    "sqlite3": "^3.1.13",
+    "xutil": "^1.0.7"
+  },
+  "devDependencies": {
+    "autod": "^2.10.0",
+    "autod-egg": "^1.0.0",
+    "egg-bin": "^4.3.5",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.13.0",
+    "eslint": "^4.10.0",
+    "eslint-config-egg": "^5.1.0"
+  },
+  "files": [
+    "app",
+    "bin",
+    "config",
+    "app.js",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint . --fix",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/macacajs/macaca-datahub.git"
+  },
+  "homepage": "https://macacajs.github.io/macaca-datahub",
+  "license": "MIT"
+}
