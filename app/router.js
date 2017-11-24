@@ -9,7 +9,7 @@ module.exports = app => {
   app.all('/data/:projectId/:dataId', app.controller.api.data.index);
 
   app.get('/api/project', app.controller.api.project.query);
-  app.post('/api/project', app.controller.api.project.add);
+  app.post('/api/project', app.controller.api.project.upsert);
   app.delete('/api/project', app.controller.api.project.remove);
 
   app.get('/api/data/:projectId', app.controller.api.data.query);

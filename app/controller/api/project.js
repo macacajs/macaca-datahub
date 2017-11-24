@@ -9,10 +9,15 @@ class ProjectController extends Controller {
     this.ctx.body = res;
   }
 
-  async add(ctx) {
+  async upsert(ctx) {
     const body = ctx.request.body;
-    const res = await ctx.service.project.add(body);
-
+    const isExist = await ctx.service.project.queryByProjectId(body.identifer);
+    let res = null;
+    if (isExist.length > 0) {
+      res = await ctx.service.project.updateByProjectId(body);
+    } else {
+      res = await ctx.service.project.add(body);
+    }
     if (res) {
       this.ctx.body = {
         success: true,
