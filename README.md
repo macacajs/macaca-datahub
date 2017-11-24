@@ -19,6 +19,8 @@
 [download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square
 [download-url]: https://npmjs.org/package/macaca-datahub
 
+> Continuous data provider for development, testing, staging and production. 
+
 ## Installation
 
 Macaca datahub is distibuted through npm. To install it, run the following command line:
