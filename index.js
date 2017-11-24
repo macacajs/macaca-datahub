@@ -5,6 +5,7 @@ const eggServer = require('egg');
 
 const defaultOptions = {
   port: 9200,
+  mode: 'production',
 };
 
 class DataHub {
@@ -19,6 +20,8 @@ class DataHub {
     if (options.store) {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);
     }
+
+    process.env.EGG_SERVER_ENV = this.options.mode;
 
     const promise = new Promise(resolve => {
       eggServer.startCluster({
