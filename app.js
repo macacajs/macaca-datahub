@@ -1,19 +1,16 @@
 'use strict';
 
+const fs = require('fs');
 const _ = require('xutil');
 const path = require('path');
 const chalk = require('chalk');
 const Sequelize = require('sequelize');
 
 module.exports = app => {
-  const tempDir = path.join(app.config.HOME, `.${app.config.pkg.name}`);
-  const storageDir = process.env.DATAHUB_STORE_PATH || path.join(tempDir, `common-${app.config.pkg.name}.data`);
+  const homePath = path.join(app.config.HOME, `.${app.config.pkg.name}`);
+  const storageDir = path.join(homePath, `${app.config.name}.${app.config.env}.data`);
 
-  _.mkdir(path.dirname(storageDir));
-
-  delete process.env.DATAHUB_STORE_PATH;
-
-  app.logger.info(`${chalk.cyan('launch datahub store at:')} ${storageDir}`);
+  app.logger.info(`${chalk.cyan('launch datahub at:')} ${storageDir}`);
 
   const sequelize = new Sequelize(null, null, null, {
     dialect: 'sqlite',
@@ -80,5 +77,81 @@ module.exports = app => {
   app.UserModel = UserModel;
   app.ProjectModel = ProjectModel;
   app.DataModel = DataModel;
+
+  if (process.env.DATAHUB_STORE_PATH) {
+    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
+
+    if (_.isExistedDir(storeDir)) {
+      app.config.dataHubStoreDir = storeDir;
+    }
+  }
+
+  app.beforeStart(async () => {
+
+    if (!app.config.dataHubStoreDir) {
+      return;
+    }
+
+    app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
+
+    const hubFile = path.resolve(app.config.dataHubStoreDir, 'hub.data');
+
+    if (_.isExistedFile(hubFile)) {
+
+      app.logger.info(`${chalk.cyan('import datahub from:')} ${hubFile}`);
+
+      const content = fs.readFileSync(hubFile, 'utf8');
+
+      try {
+        const list = JSON.parse(content);
+
+        for (let i = 0; i < list.length; i++) {
+          const data = list[i];
+          const {
+            identifer,
+          } = data;
+          await app.ProjectModel.upsert({
+            ...data,
+          }, {
+            where: {
+              identifer,
+            },
+          });
+        }
+      } catch (e) {
+        app.logger.warn(e.message);
+      }
+    }
+
+    const archiveFile = path.resolve(app.config.dataHubStoreDir, 'archive.data');
+
+    if (_.isExistedFile(archiveFile)) {
+
+      app.logger.info(`${chalk.cyan('import datahub from:')} ${archiveFile}`);
+      const content = fs.readFileSync(archiveFile, 'utf8');
+
+      try {
+        const list = JSON.parse(content);
+
+        for (let i = 0; i < list.length; i++) {
+          const data = list[i];
+          const {
+            identifer,
+            pathname,
+          } = data;
+          await app.DataModel.upsert({
+            ...data,
+          }, {
+            where: {
+              identifer,
+              pathname,
+            },
+          });
+        }
+      } catch (e) {
+        app.logger.warn(e.message);
+      }
+    }
+  });
 };
 
