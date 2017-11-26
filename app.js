@@ -10,6 +10,8 @@ module.exports = app => {
   const homePath = path.join(app.config.HOME, `.${app.config.pkg.name}`);
   const storageDir = path.join(homePath, `${app.config.name}.${app.config.env}.data`);
 
+  _.mkdir(path.dirname(storageDir));
+
   app.logger.info(`${chalk.cyan('launch datahub at:')} ${storageDir}`);
 
   const sequelize = new Sequelize(null, null, null, {
