@@ -25,6 +25,21 @@ class DataController extends Controller {
     }
   }
 
+  async query(ctx) {
+    const projectId = ctx.params.projectId;
+    const res = await this.ctx.service.data.queryByProjectId(projectId);
+    if (res) {
+      this.ctx.body = {
+        success: true,
+        data: res,
+      };
+    } else {
+      this.ctx.body = {
+        success: false,
+      };
+    }
+  }
+
   async add(ctx) {
     const projectId = ctx.params.projectId;
     const body = ctx.request.body;
@@ -50,21 +65,6 @@ class DataController extends Controller {
 
     const res = await this.ctx.service.data.updateByProjectIdAndDataId(projectId, dataId, body);
 
-    if (res) {
-      this.ctx.body = {
-        success: true,
-        data: res,
-      };
-    } else {
-      this.ctx.body = {
-        success: false,
-      };
-    }
-  }
-
-  async query(ctx) {
-    const projectId = ctx.params.projectId;
-    const res = await this.ctx.service.data.queryByProjectId(projectId);
     if (res) {
       this.ctx.body = {
         success: true,

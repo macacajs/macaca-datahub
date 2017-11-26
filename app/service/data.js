@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const Service = require('egg').Service;
 
 class DataService extends Service {
@@ -9,34 +11,7 @@ class DataService extends Service {
       where: {
         identifer: projectId,
       },
-    });
-  }
-
-  async addByProjectId(projectId, data) {
-    return await this.ctx.app.DataModel.create({
-      identifer: projectId,
-      pathname: data.pathname,
-      description: data.description,
-    });
-  }
-
-  async updateByProjectIdAndDataId(projectId, dataId, data) {
-    return await this.ctx.app.DataModel.update({
-      ...data,
-    }, {
-      where: {
-        identifer: projectId,
-        pathname: dataId,
-      },
-    });
-  }
-
-  async removeByProjectIdAndDataId(projectId, dataId) {
-    return await this.ctx.app.DataModel.destroy({
-      where: {
-        identifer: projectId,
-        pathname: dataId,
-      },
+      raw: true,
     });
   }
 
@@ -46,7 +21,55 @@ class DataService extends Service {
         identifer: projectId,
         pathname: dataId,
       },
+      raw: true,
     });
+  }
+
+  async addByProjectId(projectId, data) {
+    await this.ctx.app.DataModel.create({
+      identifer: projectId,
+      pathname: data.pathname,
+      description: data.description,
+    });
+    return await this.asyncMigration();
+  }
+
+  async updateByProjectIdAndDataId(projectId, dataId, data) {
+    await this.ctx.app.DataModel.update({
+      ...data,
+    }, {
+      where: {
+        identifer: projectId,
+        pathname: dataId,
+      },
+    });
+    return await this.asyncMigration();
+  }
+
+  async removeByProjectIdAndDataId(projectId, dataId) {
+    await this.ctx.app.DataModel.destroy({
+      where: {
+        identifer: projectId,
+        pathname: dataId,
+      },
+    });
+    return await this.asyncMigration();
+  }
+
+  async asyncMigration() {
+    const res = await this.ctx.app.DataModel.findAll({
+      raw: true,
+    });
+    if (this.ctx.app.config.dataHubStoreDir) {
+      const distRes = res.map(item => {
+        delete item.id;
+        delete item.createdAt;
+        delete item.updatedAt;
+        return item;
+      });
+      fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data'), JSON.stringify(distRes, null, 2));
+    }
+    return res;
   }
 }
 
