@@ -4,7 +4,7 @@ exports.static = {
   enable: false,
 };
 
-exports.datahubView = {
+exports.dataHubView = {
   enable: true,
   package: 'datahub-view',
 };
@@ -13,3 +13,4 @@ exports.i18n = {
   enable: true,
   package: 'egg-i18n',
 };
+

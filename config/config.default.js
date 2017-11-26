@@ -14,7 +14,8 @@ module.exports = appInfo => {
     pageUrl: '/notfound',
   };
 
-  config.datahubView = {
+  config.dataHubView = {
+    assetsUrl: '//unpkg.com/datahub-view@latest',
   };
 
   config.security = {
@@ -33,3 +34,4 @@ module.exports = appInfo => {
   return config;
 
 };
+
