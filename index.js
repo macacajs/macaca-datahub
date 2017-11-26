@@ -21,6 +21,10 @@ class DataHub {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);
     }
 
+    if (options.dataHubView && options.dataHubView.assetsUrl) {
+      process.env.DATAHUB_VIEW_CONFIG_ASSETSURL = options.dataHubView.assetsUrl;
+    }
+
     process.env.EGG_SERVER_ENV = this.options.mode;
 
     const promise = new Promise(resolve => {

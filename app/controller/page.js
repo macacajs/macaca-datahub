@@ -7,7 +7,7 @@ class PageController extends Controller {
     this.ctx.body = await this.app.render({}, {
       title: this.ctx.gettext('homepage'),
       pageId: 'home',
-      assetsDir: this.config.datahubView.assetsDir,
+      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
     });
   }
 
@@ -16,7 +16,7 @@ class PageController extends Controller {
     this.ctx.body = await this.app.render(res, {
       title: this.ctx.gettext('dashboard'),
       pageId: 'dashboard',
-      assetsDir: this.config.datahubView.assetsDir,
+      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
     });
   }
 
@@ -25,7 +25,7 @@ class PageController extends Controller {
     this.ctx.body = await this.app.render(res, {
       title: `${this.ctx.gettext('project')} - ${this.ctx.params.projectId}`,
       pageId: 'project',
-      assetsDir: this.config.datahubView.assetsDir,
+      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
     });
   }
 
@@ -38,3 +38,4 @@ class PageController extends Controller {
 }
 
 module.exports = PageController;
+
