@@ -35,6 +35,13 @@ $ npm i macaca-datahub -g
 $ datahub server
 ```
 
+## Run with docker
+
+```bash
+$ docker build -t="macaca-datahub" .
+$ docker run -it -v any.data:/root/.macaca-datahub/macaca-datahub.production.data -p 9200:9200 macaca-datahub
+```
+
 ## License
 
 The MIT License (MIT)
