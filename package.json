@@ -25,13 +25,6 @@
     "eslint": "^4.10.0",
     "eslint-config-egg": "^5.1.0"
   },
-  "files": [
-    "app",
-    "bin",
-    "config",
-    "app.js",
-    "index.js"
-  ],
   "engines": {
     "node": ">=8.9.0"
   },
