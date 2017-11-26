@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const _ = require('xutil');
 const path = require('path');
 const Service = require('egg').Service;
 
@@ -45,7 +46,9 @@ class ProjectService extends Service {
     const res = await this.ctx.app.ProjectModel.findAll({
       raw: true,
     });
+
     if (this.ctx.app.config.dataHubStoreDir) {
+      _.mkdir(this.ctx.app.config.dataHubStoreDir);
       const distRes = res.map(item => {
         delete item.id;
         delete item.createdAt;
