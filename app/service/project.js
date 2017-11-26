@@ -15,7 +15,7 @@ class ProjectService extends Service {
     });
   }
 
-  async updateByProjectId(data) {
+  async updateById(data) {
     return await this.ctx.app.ProjectModel.update({
       ...data,
     }, {
@@ -25,7 +25,7 @@ class ProjectService extends Service {
     });
   }
 
-  async queryByProjectId(projectId) {
+  async queryById(projectId) {
     return await this.ctx.app.ProjectModel.findAll({
       where: {
         identifer: projectId,

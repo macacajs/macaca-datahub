@@ -11,10 +11,10 @@ class ProjectController extends Controller {
 
   async upsert(ctx) {
     const body = ctx.request.body;
-    const isExist = await ctx.service.project.queryByProjectId(body.identifer);
+    const isExist = await ctx.service.project.queryById(body.identifer);
     let res = null;
     if (isExist.length > 0) {
-      res = await ctx.service.project.updateByProjectId(body);
+      res = await ctx.service.project.updateById(body);
     } else {
       res = await ctx.service.project.add(body);
     }
