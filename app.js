@@ -80,14 +80,6 @@ module.exports = app => {
   app.ProjectModel = ProjectModel;
   app.DataModel = DataModel;
 
-  if (process.env.DATAHUB_STORE_PATH) {
-    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
-
-    if (_.isExistedDir(storeDir)) {
-      app.config.dataHubStoreDir = storeDir;
-    }
-  }
-
   app.beforeStart(async () => {
 
     if (!app.config.dataHubStoreDir) {
@@ -141,6 +133,7 @@ module.exports = app => {
             identifer,
             pathname,
           } = data;
+          data.scenes = app.pack(data.scenes);
           await app.DataModel.upsert({
             ...data,
           }, {
