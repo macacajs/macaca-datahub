@@ -70,7 +70,13 @@ class DataService extends Service {
         delete item.updatedAt;
         return item;
       });
-      fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data'), JSON.stringify(distRes, null, 2));
+      fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data'), JSON.stringify(distRes, null, 2), err => {
+        if (err) {
+          this.ctx.logger.error('can\'t save archive.data', err);
+          return;
+        }
+        this.ctx.logger.info('archive.data saved');
+      });
     }
     return res;
   }
