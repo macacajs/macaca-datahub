@@ -133,7 +133,6 @@ module.exports = app => {
             identifer,
             pathname,
           } = data;
-          data.scenes = app.pack(data.scenes);
           await app.DataModel.upsert({
             ...data,
           }, {

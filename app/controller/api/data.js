@@ -81,6 +81,7 @@ class DataController extends Controller {
     const projectId = ctx.params.projectId;
     const dataId = ctx.params.dataId;
     const res = await ctx.service.data.removeByProjectIdAndDataId(projectId, dataId);
+
     if (res) {
       this.ctx.body = {
         success: true,

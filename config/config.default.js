@@ -1,7 +1,7 @@
 'use strict';
 
-const path = require('path');
 const _ = require('xutil');
+const path = require('path');
 
 module.exports = appInfo => {
 

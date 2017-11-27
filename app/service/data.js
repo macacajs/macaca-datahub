@@ -68,7 +68,6 @@ class DataService extends Service {
         delete item.id;
         delete item.createdAt;
         delete item.updatedAt;
-        item.scenes = this.app.unpack(item.scenes);
         return item;
       });
       fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data'), JSON.stringify(distRes, null, 2), err => {
