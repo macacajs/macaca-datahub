@@ -8,6 +8,7 @@ class PageController extends Controller {
       title: this.ctx.gettext('homepage'),
       pageId: 'home',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
+      version: this.app.config.pkg.version,
     });
   }
 
@@ -17,6 +18,7 @@ class PageController extends Controller {
       title: this.ctx.gettext('dashboard'),
       pageId: 'dashboard',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
+      version: this.app.config.pkg.version,
     });
   }
 
@@ -27,6 +29,7 @@ class PageController extends Controller {
       pageId: 'project',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       socket: this.app.config.socket,
+      version: this.app.config.pkg.version,
     });
   }
 
