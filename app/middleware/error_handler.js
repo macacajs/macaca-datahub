@@ -8,7 +8,7 @@ module.exports = (/* options, app */) => {
     try {
       await next();
     } catch (e) {
-      ctx.logger.info(`[mock] error ${e.message}`);
+      ctx.logger.error('[mock] error', e);
       ctx.body = {
         success: false,
         message: 'datahub config error',

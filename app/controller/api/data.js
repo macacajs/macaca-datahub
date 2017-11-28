@@ -23,14 +23,16 @@ class DataController extends Controller {
 
     if (proxyUrl) {
       try {
-        ctx.body = await ctx.curl(proxyUrl, {
+        const _res = await ctx.curl(proxyUrl, {
           method: ctx.method,
           headers: ctx.header,
           timeout: 3000,
-          streaming: true,
-          stream: ctx.req,
+          data: ctx.request.body,
+          dataType: 'json',
         });
+        ctx.body = _res.data;
       } catch (e) {
+        ctx.logger.error('[proxy error]', e);
         ctx.body = {};
       }
 
@@ -40,7 +42,7 @@ class DataController extends Controller {
         req: {
           method: ctx.method,
           path: ctx.path.replace(/^\/data/g, ''),
-          header: ctx.header,
+          headers: ctx.header,
         },
         res: {
           status: 200,
@@ -65,7 +67,7 @@ class DataController extends Controller {
         req: {
           method: ctx.method,
           path: ctx.path.replace(/^\/data/g, ''),
-          header: ctx.header,
+          headers: ctx.header,
         },
         res: {
           status: 200,
