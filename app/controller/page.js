@@ -26,6 +26,7 @@ class PageController extends Controller {
       title: `${this.ctx.gettext('project')} - ${this.ctx.params.projectId}`,
       pageId: 'project',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
+      socket: this.app.config.socket,
     });
   }
 

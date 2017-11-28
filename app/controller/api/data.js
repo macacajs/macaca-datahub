@@ -3,6 +3,8 @@
 const _ = require('xutil');
 const Controller = require('egg').Controller;
 
+const socket = require('../../socket');
+
 class DataController extends Controller {
 
   async index(ctx) {
