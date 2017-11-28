@@ -6,23 +6,13 @@ class SocketMQ {
 
   constructor() {
     io.on('connection', function(client) {
-      setInterval(function() {
-        console.log('----------')
-        io.sockets.emit('test event', {});
-      }, 1000);
     });
   }
 
-  broadcast(data) {
-    console.log(data)
-    io.broadcast.emit('xxx', data);
-    return
-    io.on('connection', function(client) {
-      console.log(client);
-      setInterval(function() {
-        io.broadcast.emit('xxx', {});
-      }, 1000);
-    });
+  emit(data) {
+    setTimeout(() => {
+      io.sockets.emit('test event', data);
+    }, 16);
   }
 
   listen(port) {
