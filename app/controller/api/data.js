@@ -16,14 +16,45 @@ class DataController extends Controller {
     const {
       scenes,
       currentScene,
+      proxyUrl,
     } = res;
 
-    try {
-      const json = JSON.parse(scenes);
-      const list = _.filter(json, e => e.name === currentScene);
-      this.ctx.body = list[0].data;
-    } catch (e) {
-      this.ctx.body = {};
+    if (proxyUrl) {
+      try {
+        ctx.body = await ctx.curl(proxyUrl, {
+          method: ctx.method,
+          headers: ctx.header,
+          timeout: 3000,
+          streaming: true,
+          stream: ctx.req,
+        });
+      } catch (e) {
+        ctx.body = {};
+      }
+    } else {
+      const date = new Date();
+
+      socket.emit({
+        type: 'http',
+        date,
+        req: {
+          method: ctx.method,
+          path: ctx.path,
+        },
+        res: {
+          status: ctx.status,
+          body: ctx.body,
+        },
+      });
+
+      try {
+        const json = JSON.parse(scenes);
+        const list = _.filter(json, e => e.name === currentScene);
+        const data = list[0].data;
+        ctx.body = data;
+      } catch (e) {
+        ctx.body = {};
+      }
     }
   }
 

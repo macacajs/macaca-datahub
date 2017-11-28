@@ -60,6 +60,11 @@ module.exports = app => {
       defaultValue: 'default',
       allowNull: true,
     },
+    proxyUrl: {
+      type: Sequelize.STRING,
+      defaultValue: '',
+      allowNull: true,
+    },
     params: {
       type: Sequelize.STRING,
       defaultValue: '[]',
