@@ -19,6 +19,8 @@ class DataController extends Controller {
       proxyUrl,
     } = res;
 
+    const date = _.moment().format('YY-MM-DD HH:mm:ss');
+
     if (proxyUrl) {
       try {
         ctx.body = await ctx.curl(proxyUrl, {
@@ -31,21 +33,22 @@ class DataController extends Controller {
       } catch (e) {
         ctx.body = {};
       }
-    } else {
-      const date = new Date();
 
       socket.emit({
         type: 'http',
         date,
         req: {
           method: ctx.method,
-          path: ctx.path,
+          path: ctx.path.replace(/^\/data/g, ''),
+          header: ctx.header,
         },
         res: {
-          status: ctx.status,
+          status: 200,
+          host: ctx.host,
           body: ctx.body,
         },
       });
+    } else {
 
       try {
         const json = JSON.parse(scenes);
@@ -55,6 +58,21 @@ class DataController extends Controller {
       } catch (e) {
         ctx.body = {};
       }
+
+      socket.emit({
+        type: 'http',
+        date,
+        req: {
+          method: ctx.method,
+          path: ctx.path.replace(/^\/data/g, ''),
+          header: ctx.header,
+        },
+        res: {
+          status: 200,
+          host: ctx.host,
+          body: ctx.body,
+        },
+      });
     }
   }
 
