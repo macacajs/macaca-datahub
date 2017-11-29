@@ -24,6 +24,7 @@ class DataController extends Controller {
     try {
       proxyOrigin = JSON.parse(proxyContent);
     } catch (e) {
+      ctx.logger.error('[proxy error]', e);
     }
 
     if (proxyOrigin.useProxy) {
