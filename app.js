@@ -90,68 +90,66 @@ module.exports = app => {
 
   app.beforeStart(async () => {
 
-    if (!app.config.dataHubStoreDir) {
-      return;
-    }
+    if (app.config.dataHubStoreDir) {
+      app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
 
-    app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
+      const hubFile = path.resolve(app.config.dataHubStoreDir, 'hub.data');
 
-    const hubFile = path.resolve(app.config.dataHubStoreDir, 'hub.data');
+      if (_.isExistedFile(hubFile)) {
 
-    if (_.isExistedFile(hubFile)) {
+        app.logger.info(`${chalk.cyan('import datahub from:')} ${hubFile}`);
 
-      app.logger.info(`${chalk.cyan('import datahub from:')} ${hubFile}`);
+        const content = fs.readFileSync(hubFile, 'utf8');
 
-      const content = fs.readFileSync(hubFile, 'utf8');
+        try {
+          const list = JSON.parse(content);
 
-      try {
-        const list = JSON.parse(content);
-
-        for (let i = 0; i < list.length; i++) {
-          const data = list[i];
-          const {
-            identifer,
-          } = data;
-          await app.ProjectModel.upsert({
-            ...data,
-          }, {
-            where: {
+          for (let i = 0; i < list.length; i++) {
+            const data = list[i];
+            const {
               identifer,
-            },
-          });
+            } = data;
+            await app.ProjectModel.upsert({
+              ...data,
+            }, {
+              where: {
+                identifer,
+              },
+            });
+          }
+        } catch (e) {
+          app.logger.warn(e.message);
         }
-      } catch (e) {
-        app.logger.warn(e.message);
       }
-    }
 
-    const archiveFile = path.resolve(app.config.dataHubStoreDir, 'archive.data');
+      const archiveFile = path.resolve(app.config.dataHubStoreDir, 'archive.data');
 
-    if (_.isExistedFile(archiveFile)) {
+      if (_.isExistedFile(archiveFile)) {
 
-      app.logger.info(`${chalk.cyan('import datahub from:')} ${archiveFile}`);
-      const content = fs.readFileSync(archiveFile, 'utf8');
+        app.logger.info(`${chalk.cyan('import datahub from:')} ${archiveFile}`);
+        const content = fs.readFileSync(archiveFile, 'utf8');
 
-      try {
-        const list = JSON.parse(content);
+        try {
+          const list = JSON.parse(content);
 
-        for (let i = 0; i < list.length; i++) {
-          const data = list[i];
-          const {
-            identifer,
-            pathname,
-          } = data;
-          await app.DataModel.upsert({
-            ...data,
-          }, {
-            where: {
+          for (let i = 0; i < list.length; i++) {
+            const data = list[i];
+            const {
               identifer,
               pathname,
-            },
-          });
+            } = data;
+            await app.DataModel.upsert({
+              ...data,
+            }, {
+              where: {
+                identifer,
+                pathname,
+              },
+            });
+          }
+        } catch (e) {
+          app.logger.warn(e.message);
         }
-      } catch (e) {
-        app.logger.warn(e.message);
       }
     }
 
