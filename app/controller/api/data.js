@@ -20,10 +20,11 @@ class DataController extends Controller {
     } = res;
 
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
-    let proxyOrigin = {}
+    let proxyOrigin = {};
     try {
       proxyOrigin = JSON.parse(proxyContent);
-    } catch (e) {}
+    } catch (e) {
+    }
 
     if (proxyOrigin.useProxy) {
       try {

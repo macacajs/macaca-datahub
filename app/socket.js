@@ -5,7 +5,7 @@ const io = require('socket.io')();
 class SocketMQ {
 
   constructor() {
-    io.on('connection', function(client) {
+    io.on('connection', function() {
     });
   }
 
