@@ -4,7 +4,10 @@ const fs = require('fs');
 const _ = require('xutil');
 const path = require('path');
 const chalk = require('chalk');
+const detect = require('detect-port');
 const Sequelize = require('sequelize');
+
+const socket = require('./app/socket');
 
 module.exports = app => {
   const homePath = path.join(app.config.HOME, `.${app.config.pkg.name}`);
@@ -55,6 +58,11 @@ module.exports = app => {
     currentScene: {
       type: Sequelize.STRING,
       defaultValue: 'default',
+      allowNull: true,
+    },
+    proxyContent: {
+      type: Sequelize.STRING,
+      defaultValue: '',
       allowNull: true,
     },
     params: {
@@ -146,6 +154,14 @@ module.exports = app => {
         app.logger.warn(e.message);
       }
     }
+
+    const socketPort = await detect(9300);
+
+    app.config.socket = {
+      port: socketPort,
+    };
+
+    socket.listen(socketPort);
   });
 };
 

@@ -12,7 +12,9 @@
     "datahub-view": "^1.0.0",
     "detect-port": "^1.2.2",
     "egg": "^1.11.0",
+    "egg-cors": "^2.0.0",
     "sequelize": "^4.22.8",
+    "socket.io": "^2.0.4",
     "sqlite3": "^3.1.13",
     "xutil": "^1.0.7"
   },

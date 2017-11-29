@@ -15,7 +15,7 @@ class DataHub {
 
   startServer() {
     const args = Array.prototype.slice.call(arguments);
-    const options = args[0] || {};
+    const options = Object.assign(this.options, args[0] || {});
 
     if (options.store) {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);

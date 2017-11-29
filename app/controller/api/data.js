@@ -3,6 +3,8 @@
 const _ = require('xutil');
 const Controller = require('egg').Controller;
 
+const socket = require('../../socket');
+
 class DataController extends Controller {
 
   async index(ctx) {
@@ -14,14 +16,72 @@ class DataController extends Controller {
     const {
       scenes,
       currentScene,
+      proxyContent,
     } = res;
 
+    const date = _.moment().format('YY-MM-DD HH:mm:ss');
+    let proxyOrigin = {};
     try {
-      const json = JSON.parse(scenes);
-      const list = _.filter(json, e => e.name === currentScene);
-      this.ctx.body = list[0].data;
+      proxyOrigin = JSON.parse(proxyContent);
     } catch (e) {
-      this.ctx.body = {};
+      ctx.logger.error('[proxy error]', e);
+    }
+
+    if (proxyOrigin.useProxy) {
+      try {
+        const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
+        const _res = await ctx.curl(proxyOrigin.proxies[index], {
+          method: ctx.method,
+          headers: ctx.header,
+          timeout: 3000,
+          data: ctx.request.body,
+          dataType: 'json',
+        });
+        ctx.body = _res.data;
+      } catch (e) {
+        ctx.logger.error('[proxy error]', e);
+        ctx.body = {};
+      }
+
+      socket.emit({
+        type: 'http',
+        date,
+        req: {
+          method: ctx.method,
+          path: ctx.path.replace(/^\/data/g, ''),
+          headers: ctx.header,
+        },
+        res: {
+          status: 200,
+          host: ctx.host,
+          body: ctx.body,
+        },
+      });
+    } else {
+
+      try {
+        const json = JSON.parse(scenes);
+        const list = _.filter(json, e => e.name === currentScene);
+        const data = list[0].data;
+        ctx.body = data;
+      } catch (e) {
+        ctx.body = {};
+      }
+
+      socket.emit({
+        type: 'http',
+        date,
+        req: {
+          method: ctx.method,
+          path: ctx.path.replace(/^\/data/g, ''),
+          headers: ctx.header,
+        },
+        res: {
+          status: 200,
+          host: ctx.host,
+          body: ctx.body,
+        },
+      });
     }
   }
 
