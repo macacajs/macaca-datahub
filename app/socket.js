@@ -11,7 +11,7 @@ class SocketMQ {
 
   emit(data) {
     setTimeout(() => {
-      io.sockets.emit('test event', data);
+      io.sockets.emit('push data', data);
     }, 16);
   }
 
