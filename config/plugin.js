@@ -14,3 +14,7 @@ exports.i18n = {
   package: 'egg-i18n',
 };
 
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};
