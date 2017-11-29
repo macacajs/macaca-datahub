@@ -16,14 +16,19 @@ class DataController extends Controller {
     const {
       scenes,
       currentScene,
-      proxyUrl,
+      proxyContent,
     } = res;
 
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
+    let proxyOrigin = {}
+    try {
+      proxyOrigin = JSON.parse(proxyContent);
+    } catch (e) {}
 
-    if (proxyUrl) {
+    if (proxyOrigin.useProxy) {
       try {
-        const _res = await ctx.curl(proxyUrl, {
+        const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
+        const _res = await ctx.curl(proxyOrigin.proxies[index], {
           method: ctx.method,
           headers: ctx.header,
           timeout: 3000,
