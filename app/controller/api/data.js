@@ -27,6 +27,9 @@ class DataController extends Controller {
       ctx.logger.error('[proxy error]', e);
     }
 
+    ctx.set('Access-Control-Allow-Credentials', 'true');
+    ctx.set('Access-Control-Allow-Origin', ctx.get('origin'));
+
     if (proxyOrigin.useProxy) {
       try {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
@@ -83,6 +86,7 @@ class DataController extends Controller {
         },
       });
     }
+
   }
 
   async query(ctx) {
