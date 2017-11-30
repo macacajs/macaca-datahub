@@ -29,6 +29,7 @@ class ProjectController extends Controller {
   async remove(ctx) {
     const body = ctx.request.body;
     const identifer = body.identifer;
+    await ctx.service.data.removeByProjectId(identifer);
     const res = await ctx.service.project.removeById(identifer);
 
     if (res) {

@@ -47,6 +47,15 @@ class DataService extends Service {
     return await this.asyncMigration();
   }
 
+  async removeByProjectId(projectId) {
+    await this.ctx.app.DataModel.destroy({
+      where: {
+        identifer: projectId,
+      },
+    });
+    return await this.asyncMigration();
+  }
+
   async removeByProjectIdAndDataId(projectId, dataId) {
     await this.ctx.app.DataModel.destroy({
       where: {
