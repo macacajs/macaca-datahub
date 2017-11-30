@@ -18,7 +18,7 @@ class DataHub {
     const options = Object.assign(this.options, args[0] || {});
 
     if (options.database) {
-      process.env.DATAHUB_DATABASE_PATH = options.database;
+      process.env.DATAHUB_DATABASE = options.database;
     }
 
     if (options.store) {

@@ -10,12 +10,12 @@ const Sequelize = require('sequelize');
 const socket = require('./app/socket');
 
 module.exports = app => {
-  const homePath = process.env.DATAHUB_DATABASE_PATH || app.config.HOME;
+  const homePath = app.config.HOME;
   const databasePath = path.join(homePath, `.${app.config.pkg.name}`);
 
   _.mkdir(databasePath);
 
-  const storageDir = path.join(databasePath, `${app.config.name}.${app.config.env}.data`);
+  const storageDir = process.env.DATAHUB_DATABASE || path.join(databasePath, `${app.config.name}.${app.config.env}.data`);
 
   app.logger.info(`${chalk.cyan('launch datahub at:')} ${storageDir}`);
 
