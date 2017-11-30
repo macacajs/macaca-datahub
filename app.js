@@ -67,7 +67,7 @@ module.exports = app => {
     },
     params: {
       type: Sequelize.STRING,
-      defaultValue: '[]',
+      defaultValue: '{}',
       allowNull: true,
     },
     scenes: {
