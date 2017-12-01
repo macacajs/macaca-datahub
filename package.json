@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub"
