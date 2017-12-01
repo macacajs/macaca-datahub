@@ -69,7 +69,7 @@ module.exports = app => {
     },
     params: {
       type: Sequelize.STRING,
-      defaultValue: '[]',
+      defaultValue: '{}',
       allowNull: true,
     },
     scenes: {
@@ -84,13 +84,12 @@ module.exports = app => {
     },
   });
 
-  sequelize.sync();
-
-  app.UserModel = UserModel;
-  app.ProjectModel = ProjectModel;
-  app.DataModel = DataModel;
-
   app.beforeStart(async () => {
+    await sequelize.sync();
+
+    app.UserModel = UserModel;
+    app.ProjectModel = ProjectModel;
+    app.DataModel = DataModel;
 
     if (app.config.dataHubStoreDir) {
       app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
