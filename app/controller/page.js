@@ -24,12 +24,27 @@ class PageController extends Controller {
 
   async project() {
     const res = await this.ctx.service.project.query();
+    const projectId = this.ctx.params.projectId;
     this.ctx.body = await this.app.render(res, {
-      title: `${this.ctx.gettext('project')} - ${this.ctx.params.projectId}`,
+      title: `${this.ctx.gettext('project')} - ${projectId}`,
       pageId: 'project',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       socket: this.app.config.socket,
       version: this.app.config.pkg.version,
+      projectId,
+    });
+  }
+
+  async doc() {
+    const res = await this.ctx.service.project.query();
+    const projectId = this.ctx.params.projectId;
+    this.ctx.body = await this.app.render(res, {
+      title: `${this.ctx.gettext('doc')} - ${projectId}`,
+      pageId: 'doc',
+      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
+      socket: this.app.config.socket,
+      version: this.app.config.pkg.version,
+      projectId,
     });
   }
 
