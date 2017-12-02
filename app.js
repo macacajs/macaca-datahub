@@ -133,6 +133,11 @@ module.exports = app => {
         try {
           const list = JSON.parse(content);
 
+          await app.DataModel.destroy({
+            where: {
+              identifer,
+            }
+          });
           for (let i = 0; i < list.length; i++) {
             const data = list[i];
             const {
