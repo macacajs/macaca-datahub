@@ -133,11 +133,16 @@ module.exports = app => {
         try {
           const list = JSON.parse(content);
 
-          await app.DataModel.destroy({
-            where: {
-              identifer,
-            }
-          });
+          const tables = Object.keys(_.groupBy(list, 'identifer'));
+
+          for (let i = 0; i < tables.length; i++) {
+            await app.DataModel.destroy({
+              where: {
+                identifer: tables[i],
+              },
+            });
+          }
+
           for (let i = 0; i < list.length; i++) {
             const data = list[i];
             const {
