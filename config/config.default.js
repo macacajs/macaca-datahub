@@ -35,11 +35,20 @@ module.exports = appInfo => {
     },
   };
 
-  exports.i18n = {
+  config.i18n = {
     defaultLocale: 'en_US',
     queryField: 'locale',
     cookieField: 'locale',
     cookieMaxAge: '1y',
+  };
+
+  const databasePath = path.join(appInfo.HOME, `.${appInfo.name}`);
+  _.mkdir(databasePath);
+
+  config.sequelize = {
+    dialect: 'sqlite',
+    storage: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
+    logging: false,
   };
 
   return config;

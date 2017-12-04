@@ -9,7 +9,7 @@ exports.dataHubView = {
   package: 'datahub-view',
 };
 
-exports.i18n = {
+exports.sequelize = {
   enable: true,
-  package: 'egg-i18n',
+  package: 'egg-sequelize',
 };

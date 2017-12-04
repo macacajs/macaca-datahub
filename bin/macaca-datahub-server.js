@@ -9,14 +9,14 @@ const program = require('commander');
 const DataHub = require('..');
 
 program
-  .option('--verbose',         'show more debugging information')
-  .option('-c, --config <s>',  'set configuration file')
+  .option('--verbose', 'show more debugging information')
+  .option('-c, --config <s>', 'set configuration file')
   .parse(process.argv);
 
 let options = {};
 
 if (program.config) {
-  var configFile = path.resolve(program.config);
+  const configFile = path.resolve(program.config);
 
   if (_.isExistedFile(configFile)) {
     options = Object.assign(options, require(configFile));

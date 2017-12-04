@@ -1,14 +1,14 @@
 'use strict';
 
-const fs = require('fs');
 const _ = require('xutil');
+const fs = require('mz/fs');
 const path = require('path');
 const Service = require('egg').Service;
 
 class DataService extends Service {
 
   async queryByProjectId(projectId) {
-    return await this.ctx.app.DataModel.findAll({
+    return await this.ctx.model.Data.findAll({
       where: {
         identifer: projectId,
       },
@@ -17,7 +17,7 @@ class DataService extends Service {
   }
 
   async getByProjectIdAndDataId(projectId, dataId) {
-    return await this.ctx.app.DataModel.findOne({
+    return await this.ctx.model.Data.findOne({
       where: {
         identifer: projectId,
         pathname: dataId,
@@ -27,7 +27,7 @@ class DataService extends Service {
   }
 
   async addByProjectId(projectId, data) {
-    await this.ctx.app.DataModel.create({
+    await this.ctx.model.Data.create({
       identifer: projectId,
       pathname: data.pathname,
       description: data.description,
@@ -36,7 +36,7 @@ class DataService extends Service {
   }
 
   async updateByProjectIdAndDataId(projectId, dataId, data) {
-    await this.ctx.app.DataModel.update({
+    await this.ctx.model.Data.update({
       ...data,
     }, {
       where: {
@@ -48,7 +48,7 @@ class DataService extends Service {
   }
 
   async removeByProjectId(projectId) {
-    await this.ctx.app.DataModel.destroy({
+    await this.ctx.model.Data.destroy({
       where: {
         identifer: projectId,
       },
@@ -57,7 +57,7 @@ class DataService extends Service {
   }
 
   async removeByProjectIdAndDataId(projectId, dataId) {
-    await this.ctx.app.DataModel.destroy({
+    await this.ctx.model.Data.destroy({
       where: {
         identifer: projectId,
         pathname: dataId,
@@ -67,7 +67,7 @@ class DataService extends Service {
   }
 
   async asyncMigration() {
-    const res = await this.ctx.app.DataModel.findAll({
+    const res = await this.ctx.model.Data.findAll({
       raw: true,
     });
 
@@ -79,13 +79,14 @@ class DataService extends Service {
         delete item.updatedAt;
         return item;
       });
-      fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data'), JSON.stringify(distRes, null, 2), err => {
-        if (err) {
-          this.ctx.logger.error('can\'t save archive.data', err);
-          return;
-        }
+
+      const archivePath = path.resolve(this.ctx.app.config.dataHubStoreDir, 'archive.data');
+      try {
+        await fs.writeFile(archivePath, JSON.stringify(distRes, null, 2));
         this.ctx.logger.info('archive.data saved');
-      });
+      } catch (err) {
+        this.ctx.logger.error('can\'t save archive.data', err);
+      }
     }
     return res;
   }

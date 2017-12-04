@@ -8,13 +8,13 @@ const Service = require('egg').Service;
 class ProjectService extends Service {
 
   async query() {
-    return await this.ctx.app.ProjectModel.findAll({
+    return await this.ctx.model.Project.findAll({
       raw: true,
     });
   }
 
   async queryById(projectId) {
-    return await this.ctx.app.ProjectModel.findAll({
+    return await this.ctx.model.Project.findAll({
       where: {
         identifer: projectId,
       },
@@ -23,7 +23,7 @@ class ProjectService extends Service {
   }
 
   async upsertById(identifer, data) {
-    await this.ctx.app.ProjectModel.upsert({
+    await this.ctx.model.Project.upsert({
       ...data,
     }, {
       where: {
@@ -34,7 +34,7 @@ class ProjectService extends Service {
   }
 
   async removeById(identifer) {
-    await this.ctx.app.ProjectModel.destroy({
+    await this.ctx.model.Project.destroy({
       where: {
         identifer,
       },
@@ -43,7 +43,7 @@ class ProjectService extends Service {
   }
 
   async asyncMigration() {
-    const res = await this.ctx.app.ProjectModel.findAll({
+    const res = await this.ctx.model.Project.findAll({
       raw: true,
     });
 

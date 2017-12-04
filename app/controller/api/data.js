@@ -7,7 +7,8 @@ const socket = require('../../socket');
 
 class DataController extends Controller {
 
-  async index(ctx) {
+  async index() {
+    const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const dataId = ctx.params.dataId;
 
@@ -89,7 +90,8 @@ class DataController extends Controller {
 
   }
 
-  async query(ctx) {
+  async query() {
+    const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const res = await this.ctx.service.data.queryByProjectId(projectId);
     if (res) {
@@ -104,7 +106,8 @@ class DataController extends Controller {
     }
   }
 
-  async add(ctx) {
+  async add() {
+    const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const body = ctx.request.body;
 
@@ -122,7 +125,8 @@ class DataController extends Controller {
     }
   }
 
-  async update(ctx) {
+  async update() {
+    const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const dataId = ctx.params.dataId;
     const body = ctx.request.body;
@@ -141,7 +145,8 @@ class DataController extends Controller {
     }
   }
 
-  async remove(ctx) {
+  async remove() {
+    const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const dataId = ctx.params.dataId;
     const res = await ctx.service.data.removeByProjectIdAndDataId(projectId, dataId);

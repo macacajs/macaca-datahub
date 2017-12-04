@@ -5,94 +5,19 @@ const _ = require('xutil');
 const path = require('path');
 const chalk = require('chalk');
 const detect = require('detect-port');
-const Sequelize = require('sequelize');
 
 const socket = require('./app/socket');
 
 module.exports = app => {
-  const homePath = app.config.HOME;
-  const databasePath = path.join(homePath, `.${app.config.pkg.name}`);
-
-  _.mkdir(databasePath);
-
-  const storageDir = process.env.DATAHUB_DATABASE || path.join(databasePath, `${app.config.name}.${app.config.env}.data`);
-
-  app.logger.info(`${chalk.cyan('launch datahub at:')} ${storageDir}`);
-
-  const sequelize = new Sequelize(null, null, null, {
-    dialect: 'sqlite',
-    storage: storageDir,
-    logging: false,
-  });
-
-  const UserModel = sequelize.define('user', {
-    firstName: {
-      type: Sequelize.STRING,
-    },
-  });
-
-  const ProjectModel = sequelize.define('project', {
-    identifer: {
-      type: Sequelize.STRING,
-      unique: true,
-    },
-    description: {
-      type: Sequelize.STRING,
-    },
-  });
-
-  const DataModel = sequelize.define('data', {
-    identifer: {
-      type: Sequelize.STRING,
-    },
-    pathname: {
-      type: Sequelize.STRING,
-      unique: true,
-    },
-    description: {
-      type: Sequelize.STRING,
-    },
-    method: {
-      type: Sequelize.STRING,
-      defaultValue: 'ALL',
-      allowNull: true,
-    },
-    currentScene: {
-      type: Sequelize.STRING,
-      defaultValue: 'default',
-      allowNull: true,
-    },
-    proxyContent: {
-      type: Sequelize.STRING,
-      defaultValue: '',
-      allowNull: true,
-    },
-    params: {
-      type: Sequelize.STRING,
-      defaultValue: '{}',
-      allowNull: true,
-    },
-    scenes: {
-      type: Sequelize.STRING,
-      defaultValue: '[]',
-      allowNull: true,
-    },
-    delay: {
-      type: Sequelize.STRING,
-      defaultValue: '0',
-      allowNull: true,
-    },
-  });
+  app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.database}`);
 
   app.beforeStart(async () => {
-    await sequelize.sync();
-
-    app.UserModel = UserModel;
-    app.ProjectModel = ProjectModel;
-    app.DataModel = DataModel;
+    await app.model.sync();
 
     if (app.config.dataHubStoreDir) {
       app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
+
+      const ctx = app.createAnonymousContext();
 
       const hubFile = path.resolve(app.config.dataHubStoreDir, 'hub.data');
 
@@ -110,7 +35,7 @@ module.exports = app => {
             const {
               identifer,
             } = data;
-            await app.ProjectModel.upsert({
+            await ctx.model.Project.upsert({
               ...data,
             }, {
               where: {
@@ -136,7 +61,7 @@ module.exports = app => {
           const tables = Object.keys(_.groupBy(list, 'identifer'));
 
           for (let i = 0; i < tables.length; i++) {
-            await app.DataModel.destroy({
+            await ctx.model.Data.destroy({
               where: {
                 identifer: tables[i],
               },
@@ -149,7 +74,7 @@ module.exports = app => {
               identifer,
               pathname,
             } = data;
-            await app.DataModel.upsert({
+            await ctx.model.Data.upsert({
               ...data,
             }, {
               where: {
