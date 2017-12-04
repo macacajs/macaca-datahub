@@ -42,6 +42,16 @@ module.exports = appInfo => {
     cookieMaxAge: '1y',
   };
 
+  const databasePath = path.join(appInfo.HOME, appInfo.name);
+  _.mkdir(databasePath);
+
+  config.sequelize = {
+    dialect: 'sqlite',
+    // FIXME: db dir
+    database: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
+    logging: false,
+  };
+
   return config;
 
 };
