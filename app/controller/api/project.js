@@ -4,12 +4,14 @@ const Controller = require('egg').Controller;
 
 class ProjectController extends Controller {
 
-  async query(ctx) {
+  async query() {
+    const ctx = this.ctx;
     const res = await ctx.service.project.query();
     this.ctx.body = res;
   }
 
-  async upsert(ctx) {
+  async upsert() {
+    const ctx = this.ctx;
     const body = ctx.request.body;
     const identifer = body.identifer;
 
@@ -26,7 +28,8 @@ class ProjectController extends Controller {
     }
   }
 
-  async remove(ctx) {
+  async remove() {
+    const ctx = this.ctx;
     const body = ctx.request.body;
     const identifer = body.identifer;
     await ctx.service.data.removeByProjectId(identifer);

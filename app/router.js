@@ -1,20 +1,22 @@
 'use strict';
 
 module.exports = app => {
-  app.get('/', app.controller.page.home);
-  app.get('/dashboard', app.controller.page.dashboard);
-  app.get('/project/:projectId', app.controller.page.project);
-  app.get('/doc/:projectId', app.controller.page.doc);
-  app.get('/notfound', app.controller.page.notfound);
+  const { router, controller } = app;
 
-  app.all('/data/:projectId/:dataId', app.controller.api.data.index);
+  router.get('/', controller.page.home);
+  router.get('/dashboard', controller.page.dashboard);
+  router.get('/project/:projectId', controller.page.project);
+  router.get('/doc/:projectId', controller.page.doc);
+  router.get('/notfound', controller.page.notfound);
 
-  app.get('/api/project', app.controller.api.project.query);
-  app.post('/api/project', app.controller.api.project.upsert);
-  app.delete('/api/project', app.controller.api.project.remove);
+  router.all('/data/:projectId/:dataId', controller.api.data.index);
 
-  app.get('/api/data/:projectId', app.controller.api.data.query);
-  app.post('/api/data/:projectId', app.controller.api.data.add);
-  app.post('/api/data/:projectId/:dataId', app.controller.api.data.update);
-  app.delete('/api/data/:projectId/:dataId', app.controller.api.data.remove);
+  router.get('/api/project', controller.api.project.query);
+  router.post('/api/project', controller.api.project.upsert);
+  router.delete('/api/project', controller.api.project.remove);
+
+  router.get('/api/data/:projectId', controller.api.data.query);
+  router.post('/api/data/:projectId', controller.api.data.add);
+  router.post('/api/data/:projectId/:dataId', controller.api.data.update);
+  router.delete('/api/data/:projectId/:dataId', controller.api.data.remove);
 };
