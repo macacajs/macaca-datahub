@@ -47,7 +47,7 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'sqlite',
-    database: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
+    storage: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
     logging: false,
   };
 

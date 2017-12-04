@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = app => {
-  const { router, controller } = app;
+  const {
+    router,
+    controller,
+  } = app;
 
   router.get('/', controller.page.home);
   router.get('/dashboard', controller.page.dashboard);

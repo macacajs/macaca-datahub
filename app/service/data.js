@@ -1,7 +1,7 @@
 'use strict';
 
-const fs = require('mz/fs');
 const _ = require('xutil');
+const fs = require('mz/fs');
 const path = require('path');
 const Service = require('egg').Service;
 
