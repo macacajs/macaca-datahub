@@ -1,7 +1,9 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING } = app.Sequelize;
+  const {
+    STRING,
+  } = app.Sequelize;
 
   const Project = app.model.define('project', {
     identifer: {
