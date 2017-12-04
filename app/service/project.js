@@ -51,8 +51,8 @@ class ProjectService extends Service {
       _.mkdir(this.ctx.app.config.dataHubStoreDir);
       const distRes = res.map(item => {
         delete item.id;
-        delete item.createdAt;
-        delete item.updatedAt;
+        delete item.created_at;
+        delete item.updated_at;
         return item;
       });
       fs.writeFile(path.resolve(this.ctx.app.config.dataHubStoreDir, 'hub.data'), JSON.stringify(distRes, null, 2));
