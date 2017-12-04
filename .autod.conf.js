@@ -11,6 +11,7 @@ module.exports = {
   dep: [
     'egg',
     'egg-scripts',
+    'sqlite3',
   ],
   devdep: [
     'egg-ci',

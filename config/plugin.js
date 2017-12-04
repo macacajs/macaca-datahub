@@ -9,7 +9,3 @@ exports.dataHubView = {
   package: 'datahub-view',
 };
 
-exports.i18n = {
-  enable: true,
-  package: 'egg-i18n',
-};

@@ -8,23 +8,26 @@
   "main": "./index.js",
   "dependencies": {
     "chalk": "^2.3.0",
-    "commander": "^2.9.0",
-    "datahub-view": "^1.0.0",
+    "commander": "^2.12.2",
+    "datahub-view": "^1.0.8",
     "detect-port": "^1.2.2",
-    "egg": "^1.11.0",
-    "sequelize": "^4.22.8",
+    "egg": "^2.0.0",
+    "egg-i18n": "^2.0.0",
+    "egg-scripts": "^2.4.0",
+    "sequelize": "^4.25.1",
     "socket.io": "^2.0.4",
     "sqlite3": "^3.1.13",
     "xutil": "^1.0.7"
   },
   "devDependencies": {
-    "autod": "^2.10.0",
+    "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
-    "egg-bin": "^4.3.5",
+    "egg-bin": "^4.3.6",
     "egg-ci": "^1.8.0",
-    "egg-mock": "^3.13.0",
-    "eslint": "^4.10.0",
-    "eslint-config-egg": "^5.1.0"
+    "egg-mock": "^3.13.1",
+    "eslint": "^4.12.1",
+    "eslint-config-egg": "^5.1.1",
+    "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
     "node": ">=8.9.0"

@@ -35,7 +35,7 @@ module.exports = appInfo => {
     },
   };
 
-  exports.i18n = {
+  config.i18n = {
     defaultLocale: 'en_US',
     queryField: 'locale',
     cookieField: 'locale',
