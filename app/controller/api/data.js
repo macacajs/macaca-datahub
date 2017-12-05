@@ -18,7 +18,12 @@ class DataController extends Controller {
       scenes,
       currentScene,
       proxyContent,
+      delay,
     } = res;
+
+    if (delay) {
+      ctx[Symbol.for('context#delay')] = delay;
+    }
 
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
     let proxyOrigin = {};
@@ -28,10 +33,8 @@ class DataController extends Controller {
       ctx.logger.error('[proxy error]', e);
     }
 
-    ctx.set('Access-Control-Allow-Credentials', 'true');
-    ctx.set('Access-Control-Allow-Origin', ctx.get('origin'));
-
     if (proxyOrigin.useProxy) {
+      ctx.set('x-datahub-proxy', 'true');
       try {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
         const _res = await ctx.curl(proxyOrigin.proxies[index], {
@@ -67,7 +70,7 @@ class DataController extends Controller {
         const json = JSON.parse(scenes);
         const list = _.filter(json, e => e.name === currentScene);
         const data = list[0].data;
-        ctx.body = data;
+        ctx.body = JSON.parse(data);
       } catch (e) {
         ctx.body = {};
       }
@@ -164,4 +167,3 @@ class DataController extends Controller {
 }
 
 module.exports = DataController;
-
