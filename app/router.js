@@ -1,10 +1,18 @@
 'use strict';
 
+const compose = require('koa-compose');
+
 module.exports = app => {
   const {
     router,
     controller,
+    middleware,
   } = app;
+
+  const contextMiddleWare = compose([
+    middleware.contextCors(),
+    middleware.contextDelay(),
+  ]);
 
   router.get('/', controller.page.home);
   router.get('/dashboard', controller.page.dashboard);
@@ -12,7 +20,7 @@ module.exports = app => {
   router.get('/doc/:projectId', controller.page.doc);
   router.get('/notfound', controller.page.notfound);
 
-  router.all('/data/:projectId/:dataId', controller.api.data.index);
+  router.all('/data/:projectId/:dataId', contextMiddleWare, controller.api.data.index);
 
   router.get('/api/project', controller.api.project.query);
   router.post('/api/project', controller.api.project.upsert);
