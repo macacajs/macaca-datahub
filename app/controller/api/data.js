@@ -70,7 +70,7 @@ class DataController extends Controller {
         const json = JSON.parse(scenes);
         const list = _.filter(json, e => e.name === currentScene);
         const data = list[0].data;
-        ctx.body = JSON.parse(data);
+        ctx.body = data;
       } catch (e) {
         ctx.body = {};
       }
