@@ -5,6 +5,11 @@ const Controller = require('egg').Controller;
 
 const socket = require('../../socket');
 
+const allowedProxyHeaders = [
+  'set-cookie',
+  'content-type',
+];
+
 class DataController extends Controller {
 
   async index() {
@@ -35,6 +40,8 @@ class DataController extends Controller {
 
     if (proxyOrigin.useProxy) {
       ctx.set('x-datahub-proxy', 'true');
+      let proxyResponse = {};
+      let proxyResponseStatus = 200;
       try {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
         const _res = await ctx.curl(proxyOrigin.proxies[index], {
@@ -45,6 +52,11 @@ class DataController extends Controller {
           dataType: 'json',
         });
         ctx.body = _res.data;
+        proxyResponse = _res.res;
+        proxyResponseStatus = _res.status;
+        for (const key of allowedProxyHeaders) {
+          _res.headers[key] && ctx.set(key, _res.headers[key]);
+        }
       } catch (e) {
         ctx.logger.error('[proxy error]', e);
         ctx.body = {};
@@ -59,10 +71,11 @@ class DataController extends Controller {
           headers: ctx.header,
         },
         res: {
-          status: 200,
+          status: proxyResponseStatus,
           host: ctx.host,
           body: ctx.body,
         },
+        proxyResponse,
       });
     } else {
 
