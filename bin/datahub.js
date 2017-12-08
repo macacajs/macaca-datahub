@@ -55,7 +55,7 @@ if (!cmd) {
   return program.help();
 }
 
-const file = path.join(__dirname, pkg.name + '-' + cmd + '.js');
+const file = path.join(__dirname, `${pkg.name}-${cmd}.js`);
 
 if (!fs.existsSync(file)) {
   console.log('%s  command `%s` not found', EOL, chalk.yellow(cmd));
@@ -67,7 +67,12 @@ const args = program.rawArgs.slice(3);
 args.unshift(file);
 
 const bootstrap = spawn('node', args, {
-  stdio: [ process.stdin, process.stdout, 2, 'ipc' ],
+  stdio: [
+    process.stdin,
+    process.stdout,
+    2,
+    'ipc'
+  ],
 });
 
 bootstrap.on('close', code => {
