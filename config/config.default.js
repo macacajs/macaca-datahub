@@ -35,6 +35,10 @@ module.exports = appInfo => {
     },
   };
 
+  exports.logger = {
+    consoleLevel: 'ERROR',
+  };
+
   config.i18n = {
     defaultLocale: 'en_US',
     queryField: 'locale',
