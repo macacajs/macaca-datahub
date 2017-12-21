@@ -30,6 +30,7 @@ class DataHub {
     }
 
     process.env.EGG_SERVER_ENV = this.options.mode;
+    process.env.EGG_MASTER_LOGGER_LEVEL = 'ERROR';
 
     const promise = new Promise(resolve => {
       eggServer.startCluster({
