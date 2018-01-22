@@ -20,7 +20,7 @@ module.exports = app => {
   router.get('/doc/:projectId', controller.page.doc);
   router.get('/notfound', controller.page.notfound);
 
-  router.all('/data/:projectId/:dataId', contextMiddleWare, controller.api.data.index);
+  router.all('/data/:projectId/:dataId+', contextMiddleWare, controller.api.data.index);
 
   router.get('/api/project', controller.api.project.query);
   router.post('/api/project', controller.api.project.upsert);
@@ -28,6 +28,6 @@ module.exports = app => {
 
   router.get('/api/data/:projectId', controller.api.data.query);
   router.post('/api/data/:projectId', controller.api.data.add);
-  router.post('/api/data/:projectId/:dataId', controller.api.data.update);
-  router.delete('/api/data/:projectId/:dataId', controller.api.data.remove);
+  router.post('/api/data/:projectId/:dataId+', controller.api.data.update);
+  router.delete('/api/data/:projectId/:dataId+', controller.api.data.remove);
 };
