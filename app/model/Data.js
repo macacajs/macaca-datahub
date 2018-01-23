@@ -28,7 +28,7 @@ module.exports = app => {
     },
     proxyContent: {
       type: STRING,
-      defaultValue: '',
+      defaultValue: '{}',
       allowNull: true,
     },
     params: {
