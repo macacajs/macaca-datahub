@@ -66,6 +66,7 @@ module.exports = appInfo => {
     dialect: 'sqlite',
     storage: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
     logging: false,
+    operatorsAliases: false,
   };
 
   return config;
