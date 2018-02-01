@@ -10,6 +10,7 @@ const DataHub = require('..');
 
 program
   .option('--verbose', 'show more debugging information')
+  .option('--protocol', 'set protocol for rpc')
   .option('-c, --config <s>', 'set configuration file')
   .parse(process.argv);
 
