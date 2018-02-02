@@ -3,7 +3,7 @@
 const delay = Symbol.for('context#delay');
 
 module.exports = () => {
-  return async function cors(ctx, next) {
+  return async function contextDelay(ctx, next) {
     await next();
     const delayTime = !isNaN(ctx[delay]) && parseInt(ctx[delay], 10);
     if (delayTime) {

@@ -79,11 +79,21 @@ class DataController extends Controller {
       });
     } else {
 
+      let statusCode = 200;
+      if (proxyOrigin.statusCode) {
+        statusCode = proxyOrigin.statusCode;
+        ctx[Symbol.for('context#status')] = statusCode;
+      }
+
       try {
         const json = JSON.parse(scenes);
         const list = _.filter(json, e => e.name === currentScene);
         const data = list[0].data;
-        ctx.body = data;
+        if (statusCode === 200) {
+          ctx.body = data;
+        } else {
+          ctx.body = `Response status: ${statusCode}`;
+        }
       } catch (e) {
         ctx.body = {};
       }
@@ -97,7 +107,7 @@ class DataController extends Controller {
           headers: ctx.header,
         },
         res: {
-          status: 200,
+          status: statusCode,
           host: ctx.host,
           body: ctx.body,
         },
