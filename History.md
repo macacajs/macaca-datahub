@@ -1,3 +1,15 @@
+
+1.0.25 / 2018-02-03
+==================
+
+  * feat: support custom status code
+  * bump version
+  * fix: operatorsAliases: false
+  * bump version
+  * fix: support-api-name-with-slash
+  * Update README.md
+  * bump version
+  * enlarge body
 1.0.1 / 2017-11-24
 ==================
 
