@@ -81,7 +81,7 @@ class DataController extends Controller {
 
       let statusCode = 200;
       if (proxyOrigin.statusCode) {
-        statusCode = proxyOrigin.statusCode;
+        statusCode = parseInt(proxyOrigin.statusCode, 10);
         ctx[Symbol.for('context#status')] = statusCode;
       }
 
