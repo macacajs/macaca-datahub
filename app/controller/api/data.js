@@ -116,10 +116,26 @@ class DataController extends Controller {
 
   }
 
-  async query() {
+  async queryByProjectId() {
     const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const res = await this.ctx.service.data.queryByProjectId(projectId);
+    if (res) {
+      this.ctx.body = {
+        success: true,
+        data: res,
+      };
+    } else {
+      this.ctx.body = {
+        success: false,
+      };
+    }
+  }
+
+  async queryByProjectIdAndDataId() {
+    const ctx = this.ctx;
+    const { projectId, dataId } = ctx.params;
+    const res = await this.ctx.service.data.getByProjectIdAndDataId(projectId, dataId);
     if (res) {
       this.ctx.body = {
         success: true,

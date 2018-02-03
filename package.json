@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js"
@@ -34,8 +34,9 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "dev": "egg-bin dev",
-    "debug": "egg-bin debug",
+    "view": "npx datahub-view",
+    "dev": "npm run view & egg-bin dev",
+    "debug": "npm run view & egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
