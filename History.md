@@ -1,4 +1,10 @@
 
+1.0.27 / 2018-02-03
+==================
+
+  * feat: add queryByProjectIdAndDataId api
+  * fix: strict equal statusCode
+
 1.0.25 / 2018-02-03
 ==================
 
