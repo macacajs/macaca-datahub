@@ -12,6 +12,7 @@ module.exports = app => {
   const contextMiddleWare = compose([
     middleware.contextCors(),
     middleware.contextDelay(),
+    middleware.contextStatus(),
   ]);
 
   router.get('/', controller.page.home);
@@ -24,8 +25,9 @@ module.exports = app => {
   router.post('/api/project', controller.api.project.upsert);
   router.delete('/api/project', controller.api.project.remove);
 
-  router.get('/api/data/:projectId', controller.api.data.query);
+  router.get('/api/data/:projectId', controller.api.data.queryByProjectId);
   router.post('/api/data/:projectId', controller.api.data.add);
+  router.get('/api/data/:projectId/:dataId+', controller.api.data.queryByProjectIdAndDataId);
   router.post('/api/data/:projectId/:dataId+', controller.api.data.update);
   router.delete('/api/data/:projectId/:dataId+', controller.api.data.remove);
 

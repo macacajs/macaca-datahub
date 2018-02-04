@@ -79,11 +79,21 @@ class DataController extends Controller {
       });
     } else {
 
+      let statusCode = 200;
+      if (proxyOrigin.statusCode) {
+        statusCode = parseInt(proxyOrigin.statusCode, 10);
+        ctx[Symbol.for('context#status')] = statusCode;
+      }
+
       try {
         const json = JSON.parse(scenes);
         const list = _.filter(json, e => e.name === currentScene);
         const data = list[0].data;
-        ctx.body = data;
+        if (statusCode === 200) {
+          ctx.body = data;
+        } else {
+          ctx.body = `Response status: ${statusCode}`;
+        }
       } catch (e) {
         ctx.body = {};
       }
@@ -97,7 +107,7 @@ class DataController extends Controller {
           headers: ctx.header,
         },
         res: {
-          status: 200,
+          status: statusCode,
           host: ctx.host,
           body: ctx.body,
         },
@@ -106,10 +116,26 @@ class DataController extends Controller {
 
   }
 
-  async query() {
+  async queryByProjectId() {
     const ctx = this.ctx;
     const projectId = ctx.params.projectId;
     const res = await this.ctx.service.data.queryByProjectId(projectId);
+    if (res) {
+      this.ctx.body = {
+        success: true,
+        data: res,
+      };
+    } else {
+      this.ctx.body = {
+        success: false,
+      };
+    }
+  }
+
+  async queryByProjectIdAndDataId() {
+    const ctx = this.ctx;
+    const { projectId, dataId } = ctx.params;
+    const res = await this.ctx.service.data.getByProjectIdAndDataId(projectId, dataId);
     if (res) {
       this.ctx.body = {
         success: true,

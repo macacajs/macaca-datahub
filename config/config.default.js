@@ -47,16 +47,8 @@ module.exports = appInfo => {
   };
 
   config.bodyParser = {
-    enable: true,
-    encoding: 'utf8',
     formLimit: '500kb',
     jsonLimit: '500kb',
-    strict: true,
-    queryString: {
-      arrayLimit: 100,
-      depth: 5,
-      parameterLimit: 1000,
-    },
   };
 
   const databasePath = path.join(appInfo.HOME, `.${appInfo.name}`);
