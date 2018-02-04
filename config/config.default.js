@@ -29,6 +29,8 @@ module.exports = appInfo => {
     }
   }
 
+  config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
+
   config.security = {
     csrf: {
       enable: false,

@@ -1,12 +1,9 @@
-
-1.0.27 / 2018-02-03
-==================
+# 1.0.27 / 2018-02-03
 
   * feat: add queryByProjectIdAndDataId api
   * fix: strict equal statusCode
 
-1.0.25 / 2018-02-03
-==================
+# 1.0.25 / 2018-02-03
 
   * feat: support custom status code
   * bump version
@@ -16,8 +13,8 @@
   * Update README.md
   * bump version
   * enlarge body
-1.0.1 / 2017-11-24
-==================
+
+# 1.0.1 / 2017-11-24
 
   * feat: add server mode option
   * add docs page

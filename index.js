@@ -6,6 +6,7 @@ const eggServer = require('egg');
 const defaultOptions = {
   port: 9200,
   mode: 'production',
+  protocol: 'http'
 };
 
 class DataHub {
@@ -29,7 +30,8 @@ class DataHub {
       process.env.DATAHUB_VIEW_CONFIG_ASSETSURL = options.dataHubView.assetsUrl;
     }
 
-    process.env.EGG_SERVER_ENV = this.options.mode;
+    process.env.DATAHUB_RPC_PROTOCOL = options.protocol;
+    process.env.EGG_SERVER_ENV = options.mode;
     process.env.EGG_MASTER_LOGGER_LEVEL = 'ERROR';
 
     const promise = new Promise(resolve => {

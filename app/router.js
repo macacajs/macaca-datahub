@@ -31,7 +31,9 @@ module.exports = app => {
   router.post('/api/data/:projectId/:dataId+', controller.api.data.update);
   router.delete('/api/data/:projectId/:dataId+', controller.api.data.remove);
 
-  // http protocol support
+  // dataHubRpcType: http
 
-  router.all('/data/:projectId/:dataId+', contextMiddleWare, controller.api.data.index);
+  if (app.config.dataHubRpcType === 'http') {
+    router.all('/data/:projectId/:dataId+', contextMiddleWare, controller.api.data.index);
+  }
 };

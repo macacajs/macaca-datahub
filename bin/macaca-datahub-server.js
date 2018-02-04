@@ -10,7 +10,7 @@ const DataHub = require('..');
 
 program
   .option('--verbose', 'show more debugging information')
-  .option('--protocol', 'set protocol for rpc')
+  .option('-p, --protocol <s>', 'set protocol for rpc')
   .option('-c, --config <s>', 'set configuration file')
   .parse(process.argv);
 
@@ -27,5 +27,5 @@ if (program.config) {
 const datahub = new DataHub(options);
 
 datahub.startServer(() => {
-  console.log('ready');
+  console.log('datahub ready');
 });
