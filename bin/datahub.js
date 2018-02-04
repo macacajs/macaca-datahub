@@ -3,13 +3,15 @@
 'use strict';
 
 const fs = require('fs');
+const _ = require('xutil');
 const path = require('path');
 const EOL = require('os').EOL;
-const chalk = require('chalk');
 const program = require('commander');
 const spawn = require('child_process').spawn;
 
 const pkg = require('../package');
+
+const chalk = _.chalk;
 
 program
   .option('-v, --versions', 'show version and exit')
@@ -36,7 +38,7 @@ program
       '',
       '  Further help:',
       '',
-      '  ' + chalk.white(pkg.homepage),
+      '  ' + chalk.underline.white(pkg.homepage),
       '',
       '',
     ].join(EOL);

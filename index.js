@@ -37,7 +37,7 @@ class DataHub {
     const promise = new Promise(resolve => {
       eggServer.startCluster({
         workers: 1,
-        port: this.options.port,
+        port: options.port,
         baseDir: __dirname,
       }, () => {
         resolve();

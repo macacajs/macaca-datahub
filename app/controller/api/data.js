@@ -12,6 +12,10 @@ const allowedProxyHeaders = [
 
 class DataController extends Controller {
 
+  /**
+   * index router just for http service
+   */
+
   async index() {
     const ctx = this.ctx;
     const projectId = ctx.params.projectId;
