@@ -10,7 +10,7 @@ const chalk = _.chalk;
 const detectPort = _.detectPort;
 
 module.exports = app => {
-  app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.database}`);
+  app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.storage}`);
 
   app.beforeStart(async () => {
     await app.model.sync();
