@@ -13,6 +13,7 @@ module.exports = app => {
     middleware.contextCors(),
     middleware.contextDelay(),
     middleware.contextStatus(),
+    middleware.socketEmit(),
   ]);
 
   router.get('/', controller.page.home);
@@ -20,8 +21,6 @@ module.exports = app => {
   router.get('/project/:projectId', controller.page.project);
   router.get('/doc/:projectId', controller.page.doc);
   router.get('/notfound', controller.page.notfound);
-
-  router.all('/data/:projectId/:dataId+', contextMiddleWare, controller.api.data.index);
 
   router.get('/api/project', controller.api.project.query);
   router.post('/api/project', controller.api.project.upsert);
@@ -32,4 +31,10 @@ module.exports = app => {
   router.get('/api/data/:projectId/:dataId+', controller.api.data.queryByProjectIdAndDataId);
   router.post('/api/data/:projectId/:dataId+', controller.api.data.update);
   router.delete('/api/data/:projectId/:dataId+', controller.api.data.remove);
+
+  // dataHubRpcType: http
+
+  if (app.config.dataHubRpcType === 'http') {
+    router.all('/data/:projectId/:dataId+', contextMiddleWare, controller.api.data.index);
+  }
 };

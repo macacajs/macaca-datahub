@@ -29,6 +29,12 @@ module.exports = appInfo => {
     }
   }
 
+  config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
+
+  config.dataHubSocket = {
+    port: 9300,
+  };
+
   config.security = {
     csrf: {
       enable: false,

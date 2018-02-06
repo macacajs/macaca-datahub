@@ -8,6 +8,10 @@ module.exports = (/* appInfo */) => {
     assetsUrl: 'http://localhost:8080',
   };
 
+  exports.logger = {
+    consoleLevel: 'INFO',
+  };
+
   return config;
 
 };

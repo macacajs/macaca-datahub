@@ -7,10 +7,8 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "datahub-view": "^1.0.8",
-    "detect-port": "^1.2.2",
     "egg": "^2.0.0",
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^3.1.0",
@@ -36,6 +34,7 @@
   "scripts": {
     "view": "npx datahub-view",
     "dev": "npm run view & egg-bin dev",
+    "dev:local": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "debug": "npm run view & egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

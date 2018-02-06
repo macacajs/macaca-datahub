@@ -3,10 +3,11 @@
 const fs = require('fs');
 const _ = require('xutil');
 const path = require('path');
-const chalk = require('chalk');
-const detect = require('detect-port');
 
 const socket = require('./app/socket');
+
+const chalk = _.chalk;
+const detectPort = _.detectPort;
 
 module.exports = app => {
   app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.database}`);
@@ -89,7 +90,7 @@ module.exports = app => {
       }
     }
 
-    const socketPort = await detect(9300);
+    const socketPort = await detectPort(app.config.dataHubSocket.port);
 
     app.config.socket = {
       port: socketPort,
