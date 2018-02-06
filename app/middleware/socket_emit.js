@@ -29,6 +29,7 @@ module.exports = () => {
           status: ctx[proxyResponseStatus],
           host: ctx.host,
           body: ctx.body,
+          headers: ctx.response.headers,
         },
         proxyResponse: ctx[proxyResponse],
       });
