@@ -2,11 +2,14 @@
 
 const path = require('path');
 const eggServer = require('egg');
+const {
+  detectPort,
+} = require('xutil');
 
 const defaultOptions = {
   port: 9200,
   mode: 'production',
-  protocol: 'http'
+  protocol: 'http',
 };
 
 class DataHub {
@@ -34,15 +37,15 @@ class DataHub {
     process.env.EGG_SERVER_ENV = options.mode;
     process.env.EGG_MASTER_LOGGER_LEVEL = 'ERROR';
 
-    const promise = new Promise(resolve => {
-      eggServer.startCluster({
-        workers: 1,
-        port: options.port,
-        baseDir: __dirname,
-      }, () => {
-        resolve();
+    const promise = detectPort(options.port)
+      .then(_port => {
+        console.log(`macaca server start at: ${_port}`)
+        return eggServer.startCluster({
+          workers: 1,
+          port: _port,
+          baseDir: __dirname,
+        });
       });
-    });
 
     if (args.length > 1) {
       const cb = args[1];
