@@ -3,8 +3,6 @@
 const _ = require('xutil');
 const Controller = require('egg').Controller;
 
-const socket = require('../../socket');
-
 const allowedProxyHeaders = [
   'set-cookie',
   'content-type',
@@ -34,13 +32,14 @@ class DataController extends Controller {
       ctx[Symbol.for('context#delay')] = delay;
     }
 
-    const date = _.moment().format('YY-MM-DD HH:mm:ss');
     let proxyOrigin = {};
     try {
       proxyOrigin = JSON.parse(proxyContent);
     } catch (e) {
       ctx.logger.error('[proxy error]', e);
     }
+
+    ctx[Symbol.for('context#useProxy')] = proxyOrigin.useProxy;
 
     if (proxyOrigin.useProxy) {
       ctx.set('x-datahub-proxy', 'true');
@@ -58,6 +57,7 @@ class DataController extends Controller {
         ctx.body = _res.data;
         proxyResponse = _res.res;
         proxyResponseStatus = _res.status;
+
         for (const key of allowedProxyHeaders) {
           _res.headers[key] && ctx.set(key, _res.headers[key]);
         }
@@ -66,24 +66,12 @@ class DataController extends Controller {
         ctx.body = {};
       }
 
-      socket.emit({
-        type: 'http',
-        date,
-        req: {
-          method: ctx.method,
-          path: ctx.path.replace(/^\/data/g, ''),
-          headers: ctx.header,
-        },
-        res: {
-          status: proxyResponseStatus,
-          host: ctx.host,
-          body: ctx.body,
-        },
-        proxyResponse,
-      });
+      ctx[Symbol.for('context#proxyResponseStatus')] = proxyResponseStatus;
+      ctx[Symbol.for('context#proxyResponse')] = proxyResponse;
     } else {
 
       let statusCode = 200;
+
       if (proxyOrigin.statusCode) {
         statusCode = parseInt(proxyOrigin.statusCode, 10);
         ctx[Symbol.for('context#status')] = statusCode;
@@ -102,22 +90,8 @@ class DataController extends Controller {
         ctx.body = {};
       }
 
-      socket.emit({
-        type: 'http',
-        date,
-        req: {
-          method: ctx.method,
-          path: ctx.path.replace(/^\/data/g, ''),
-          headers: ctx.header,
-        },
-        res: {
-          status: statusCode,
-          host: ctx.host,
-          body: ctx.body,
-        },
-      });
+      ctx[Symbol.for('context#statusCode')] = statusCode;
     }
-
   }
 
   async queryByProjectId() {
@@ -138,7 +112,10 @@ class DataController extends Controller {
 
   async queryByProjectIdAndDataId() {
     const ctx = this.ctx;
-    const { projectId, dataId } = ctx.params;
+    const {
+      projectId,
+      dataId
+    } = ctx.params;
     const res = await this.ctx.service.data.getByProjectIdAndDataId(projectId, dataId);
     if (res) {
       this.ctx.body = {

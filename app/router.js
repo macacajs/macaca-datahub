@@ -13,6 +13,7 @@ module.exports = app => {
     middleware.contextCors(),
     middleware.contextDelay(),
     middleware.contextStatus(),
+    middleware.socketEmit(),
   ]);
 
   router.get('/', controller.page.home);
