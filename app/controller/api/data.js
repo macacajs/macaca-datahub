@@ -76,6 +76,9 @@ class DataController extends Controller {
         statusCode = parseInt(proxyOrigin.statusCode, 10);
         ctx[Symbol.for('context#status')] = statusCode;
       }
+      if (proxyOrigin.responseHeaders) {
+        ctx[Symbol.for('context#responseHeaders')] = proxyOrigin.responseHeaders;
+      }
 
       try {
         const json = JSON.parse(scenes);

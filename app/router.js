@@ -13,6 +13,7 @@ module.exports = app => {
     middleware.contextCors(),
     middleware.contextDelay(),
     middleware.contextStatus(),
+    middleware.contextResponseHeaders(),
     middleware.socketEmit(),
   ]);
 
