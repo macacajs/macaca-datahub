@@ -1,10 +1,15 @@
 'use strict';
 
-const path = require('path');
-const eggServer = require('egg');
 const {
+  ipv4,
+  chalk,
+  platform,
   detectPort,
 } = require('xutil');
+const path = require('path');
+const EOL = require('os').EOL;
+const eggServer = require('egg');
+const macacaLogo = require('macaca-logo');
 
 const defaultOptions = {
   port: 9200,
@@ -39,7 +44,11 @@ class DataHub {
 
     const promise = detectPort(options.port)
       .then(_port => {
-        console.log(`macaca server start at: ${_port}`)
+        if (platform.isOSX && process.stdout.columns >= 99) {
+          macacaLogo.print();
+        }
+        const host = chalk.cyan.underline(`http://${ipv4}:${(_port)}`);
+        console.log(`DataHub server start at: ${host}${EOL}`)
         return eggServer.startCluster({
           workers: 1,
           port: _port,
