@@ -73,7 +73,7 @@ const bootstrap = spawn('node', args, {
     process.stdin,
     process.stdout,
     2,
-    'ipc'
+    'ipc',
   ],
 });
 

@@ -117,7 +117,7 @@ class DataController extends Controller {
     const ctx = this.ctx;
     const {
       projectId,
-      dataId
+      dataId,
     } = ctx.params;
     const res = await this.ctx.service.data.getByProjectIdAndDataId(projectId, dataId);
     if (res) {
