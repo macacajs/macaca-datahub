@@ -1,3 +1,7 @@
+# 1.0.33 / 2018-02-07
+
+  * feat: update checker supported
+
 # 1.0.27 / 2018-02-03
 
   * feat: add queryByProjectIdAndDataId api
