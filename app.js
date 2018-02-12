@@ -31,6 +31,12 @@ module.exports = app => {
         try {
           const list = JSON.parse(content);
 
+          app.whiteList = list.map(item => {
+            return {
+              identifer: item.identifer,
+            };
+          });
+
           for (let i = 0; i < list.length; i++) {
             const data = list[i];
             const {

@@ -1,7 +1,9 @@
 'use strict';
 
+const {
+  Controller,
+} = require('egg');
 const _ = require('xutil');
-const Controller = require('egg').Controller;
 
 const allowedProxyHeaders = [
   'set-cookie',

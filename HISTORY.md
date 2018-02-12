@@ -1,3 +1,7 @@
+# 1.0.34 / 2018-02-12
+
+  * feat: only migration white list data
+
 # 1.0.33 / 2018-02-07
 
   * feat: update checker supported
