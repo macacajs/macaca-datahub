@@ -61,7 +61,7 @@ const init = (error, data) => {
   const datahub = new DataHub(options);
 
   datahub.startServer(() => {
-    console.log('datahub ready');
+    console.log('DataHub launch ready');
   });
 };
 
