@@ -30,6 +30,7 @@ if (program.config) {
   const configFile = path.resolve(program.config);
 
   if (_.isExistedFile(configFile)) {
+    console.log(`${EOL}configuration file: ${chalk.cyan(configFile)}`);
     options = Object.assign(options, require(configFile));
   }
 }
