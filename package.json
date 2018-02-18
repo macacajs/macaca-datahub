@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js"
@@ -14,6 +14,7 @@
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^3.1.0",
     "koa-compose": "^4.0.0",
+    "macaca-doctor": "^2.0.5",
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
     "npm-update": "^1.0.6",
@@ -35,8 +36,7 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "dev": "egg-bin dev",
-    "dev:local": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
+    "dev": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
