@@ -32,8 +32,8 @@ class DataHub {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);
     }
 
-    if (options.dataHubView && options.dataHubView.assetsUrl) {
-      process.env.DATAHUB_VIEW_CONFIG_ASSETSURL = options.dataHubView.assetsUrl;
+    if (options.view && options.view.assetsUrl) {
+      process.env.DATAHUB_VIEW_CONFIG_ASSETSURL = options.view.assetsUrl;
     }
 
     process.env.DATAHUB_RPC_PROTOCOL = options.protocol;
