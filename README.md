@@ -21,6 +21,10 @@
 
 > Continuous data provider for development, testing, staging and production.
 
+## Introduction
+
+[macacajs.github.io/datahub](//macacajs.github.io/datahub)
+
 ## Installation
 
 Macaca datahub is distibuted through npm. To install it, run the following command line:
@@ -31,9 +35,49 @@ $ npm i macaca-datahub -g
 
 ## Common Usage
 
+Start datahub server
+
 ```bash
 $ datahub server
 ```
+
+## Configuration
+
+| key          | type     | description                 | default   |
+| ------------ | -------- | --------------------------- | --------- |
+| port         | Number   | port for DataHub server     | 9200      |
+| mode         | String   | mode for DataHub server     | 'prod'    |
+| protocol     | String   | protocol for DataHub server | 'http'    |
+| database     | String   | path to file database       | $HOME     |
+| store        | String   | path to migrate directory   | undefined |
+| view         | Object   | view layer config           | {}        |
+
+Sample: [macaca-datahub.config.js](./macaca-datahub.config.js)
+
+```javascript
+module.exports = {
+  mode: 'local',
+
+  port: 7001,
+
+  store: path.resolve(__dirname, 'data'),
+
+  view: {
+    // set assets base url
+    assetsUrl: 'https://npmcdn.com/datahub-view@latest',
+  },
+};
+```
+
+Pass config file[`.js`|`.json`] to DataHub server.
+
+```bash
+$ datahub server -c path/to/config.js --verbose
+```
+
+## Run with middleware
+
+More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
 
 ## Run with docker
 
