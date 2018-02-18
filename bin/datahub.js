@@ -2,7 +2,6 @@
 
 'use strict';
 
-const fs = require('fs');
 const _ = require('xutil');
 const path = require('path');
 const EOL = require('os').EOL;
@@ -28,9 +27,8 @@ program
       '',
       '  Commands:',
       '',
-      '    server          start webdriver server',
+      '    server          start DataHub server',
       '    doctor          detect environment',
-      '    run             run test',
       '',
       '  Options:',
       '',
@@ -59,7 +57,7 @@ if (!cmd) {
 
 const file = path.join(__dirname, `${pkg.name}-${cmd}.js`);
 
-if (!fs.existsSync(file)) {
+if (!_.isExistedFile(file)) {
   console.log('%s command `%s` not found', EOL, chalk.yellow(cmd));
   program.help();
   return;

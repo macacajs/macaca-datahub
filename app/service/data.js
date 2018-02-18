@@ -1,9 +1,11 @@
 'use strict';
 
+const {
+  Service,
+} = require('egg');
 const _ = require('xutil');
 const fs = require('mz/fs');
 const path = require('path');
-const Service = require('egg').Service;
 
 class DataService extends Service {
 
