@@ -3,7 +3,7 @@
 module.exports = {
   mode: 'local',
   port: 7001,
-  dataHubView: {
+  view: {
     assetsUrl: 'https://npmcdn.com/datahub-view@latest',
   },
 };
