@@ -44,6 +44,9 @@ class ProjectService extends Service {
 
   async asyncMigration() {
     const res = await this.ctx.model.Project.findAll({
+      where: {
+        [this.app.Sequelize.Op.or]: this.ctx.app.whiteList || [],
+      },
       raw: true,
     });
 
