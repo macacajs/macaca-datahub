@@ -1,5 +1,7 @@
 #!/bin/bash
 
-npm i
+npm i -g macaca-datahub --registry=https://registry.npm.taobao.org
 
-./bin/datahub server &
+macaca-datahub -v
+
+macaca-datahub server --verbose

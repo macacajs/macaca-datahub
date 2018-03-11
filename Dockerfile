@@ -1,7 +1,9 @@
-FROM node:8
+FROM node:8.4.0-alpine
 
-COPY . /src
+RUN apk --no-cache add python bash build-base ca-certificates
 
-WORKDIR src
+RUN npm config set unsafe-perm=true
 
-ENTRYPOINT ["/src/entrypoint.sh"]
+COPY ./entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

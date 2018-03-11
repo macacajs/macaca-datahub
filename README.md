@@ -81,9 +81,22 @@ More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middle
 
 ## Run with docker
 
+Build base mirror.
+
 ```bash
 $ docker build -t="macaca-datahub" .
-$ docker run -it -v any.data:/root/.macaca-datahub/macaca-datahub.production.data -p 9200:9200 macaca-datahub
+```
+
+Run as standalone just once service.
+
+```bash
+docker run -it -p 9200:9200 -p 9300:9300 macaca-datahub
+```
+
+Run with existed datahub's database in your host.
+
+```bash
+$ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data -p 9200:9200 -p 9300:9300 macaca-datahub
 ```
 
 ## License
