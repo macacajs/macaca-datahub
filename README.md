@@ -7,6 +7,7 @@
 [![Test coverage][coveralls-image]][coveralls-url]
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
+[![docker pull][docker-image]][docker-url]
 
 [npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/macaca-datahub
@@ -18,6 +19,8 @@
 [node-url]: http://nodejs.org/download/
 [download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square
 [download-url]: https://npmjs.org/package/macaca-datahub
+[docker-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square
+[docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
 > Continuous data provider for development, testing, staging and production.
 
@@ -81,22 +84,30 @@ More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middle
 
 ## Run with docker
 
+Common usage
+
+```bash
+$ docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
+```
+
+## Build docker image
+
 Build base mirror.
 
 ```bash
-$ docker build -t="macaca-datahub" .
+$ docker build -t="macacajs/macaca-datahub" .
 ```
 
 Run as standalone just once service.
 
 ```bash
-docker run -it -p 9200:9200 -p 9300:9300 macaca-datahub
+docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
 ```
 
 Run with existed datahub's database in your host.
 
 ```bash
-$ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data -p 9200:9200 -p 9300:9300 macaca-datahub
+$ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
 ```
 
 ## License
