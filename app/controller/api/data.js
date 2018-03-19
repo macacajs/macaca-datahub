@@ -27,6 +27,7 @@ class DataController extends Controller {
       scenes,
       currentScene,
       proxyContent,
+      responseHeader,
       delay,
     } = res;
 
@@ -93,6 +94,14 @@ class DataController extends Controller {
         }
       } catch (e) {
         ctx.body = {};
+      }
+
+      try {
+        const headerMap = JSON.parse(responseHeader);
+        Object.keys(headerMap).forEach(key => {
+          ctx.set(key, headerMap[key]);
+        });
+      } catch (e) {
       }
 
       ctx[Symbol.for('context#statusCode')] = statusCode;
