@@ -102,6 +102,7 @@ class DataController extends Controller {
           ctx.set(key, headerMap[key]);
         });
       } catch (e) {
+        console.log(e);
       }
 
       ctx[Symbol.for('context#statusCode')] = statusCode;
