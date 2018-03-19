@@ -15,10 +15,25 @@ module.exports = app => {
   app.beforeStart(async () => {
     await app.model.sync();
 
+    const ctx = app.createAnonymousContext();
+    try {
+      await ctx.model.Data.findAll({
+        raw: true,
+      });
+    } catch (e) {
+      if (e.parent && e.parent.code === 'SQLITE_ERROR') {
+        console.log(_.chalk.red('****************** IMPORTANT!!! ******************'));
+        console.log(_.chalk.red('*                                                *'));
+        console.log(_.chalk.red(`*    please remove: ${path.resolve(app.config.sequelize.storage, '..')}   *`));
+        console.log(_.chalk.red('*                                                *'));
+        console.log(_.chalk.red('****************** IMPORTANT!!! ******************'));
+        process.exit(0);
+      }
+    }
+
     if (app.config.dataHubStoreDir) {
       app.logger.info(`${chalk.cyan('launch datahub store at:')} ${app.config.dataHubStoreDir}`);
 
-      const ctx = app.createAnonymousContext();
 
       const hubFile = path.resolve(app.config.dataHubStoreDir, 'hub.data');
 
