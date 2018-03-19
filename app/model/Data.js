@@ -36,6 +36,11 @@ module.exports = app => {
       defaultValue: '{}',
       allowNull: true,
     },
+    responseHeader: {
+      type: STRING,
+      defaultValue: '{}',
+      allowNull: true,
+    },
     scenes: {
       type: STRING,
       defaultValue: '[]',
