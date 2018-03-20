@@ -7,6 +7,12 @@ const _ = require('xutil');
 const fs = require('mz/fs');
 const path = require('path');
 
+const PROXY_CONTENT_KEYS = [
+  'statusCode',
+  'responseHeaders',
+];
+
+
 class DataService extends Service {
 
   async queryByProjectId(projectId) {
@@ -46,6 +52,38 @@ class DataService extends Service {
         pathname: dataId,
       },
     });
+    return await this.asyncMigration();
+  }
+
+  async updateMultiData(payload = []) {
+    const ctx = this.ctx;
+    await Promise.all(payload.map(item => {
+      const { projectId, dataId, ...data } = item;
+      return (async () => {
+        const currentValue = await ctx.service.data.getByProjectIdAndDataId(projectId, dataId);
+
+        // build proxyContent data begin
+        let proxyContent = {};
+        try {
+          proxyContent = JSON.parse(currentValue.proxyContent);
+        } catch (_) { /* reset if invalid */ }
+        for (const key of PROXY_CONTENT_KEYS) {
+          if (typeof data[key] !== 'undefined') {
+            proxyContent[key] = data[key];
+            delete data[key];
+          }
+        }
+        data.proxyContent = JSON.stringify(proxyContent);
+        await ctx.model.Data.update({
+          ...data,
+        }, {
+          where: {
+            identifer: projectId,
+            pathname: dataId,
+          },
+        });
+      })();
+    }));
     return await this.asyncMigration();
   }
 

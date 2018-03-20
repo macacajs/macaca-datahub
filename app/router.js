@@ -33,6 +33,8 @@ module.exports = app => {
   router.post('/api/data/:projectId/:dataId+', controller.api.data.update);
   router.delete('/api/data/:projectId/:dataId+', controller.api.data.remove);
 
+  router.post('/api/multi/data', controller.api.multiData.update);
+
   // dataHubRpcType: http
 
   if (app.config.dataHubRpcType === 'http') {
