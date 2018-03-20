@@ -22,11 +22,10 @@ module.exports = app => {
       });
     } catch (e) {
       if (e.parent && e.parent.code === 'SQLITE_ERROR') {
-        console.log(_.chalk.red('****************** IMPORTANT!!! ******************'));
-        console.log(_.chalk.red('*                                                *'));
-        console.log(_.chalk.red(`*    please remove: ${path.resolve(app.config.sequelize.storage, '..')}   *`));
-        console.log(_.chalk.red('*                                                *'));
-        console.log(_.chalk.red('****************** IMPORTANT!!! ******************'));
+        console.log(_.chalk.red('\n****************** IMPORTANT!!! ******************'));
+        console.log(_.chalk.red(`\n  please remove: ${path.resolve(app.config.sequelize.storage, '..')}`));
+        console.log(_.chalk.red(`\n  $ rm ${path.resolve(app.config.sequelize.storage, '..')}`));
+        console.log(_.chalk.red('\n****************** IMPORTANT!!! ******************\n'));
         process.exit(0);
       }
     }
