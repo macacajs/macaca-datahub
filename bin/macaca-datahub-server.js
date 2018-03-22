@@ -8,6 +8,7 @@ const {
 const _ = require('xutil');
 const path = require('path');
 const DataHub = require('..');
+const semver = require('semver');
 const program = require('commander');
 
 const update = require('../lib/update');
@@ -35,6 +36,12 @@ if (program.config) {
 
 update()
   .then(() => {
+    const version = '8.9.4';
+
+    if (semver.gt(version, process.version)) {
+      console.log(`Node.js version: ${process.version} lower than ${version}`);
+      return;
+    }
     const datahub = new DataHub(options);
 
     datahub.startServer(() => {

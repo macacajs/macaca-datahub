@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -19,6 +19,7 @@
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
     "npm-update": "^1.0.6",
+    "semver": "^5.5.0",
     "socket.io": "^2.0.4",
     "sqlite3": "^3.1.13",
     "xutil": "^1.0.7"
