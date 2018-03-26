@@ -39,7 +39,7 @@ update()
     const version = '8.9.4';
 
     if (semver.gt(version, process.version)) {
-      console.log(`Node.js version: ${process.version} lower than ${version}`);
+      console.log(chalk.red(`${EOL}Node.js version: ${process.version} is lower than ${version}${EOL}`));
       return;
     }
     const datahub = new DataHub(options);
