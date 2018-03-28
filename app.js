@@ -24,7 +24,7 @@ module.exports = app => {
       if (e.parent && e.parent.code === 'SQLITE_ERROR') {
         console.log(_.chalk.red('\n****************** IMPORTANT!!! ******************'));
         console.log(_.chalk.red(`\n  please remove: ${path.resolve(app.config.sequelize.storage, '..')}`));
-        console.log(_.chalk.red(`\n  $ rm ${path.resolve(app.config.sequelize.storage, '..')}`));
+        console.log(_.chalk.red(`\n  $ rm -r ${path.resolve(app.config.sequelize.storage, '..')}`));
         console.log(_.chalk.red('\n****************** IMPORTANT!!! ******************\n'));
         process.exit(0);
       }
