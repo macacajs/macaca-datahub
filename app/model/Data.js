@@ -36,6 +36,16 @@ module.exports = app => {
       defaultValue: '{}',
       allowNull: true,
     },
+    reqSchemaContent: {
+      type: STRING,
+      defaultValue: '{}',
+      allowNull: true,
+    },
+    resSchemaContent: {
+      type: STRING,
+      defaultValue: '{}',
+      allowNull: true,
+    },
     responseHeader: {
       type: STRING,
       defaultValue: '{}',
