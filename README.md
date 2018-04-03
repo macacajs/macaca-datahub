@@ -118,7 +118,7 @@ $ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/
 | :---: | :---: | :---: | :---: | :---: |
 
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Mon Mar 26 2018 19:56:56 GMT+0800`.
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Tue Apr 03 2018 23:01:10 GMT+0800`.
 
 <!-- GITCONTRIBUTOR_END -->
 
