@@ -2,8 +2,21 @@
 
 module.exports = () => {
   return async function cors(ctx, next) {
-    await next();
+    const origin = ctx.get('origin');
+    if (!origin) {
+      return await next();
+    }
+
+    ctx.set('Access-Control-Allow-Origin', origin);
     ctx.set('Access-Control-Allow-Credentials', 'true');
-    ctx.set('Access-Control-Allow-Origin', ctx.get('origin'));
+
+    if (ctx.method !== 'OPTIONS') {
+      return await next();
+    }
+
+    // preflight OPTIONS request
+    ctx.set('Access-Control-Allow-Headers', ctx.get('Access-Control-Request-Headers'));
+    ctx.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
+    ctx.status = 204;
   };
 };
