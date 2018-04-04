@@ -49,7 +49,7 @@ module.exports = appInfo => {
   };
 
   config.i18n = {
-    defaultLocale: 'en_US',
+    defaultLocale: 'zh_CN',
     queryField: 'locale',
     cookieField: 'locale',
     cookieMaxAge: '1y',

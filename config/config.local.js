@@ -12,6 +12,13 @@ module.exports = (/* appInfo */) => {
     consoleLevel: 'INFO',
   };
 
+  config.i18n = {
+    defaultLocale: 'zh_CN',
+    queryField: 'locale',
+    cookieField: 'locale',
+    cookieMaxAge: '1y',
+  };
+
   return config;
 
 };
