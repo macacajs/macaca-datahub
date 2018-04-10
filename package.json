@@ -29,7 +29,7 @@
   "devDependencies": {
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
-    "deep-object-diff": "^1.1.0",
+    "deep-diff": "^0.3.8",
     "egg-bin": "^4.3.6",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.13.1",
