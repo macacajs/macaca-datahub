@@ -8,6 +8,7 @@
   },
   "main": "./index.js",
   "dependencies": {
+    "ajv": "^6.4.0",
     "co": "^4.6.0",
     "commander": "^2.12.2",
     "datahub-view": "^1.0.8",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
+    "deep-object-diff": "^1.1.0",
     "egg-bin": "^4.3.6",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.13.1",

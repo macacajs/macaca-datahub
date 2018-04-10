@@ -1,0 +1,49 @@
+{
+  "properties": {
+    "list": {
+      "items": {
+        "properties": {
+          "akey1": {
+            "title": "akey1",
+            "type": "object"
+          },
+          "akey2": {
+            "title": "akey2",
+            "type": "object"
+          }
+        },
+        "required": [
+          "akey1"
+        ],
+        "type": "object"
+      },
+      "title": "list",
+      "type": "array"
+    },
+    "result": {
+      "properties": {
+        "attributes": {
+          "title": "attributes",
+          "type": "object"
+        },
+        "name": {
+          "title": "name",
+          "type": "object"
+        }
+      },
+      "required": [
+        "attributes"
+      ],
+      "title": "result",
+      "type": "object"
+    },
+    "resultStatus": {
+      "title": "resultStatus",
+      "type": "number"
+    }
+  },
+  "required": [
+    "resultStatus"
+  ],
+  "type": "object"
+}
