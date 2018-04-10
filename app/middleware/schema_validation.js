@@ -1,7 +1,7 @@
 'use strict';
 
-const schemaUtil = require('../util/schemaUtil');
 const Ajv = require('ajv');
+const schemaUtil = require('../util/schemaUtil');
 
 const validateSchema = (schemaData, data) => {
   const schema = schemaUtil.toJSONSchema(schemaData);
