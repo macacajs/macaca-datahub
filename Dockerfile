@@ -1,4 +1,4 @@
-FROM node:8.4.0-alpine
+FROM node:8.11.1-alpine
 
 RUN apk --no-cache add python bash build-base ca-certificates
 
