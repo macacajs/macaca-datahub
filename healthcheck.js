@@ -2,7 +2,7 @@
 
 const request = require('request');
 
-request('http://172.17.0.2:9200', error => {
+request('http://0.0.0.0:9200', error => {
   if (error) {
     throw error;
   }
