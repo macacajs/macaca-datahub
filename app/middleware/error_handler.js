@@ -11,7 +11,7 @@ module.exports = (/* options, app */) => {
       ctx.logger.error('[mock] error', e);
       ctx.body = {
         success: false,
-        message: `datahub config error: ${JSON.stringify(e)}`,
+        message: `datahub config error: ${e.message}`,
       };
     }
   };

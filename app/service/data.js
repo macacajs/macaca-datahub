@@ -55,6 +55,14 @@ class DataService extends Service {
     return await this.asyncMigration();
   }
 
+  async getSchemaData(projectId, dataId) {
+    const data = await this.getByProjectIdAndDataId(projectId, dataId);
+    return {
+      reqSchemaContent: data.reqSchemaContent,
+      resSchemaContent: data.resSchemaContent,
+    };
+  }
+
   async updateMultiData(payload = []) {
     const ctx = this.ctx;
     await Promise.all(payload.map(item => {
