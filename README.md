@@ -78,6 +78,8 @@ Pass config file[`.js`|`.json`] to DataHub server.
 $ datahub server -c path/to/config.js --verbose
 ```
 
+## Schema Syntax
+
 ## Run with middleware
 
 More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
