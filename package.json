@@ -55,8 +55,7 @@
     "contributor": "git-contributor"
   },
   "pre-commit": [
-    "lint",
-    "contributor"
+    "lint"
   ],
   "ci": {
     "version": "8"
