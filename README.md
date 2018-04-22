@@ -120,7 +120,7 @@ live demo: [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-s
 
 - [android-datahub-sample](//github.com/app-bootstrap/android-app-bootstrap) - Android sample for DataHub
 - [ios-datahub-sample](//github.com/app-bootstrap/ios-app-bootstrap) - iOS sample for DataHub
-- [antd-sample](//github.com/macaca-sample/antd-sample) Ant Design sample for DataHub
+- [antd-sample](//github.com/macaca-sample/antd-sample) - Ant Design sample for DataHub
 - [angular-datahub-sample](//github.com/macaca-sample/angular-datahub-sample) - Angular's ng toolchain sample for DataHub
 
 ## Run with middleware
