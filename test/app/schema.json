@@ -1,16 +1,13 @@
 {
-  "title": "root",
   "type": "object",
   "required": [
     "success"
   ],
   "properties": {
     "success": {
-      "title": "success",
       "type": "boolean"
     },
     "foo": {
-      "title": "foo",
       "type": "object",
       "description": "foo description",
       "default": "",
@@ -19,7 +16,6 @@
       ],
       "properties": {
         "bar": {
-          "title": "bar",
           "type": "string",
           "description": "bar description"
         }

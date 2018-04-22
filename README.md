@@ -84,18 +84,15 @@ DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema 
 
 ```json
 {
-  "title": "root",
   "type": "object",
   "required": [
     "success"
   ],
   "properties": {
     "success": {
-      "title": "success",
       "type": "boolean"
     },
     "foo": {
-      "title": "foo",
       "type": "object",
       "description": "foo description",
       "default": "",
@@ -104,7 +101,6 @@ DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema 
       ],
       "properties": {
         "bar": {
-          "title": "bar",
           "type": "string",
           "description": "bar description"
         }
@@ -163,7 +159,7 @@ $ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[<img src="https://avatars3.githubusercontent.com/u/3807955?v=4" width="100px;"/><br/><sub><b>BernardTolosajr</b></sub>](https://github.com/BernardTolosajr)<br/>
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Sat Apr 21 2018 23:24:30 GMT+0800`.
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Sun Apr 22 2018 18:34:37 GMT+0800`.
 
 <!-- GITCONTRIBUTOR_END -->
 
