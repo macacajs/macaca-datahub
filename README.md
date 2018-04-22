@@ -114,6 +114,8 @@ DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema 
 }
 ```
 
+live demo: [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)
+
 ## Run with middleware
 
 More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
