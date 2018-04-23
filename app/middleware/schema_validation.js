@@ -1,12 +1,10 @@
 'use strict';
 
 const Ajv = require('ajv');
-const schemaUtil = require('../util/schemaUtil');
 
 const validateSchema = (schemaData, data) => {
-  const schema = schemaUtil.toJSONSchema(schemaData);
   const ajv = new Ajv();
-  const isValid = ajv.validate(schema, data);
+  const isValid = ajv.validate(schemaData, data);
   return {
     isValid,
     errors: ajv.errors,
@@ -14,7 +12,7 @@ const validateSchema = (schemaData, data) => {
 };
 
 const needValidate = schemaContent => {
-  return schemaContent.enableSchemaValidate && schemaContent.schemaData && schemaContent.schemaData.length;
+  return schemaContent.enableSchemaValidate && schemaContent.schemaData;
 };
 
 module.exports = () => {
