@@ -5,19 +5,21 @@ const {
   assert,
 } = require('egg-mock/bootstrap');
 
+const _ = require('xutil');
+
 describe('app/controller/api/project.js', () => {
   describe('GET /api/project', () => {
     it('return projects', async () => {
       const expected = [{ id: 1,
         identifer: 'identifer-1',
         description: 'description 2',
-        created_at: '2018-04-12 03:07:59.906 +00:00',
-        updated_at: '2018-04-26 09:15:08.829 +00:00',
+        created_at: _.moment().format('YY-MM-DD'),
+        updated_at: _.moment().format('YY-MM-DD'),
       }, { id: 2,
         identifer: 'identifer-2',
         description: 'description 2',
-        created_at: '2018-04-24 14:37:21.125 +00:00',
-        updated_at: '2018-04-25 07:30:20.392 +00:00',
+        created_at: _.moment().format('YY-MM-DD'),
+        updated_at: _.moment().format('YY-MM-DD'),
       }];
 
       app.mockService('project', 'query', () => {
