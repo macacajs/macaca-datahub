@@ -10,17 +10,21 @@ const _ = require('xutil');
 describe('app/controller/api/project.js', () => {
   describe('GET /api/project', () => {
     it('return projects', async () => {
-      const expected = [{ id: 1,
-        identifer: 'identifer-1',
-        description: 'description 2',
-        created_at: _.moment().format('YY-MM-DD'),
-        updated_at: _.moment().format('YY-MM-DD'),
-      }, { id: 2,
-        identifer: 'identifer-2',
-        description: 'description 2',
-        created_at: _.moment().format('YY-MM-DD'),
-        updated_at: _.moment().format('YY-MM-DD'),
-      }];
+      const expected = [
+        { id: 1,
+          identifer: 'identifer-1',
+          description: 'description 2',
+          created_at: _.moment().format('YY-MM-DD'),
+          updated_at: _.moment().format('YY-MM-DD'),
+        },
+        {
+          id: 2,
+          identifer: 'identifer-2',
+          description: 'description 2',
+          created_at: _.moment().format('YY-MM-DD'),
+          updated_at: _.moment().format('YY-MM-DD'),
+        }
+      ];
 
       app.mockService('project', 'query', () => {
         return expected;
