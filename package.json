@@ -24,7 +24,8 @@
     "request": "^2.85.0",
     "semver": "^5.5.0",
     "socket.io": "^2.0.4",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^3.1.13",
+    "xutil": "^1.0.11"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -37,8 +38,7 @@
     "eslint-config-egg": "^5.1.1",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
-    "webstorm-disable-index": "^1.2.0",
-    "xutil": "^1.0.11"
+    "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
     "node": ">=8.9.0"
