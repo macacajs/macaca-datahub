@@ -183,6 +183,10 @@ Macaca DataHub 可与所有类型的iOS, Android 和 Web 工程集成，以下�
 
 Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中间件文档：[datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
 
+### Egg.js集成
+
+More about [egg-datahub](//github.com/macacajs/egg-datahub)
+
 ## 构建 Docker 镜像
 
 如果你使用 Docker ，可通过以下命令构建基础镜像：

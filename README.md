@@ -181,9 +181,13 @@ live demo: [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-s
 - [antd-sample](//github.com/macaca-sample/antd-sample) - Ant Design sample for DataHub
 - [angular-datahub-sample](//github.com/macaca-sample/angular-datahub-sample) - Angular's ng toolchain sample for DataHub
 
-### Integration with middleware
+### Integration with webpack-dev-sever
 
 More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
+
+### Integration with Egg.js
+
+More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 ## Build docker image
 
