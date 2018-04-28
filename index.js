@@ -11,7 +11,7 @@ const eggServer = require('egg');
 
 const defaultOptions = {
   port: 9200,
-  mode: 'production',
+  mode: 'unittest',
   protocol: 'http',
 };
 
