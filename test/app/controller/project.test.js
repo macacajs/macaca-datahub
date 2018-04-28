@@ -23,7 +23,7 @@ describe('app/controller/api/project.js', () => {
           description: 'description 2',
           created_at: _.moment().format('YY-MM-DD'),
           updated_at: _.moment().format('YY-MM-DD'),
-        }
+        },
       ];
 
       app.mockService('project', 'query', () => {

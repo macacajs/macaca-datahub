@@ -7,8 +7,6 @@ module.exports = appInfo => {
 
   const config = exports = {};
 
-  config.mode = 'unittest';
-
   config.keys = appInfo.name;
 
   config.middleware = [
