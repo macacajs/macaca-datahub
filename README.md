@@ -189,6 +189,10 @@ More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middle
 
 More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
+### Integration with UmiJS
+
+[UmiJS](//github.com/umijs/umi) is a blazing-fast next.js-like framework for React apps, and it's friendly to [ant-design](//github.com/ant-design/ant-design) project.
+
 ## Build docker image
 
 Build base mirror.
