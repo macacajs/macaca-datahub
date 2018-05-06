@@ -13,9 +13,9 @@ describe('app/service/project.js', () => {
           findAll: options => {
             assert(options.raw === true);
             return [];
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     await ctx.service.project.query();
@@ -36,9 +36,9 @@ describe('app/service/project.js', () => {
             assert(query.where.identifer === 'some-identifier');
             return [];
           },
-          findAll: () => { return []; }
-        }
-      }
+          findAll: () => { return []; },
+        },
+      },
     });
 
     await ctx.service.project.upsertById('some-identifier', body);
@@ -53,8 +53,8 @@ describe('app/service/project.js', () => {
             return [];
           },
           findAll: () => { return []; },
-        }
-      }
+        },
+      },
     });
 
     await ctx.service.project.removeById('some-identifier');
