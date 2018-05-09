@@ -23,6 +23,25 @@ class ProjectService extends Service {
   }
 
   async upsertById(identifer, data) {
+    const projectData = await this.ctx.model.Project.findAll({
+      where: {
+        identifer,
+      },
+      raw: true,
+    });
+
+    if (!projectData || !projectData.length) { // add Project, upate whiteList
+      if (this.ctx.app.whiteList) {
+        this.ctx.app.whiteList.push({
+          identifer,
+        });
+      } else {
+        this.ctx.app.whiteList = [{
+          identifer,
+        }];
+      }
+    }
+
     await this.ctx.model.Project.upsert({
       ...data,
     }, {
