@@ -193,6 +193,8 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 [UmiJS](//github.com/umijs/umi/tree/master/packages/umi-plugin-datahub) is a blazing-fast next.js-like framework for React apps, and it's friendly to [ant-design](//github.com/ant-design/ant-design) project.
 
+- [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
+
 ## Build docker image
 
 Build base mirror.
@@ -207,7 +209,7 @@ Run as standalone just once service.
 docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
 ```
 
-Run with existed datahub's database in your host.
+Run with existed DataHub's database in your host.
 
 ```bash
 $ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub

@@ -183,9 +183,15 @@ Macaca DataHub 可与所有类型的iOS, Android 和 Web 工程集成，以下�
 
 Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中间件文档：[datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware)
 
-### Egg.js集成
+### Egg.js 集成
 
-More about [egg-datahub](//github.com/macacajs/egg-datahub)
+更多关于 [egg-datahub](//github.com/macacajs/egg-datahub)
+
+### UmiJS 集成
+
+[UmiJS](//github.com/umijs/umi/tree/master/packages/umi-plugin-datahub) 极快的类 Next.js 的 React 应用框架。
+
+- [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
 ## 构建 Docker 镜像
 
