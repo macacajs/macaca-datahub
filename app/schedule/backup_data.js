@@ -9,7 +9,7 @@ const BACKUP_LIMIT_NUMBER = 7;
 class BackupData extends Subscription {
 
   static get schedule() {
-    // 启动时执行一次，每天 0 时执行一次
+    // backup at 00:00 every day.
     return {
       cron: '* * 0 * * *',
       type: 'worker',
