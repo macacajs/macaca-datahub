@@ -11,7 +11,7 @@ class BackupData extends Subscription {
   static get schedule() {
     // backup at 00:00 every day.
     return {
-      cron: '* * 0 * * *',
+      cron: '0 0 0 * * *',
       type: 'worker',
       immediate: true,
     };
