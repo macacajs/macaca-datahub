@@ -9,6 +9,9 @@ class ProjectService extends Service {
 
   async query() {
     return await this.ctx.model.Project.findAll({
+      where: {
+        [this.app.Sequelize.Op.or]: this.ctx.app.whiteList || [],
+      },
       raw: true,
     });
   }
