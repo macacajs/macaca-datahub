@@ -8,6 +8,7 @@
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![node version][node-image]][node-url]
+[![egg version][egg-image]][egg-url]
 [![npm download][download-image]][download-url]
 [![docker pull][docker-image]][docker-url]
 
@@ -19,6 +20,8 @@
 [coveralls-url]: https://codecov.io/gh/macacajs/macaca-datahub
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
+[egg-image]: https://img.shields.io/badge/node.js-%3E=_2-green.svg?style=flat-square
+[egg-url]: https://github.com/eggjs/egg
 [download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square
 [download-url]: https://npmjs.org/package/macaca-datahub
 [docker-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square
