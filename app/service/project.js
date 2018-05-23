@@ -8,12 +8,15 @@ const Service = require('egg').Service;
 class ProjectService extends Service {
 
   async query() {
-    return await this.ctx.model.Project.findAll({
+    const selector = this.ctx.app.whiteList ? {
       where: {
         [this.app.Sequelize.Op.or]: this.ctx.app.whiteList || [],
       },
       raw: true,
-    });
+    } : {
+      raw: true,
+    };
+    return await this.ctx.model.Project.findAll(selector);
   }
 
   async queryById(projectId) {
