@@ -65,7 +65,7 @@ module.exports = app => {
             });
           }
         } catch (e) {
-          app.logger.warn(e.message);
+          app.logger.error(e.message);
         }
       }
 
@@ -105,7 +105,7 @@ module.exports = app => {
             });
           }
         } catch (e) {
-          app.logger.warn(e.message);
+          app.logger.error(e.message);
         }
       }
     }
