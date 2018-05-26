@@ -51,8 +51,8 @@ class DataHub {
         });
       });
 
-    if (args.length > 1) {
-      const cb = args[1];
+    if (args.length) {
+      const cb = args[0];
 
       return promise.then(data => {
         cb.call(this, null, data);
@@ -61,7 +61,6 @@ class DataHub {
       });
     }
     return promise;
-
   }
 }
 
