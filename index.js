@@ -36,10 +36,6 @@ class DataHub {
       process.env.DATAHUB_VIEW_CONFIG_ASSETSURL = options.view.assetsUrl;
     }
 
-    if (process.env.DATAHUB_SERVER_PORT) {
-      options.port = process.env.DATAHUB_SERVER_PORT;
-    }
-
     process.env.DATAHUB_RPC_PROTOCOL = options.protocol;
     process.env.EGG_SERVER_ENV = options.mode;
     process.env.EGG_MASTER_LOGGER_LEVEL = 'ERROR';
@@ -55,8 +51,8 @@ class DataHub {
         });
       });
 
-    if (args.length > 1) {
-      const cb = args[1];
+    if (args.length) {
+      const cb = args[0];
 
       return promise.then(data => {
         cb.call(this, null, data);
@@ -65,7 +61,6 @@ class DataHub {
       });
     }
     return promise;
-
   }
 }
 

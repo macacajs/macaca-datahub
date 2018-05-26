@@ -21,6 +21,7 @@ program
   .option('--verbose', 'show more debugging information')
   .option('-p, --protocol <s>', 'set protocol for rpc')
   .option('-c, --config <s>', 'set configuration file')
+  .option('-o, --options <s>', 'set options string')
   .parse(process.argv);
 
 let options = {};
@@ -31,6 +32,14 @@ if (program.config) {
   if (_.isExistedFile(configFile)) {
     console.log(`${EOL}configuration file: ${chalk.cyan(configFile)}`);
     options = Object.assign(options, require(configFile));
+  }
+}
+
+if (program.options) {
+  try {
+    options = Object.assign(options, JSON.parse(program.options));
+  } catch (e) {
+    console.log(e);
   }
 }
 
