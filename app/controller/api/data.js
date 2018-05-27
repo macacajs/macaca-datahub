@@ -53,9 +53,13 @@ class DataController extends Controller {
       try {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
         const distUrlObj = url.parse(proxyOrigin.proxies[index]);
-        const distUrl = `${distUrlObj.protocol}//${distUrlObj.host}${distUrlObj.pathname}`;
+        let distUrl = `${distUrlObj.protocol}//${distUrlObj.host}${distUrlObj.pathname}`;
         const originUrlObj = url.parse(ctx.url);
-        const _res = await ctx.curl(`${distUrl}${originUrlObj.search}`, {
+
+        if (originUrlObj.search) {
+          distUrl += originUrlObj.search;
+        }
+        const _res = await ctx.curl(distUrl, {
           method: ctx.method,
           headers: ctx.header,
           timeout: 3000,
