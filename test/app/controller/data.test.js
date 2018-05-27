@@ -42,8 +42,8 @@ describe('app/controller/api/data.js', () => {
             scenes: JSON.stringify([{
               name: 'default',
               data: {
-                success: true
-              }
+                success: true,
+              },
             }]),
           };
         });
