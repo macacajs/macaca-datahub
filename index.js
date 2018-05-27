@@ -42,28 +42,30 @@ class DataHub {
 
     const promise = detectPort(options.port)
       .then(_port => {
-        if (options.port !== _port) {
-          return new Promise((resolve, reject) => {
-            reject(`port: ${options.port} was not occupied`);
+        if (options.port === _port) {
+          const host = chalk.cyan.underline(`http://${ipv4}:${(_port)}`);
+          console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
+          return eggServer.startCluster({
+            workers: 1,
+            port: _port,
+            baseDir: __dirname,
           });
         }
-        const host = chalk.cyan.underline(`http://${ipv4}:${(_port)}`);
-        console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
-        return eggServer.startCluster({
-          workers: 1,
-          port: _port,
-          baseDir: __dirname,
-        });
+      })
+      .catch(e => {
+        console.log(e);
       });
 
     if (args.length > 1) {
       const cb = args[1];
 
-      return promise.then(data => {
-        cb.call(this, null, data);
-      }).catch(err => {
-        cb.call(this, `Error occurred: ${err}`);
-      });
+      return promise
+        .then(data => {
+          cb.call(this, null, data);
+        })
+        .catch(err => {
+          cb.call(this, `Error occurred: ${err}`);
+        });
     }
     return promise;
   }
