@@ -21,7 +21,7 @@ program
   .option('--verbose', 'show more debugging information')
   .option('-p, --protocol <s>', 'set protocol for rpc')
   .option('-c, --config <s>', 'set configuration file')
-  .option('-o, --options <s>', 'set options string')
+  .option('-o, --optionstr <s>', 'set options string')
   .parse(process.argv);
 
 let options = {};
@@ -35,9 +35,9 @@ if (program.config) {
   }
 }
 
-if (program.options) {
+if (program.optionstr) {
   try {
-    options = Object.assign(options, JSON.parse(program.options));
+    options = Object.assign(options, JSON.parse(program.optionstr));
   } catch (e) {
     console.log(e);
   }
@@ -53,7 +53,7 @@ update()
     }
     const datahub = new DataHub(options);
 
-    datahub.startServer(() => {
+    datahub.startServer({}, () => {
       console.log('DataHub launch ready');
     });
   });
