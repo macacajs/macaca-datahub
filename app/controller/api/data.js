@@ -3,6 +3,7 @@
 const {
   Controller,
 } = require('egg');
+const url = require('url');
 const _ = require('xutil');
 
 const allowedProxyHeaders = [
@@ -48,9 +49,13 @@ class DataController extends Controller {
       ctx.set('x-datahub-proxy', 'true');
       let proxyResponse = {};
       let proxyResponseStatus = 200;
+
       try {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
-        const _res = await ctx.curl(proxyOrigin.proxies[index], {
+        const distUrlObj = url.parse(proxyOrigin.proxies[index]);
+        const distUrl = `${distUrlObj.protocol}//${distUrlObj.host}${distUrlObj.pathname}`;
+        const originUrlObj = url.parse(ctx.url);
+        const _res = await ctx.curl(`${distUrl}${originUrlObj.search}`, {
           method: ctx.method,
           headers: ctx.header,
           timeout: 3000,
