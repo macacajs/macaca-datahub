@@ -46,7 +46,7 @@
   "scripts": {
     "dev": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
+    "test": "npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint . --fix",

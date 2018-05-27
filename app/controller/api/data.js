@@ -54,11 +54,13 @@ class DataController extends Controller {
         const index = proxyOrigin.originKeys.indexOf(proxyOrigin.currentProxyIndex);
         const distUrlObj = url.parse(proxyOrigin.proxies[index]);
         let distUrl = `${distUrlObj.protocol}//${distUrlObj.host}${distUrlObj.pathname}`;
+
         const originUrlObj = url.parse(ctx.url);
 
         if (originUrlObj.search) {
           distUrl += originUrlObj.search;
         }
+
         const _res = await ctx.curl(distUrl, {
           method: ctx.method,
           headers: ctx.header,

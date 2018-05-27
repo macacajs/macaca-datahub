@@ -11,7 +11,11 @@ describe('app/controller/api/data.js', () => {
   describe('/data/:projectId/:dataId+', () => {
     describe('proxy true', () => {
       it('it proxy request', async () => {
-        app.mockHttpclient('www.some.test', {
+        app.mockHttpclient('http://www.some.test?foo=bar', {
+          data: JSON.stringify({ success: true }),
+        });
+
+        app.mockHttpclient('http://www.some.test/?foo=bar', {
           data: JSON.stringify({ success: true }),
         });
 
@@ -27,7 +31,7 @@ describe('app/controller/api/data.js', () => {
             params: '{}',
             pathname: 'test',
             proxyContent: JSON.stringify({
-              proxies: [ 'www.some.test' ],
+              proxies: [ 'http://www.some.test' ],
               useProxy: true,
               originKeys: [ 1 ],
               currentProxyIndex: 1,
@@ -35,12 +39,17 @@ describe('app/controller/api/data.js', () => {
             reqSchemaContent: '{}',
             resSchemaContent: '{}',
             responseHeader: '{}',
-            scenes: JSON.stringify([{ name: 'default', data: { success: true } }]),
+            scenes: JSON.stringify([{
+              name: 'default',
+              data: {
+                success: true
+              }
+            }]),
           };
         });
 
         await app.httpRequest()
-          .get('/data/identifer/test')
+          .get('/data/identifer/test?foo=bar')
           .expect(200)
           .expect({ success: true })
           .then(response => {
