@@ -42,6 +42,11 @@ class DataHub {
 
     const promise = detectPort(options.port)
       .then(_port => {
+        if (options.port !== _port) {
+          return new Promise((resolve, reject) => {
+            reject(`port: ${options.port} was not occupied`);
+          });
+        }
         const host = chalk.cyan.underline(`http://${ipv4}:${(_port)}`);
         console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
         return eggServer.startCluster({

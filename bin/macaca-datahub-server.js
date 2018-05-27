@@ -53,7 +53,11 @@ update()
     }
     const datahub = new DataHub(options);
 
-    datahub.startServer({}, () => {
+    datahub.startServer({}, error => {
+      if (error) {
+        return;
+      }
       console.log('DataHub launch ready');
     });
   });
+
