@@ -76,6 +76,8 @@ $ npm i macaca-datahub -g
 $ datahub server
 ```
 
+DataHub 启动后会定期备份数据库到数据库文件所在的目录下，备份文件的前缀为 `macaca-datahub.data-backup-`
+
 ## 使用 Docker 启动
 
 ```bash

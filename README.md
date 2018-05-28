@@ -100,6 +100,8 @@ Start datahub server
 $ datahub server
 ```
 
+The server will create backup files with prefix 'macaca-datahub.data-backup-' for the database periodically.
+
 ## Run with docker
 
 ```bash
@@ -197,7 +199,7 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 ## Build docker image
 
-Build base mirror.
+Build base image.
 
 ```bash
 $ docker build -t="macacajs/macaca-datahub" .
