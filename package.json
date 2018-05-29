@@ -52,7 +52,8 @@
     "lint": "eslint . --fix",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "contributor": "git-contributor"
+    "contributor": "git-contributor",
+    "docker": "docker build -t=macacajs/macaca-datahub . --no-cache"
   },
   "pre-commit": [
     "lint"
