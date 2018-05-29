@@ -154,21 +154,48 @@ DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema 
   ],
   "properties": {
     "success": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "server side success"
     },
-    "foo": {
-      "type": "object",
-      "description": "foo description",
-      "default": "",
+    "data": {
+      "type": "array",
+      "description": "data field",
       "required": [
-        "bar"
+        "age",
+        "key",
+        "name",
+        "address"
       ],
-      "properties": {
-        "bar": {
-          "type": "string",
-          "description": "bar description"
+      "items": [
+        {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "key description"
+            },
+            "name": {
+              "type": "string",
+              "description": "name description"
+            },
+            "age": {
+              "type": "number",
+              "description": "age description"
+            },
+            "address": {
+              "type": "string",
+              "description": "address description"
+            }
+          }
         }
-      }
+      ]
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "error message description"
     }
   }
 }
