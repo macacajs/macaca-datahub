@@ -2,4 +2,4 @@
 
 macaca-datahub -v
 
-macaca-datahub server --verbose
+RUN_MODE=docker macaca-datahub server --verbose

@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.66",
+  "version": "1.0.67",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -53,7 +53,7 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "contributor": "git-contributor",
-    "docker": "docker build -t=macacajs/macaca-datahub . --no-cache"
+    "build:docker": "docker build -t=macacajs/macaca-datahub . --no-cache"
   },
   "pre-commit": [
     "lint"
