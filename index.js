@@ -43,7 +43,9 @@ class DataHub {
     const promise = detectPort(options.port)
       .then(_port => {
         if (options.port === _port) {
-          const host = chalk.cyan.underline(`http://${ipv4}:${(_port)}`);
+          const inDocker = process.env.RUN_MODE === 'docker';
+          const ip = inDocker ? '127.0.0.1' : ipv4;
+          const host = chalk.cyan.underline(`http://${ip}:${(_port)}`);
           console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
           return eggServer.startCluster({
             workers: 1,
