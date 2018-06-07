@@ -219,7 +219,11 @@ docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
 启动服务前建议挂载本地数据文件，方便数据存档：
 
 ```bash
-$ docker run -it -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
+$ docker run -it \
+  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
+  -p 9200:9200 \
+  -p 9300:9300 \
+  macacajs/macaca-datahub
 ```
 
 ## SDK 接入
