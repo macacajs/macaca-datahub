@@ -242,8 +242,9 @@ Run with existed DataHub's database in your host.
 
 ```bash
 $ docker run -it \
-  -v ~/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
-  -p 9200:9200 -p 9300:9300 \
+  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
+  -p 9200:9200 \
+  -p 9300:9300 \
   macacajs/macaca-datahub
 ```
 
