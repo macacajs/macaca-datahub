@@ -202,29 +202,9 @@ Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中�
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
-## 构建 Docker 镜像
+## 使用 Docker 镜像
 
-如果你使用 Docker ，可通过以下命令构建基础镜像：
-
-```bash
-$ docker build -t="macacajs/macaca-datahub" .
-```
-
-启动服务：
-
-```bash
-docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
-```
-
-启动服务前建议挂载本地数据文件，方便数据存档：
-
-```bash
-$ docker run -it \
-  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
-  -p 9200:9200 \
-  -p 9300:9300 \
-  macacajs/macaca-datahub
-```
+[见文档](//github.com/macacajs/macaca-datahub#play-docker)
 
 ## SDK 接入
 
