@@ -224,28 +224,45 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
-## Build docker image
-
-Build base image.
-
-```bash
-$ docker build -t="macacajs/macaca-datahub" .
-```
+## Play Docker
 
 Run as standalone just once service.
 
 ```bash
-docker run -it -p 9200:9200 -p 9300:9300 macacajs/macaca-datahub
+$ docker run -it \
+  --name macaca-datahub \
+  -p 9200:9200 \
+  -p 9300:9300 \
+  macacajs/macaca-datahub
 ```
 
 Run with existed DataHub's database in your host.
 
 ```bash
 $ docker run -it \
+  --name macaca-datahub \
   -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
   -p 9200:9200 \
   -p 9300:9300 \
   macacajs/macaca-datahub
+```
+
+Run as a service.
+
+
+```bash
+$ docker run -it \
+  --name macaca-datahub \
+  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
+  -p 9200:9200 \
+  -p 9300:9300 \
+  -d macacajs/macaca-datahub
+```
+
+Build base image.
+
+```bash
+$ docker build -t="macacajs/macaca-datahub" .
 ```
 
 ## SDKs
