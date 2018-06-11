@@ -40,9 +40,9 @@ module.exports = () => {
       let result = {};
 
       if (ctx.method === 'POST') {
-        result= validateSchema(reqSchemaContent.schemaData, ctx.request.body);
+        result = validateSchema(reqSchemaContent.schemaData, ctx.request.body);
       } else {
-        result= validateSchema(reqSchemaContent.schemaData, ctx.query);
+        result = validateSchema(reqSchemaContent.schemaData, ctx.query);
       }
 
       const {
