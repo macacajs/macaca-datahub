@@ -37,10 +37,18 @@ module.exports = () => {
     }
 
     if (needValidate(reqSchemaContent)) {
+      let result = {};
+
+      if (ctx.method === 'POST') {
+        result = validateSchema(reqSchemaContent.schemaData, ctx.request.body);
+      } else {
+        result = validateSchema(reqSchemaContent.schemaData, ctx.query);
+      }
+
       const {
         isValid,
         errors,
-      } = validateSchema(reqSchemaContent.schemaData, ctx.request.body);
+      } = result;
 
       if (!isValid) {
         ctx.body = {
