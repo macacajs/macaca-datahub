@@ -101,7 +101,7 @@ class DataController extends Controller {
         if (statusCode === 200) {
           ctx.body = data;
         } else {
-          ctx.body = `Response status: ${statusCode}`;
+          ctx.body = data;
         }
       } catch (e) {
         ctx.body = {};
