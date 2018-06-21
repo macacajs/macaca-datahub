@@ -58,6 +58,39 @@ describe('app/controller/api/data.js', () => {
       });
     });
 
+    describe('status code not 200 OK', () => {
+      let response;
+      before(() => {
+        response = {
+          created_at: _.moment().format('YY-MM-DD'),
+          currentScene: 'default',
+          delay: '1',
+          description: 'test',
+          id: 1,
+          identifer: 'identifer',
+          method: 'ALL',
+          params: '{}',
+          pathname: 'test',
+          proxyContent: JSON.stringify({ statusCode: '422' }),
+          reqSchemaContent: '{}',
+          resSchemaContent: '{}',
+          responseHeader: '{}',
+          scenes: JSON.stringify([{ name: 'default', data: { success: false } }]),
+        };
+      });
+
+      it('return scene', async () => {
+        app.mockService('data', 'getByProjectIdAndDataId', () => {
+          return response;
+        });
+
+        await app.httpRequest()
+          .get('/data/identifer/test')
+          .expect(422)
+          .expect({ success: false });
+      });
+    });
+
     describe('proxy false', () => {
       let response;
       before(() => {
