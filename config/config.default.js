@@ -18,7 +18,7 @@ module.exports = appInfo => {
   };
 
   config.dataHubView = {
-    assetsUrl: '//unpkg.com/datahub-view@latest',
+    assetsUrl: '//unpkg.com/datahub-view@1',
   };
 
   if (process.env.DATAHUB_STORE_PATH) {

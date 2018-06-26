@@ -1,10 +1,12 @@
 FROM node:8.11.1-alpine
 
-RUN apk --no-cache add python bash build-base ca-certificates
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
+RUN apk --no-cache add bash
 
 RUN npm config set unsafe-perm=true
 
-RUN npm i -g macaca-datahub
+RUN npm i -g --verbose macaca-datahub --registry=https://registry.npm.taobao.org
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./healthcheck.js /healthcheck.js

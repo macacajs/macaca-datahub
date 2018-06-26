@@ -229,7 +229,7 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 Run as standalone just once service.
 
 ```bash
-$ docker run -it \
+$ docker run -it --rm \
   --name macaca-datahub \
   -p 9200:9200 \
   -p 9300:9300 \
@@ -251,7 +251,7 @@ Run as a service.
 
 
 ```bash
-$ docker run -it \
+$ docker run \
   --name macaca-datahub \
   -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
   -p 9200:9200 \
@@ -262,7 +262,7 @@ $ docker run -it \
 Build base image.
 
 ```bash
-$ docker build -t="macacajs/macaca-datahub" .
+$ docker build --pull -t="macacajs/macaca-datahub" .
 ```
 
 ## SDKs
