@@ -8,7 +8,6 @@ const {
 const _ = require('xutil');
 const path = require('path');
 const DataHub = require('..');
-const semver = require('semver');
 const program = require('commander');
 
 const update = require('../lib/update');
@@ -43,21 +42,16 @@ if (program.optionstr) {
   }
 }
 
-update()
-  .then(() => {
-    const version = '8.9.4';
+(async () => {
+  if (!await update()) return;
 
-    if (semver.gt(version, process.version)) {
-      console.log(chalk.red(`${EOL}Node.js version: ${process.version} is lower than ${version}${EOL}`));
-      return;
-    }
-    const datahub = new DataHub(options);
+  const datahub = new DataHub(options);
 
-    datahub.startServer({}, error => {
-      if (error) {
-        return;
-      }
-      console.log('DataHub launch ready');
-    });
-  });
+  try {
+    await datahub.startServer({});
+  } catch (error) {
+    console.log(chalk.red(`${EOL}DataHub start unsuccessfully: ${error}${EOL}`));
+    return;
+  }
+})();
 
