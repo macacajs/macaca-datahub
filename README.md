@@ -262,7 +262,7 @@ $ docker run \
 Build base image.
 
 ```bash
-$ docker build --pull -t="macacajs/macaca-datahub" .
+$ docker build --no-cache --pull -t="macacajs/macaca-datahub" .
 ```
 
 ## SDKs

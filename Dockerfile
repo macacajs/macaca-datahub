@@ -2,7 +2,7 @@ FROM node:8.11.1-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
-RUN apk --no-cache add bash
+RUN apk --no-cache add bash python build-base
 
 RUN npm i -g --verbose macaca-datahub --registry=https://registry.npm.taobao.org
 
