@@ -13,7 +13,9 @@ module.exports = app => {
   app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.storage}`);
 
   app.beforeStart(async () => {
-    await app.model.sync();
+    await app.model.sync({
+      force: true,
+    });
 
     const ctx = app.createAnonymousContext();
     try {
