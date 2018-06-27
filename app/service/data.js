@@ -6,6 +6,7 @@ const {
 const _ = require('xutil');
 const fs = require('mz/fs');
 const path = require('path');
+const pathToRegexp = require('path-to-regexp');
 
 const PROXY_CONTENT_KEYS = [
   'statusCode',
@@ -25,13 +26,44 @@ class DataService extends Service {
   }
 
   async getByProjectIdAndDataId(projectId, dataId) {
-    return await this.ctx.model.Data.findOne({
+    let res = await this.ctx.model.Data.findOne({
       where: {
         identifer: projectId,
         pathname: dataId,
       },
       raw: true,
     });
+    if (!res) {
+      res = await this.ctx.service.data.getByProjectIdAndPathRegexp(projectId, dataId);
+    }
+    return res;
+  }
+
+  async getByProjectIdAndPathRegexp(projectId, dataId) {
+    const data = await this.ctx.model.Data.findAll({
+      where: {
+        identifer: projectId,
+      },
+      raw: true,
+    });
+    for (const record of data) {
+      const keys = [];
+      const re = pathToRegexp(record.pathname, keys);
+      const execResult = re.exec(dataId);
+      if (execResult) {
+        record.__pathParam = this._getPathParam(keys, execResult);
+        return record;
+      }
+    }
+    return null;
+  }
+
+  _getPathParam(keys, execResult) {
+    const param = {};
+    keys.forEach((value, index) => {
+      param[value.name] = execResult[index + 1];
+    });
+    return param;
   }
 
   async addByProjectId(projectId, data) {
@@ -57,6 +89,9 @@ class DataService extends Service {
 
   async getSchemaData(projectId, dataId) {
     const data = await this.getByProjectIdAndDataId(projectId, dataId);
+    if (!data) {
+      return {};
+    }
     return {
       reqSchemaContent: data.reqSchemaContent,
       resSchemaContent: data.resSchemaContent,
