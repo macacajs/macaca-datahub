@@ -41,10 +41,6 @@ class ProjectService extends Service {
         this.ctx.app.whiteList.push({
           identifer,
         });
-      } else {
-        this.ctx.app.whiteList = [{
-          identifer,
-        }];
       }
     }
 
