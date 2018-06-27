@@ -78,8 +78,8 @@ API name example:
 | ----             | ----                 |
 | api1/books       | api1/books           |
 | api2/:foo/:bar   | api2/group/project   |
-| api3/:id         | api3/aaaaa           |
-| api3/:id         | api3/bbbbb           |
+| api3/:id         | api3/fred            |
+| api3/:id         | api3/baz             |
 
 <div align="center">
   <img src="https://wx4.sinaimg.cn/large/6d308bd9gy1fpbmdxv2ehj21kw13awr0.jpg" width="75%" />
