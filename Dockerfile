@@ -9,8 +9,8 @@ RUN npm config set unsafe-perm=true
 RUN npm i -g --verbose macaca-datahub --registry=https://registry.npm.taobao.org
 
 COPY ./entrypoint.sh /entrypoint.sh
-COPY ./healthcheck.js /healthcheck.js
 
-HEALTHCHECK CMD node /healthcheck.js || exit 1
+HEALTHCHECK --interval=10s --retries=6 \
+  CMD wget -O /dev/null localhost:9200 || exit 1
 
 ENTRYPOINT ["/entrypoint.sh"]
