@@ -70,6 +70,10 @@ module.exports = appInfo => {
     operatorsAliases: false,
   };
 
+  config.modelCommonOption = {
+    underscored: false,
+  };
+
   return config;
 
 };
