@@ -8,7 +8,7 @@ module.exports = app => {
     JSON,
   } = app.Sequelize;
 
-  const Api = app.model.define('api', {
+  const Interface = app.model.define('interface', {
     protocol: {
       type: STRING,
       defaultValue: 'http',
@@ -72,5 +72,5 @@ module.exports = app => {
     ],
   });
 
-  return Api;
+  return Interface;
 };

@@ -18,7 +18,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: {},
     },
-    apiUniqId: {
+    interfaceUniqId: {
       type: STRING,
       allowNull: false,
     },
@@ -34,7 +34,7 @@ module.exports = app => {
       {
         fields: [
           'type',
-          'apiUniqId',
+          'interfaceUniqId',
         ],
         unique: true,
       },

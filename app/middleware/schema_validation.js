@@ -20,7 +20,8 @@ module.exports = () => {
     let {
       reqSchemaContent = '{}',
       resSchemaContent = '{}',
-    } = await ctx.service.data.getSchemaData(ctx.params.projectId, ctx.params.dataId);
+    } = {};
+    // } = await ctx.service.data.getSchemaData(ctx.params.projectId, ctx.params.dataId);
 
     try {
       reqSchemaContent = JSON.parse(reqSchemaContent);

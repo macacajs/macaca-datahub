@@ -12,7 +12,8 @@ class ProjectService extends Service {
     return await this.ctx.model.Project.findAll();
   }
 
-  async queryProjectByName() {
+  async queryProjectByName(projectName) {
+    console.log(`queryProjectByName ${projectName}`);
     return await this.ctx.model.Project.findAll();
   }
 

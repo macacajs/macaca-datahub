@@ -18,7 +18,7 @@ module.exports = app => {
       defaultValue: {},
       allowNull: false,
     },
-    apiUniqId: {
+    interfaceUniqId: {
       type: STRING,
       allowNull: false,
     },
@@ -34,7 +34,7 @@ module.exports = app => {
       {
         fields: [
           'sceneName',
-          'apiUniqId',
+          'interfaceUniqId',
         ],
         unique: true,
       },

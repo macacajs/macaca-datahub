@@ -4,11 +4,7 @@ const Service = require('egg').Service;
 
 class SchemaService extends Service {
 
-  async querySchemaByProjectUniqId() {
-    return await this.ctx.model.Schema.findAll();
-  }
-
-  async querySchema() {
+  async querySchemaByInterfaceUniqId() {
     return await this.ctx.model.Schema.findAll();
   }
 
