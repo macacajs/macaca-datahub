@@ -13,7 +13,7 @@ class PageController extends Controller {
   }
 
   async dashboard() {
-    const res = await this.ctx.service.project.query();
+    const res = await this.ctx.service.project.queryAllProject();
     this.ctx.body = await this.app.render(res, {
       title: this.ctx.gettext('dashboard'),
       pageId: 'dashboard',
@@ -23,7 +23,7 @@ class PageController extends Controller {
   }
 
   async project() {
-    const res = await this.ctx.service.project.query();
+    const res = await this.ctx.service.project.queryAllProject();
     const projectId = this.ctx.params.projectId;
     this.ctx.body = await this.app.render(res, {
       title: `${this.ctx.gettext('project')} - ${projectId}`,
@@ -36,22 +36,22 @@ class PageController extends Controller {
   }
 
   async doc() {
-    const res = await this.ctx.service.project.query();
-    const projectId = this.ctx.params.projectId;
+    const res = await this.ctx.service.project.queryAllProject();
+    const projectName = this.ctx.params.projectName;
     this.ctx.body = await this.app.render(res, {
-      title: `${this.ctx.gettext('doc')} - ${projectId}`,
+      title: `${this.ctx.gettext('doc')} - ${projectName}`,
       pageId: 'doc',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       socket: this.app.config.socket,
       version: this.app.config.pkg.version,
-      projectId,
+      projectName,
     });
   }
 
   async notfound() {
     this.ctx.body = {
       success: false,
-      errorMessage: 'databub api not found',
+      errorMessage: 'databub interface not found',
     };
   }
 }

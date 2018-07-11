@@ -4,46 +4,35 @@ const Controller = require('egg').Controller;
 
 class ProjectController extends Controller {
 
-  async query() {
+  async showAll() {
     const ctx = this.ctx;
-    const res = await ctx.service.project.query();
-    this.ctx.body = res;
+    const res = await ctx.service.project.queryAllProject();
+    ctx.body = res;
   }
 
-  async upsert() {
+  async show() {
     const ctx = this.ctx;
-    const body = ctx.request.body;
-    const identifer = body.identifer;
-
-    const res = await ctx.service.project.upsertById(identifer, body);
-
-    if (res) {
-      this.ctx.body = {
-        success: true,
-      };
-    } else {
-      this.ctx.body = {
-        success: false,
-      };
-    }
+    const res = await ctx.service.project.queryProjectByUniqId();
+    // const res = await ctx.service.project.queryProjectByName();
+    ctx.body = res;
   }
 
-  async remove() {
+  async create() {
     const ctx = this.ctx;
-    const body = ctx.request.body;
-    const identifer = body.identifer;
-    await ctx.service.data.removeByProjectId(identifer);
-    const res = await ctx.service.project.removeById(identifer);
+    const res = await ctx.service.project.createProject();
+    ctx.body = res;
+  }
 
-    if (res) {
-      this.ctx.body = {
-        success: true,
-      };
-    } else {
-      this.ctx.body = {
-        success: false,
-      };
-    }
+  async update() {
+    const ctx = this.ctx;
+    const res = await ctx.service.project.updateProject();
+    ctx.body = res;
+  }
+
+  async delete() {
+    const ctx = this.ctx;
+    const res = await ctx.service.project.deleteProjectByUniqId();
+    ctx.body = res;
   }
 }
 

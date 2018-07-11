@@ -4,11 +4,11 @@ const Service = require('egg').Service;
 
 class SceneService extends Service {
 
-  async querySceneByProjectUniqId() {
+  async queryScene() {
     return await this.ctx.model.Scene.findAll();
   }
 
-  async queryScene() {
+  async querySceneByInterfaceUniqId() {
     return await this.ctx.model.Scene.findAll();
   }
 
