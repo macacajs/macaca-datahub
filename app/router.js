@@ -28,25 +28,25 @@ module.exports = app => {
   router.get('/api/project/:uniqId', controller.api.project.show);
   router.post('/api/project', controller.api.project.create);
   router.put('/api/project/:uniqId', controller.api.project.update);
-  router.delete('/api/project', controller.api.project.delete);
+  router.delete('/api/project/:uniqId', controller.api.project.delete);
 
   router.get('/api/interface', controller.api.interface.showAll);
   router.get('/api/interface/:uniqId', controller.api.interface.show);
   router.post('/api/interface', controller.api.interface.create);
   router.put('/api/interface/:uniqId', controller.api.interface.update);
-  router.delete('/api/interface', controller.api.project.delete);
+  router.delete('/api/interface/:uniqId', controller.api.project.delete);
 
   router.get('/api/scene', controller.api.scene.showAll);
   router.get('/api/scene/:uniqId', controller.api.scene.show);
   router.post('/api/scene', controller.api.scene.create);
   router.put('/api/scene/:uniqId', controller.api.scene.update);
-  router.delete('/api/scene', controller.api.scene.delete);
+  router.delete('/api/scene/:uniqId', controller.api.scene.delete);
 
   router.get('/api/schema', controller.api.schema.showAll);
   router.get('/api/schema/:uniqId', controller.api.schema.show);
   router.post('/api/schema', controller.api.schema.create);
   router.put('/api/schema/:uniqId', controller.api.schema.update);
-  router.delete('/api/schema', controller.api.schema.delete);
+  router.delete('/api/schema/:uniqId', controller.api.schema.delete);
 
   // router.post('/api/multi/data', controller.api.multiData.update);
 

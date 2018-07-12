@@ -23,15 +23,16 @@ class PageController extends Controller {
   }
 
   async project() {
-    const res = await this.ctx.service.project.queryAllProject();
-    const projectId = this.ctx.params.projectId;
+    const projectName = this.ctx.params.projectName;
+    const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
     this.ctx.body = await this.app.render(res, {
-      title: `${this.ctx.gettext('project')} - ${projectId}`,
+      title: `${this.ctx.gettext('project')} - ${projectName}`,
       pageId: 'project',
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       socket: this.app.config.socket,
       version: this.app.config.pkg.version,
-      projectId,
+      uniqId: res.uniqId,
+      projectName,
     });
   }
 

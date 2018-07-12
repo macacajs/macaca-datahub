@@ -6,8 +6,10 @@ class InterfaceController extends Controller {
 
   async showAll() {
     const ctx = this.ctx;
-    const res = await ctx.service.interface.queryInterfaceByProjectUniqId();
-    ctx.body = res;
+    const { projectUniqId } = ctx.query;
+    ctx.assertParam({ projectUniqId });
+    const res = await ctx.service.interface.queryInterfaceByProjectUniqId({ projectUniqId });
+    ctx.success(res);
   }
 
   async show() {
