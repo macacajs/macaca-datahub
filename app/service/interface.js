@@ -4,12 +4,20 @@ const Service = require('egg').Service;
 
 class InterfaceService extends Service {
 
-  async queryInterfaceByProjectUniqId() {
-    return await this.ctx.model.Interface.findAll();
+  async queryInterfaceByProjectUniqId({ projectUniqId }) {
+    return await this.ctx.model.Interface.findAll({
+      where: {
+        projectUniqId,
+      },
+    });
   }
 
-  async queryInterfaceByUniqId() {
-    return await this.ctx.model.Interface.findAll();
+  async queryInterfaceByUniqId({ uniqId }) {
+    return await this.ctx.model.Interface.findOne({
+      where: {
+        uniqId,
+      },
+    });
   }
 
   async createInterface() {

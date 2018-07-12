@@ -3,16 +3,19 @@
 module.exports = (/* options, app */) => {
   return async function errorHandler(ctx, next) {
     if (!ctx.path.startsWith('/data/')) {
-      return await next();
+      try {
+        return await next();
+      } catch (e) {
+        ctx.logger.error(e);
+        ctx.fail(`server error: ${e.message}`);
+        return;
+      }
     }
     try {
       await next();
     } catch (e) {
       ctx.logger.error('[mock] error', e);
-      ctx.body = {
-        success: false,
-        message: `datahub config error: ${e.message}`,
-      };
+      ctx.fail(`datahub config error: ${e.message}`);
     }
   };
 };

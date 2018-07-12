@@ -8,25 +8,46 @@ class ProjectService extends Service {
     return await this.ctx.model.Project.findAll();
   }
 
-  async queryProjectByUniqId() {
-    return await this.ctx.model.Project.findAll();
+  async queryProjectByUniqId({ uniqId }) {
+    return await this.ctx.model.Project.findOne({
+      where: {
+        uniqId,
+      },
+    });
   }
 
-  async queryProjectByName(projectName) {
-    console.log(`queryProjectByName ${projectName}`);
-    return await this.ctx.model.Project.findAll();
+  async queryProjectByProjectName({ projectName }) {
+    return await this.ctx.model.Project.findOne({
+      where: {
+        projectName,
+      },
+    });
   }
 
-  async createProject() {
-    return await this.ctx.model.Project.findAll();
+  async createProject({ projectName, description }) {
+    return await this.ctx.model.Project.create({
+      projectName,
+      description,
+    });
   }
 
-  async updateProject() {
-    return await this.ctx.model.Project.findAll();
+  async updateProject({ uniqId, payload }) {
+    return await this.ctx.model.Project.update(
+      payload,
+      {
+        where: {
+          uniqId,
+        },
+      }
+    );
   }
 
-  async deleteProjectByUniqId() {
-    return await this.ctx.model.Project.findAll();
+  async deleteProjectByUniqId({ uniqId }) {
+    return await this.ctx.model.Project.destroy({
+      where: {
+        uniqId,
+      },
+    });
   }
 
   async syncDataToLocalFile() {
