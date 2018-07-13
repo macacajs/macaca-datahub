@@ -15,13 +15,17 @@ class InterfaceController extends Controller {
   async show() {
     const ctx = this.ctx;
     const res = await ctx.service.interface.queryInterfaceByUniqId();
-    ctx.body = res;
+    ctx.success(res);
   }
 
   async create() {
     const ctx = this.ctx;
-    const res = await ctx.service.interface.createInterface();
-    ctx.body = res;
+    const { projectUniqId, pathname, method, description } = ctx.request.body;
+    ctx.assertParam({ projectUniqId, pathname, method, description });
+    const res = await ctx.service.interface.createInterface({
+      projectUniqId, pathname, method, description,
+    });
+    ctx.success(res);
   }
 
   async update() {
@@ -32,8 +36,13 @@ class InterfaceController extends Controller {
 
   async delete() {
     const ctx = this.ctx;
-    const res = await ctx.service.interface.deleteInterfaceByUniqId();
-    ctx.body = res;
+    const { uniqId } = ctx.params;
+    const res = await ctx.service.interface.deleteInterfaceByUniqId({ uniqId });
+    if (res) {
+      ctx.success(res);
+      return;
+    }
+    ctx.fail(ctx.gettext('common.delete.fail'));
   }
 }
 

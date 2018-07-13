@@ -12,7 +12,7 @@ module.exports = app => {
 
   app.beforeStart(async () => {
     await app.model.sync({
-      force: true,
+      // force: true,
     });
 
     const socketPort = await detectPort(app.config.dataHubSocket.port);

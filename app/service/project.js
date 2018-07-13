@@ -5,7 +5,14 @@ const Service = require('egg').Service;
 class ProjectService extends Service {
 
   async queryAllProject() {
-    return await this.ctx.model.Project.findAll();
+    return await this.ctx.model.Project.findAll({
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
   }
 
   async queryProjectByUniqId({ uniqId }) {

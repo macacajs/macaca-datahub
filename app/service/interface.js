@@ -9,6 +9,12 @@ class InterfaceService extends Service {
       where: {
         projectUniqId,
       },
+      order: [
+        [
+          'createdAt',
+          'DESC',
+        ],
+      ],
     });
   }
 
@@ -20,16 +26,22 @@ class InterfaceService extends Service {
     });
   }
 
-  async createInterface() {
-    return await this.ctx.model.Interface.findAll();
+  async createInterface({ projectUniqId, pathname, method, description }) {
+    return await this.ctx.model.Interface.create({
+      projectUniqId, pathname, method, description,
+    });
   }
 
   async updateInterface() {
     return await this.ctx.model.Interface.findAll();
   }
 
-  async deleteInterfaceByUniqId() {
-    return await this.ctx.model.Interface.findAll();
+  async deleteInterfaceByUniqId({ uniqId }) {
+    return await this.ctx.model.Interface.destroy({
+      where: {
+        uniqId,
+      },
+    });
   }
 }
 
