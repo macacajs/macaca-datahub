@@ -7,7 +7,7 @@ class ProjectController extends Controller {
   async showAll() {
     const ctx = this.ctx;
     const res = await ctx.service.project.queryAllProject();
-    ctx.body = res;
+    ctx.success(res);
   }
 
   async show() {

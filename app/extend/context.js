@@ -10,10 +10,11 @@ module.exports = {
     };
   },
 
-  fail(message = '') {
+  fail(message = '', data) {
     this.body = {
       success: false,
       message,
+      data,
     };
   },
 

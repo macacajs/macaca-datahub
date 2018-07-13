@@ -34,7 +34,7 @@ module.exports = app => {
   router.get('/api/interface/:uniqId', controller.api.interface.show);
   router.post('/api/interface', controller.api.interface.create);
   router.put('/api/interface/:uniqId', controller.api.interface.update);
-  router.delete('/api/interface/:uniqId', controller.api.project.delete);
+  router.delete('/api/interface/:uniqId', controller.api.interface.delete);
 
   router.get('/api/scene', controller.api.scene.showAll);
   router.get('/api/scene/:uniqId', controller.api.scene.show);
