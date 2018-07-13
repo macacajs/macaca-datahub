@@ -6,7 +6,16 @@ class ProjectController extends Controller {
 
   async showAll() {
     const ctx = this.ctx;
-    const res = await ctx.service.project.queryAllProject();
+    const res = await ctx.service.project.queryAllProject({ raw: true });
+    for (const item of res) {
+      const iterfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({
+        projectUniqId: item.uniqId,
+      });
+      item.capacity = {
+        count: iterfaceList.length,
+        size: iterfaceList.length, // TODO calculate size
+      };
+    }
     ctx.success(res);
   }
 
