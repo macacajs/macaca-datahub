@@ -4,8 +4,9 @@ const Service = require('egg').Service;
 
 class ProjectService extends Service {
 
-  async queryAllProject() {
+  async queryAllProject(selector = {}) {
     return await this.ctx.model.Project.findAll({
+      ...selector,
       order: [
         [
           'createdAt',
