@@ -4,30 +4,52 @@ const Service = require('egg').Service;
 
 class SceneService extends Service {
 
-  async queryScene() {
-    return await this.ctx.model.Scene.findAll();
+  async querySceneByInterfaceUniqId({ interfaceUniqId }) {
+    return await this.ctx.model.Scene.findAll({
+      where: {
+        interfaceUniqId,
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
   }
 
-  async querySceneByInterfaceUniqId() {
-    return await this.ctx.model.Scene.findAll();
+  async querySceneByUniqId({ uniqId }) {
+    return await this.ctx.model.Scene.findOne({
+      where: {
+        uniqId,
+      },
+    });
   }
 
-  async querySceneByUniqId() {
-    return await this.ctx.model.Scene.findAll();
+  async createScene({ interfaceUniqId, sceneName, data }) {
+    return await this.ctx.model.Scene.create({
+      interfaceUniqId, sceneName, data,
+    });
   }
 
-  async createScene() {
-    return await this.ctx.model.Scene.findAll();
+  async updateScene({ uniqId, payload }) {
+    return await this.ctx.model.Scene.update(
+      payload,
+      {
+        where: {
+          uniqId,
+        },
+      }
+    );
   }
 
-  async updateScene() {
-    return await this.ctx.model.Scene.findAll();
-  }
-
-  async deleteSceneByUniqId() {
-    return await this.ctx.model.Scene.findAll();
+  async deleteSceneByUniqId({ uniqId }) {
+    return await this.ctx.model.Scene.destroy({
+      where: {
+        uniqId,
+      },
+    });
   }
 }
 
 module.exports = SceneService;
-

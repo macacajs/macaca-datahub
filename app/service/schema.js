@@ -26,4 +26,3 @@ class SchemaService extends Service {
 }
 
 module.exports = SchemaService;
-
