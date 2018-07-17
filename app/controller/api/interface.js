@@ -30,8 +30,16 @@ class InterfaceController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const res = await ctx.service.interface.updateInterface();
-    ctx.body = res;
+    const uniqId = ctx.params.uniqId;
+    const payload = {};
+    [ 'pathname', 'method', 'description' ].forEach(i => {
+      if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
+    });
+    const res = await ctx.service.interface.updateInterface({
+      uniqId,
+      payload,
+    });
+    ctx.success(res);
   }
 
   async delete() {

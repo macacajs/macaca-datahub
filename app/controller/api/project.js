@@ -43,10 +43,10 @@ class ProjectController extends Controller {
   async update() {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;
-    const { description, projectName } = ctx.request.body;
     const payload = {};
-    if (description) payload.description = description;
-    if (projectName) payload.projectName = projectName;
+    [ 'description', 'projectName' ].forEach(i => {
+      if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
+    });
     const res = await ctx.service.project.updateProject({
       uniqId,
       payload,

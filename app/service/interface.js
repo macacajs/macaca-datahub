@@ -12,7 +12,7 @@ class InterfaceService extends Service {
       order: [
         [
           'createdAt',
-          'DESC',
+          'ASC',
         ],
       ],
     });
@@ -32,8 +32,15 @@ class InterfaceService extends Service {
     });
   }
 
-  async updateInterface() {
-    return await this.ctx.model.Interface.findAll();
+  async updateInterface({ uniqId, payload }) {
+    return await this.ctx.model.Interface.update(
+      payload,
+      {
+        where: {
+          uniqId,
+        },
+      }
+    );
   }
 
   async deleteInterfaceByUniqId({ uniqId }) {
@@ -46,4 +53,3 @@ class InterfaceService extends Service {
 }
 
 module.exports = InterfaceService;
-
