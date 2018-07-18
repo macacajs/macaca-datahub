@@ -4,6 +4,12 @@ const Service = require('egg').Service;
 
 class InterfaceService extends Service {
 
+  async queryInterfaceByHTTPContext(option) {
+    return await this.ctx.model.Interface.findOne({
+      where: option,
+    });
+  }
+
   async queryInterfaceByProjectUniqId({ projectUniqId }) {
     return await this.ctx.model.Interface.findAll({
       where: {
