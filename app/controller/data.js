@@ -11,14 +11,33 @@ class SceneController extends Controller {
     const pathname = params.pathname;
     const method = ctx.method;
 
-    const { projectUniqId } = await ctx.service.project.queryProjectByName(projectName);
-
-    const res = await ctx.service.scene.queryScene({
+    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
+    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
       projectUniqId,
       pathname,
       method,
     });
-    ctx.body = res;
+
+    if (!interfaceData) {
+      this.fail(`${method} ${pathname} not found`);
+      return;
+    }
+
+    const res = await ctx.service.scene.querySceneByNameAndInterfaceUniqId({
+      sceneName: interfaceData.currentScene,
+      interfaceUniqId: interfaceData.uniqId,
+    });
+
+    res ?
+      ctx.body = res :
+      this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
+  }
+
+  fail(message) {
+    const ctx = this.ctx;
+    ctx.set('x-datahub-fail', message);
+    ctx.status = 400;
+    ctx.body = {};
   }
 }
 

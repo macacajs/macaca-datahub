@@ -48,11 +48,5 @@ module.exports = app => {
   router.put('/api/schema/:uniqId', controller.api.schema.update);
   router.delete('/api/schema/:uniqId', controller.api.schema.delete);
 
-  // router.post('/api/multi/data', controller.api.multiData.update);
-
-  // dataHubRpcType: http
-
-  if (app.config.dataHubRpcType === 'http') {
-    router.all('/data/:projectName/:pathname+', contextMiddleWare, controller.data.index);
-  }
+  router.all('/data/:projectName/:pathname+', contextMiddleWare, controller.data.index);
 };

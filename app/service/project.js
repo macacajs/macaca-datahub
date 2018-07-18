@@ -16,6 +16,14 @@ class ProjectService extends Service {
     });
   }
 
+  async queryProjectByName({ projectName }) {
+    return await this.ctx.model.Project.findOne({
+      where: {
+        projectName,
+      },
+    });
+  }
+
   async queryProjectByUniqId({ uniqId }) {
     return await this.ctx.model.Project.findOne({
       where: {
