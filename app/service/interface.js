@@ -4,9 +4,18 @@ const Service = require('egg').Service;
 
 class InterfaceService extends Service {
 
-  async queryInterfaceByHTTPContext(option) {
+  async queryInterfaceByHTTPContext({ projectUniqId, pathname, method }) {
+    const Op = this.ctx.app.Sequelize.Op;
     return await this.ctx.model.Interface.findOne({
-      where: option,
+      where: {
+        projectUniqId,
+        pathname,
+        [Op.or]: [
+          { method },
+          { method: 'ALL' },
+        ]
+        ,
+      },
     });
   }
 

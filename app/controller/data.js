@@ -29,7 +29,7 @@ class SceneController extends Controller {
     });
 
     res ?
-      ctx.body = res :
+      ctx.body = res.data :
       this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
   }
 
