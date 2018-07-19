@@ -23,7 +23,7 @@ class InterfaceController extends Controller {
     const { projectUniqId, pathname, method, description } = ctx.request.body;
     ctx.assertParam({ projectUniqId, pathname, method, description });
     const res = await ctx.service.interface.createInterface({
-      projectUniqId, pathname, method, description,
+      projectUniqId, pathname, method: method.toUpperCase(), description,
     });
     ctx.success(res);
   }
