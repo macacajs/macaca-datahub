@@ -65,10 +65,6 @@ class ProjectService extends Service {
       },
     });
   }
-
-  async syncDataToLocalFile() {
-    return await this.ctx.model.Project.findAll();
-  }
 }
 
 module.exports = ProjectService;
