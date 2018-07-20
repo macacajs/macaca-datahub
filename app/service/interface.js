@@ -19,8 +19,9 @@ class InterfaceService extends Service {
     });
   }
 
-  async queryInterfaceByProjectUniqId({ projectUniqId }) {
+  async queryInterfaceByProjectUniqId({ projectUniqId }, options = {}) {
     return await this.ctx.model.Interface.findAll({
+      ...options,
       where: {
         projectUniqId,
       },

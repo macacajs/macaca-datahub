@@ -15,6 +15,9 @@ module.exports = app => {
       // force: true,
     });
 
+    const ctx = app.createAnonymousContext();
+    await ctx.service.database.importData();
+
     const socketPort = await detectPort(app.config.dataHubSocket.port);
 
     app.config.socket = {

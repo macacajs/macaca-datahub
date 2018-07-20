@@ -26,6 +26,13 @@ class SceneController extends Controller {
     const res = await ctx.service.scene.createScene({
       interfaceUniqId, sceneName, data,
     });
+    const { uniqId: currentScene } = res;
+    await ctx.service.interface.updateInterface({
+      uniqId: interfaceUniqId,
+      payload: {
+        currentScene,
+      },
+    });
     ctx.success(res);
   }
 
@@ -46,8 +53,20 @@ class SceneController extends Controller {
   async delete() {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;
+    const findScene = await ctx.service.scene.querySceneByUniqId({ uniqId });
     const res = await ctx.service.scene.deleteSceneByUniqId({ uniqId });
-    if (res) {
+    if (findScene && res) {
+      const interfaceUniqId = findScene.interfaceUniqId;
+      const allScene = await ctx.service.scene.querySceneByInterfaceUniqId({ interfaceUniqId });
+      const firstScene = allScene[0];
+      if (firstScene) {
+        await ctx.service.interface.updateInterface({
+          uniqId: interfaceUniqId,
+          payload: {
+            currentScene: firstScene.uniqId,
+          },
+        });
+      }
       ctx.success(res);
       return;
     }

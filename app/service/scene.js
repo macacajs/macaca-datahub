@@ -4,8 +4,9 @@ const Service = require('egg').Service;
 
 class SceneService extends Service {
 
-  async querySceneByInterfaceUniqId({ interfaceUniqId }) {
+  async querySceneByInterfaceUniqId({ interfaceUniqId }, options = {}) {
     return await this.ctx.model.Scene.findAll({
+      ...options,
       where: {
         interfaceUniqId,
       },
@@ -15,15 +16,6 @@ class SceneService extends Service {
           'ASC',
         ],
       ],
-    });
-  }
-
-  async querySceneByNameAndInterfaceUniqId({ interfaceUniqId, sceneName }) {
-    return await this.ctx.model.Scene.findOne({
-      where: {
-        interfaceUniqId,
-        sceneName,
-      },
     });
   }
 
