@@ -4,7 +4,7 @@ module.exports = {
   mode: 'local',
   port: 7001,
   view: {
-    xassetsUrl: 'https://npmcdn.com/datahub-view@latest',
-    assetsUrl: 'http://localhost:8080',
+    assetsUrl: 'https://npmcdn.com/datahub-view@2',
+    // assetsUrl: 'http://localhost:8080',
   },
 };
