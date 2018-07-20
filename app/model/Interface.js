@@ -33,7 +33,7 @@ module.exports = app => {
     },
     currentScene: {
       type: STRING,
-      defaultValue: 'default',
+      defaultValue: '',
       allowNull: false,
     },
     proxyConfig: {

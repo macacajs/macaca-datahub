@@ -44,7 +44,7 @@ module.exports = appInfo => {
     },
   };
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: 'ERROR',
   };
 
@@ -73,6 +73,9 @@ module.exports = appInfo => {
   config.modelCommonOption = {
     underscored: false,
   };
+
+  config.exportArchiveBaseDir = path.join(__dirname, '..', 'data');
+  config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
 
   return config;
 
