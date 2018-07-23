@@ -105,8 +105,8 @@ class DataBaseService extends Service {
   }
 
   async exportInterface(interfaceData, projectName) {
-    const exportInterfaceName = `${interfaceData.method}_` +
-    `${interfaceData.pathname.replace(/\//g, '_')}_${interfaceData.uniqId.substr(0, 8)}`;
+    const exportInterfaceName = `${projectName}_${interfaceData.method}_` +
+    `${interfaceData.pathname.replace(/[:/]/g, '_')}_${interfaceData.uniqId.substr(0, 4)}`;
     await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName));
     await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName, 'scene'));
     await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName, 'schema'));
