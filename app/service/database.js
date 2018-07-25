@@ -17,7 +17,7 @@ class DataBaseService extends Service {
     await this.ensureDir(this.baseDir);
     const baseDir = ctx.app.config.exportArchiveBaseDir;
     const contents = await fs.readdir(baseDir);
-    await contents.map(content => {
+    await contents.filter(content => content.endsWith('.json')).map(content => {
       return (async () => {
         const constentPath = path.join(baseDir, content);
         const stat = await fs.stat(constentPath);

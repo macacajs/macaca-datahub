@@ -71,10 +71,15 @@ for (const project of projects) {
       exportName,
       'scene'
     ));
-    const defaultSceneUniqId = '';
+    let defaultSceneUniqId = '';
+    let defaultSceneUniqIdhasSet = false;
     const sceneList = JSON.parse(interfaceData.scenes) || [];
     for (const scene of sceneList) {
       const sceneUniqId = uuid();
+      if (!defaultSceneUniqIdhasSet) {
+        defaultSceneUniqId = sceneUniqId;
+        defaultSceneUniqIdhasSet = true;
+      }
       const { name, data } = scene;
       fs.writeFileSync(path.join(
         baseDir,
