@@ -13,6 +13,7 @@ class DataBaseService extends Service {
 
   async importData() {
     const ctx = this.ctx;
+    if (!ctx.app.config.exportArchiveBaseDir) return;
     await this.ensureDir(this.baseDir);
     const baseDir = ctx.app.config.exportArchiveBaseDir;
     const contents = await fs.readdir(baseDir);
@@ -70,6 +71,7 @@ class DataBaseService extends Service {
   }
 
   async exportData() {
+    if (!this.ctx.app.config.exportArchiveBaseDir) return;
     await this.ensureDir(this.baseDir);
     const projects = await this.ctx.service.project.queryAllProject({
       attributes: {

@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('xutil');
+const fs = require('fs');
 const path = require('path');
 
 module.exports = appInfo => {
@@ -20,14 +21,6 @@ module.exports = appInfo => {
   config.dataHubView = {
     assetsUrl: '//unpkg.com/datahub-view@1',
   };
-
-  if (process.env.DATAHUB_STORE_PATH) {
-    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
-
-    if (_.isExistedDir(storeDir)) {
-      config.dataHubStoreDir = storeDir;
-    }
-  }
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
 
@@ -74,7 +67,12 @@ module.exports = appInfo => {
     underscored: false,
   };
 
-  config.exportArchiveBaseDir = path.join(__dirname, '..', 'data');
+  if (process.env.DATAHUB_STORE_PATH) {
+    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
+    if (!_.isExistedDir(storeDir)) fs.mkdirSync(storeDir);
+    config.exportArchiveBaseDir = storeDir;
+  }
+
   config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
 
   return config;
