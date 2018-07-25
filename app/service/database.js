@@ -17,11 +17,11 @@ class DataBaseService extends Service {
     await this.ensureDir(this.baseDir);
     const baseDir = ctx.app.config.exportArchiveBaseDir;
     const contents = await fs.readdir(baseDir);
-    await contents.filter(content => content.endsWith('.json')).map(content => {
+    await contents.map(content => {
       return (async () => {
         const constentPath = path.join(baseDir, content);
         const stat = await fs.stat(constentPath);
-        if (stat.isFile()) {
+        if (stat.isFile() && content.endsWith('.json')) {
           await this.importProject(constentPath);
         }
         if (stat.isDirectory()) {
