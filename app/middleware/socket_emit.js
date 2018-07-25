@@ -4,7 +4,6 @@ const _ = require('xutil');
 
 const useProxy = Symbol.for('context#useProxy');
 const statusCode = Symbol.for('context#statusCode');
-const proxyResponse = Symbol.for('context#proxyResponse');
 const proxyResponseStatus = Symbol.for('context#proxyResponseStatus');
 
 const socket = require('../socket');
@@ -28,10 +27,9 @@ module.exports = () => {
         res: {
           status: ctx[proxyResponseStatus],
           host: ctx.host,
-          body: ctx.body,
+          body: ctx.response.body,
           headers: ctx.response.headers,
         },
-        proxyResponse: ctx[proxyResponse],
       });
     } else {
       socket.emit({
@@ -47,10 +45,9 @@ module.exports = () => {
           status: ctx[statusCode],
           host: ctx.host,
           headers: ctx.response.headers,
-          body: ctx.body,
+          body: ctx.response.body,
         },
       });
-
     }
   };
 };

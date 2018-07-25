@@ -38,6 +38,7 @@
     "eslint-config-egg": "^5.1.1",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.2",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
