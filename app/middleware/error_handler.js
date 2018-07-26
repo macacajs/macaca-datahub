@@ -6,9 +6,9 @@ module.exports = (/* options, app */) => {
     // internal server error
     if (!ctx.path.startsWith('/data/')) {
       try {
-        return await next();
+        await next();
       } catch (e) {
-        ctx.logger.error(e);
+        ctx.logger.error('[internal error]', e);
         switch (e.name) {
           // uniq index error
           case 'SequelizeUniqueConstraintError':
@@ -17,15 +17,15 @@ module.exports = (/* options, app */) => {
           default:
             ctx.fail(`server error: ${e.message}`);
         }
-        return;
       }
+      return;
     }
 
-    // datahub interface service error
+    // datahub /data/ service error
     try {
       await next();
     } catch (e) {
-      ctx.logger.error('[mock] error', e);
+      ctx.logger.error('[datahub error]', e);
       ctx.fail(`config error: ${e.message}`);
     }
   };

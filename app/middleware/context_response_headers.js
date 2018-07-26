@@ -1,6 +1,6 @@
 'use strict';
 
-const responseHeaders = Symbol.for('context#responseHeaders');
+const responseHeaders = Symbol.for('context#rewriteResponseHeaders');
 
 module.exports = () => {
   return async function contextResponseHeaders(ctx, next) {

@@ -48,5 +48,9 @@ module.exports = app => {
   router.put('/api/schema/:uniqId', controller.api.schema.update);
   router.delete('/api/schema/:uniqId', controller.api.schema.delete);
 
+  router.post('/api/sdk/switch_scene', controller.api.sdk.switchScene);
+  router.post('/api/sdk/switch_multi_scenes', controller.api.sdk.switchMultiScenes);
+  router.post('/api/sdk/switch_all_scenes', controller.api.sdk.switchAllScenes);
+
   router.all('/data/:projectName/:pathname+', contextMiddleWare, controller.data.index);
 };
