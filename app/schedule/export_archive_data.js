@@ -14,6 +14,8 @@ class exportArchiveData extends Subscription {
   }
 
   async subscribe() {
+    // disabled in test NODE_ENV
+    if ([ 'test' ].includes(process.env.NODE_ENV)) return;
     this.excludeAttributes = this.app.config.exportExcludeAttributes;
     if (!this.app.config.exportArchiveBaseDir) return;
     if (this.app.EXPORT_LOCKING === true) return;

@@ -19,6 +19,16 @@ class SceneService extends Service {
     });
   }
 
+  async querySceneByInterfaceUniqIdAndSceneName({ interfaceUniqId, sceneName }, options = {}) {
+    return await this.ctx.model.Scene.findOne({
+      ...options,
+      where: {
+        interfaceUniqId,
+        sceneName,
+      },
+    });
+  }
+
   async querySceneByUniqId({ uniqId }) {
     return await this.ctx.model.Scene.findOne({
       where: {

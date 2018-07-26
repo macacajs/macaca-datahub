@@ -29,7 +29,15 @@ class SceneController extends Controller {
       return;
     }
 
-    const proxyConfig = interfaceData.proxyConfig;
+    const { contextConfig, proxyConfig } = interfaceData;
+
+    if (contextConfig.responseDelay) {
+      ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseInt(contextConfig.responseDelay, 10);
+    }
+    if (contextConfig.responseStatus) {
+      ctx[Symbol.for('context#rewriteResponseStatus')] = Number.parseInt(contextConfig.responseStatus, 10);
+    }
+
     const { enabled: proxyEnabled, proxyList = [], activeIndex = 0 } = proxyConfig;
     ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
     if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
@@ -45,12 +53,13 @@ class SceneController extends Controller {
         headers: ctx.headers,
         timeout: 5 * 1000,
         data: ctx.request.body,
-        dataType: 'json',
+        dataType: 'text',
       });
       for (const key of ALLOWED_PROXY_HEADERS) {
         _res.headers[key] && ctx.set(key, _res.headers[key]);
       }
       ctx[Symbol.for('context#proxyResponseStatus')] = _res.status;
+      ctx.status = _res.status;
       ctx.body = _res.data;
       return;
     }
