@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -25,7 +25,7 @@
     "request": "^2.85.0",
     "semver": "^5.5.0",
     "socket.io": "^2.0.4",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "^4.0.2",
     "xutil": "^1.0.11"
   },
   "devDependencies": {
