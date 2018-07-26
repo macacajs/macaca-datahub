@@ -4,6 +4,10 @@ const Controller = require('egg').Controller;
 
 class SdkController extends Controller {
 
+  get DEFAULT_CONTEXT_CONFIG() {
+    return {};
+  }
+
   async switchScene() {
     const ctx = this.ctx;
     const options = ctx.request.body;
@@ -22,7 +26,7 @@ class SdkController extends Controller {
     const sceneName = options.scene;
 
     // change interface contextConfig
-    const contextConfig = {};
+    const contextConfig = this.DEFAULT_CONTEXT_CONFIG;
     if (!isNaN(options.status)) {
       contextConfig.responseStatus = parseInt(options.status, 10);
     }
@@ -37,20 +41,20 @@ class SdkController extends Controller {
       pathname,
       method,
     });
-    const sceneData = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-      interfaceUniqId: interfaceData.uniqId,
-      sceneName,
-    });
-    const currentScene = sceneData.uniqId;
+
+    const payload = {};
+    if (sceneName) {
+      const sceneData = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+        interfaceUniqId: interfaceData.uniqId,
+        sceneName,
+      });
+      payload.currentScene = sceneData.uniqId;
+    }
+    payload.contextConfig = contextConfig;
+
     await ctx.service.interface.updateInterface({
       uniqId: interfaceData.uniqId,
-      payload: {
-        currentScene,
-        contextConfig: {
-          ...interfaceData.contextConfig,
-          ...contextConfig,
-        },
-      },
+      payload,
     });
   }
 
@@ -83,6 +87,7 @@ class SdkController extends Controller {
         uniqId: interfaceData.uniqId,
         payload: {
           currentScene: sceneData.uniqId,
+          contextConfig: this.DEFAULT_CONTEXT_CONFIG,
         },
       });
     })());
