@@ -32,7 +32,7 @@ class SceneController extends Controller {
     const { contextConfig, proxyConfig } = interfaceData;
 
     if (contextConfig.responseDelay) {
-      ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseInt(contextConfig.responseDelay, 10);
+      ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
     }
     if (contextConfig.responseStatus) {
       ctx[Symbol.for('context#rewriteResponseStatus')] = Number.parseInt(contextConfig.responseStatus, 10);
