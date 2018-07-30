@@ -10,12 +10,12 @@ module.exports = app => {
   } = app;
 
   const contextMiddleWare = compose([
+    middleware.socketEmit(),
     middleware.schemaValidation(),
     middleware.contextCors(),
     middleware.contextDelay(),
     middleware.contextStatus(),
     middleware.contextResponseHeaders(),
-    middleware.socketEmit(),
   ]);
 
   router.get('/', controller.page.home);
