@@ -11,7 +11,7 @@
     "ajv": "^6.4.0",
     "co": "^4.6.0",
     "commander": "^2.12.2",
-    "datahub-view": "^1.0.75",
+    "datahub-view": "^2.0.0",
     "egg": "^2.0.0",
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",
