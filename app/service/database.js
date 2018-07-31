@@ -48,6 +48,7 @@ class DataBaseService extends Service {
         }
         if (stat.isDirectory()) {
           await this.importScene(path.join(constentPath, 'scene'));
+          await this.importSchema(path.join(constentPath, 'schema'));
         }
       })();
     });
@@ -66,6 +67,17 @@ class DataBaseService extends Service {
         const buffer = await fs.readFile(path.join(baseDir, content));
         const data = JSON.parse(buffer);
         await this.ctx.model.Scene.upsert(data);
+      })();
+    });
+  }
+
+  async importSchema(baseDir) {
+    const contents = await fs.readdir(baseDir);
+    await contents.map(content => {
+      return (async () => {
+        const buffer = await fs.readFile(path.join(baseDir, content));
+        const data = JSON.parse(buffer);
+        await this.ctx.model.Schema.upsert(data);
       })();
     });
   }
@@ -123,9 +135,19 @@ class DataBaseService extends Service {
         exclude: this.excludeAttributes,
       },
     });
-    await Promise.all(scenes.map(scene => {
-      return this.exportScene(scene, projectName, exportInterfaceName);
-    }));
+    const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
+      interfaceUniqId: interfaceData.uniqId,
+    }, {
+      attributes: {
+        exclude: this.excludeAttributes,
+      },
+    });
+    await Promise.all(
+      scenes.map(scene => {
+        return this.exportScene(scene, projectName, exportInterfaceName);
+      }).concat(schemas.map(schema => {
+        return this.exportSchema(schema, projectName, exportInterfaceName);
+      })));
   }
 
   async exportScene(scene, projectName, exportInterfaceName) {
@@ -138,6 +160,19 @@ class DataBaseService extends Service {
         `${scene.sceneName}.json`
       ),
       JSON.stringify(scene, null, 2)
+    );
+  }
+
+  async exportSchema(schema, projectName, exportInterfaceName) {
+    await fs.writeFile(
+      path.join(
+        this.baseDir,
+        projectName,
+        exportInterfaceName,
+        'schema',
+        `${schema.type}.json`
+      ),
+      JSON.stringify(schema, null, 2)
     );
   }
 }
