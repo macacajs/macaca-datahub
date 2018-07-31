@@ -4,24 +4,25 @@ const Service = require('egg').Service;
 
 class SchemaService extends Service {
 
-  async querySchemaByInterfaceUniqId() {
-    return await this.ctx.model.Schema.findAll();
+  async querySchemaByInterfaceUniqId({ interfaceUniqId }, options = {}) {
+    return await this.ctx.model.Schema.findAll({
+      ...options,
+      where: {
+        interfaceUniqId,
+      },
+      order: [
+        [
+          'type',
+          'ASC',
+        ],
+      ],
+    });
   }
 
-  async querySchemaByUniqId() {
-    return await this.ctx.model.Schema.findAll();
-  }
-
-  async createSchema() {
-    return await this.ctx.model.Schema.findAll();
-  }
-
-  async updateSchema() {
-    return await this.ctx.model.Schema.findAll();
-  }
-
-  async deleteSchemaByUniqId() {
-    return await this.ctx.model.Schema.findAll();
+  async updateSchema({ interfaceUniqId, type, data }) {
+    return await this.ctx.model.Schema.upsert({
+      interfaceUniqId, type, data,
+    });
   }
 }
 

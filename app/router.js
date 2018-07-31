@@ -43,10 +43,7 @@ module.exports = app => {
   router.delete('/api/scene/:uniqId', controller.api.scene.delete);
 
   router.get('/api/schema', controller.api.schema.showAll);
-  router.get('/api/schema/:uniqId', controller.api.schema.show);
-  router.post('/api/schema', controller.api.schema.create);
-  router.put('/api/schema/:uniqId', controller.api.schema.update);
-  router.delete('/api/schema/:uniqId', controller.api.schema.delete);
+  router.put('/api/schema/:type', controller.api.schema.update);
 
   router.post('/api/sdk/switch_scene', controller.api.sdk.switchScene);
   router.post('/api/sdk/switch_multi_scenes', controller.api.sdk.switchMultiScenes);
