@@ -2,79 +2,73 @@
 
 const Ajv = require('ajv');
 
-const validateSchema = (schemaData, data) => {
-  const ajv = new Ajv();
-  const isValid = ajv.validate(schemaData, data);
-  return {
-    isValid,
-    errors: ajv.errors,
-  };
-};
-
-const needValidate = schemaContent => {
-  return schemaContent.enableSchemaValidate && schemaContent.schemaData;
-};
-
 module.exports = () => {
   return async function schemaValidation(ctx, next) {
-    let {
-      reqSchemaContent = '{}',
-      resSchemaContent = '{}',
-    } = {};
-    // } = await ctx.service.data.getSchemaData(ctx.params.projectId, ctx.params.dataId);
+    const { projectName, pathname } = ctx.params;
+    const method = ctx.method;
+    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
+    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname,
+      method,
+    });
 
-    try {
-      reqSchemaContent = JSON.parse(reqSchemaContent);
-      resSchemaContent = JSON.parse(resSchemaContent);
-    } catch (e) {
-      ctx.body = {
-        success: false,
-        message: 'validation schema parse error please format it or disable schema validation',
-        errors: {
-          projectId: ctx.params.projectId,
-          dataId: ctx.params.dataId,
-        },
-      };
-    }
+    if (!interfaceData) return await next();
+
+    const schemaList = await ctx.service.schema.querySchemaByInterfaceUniqId({
+      interfaceUniqId: interfaceData.uniqId,
+    });
+    const reqSchemaContent = schemaList.find(i => i.type === 'request');
+    const resSchemaContent = schemaList.find(i => i.type === 'response');
+
+    await next();
 
     if (needValidate(reqSchemaContent)) {
       let result = {};
 
-      if (ctx.method === 'POST') {
-        result = validateSchema(reqSchemaContent.schemaData, ctx.request.body);
+      if ([ 'POST', 'PUT' ].includes(ctx.method)) {
+        result = validateSchema(reqSchemaContent.data.schemaData, ctx.request.body);
       } else {
-        result = validateSchema(reqSchemaContent.schemaData, ctx.query);
+        result = validateSchema(reqSchemaContent.data.schemaData, ctx.query);
       }
 
-      const {
-        isValid,
-        errors,
-      } = result;
-
-      if (!isValid) {
+      if (result.isValid === false) {
         ctx.body = {
           success: false,
-          message: 'schema validation error',
-          errors,
+          message: 'request schema validation error',
+          errors: result.errors,
         };
-        return; // not go on
+        return;
       }
     }
-
-    await next();
 
     if (needValidate(resSchemaContent)) {
       const {
         isValid,
         errors,
-      } = validateSchema(resSchemaContent.schemaData, ctx.response.body);
+      } = validateSchema(resSchemaContent.data.schemaData, ctx.response.body);
       if (!isValid) {
         ctx.body = {
           success: false,
-          message: 'schema validation error',
+          message: 'response schema validation error',
           errors,
         };
       }
     }
   };
 };
+
+function validateSchema(schemaData, data) {
+  const ajv = new Ajv({ allErrors: true });
+  const isValid = ajv.validate(schemaData, data);
+  return {
+    isValid,
+    errors: ajv.errors,
+  };
+}
+
+function needValidate(reqSchemaContent) {
+  return reqSchemaContent &&
+    reqSchemaContent.data &&
+    reqSchemaContent.data.enableSchemaValidate;
+}
