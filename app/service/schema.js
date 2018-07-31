@@ -19,9 +19,16 @@ class SchemaService extends Service {
     });
   }
 
-  async updateSchema({ interfaceUniqId, type, data }) {
+  async updateSchema({ interfaceUniqId, type, payload }) {
+    const res = await this.ctx.model.Schema.findOne({
+      where: { interfaceUniqId, type },
+    });
+    const newValue = {
+      ...res.data,
+      ...payload,
+    };
     return await this.ctx.model.Schema.upsert({
-      interfaceUniqId, type, data,
+      interfaceUniqId, type, data: newValue,
     });
   }
 }
