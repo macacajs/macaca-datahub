@@ -4,7 +4,7 @@ module.exports = {
   homepage: 'Home Page',
   dashboard: 'Dashboard',
   project: 'Project',
-  doc: 'Document',
+  document: 'Document',
 
   // resource manage
   'common.delete.fail': 'deletion execute failed',
