@@ -23,10 +23,15 @@ class SchemaService extends Service {
     const res = await this.ctx.model.Schema.findOne({
       where: { interfaceUniqId, type },
     });
-    const newValue = {
-      ...res.data,
-      ...payload,
-    };
+    let newValue = {};
+    if (res && res.data) {
+      newValue = {
+        ...res.data,
+        ...payload,
+      };
+    } else {
+      newValue = payload;
+    }
     return await this.ctx.model.Schema.upsert({
       interfaceUniqId, type, data: newValue,
     });

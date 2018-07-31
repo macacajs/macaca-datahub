@@ -61,6 +61,7 @@ class DataBaseService extends Service {
   }
 
   async importScene(baseDir) {
+    if (!fs.existsSync(baseDir)) return;
     const contents = await fs.readdir(baseDir);
     await contents.map(content => {
       return (async () => {
@@ -72,6 +73,7 @@ class DataBaseService extends Service {
   }
 
   async importSchema(baseDir) {
+    if (!fs.existsSync(baseDir)) return;
     const contents = await fs.readdir(baseDir);
     await contents.map(content => {
       return (async () => {
