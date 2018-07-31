@@ -102,6 +102,32 @@ for (const project of projects) {
       exportName,
       'schema'
     ));
+    const reqSchemaContent = JSON.parse(interfaceData.reqSchemaContent) || {};
+    fs.writeFileSync(path.join(
+      baseDir,
+      project.identifer,
+      exportName,
+      'schema',
+      'request.json'
+    ), JSON.stringify({
+      type: 'request',
+      data: reqSchemaContent,
+      interfaceUniqId: interfaceDataUniqId,
+      uniqId: uuid(),
+    }, null, 2));
+    const resSchemaContent = JSON.parse(interfaceData.resSchemaContent) || {};
+    fs.writeFileSync(path.join(
+      baseDir,
+      project.identifer,
+      exportName,
+      'schema',
+      'response.json'
+    ), JSON.stringify({
+      type: 'response',
+      data: resSchemaContent,
+      interfaceUniqId: interfaceDataUniqId,
+      uniqId: uuid(),
+    }, null, 2));
 
     // create interface dir
     const proxyContent = JSON.parse(interfaceData.proxyContent);
