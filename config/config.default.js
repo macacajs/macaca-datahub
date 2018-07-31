@@ -19,7 +19,7 @@ module.exports = appInfo => {
   };
 
   config.dataHubView = {
-    assetsUrl: '//unpkg.com/datahub-view@1',
+    assetsUrl: '//unpkg.com/datahub-view@2',
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
