@@ -43,7 +43,8 @@ if (program.optionstr) {
 }
 
 (async () => {
-  if (!await update()) return;
+  const needUpdate = await update();
+  if (needUpdate) return;
 
   const datahub = new DataHub(options);
 

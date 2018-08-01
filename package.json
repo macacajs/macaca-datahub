@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "2.0.4",
+  "version": "2.0.5-1",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -9,7 +9,6 @@
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
-    "co": "^4.6.0",
     "commander": "^2.12.2",
     "datahub-view": "^2.0.0",
     "egg": "^2.0.0",
@@ -17,10 +16,9 @@
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^3.1.0",
     "koa-compose": "^4.0.0",
-    "macaca-doctor": "^2.0.5",
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
-    "npm-update": "^1.0.8",
+    "npm-update": "^2.0.0",
     "path-to-regexp": "^2.2.1",
     "request": "^2.85.0",
     "semver": "^5.5.0",
