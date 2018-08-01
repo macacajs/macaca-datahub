@@ -26,11 +26,10 @@ class SceneController extends Controller {
     const res = await ctx.service.scene.createScene({
       interfaceUniqId, sceneName, data,
     });
-    const { uniqId: currentScene } = res;
     await ctx.service.interface.updateInterface({
       uniqId: interfaceUniqId,
       payload: {
-        currentScene,
+        currentScene: sceneName,
       },
     });
     ctx.success(res);
@@ -63,7 +62,7 @@ class SceneController extends Controller {
         await ctx.service.interface.updateInterface({
           uniqId: interfaceUniqId,
           payload: {
-            currentScene: firstScene.uniqId,
+            currentScene: firstScene.sceneName,
           },
         });
       }
