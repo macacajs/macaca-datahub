@@ -31,7 +31,7 @@ class SdkController extends Controller {
       contextConfig.responseStatus = parseInt(options.status, 10);
     }
     if (!isNaN(options.delay)) {
-      contextConfig.responseDelay = parseInt(options.delay, 10);
+      contextConfig.responseDelay = parseFloat(options.delay);
     }
     if (typeof options.headers === 'object') contextConfig.responseHeaders = options.headers;
 
@@ -44,11 +44,7 @@ class SdkController extends Controller {
 
     const payload = {};
     if (sceneName) {
-      const sceneData = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-        interfaceUniqId: interfaceData.uniqId,
-        sceneName,
-      });
-      payload.currentScene = sceneData.uniqId;
+      payload.currentScene = sceneName;
     }
     payload.contextConfig = contextConfig;
 
@@ -86,7 +82,7 @@ class SdkController extends Controller {
       await ctx.service.interface.updateInterface({
         uniqId: interfaceData.uniqId,
         payload: {
-          currentScene: sceneData.uniqId,
+          currentScene: sceneData.sceneName,
           contextConfig: this.DEFAULT_CONTEXT_CONFIG,
         },
       });

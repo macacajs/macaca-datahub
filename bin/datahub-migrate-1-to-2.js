@@ -71,14 +71,14 @@ for (const project of projects) {
       exportName,
       'scene'
     ));
-    let defaultSceneUniqId = '';
-    let defaultSceneUniqIdhasSet = false;
+    let defaultSceneName = '';
+    let defaultSceneNamehasSet = false;
     const sceneList = JSON.parse(interfaceData.scenes) || [];
     for (const scene of sceneList) {
       const sceneUniqId = uuid();
-      if (!defaultSceneUniqIdhasSet) {
-        defaultSceneUniqId = sceneUniqId;
-        defaultSceneUniqIdhasSet = true;
+      if (!defaultSceneNamehasSet) {
+        defaultSceneName = scene.name;
+        defaultSceneNamehasSet = true;
       }
       const { name, data } = scene;
       fs.writeFileSync(path.join(
@@ -152,7 +152,7 @@ for (const project of projects) {
       method: interfaceData.method,
       projectUniqId,
       description: interfaceData.description,
-      currentScene: defaultSceneUniqId,
+      currentScene: defaultSceneName,
       proxyConfig,
       contextConfig: {},
       uniqId: interfaceDataUniqId,
@@ -164,8 +164,3 @@ function cdir(dir) {
   rimraf.sync(dir);
   fs.mkdirSync(dir);
 }
-
-
-// for (const interfaceData of archiveData) {
-//   console.log('interfaceData', interfaceData);
-// }
