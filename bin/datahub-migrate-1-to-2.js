@@ -56,8 +56,7 @@ for (const project of projects) {
     const interfaceDataUniqId = uuid();
     const exportName = interfaceData.identifer + '_' +
       interfaceData.method + '_' +
-      interfaceData.pathname.replace(/[:/]/g, '_') + '_' +
-      interfaceDataUniqId.substr(0, 4);
+      interfaceData.pathname.replace(/[:/]/g, '#');
     cdir(path.join(
       baseDir,
       project.identifer,
