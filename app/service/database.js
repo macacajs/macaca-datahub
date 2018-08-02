@@ -2,6 +2,7 @@
 
 const fs = require('mz/fs');
 const path = require('path');
+const rimraf = require('rimraf');
 const Service = require('egg').Service;
 
 class DataBaseService extends Service {
@@ -9,6 +10,16 @@ class DataBaseService extends Service {
     super(ctx);
     this.excludeAttributes = ctx.app.config.exportExcludeAttributes;
     this.baseDir = ctx.app.config.exportArchiveBaseDir;
+  }
+
+  async ensureDir(dir) {
+    if (fs.existsSync(dir)) return;
+    await fs.mkdir(dir);
+  }
+
+  async ensureNewDir(dir) {
+    if (fs.existsSync(dir)) rimraf.sync(dir);
+    await fs.mkdir(dir);
   }
 
   async importData() {
@@ -86,7 +97,7 @@ class DataBaseService extends Service {
 
   async exportData() {
     if (!this.ctx.app.config.exportArchiveBaseDir) return;
-    await this.ensureDir(this.baseDir);
+    await this.ensureNewDir(this.baseDir);
     const projects = await this.ctx.service.project.queryAllProject({
       attributes: {
         exclude: this.excludeAttributes,
@@ -95,11 +106,6 @@ class DataBaseService extends Service {
     await Promise.all(projects.map(project => {
       return this.exportProject(project);
     }));
-  }
-
-  async ensureDir(dir) {
-    if (fs.existsSync(dir)) return;
-    await fs.mkdir(dir);
   }
 
   async exportProject(project) {

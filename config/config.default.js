@@ -11,8 +11,21 @@ module.exports = appInfo => {
   config.keys = appInfo.name;
 
   config.middleware = [
+    'exportData',
     'errorHandler',
   ];
+
+  config.exportData = {
+    match(ctx) {
+      return [
+        '/api/project',
+        '/api/interface',
+        '/api/scene',
+        '/api/schema',
+      ].some(path => ctx.path.startsWith(path))
+      && [ 'POST', 'PUT', 'DELETE' ].includes(ctx.method);
+    },
+  };
 
   config.notfound = {
     pageUrl: '/notfound',
