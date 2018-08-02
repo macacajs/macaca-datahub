@@ -19,7 +19,6 @@
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
     "npm-update": "^2.0.0",
-    "path-to-regexp": "^2.2.1",
     "request": "^2.85.0",
     "semver": "^5.5.0",
     "socket.io": "^2.0.4",
