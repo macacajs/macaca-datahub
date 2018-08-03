@@ -46,6 +46,15 @@ DataHub 将 Mock 数据与字段描述整合处理，自动生成接口文档。
 
 DataHub 采用多场景设计，能够根据场景名称进行数据分组，同时提供了场景数据的增、删、改，可以通过 DataHub 的面板界面进行操作。
 
+Datahub 可以定义动态路径，底层使用的是 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 。
+
+| DataHub API 定义 | 匹配的 URL 路径      |
+| ----             | ----                 |
+| api1/books       | api1/books           |
+| api2/:foo/:bar   | api2/group/project   |
+| api3/:id         | api3/fred            |
+| api3/:id         | api3/baz             |
+
 <div align="center">
   <img src="https://wx3.sinaimg.cn/large/6d308bd9gy1fpbm9x6ctkj21kw13a16k.jpg" width="75%" />
 </div>
