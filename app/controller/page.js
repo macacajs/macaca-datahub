@@ -3,55 +3,57 @@
 const Controller = require('egg').Controller;
 
 class PageController extends Controller {
-  async home() {
-    this.ctx.body = await this.app.render({}, {
-      title: this.ctx.gettext('homepage'),
-      pageId: 'home',
+  get commonPageConfig() {
+    return {
       assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       version: this.app.config.pkg.version,
+    };
+  }
+
+  async home() {
+    this.ctx.body = await this.app.render({}, {
+      ...this.commonPageConfig,
+      title: this.ctx.gettext('homepage'),
+      pageId: 'home',
     });
   }
 
   async dashboard() {
-    const res = await this.ctx.service.project.query();
+    const res = await this.ctx.service.project.queryAllProject();
     this.ctx.body = await this.app.render(res, {
+      ...this.commonPageConfig,
       title: this.ctx.gettext('dashboard'),
       pageId: 'dashboard',
-      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
-      version: this.app.config.pkg.version,
     });
   }
 
   async project() {
-    const res = await this.ctx.service.project.query();
-    const projectId = this.ctx.params.projectId;
-    this.ctx.body = await this.app.render(res, {
-      title: `${this.ctx.gettext('project')} - ${projectId}`,
-      pageId: 'project',
-      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
+    const projectName = this.ctx.params.projectName;
+    const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
+    this.ctx.body = await this.app.render({
+      ...res.get({ plain: true }),
       socket: this.app.config.socket,
-      version: this.app.config.pkg.version,
-      projectId,
+    }, {
+      ...this.commonPageConfig,
+      title: `${this.ctx.gettext('project')} - ${projectName}`,
+      pageId: 'project',
     });
   }
 
   async doc() {
-    const res = await this.ctx.service.project.query();
-    const projectId = this.ctx.params.projectId;
+    const projectName = this.ctx.params.projectName;
+    const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
     this.ctx.body = await this.app.render(res, {
-      title: `${this.ctx.gettext('doc')} - ${projectId}`,
-      pageId: 'doc',
-      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
-      socket: this.app.config.socket,
-      version: this.app.config.pkg.version,
-      projectId,
+      ...this.commonPageConfig,
+      title: `${this.ctx.gettext('document')} - ${projectName}`,
+      pageId: 'document',
     });
   }
 
   async notfound() {
     this.ctx.body = {
       success: false,
-      errorMessage: 'databub api not found',
+      errorMessage: 'databub interface not found',
     };
   }
 }

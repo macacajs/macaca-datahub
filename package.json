@@ -1,27 +1,24 @@
 {
   "name": "macaca-datahub",
-  "version": "1.0.75",
+  "version": "2.1.1",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
-    "macaca-datahub": "./bin/datahub.js"
+    "datahub-migrate-1-to-2": "./bin/datahub-migrate-1-to-2.js"
   },
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
-    "co": "^4.6.0",
     "commander": "^2.12.2",
-    "datahub-view": "^1.0.75",
+    "datahub-view": "^2.0.0",
     "egg": "^2.0.0",
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^3.1.0",
     "koa-compose": "^4.0.0",
-    "macaca-doctor": "^2.0.5",
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
-    "npm-update": "^1.0.6",
-    "path-to-regexp": "^2.2.1",
+    "npm-update": "^2.0.0",
     "request": "^2.85.0",
     "semver": "^5.5.0",
     "socket.io": "^2.0.4",
@@ -39,6 +36,8 @@
     "eslint-config-egg": "^5.1.1",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.2",
+    "uuid": "^3.3.2",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {

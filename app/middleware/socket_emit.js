@@ -3,15 +3,16 @@
 const _ = require('xutil');
 
 const useProxy = Symbol.for('context#useProxy');
-const statusCode = Symbol.for('context#statusCode');
-const proxyResponse = Symbol.for('context#proxyResponse');
 const proxyResponseStatus = Symbol.for('context#proxyResponseStatus');
+const rewriteResponseStatus = Symbol.for('context#rewriteResponseStatus');
 
 const socket = require('../socket');
 
 module.exports = () => {
   return async function socketEmit(ctx, next) {
     await next();
+
+    const rewriteResponseStatusCode = ctx[rewriteResponseStatus];
 
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
 
@@ -26,12 +27,11 @@ module.exports = () => {
           body: ctx.request.body,
         },
         res: {
-          status: ctx[proxyResponseStatus],
+          status: rewriteResponseStatusCode || ctx[proxyResponseStatus],
           host: ctx.host,
-          body: ctx.body,
+          body: ctx.response.body,
           headers: ctx.response.headers,
         },
-        proxyResponse: ctx[proxyResponse],
       });
     } else {
       socket.emit({
@@ -44,13 +44,12 @@ module.exports = () => {
           body: ctx.request.body,
         },
         res: {
-          status: ctx[statusCode],
+          status: rewriteResponseStatusCode || ctx.status,
           host: ctx.host,
           headers: ctx.response.headers,
-          body: ctx.body,
+          body: ctx.response.body,
         },
       });
-
     }
   };
 };

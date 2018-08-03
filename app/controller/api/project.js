@@ -4,46 +4,61 @@ const Controller = require('egg').Controller;
 
 class ProjectController extends Controller {
 
-  async query() {
+  async showAll() {
     const ctx = this.ctx;
-    const res = await ctx.service.project.query();
-    this.ctx.body = res;
-  }
-
-  async upsert() {
-    const ctx = this.ctx;
-    const body = ctx.request.body;
-    const identifer = body.identifer;
-
-    const res = await ctx.service.project.upsertById(identifer, body);
-
-    if (res) {
-      this.ctx.body = {
-        success: true,
-      };
-    } else {
-      this.ctx.body = {
-        success: false,
+    const res = await ctx.service.project.queryAllProject({ raw: true });
+    for (const item of res) {
+      const iterfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({
+        projectUniqId: item.uniqId,
+      });
+      item.capacity = {
+        count: iterfaceList.length,
+        size: iterfaceList.length, // TODO calculate size
       };
     }
+    ctx.success(res);
   }
 
-  async remove() {
+  async show() {
     const ctx = this.ctx;
-    const body = ctx.request.body;
-    const identifer = body.identifer;
-    await ctx.service.data.removeByProjectId(identifer);
-    const res = await ctx.service.project.removeById(identifer);
+    const { uniqId } = ctx.params;
+    const res = await ctx.service.project.queryProjectByUniqId({ uniqId });
+    ctx.success(res);
+  }
 
-    if (res) {
-      this.ctx.body = {
-        success: true,
-      };
-    } else {
-      this.ctx.body = {
-        success: false,
-      };
-    }
+  async create() {
+    const ctx = this.ctx;
+    const {
+      projectName,
+      description,
+    } = ctx.request.body;
+    ctx.assertParam({ projectName, description });
+    const res = await ctx.service.project.createProject({
+      projectName,
+      description,
+    });
+    ctx.success(res);
+  }
+
+  async update() {
+    const ctx = this.ctx;
+    const { uniqId } = ctx.params;
+    const payload = {};
+    [ 'description', 'projectName' ].forEach(i => {
+      if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
+    });
+    const res = await ctx.service.project.updateProject({
+      uniqId,
+      payload,
+    });
+    ctx.success(res);
+  }
+
+  async delete() {
+    const ctx = this.ctx;
+    const { uniqId } = ctx.params;
+    const res = await ctx.service.project.deleteProjectByUniqId({ uniqId });
+    ctx.success(res);
   }
 }
 

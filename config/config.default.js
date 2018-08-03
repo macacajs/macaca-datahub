@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('xutil');
+const fs = require('fs');
 const path = require('path');
 
 module.exports = appInfo => {
@@ -10,24 +11,29 @@ module.exports = appInfo => {
   config.keys = appInfo.name;
 
   config.middleware = [
+    'exportData',
     'errorHandler',
   ];
+
+  config.exportData = {
+    match(ctx) {
+      return [
+        '/api/project',
+        '/api/interface',
+        '/api/scene',
+        '/api/schema',
+      ].some(path => ctx.path.startsWith(path))
+      && [ 'POST', 'PUT', 'DELETE' ].includes(ctx.method);
+    },
+  };
 
   config.notfound = {
     pageUrl: '/notfound',
   };
 
   config.dataHubView = {
-    assetsUrl: '//unpkg.com/datahub-view@1',
+    assetsUrl: '//unpkg.com/datahub-view@2',
   };
-
-  if (process.env.DATAHUB_STORE_PATH) {
-    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
-
-    if (_.isExistedDir(storeDir)) {
-      config.dataHubStoreDir = storeDir;
-    }
-  }
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
 
@@ -44,12 +50,12 @@ module.exports = appInfo => {
     },
   };
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: 'ERROR',
   };
 
   config.i18n = {
-    defaultLocale: 'zh_CN',
+    defaultLocale: 'en_US',
     queryField: 'locale',
     cookieField: 'locale',
     cookieMaxAge: '1y',
@@ -69,6 +75,18 @@ module.exports = appInfo => {
     logging: false,
     operatorsAliases: false,
   };
+
+  config.modelCommonOption = {
+    underscored: false,
+  };
+
+  if (process.env.DATAHUB_STORE_PATH) {
+    const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
+    if (!_.isExistedDir(storeDir)) fs.mkdirSync(storeDir);
+    config.exportArchiveBaseDir = storeDir;
+  }
+
+  config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
 
   return config;
 

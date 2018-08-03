@@ -5,7 +5,7 @@ module.exports = (/* appInfo */) => {
 
   // for datahub-view
   config.dataHubView = {
-    assetsUrl: 'http://localhost:8080',
+    // assetsUrl: 'http://localhost:8080',
   };
 
   exports.logger = {

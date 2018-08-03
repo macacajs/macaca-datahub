@@ -28,7 +28,6 @@ program
       '  Commands:',
       '',
       '    server          start DataHub server',
-      '    doctor          detect environment',
       '',
       '  Options:',
       '',
@@ -55,7 +54,7 @@ if (!cmd) {
   return program.help();
 }
 
-const file = path.join(__dirname, `${pkg.name}-${cmd}.js`);
+const file = path.join(__dirname, `datahub-${cmd}.js`);
 
 if (!_.isExistedFile(file)) {
   console.log('%s command `%s` not found', EOL, chalk.yellow(cmd));

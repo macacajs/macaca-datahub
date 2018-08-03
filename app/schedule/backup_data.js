@@ -13,7 +13,6 @@ class BackupData extends Subscription {
     return {
       cron: '0 0 0 * * *',
       type: 'worker',
-      immediate: true,
     };
   }
 

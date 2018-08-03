@@ -4,8 +4,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 RUN apk --no-cache add bash
 
-RUN npm config set unsafe-perm=true
-
 RUN npm i -g --verbose macaca-datahub --registry=https://registry.npm.taobao.org
 
 COPY ./entrypoint.sh /entrypoint.sh

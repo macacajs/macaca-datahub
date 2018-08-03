@@ -1,5 +1,7 @@
 'use strict';
 
+const assert = require('assert');
+
 module.exports = {
   success(data = {}) {
     this.body = {
@@ -8,10 +10,17 @@ module.exports = {
     };
   },
 
-  fail(message = '') {
+  fail(message = '', data) {
     this.body = {
       success: false,
       message,
+      data,
     };
+  },
+
+  assertParam(params = {}) {
+    for (const key in params) {
+      assert(params[key], new TypeError(`${key} is required`));
+    }
   },
 };
