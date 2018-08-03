@@ -1,22 +1,53 @@
 'use strict';
 
 const Service = require('egg').Service;
+const pathToRegexp = require('path-to-regexp');
 
 class InterfaceService extends Service {
 
   async queryInterfaceByHTTPContext({ projectUniqId, pathname, method }) {
     const Op = this.ctx.app.Sequelize.Op;
-    return await this.ctx.model.Interface.findOne({
+    const res = await this.ctx.model.Interface.findOne({
       where: {
         projectUniqId,
         pathname,
-        [Op.or]: [
-          { method },
-          { method: 'ALL' },
-        ]
-        ,
+        method: {
+          [Op.or]: [ method, 'ALL' ],
+        },
       },
     });
+    if (!res) {
+      return await this.queryInterfaceByHTTPContextAndPathRegexp({
+        projectUniqId, pathname, method,
+      });
+    }
+    return res;
+  }
+
+  async queryInterfaceByHTTPContextAndPathRegexp({ projectUniqId, pathname, method }) {
+    const Op = this.ctx.app.Sequelize.Op;
+    const allInterfaceList = await this.ctx.model.Interface.findAll({
+      where: {
+        projectUniqId,
+        method: {
+          [Op.or]: [ method, 'ALL' ],
+        },
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
+    for (const interfaceData of allInterfaceList) {
+      const re = pathToRegexp(interfaceData.pathname);
+      const execResult = re.test(pathname);
+      if (execResult) {
+        return interfaceData;
+      }
+    }
+    return null;
   }
 
   async queryInterfaceByProjectUniqId({ projectUniqId }, options = {}) {

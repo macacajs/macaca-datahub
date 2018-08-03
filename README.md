@@ -74,6 +74,17 @@ DataHub adopts multi-scenario design, can group data according to the scene name
 
 DataHub provides a dashboard for you to manage your data. You can group data by scene, or by stage such as development, testing, or staging. Datahub provides standard CRUD funtions.
 
+Datahub use [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for dynamic path matching.
+
+API name example:
+
+| DataHub API name | matched request path |
+| ----             | ----                 |
+| api1/books       | api1/books           |
+| api2/:foo/:bar   | api2/group/project   |
+| api3/:id         | api3/fred            |
+| api3/:id         | api3/baz             |
+
 <div align="center">
   <img src="https://wx4.sinaimg.cn/large/6d308bd9gy1fpbmdxv2ehj21kw13awr0.jpg" width="75%" />
 </div>
