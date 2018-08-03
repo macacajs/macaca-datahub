@@ -55,7 +55,7 @@ for (const project of projects) {
     // create interface dir
     const interfaceDataUniqId = uuid();
     const exportName = interfaceData.identifer + '_' +
-      interfaceData.method + '_' +
+      'ALL_' +
       interfaceData.pathname.replace(/[:/]/g, '#');
     cdir(path.join(
       baseDir,
@@ -148,7 +148,7 @@ for (const project of projects) {
     fs.writeFileSync(path.join(baseDir, project.identifer, `${exportName}.json`), JSON.stringify({
       protocol: 'http',
       pathname: interfaceData.pathname,
-      method: interfaceData.method,
+      method: 'ALL',
       projectUniqId,
       description: interfaceData.description,
       currentScene: defaultSceneName,
