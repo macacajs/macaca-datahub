@@ -256,7 +256,7 @@ Run with existed DataHub's database in your host.
 ```bash
 $ docker run -it \
   --name macaca-datahub \
-  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
+  -v $HOME/.macaca-datahub:/root/.macaca-datahub \
   -p 9200:9200 \
   -p 9300:9300 \
   macacajs/macaca-datahub
@@ -268,7 +268,7 @@ Run as a service.
 ```bash
 $ docker run \
   --name macaca-datahub \
-  -v $HOME/.macaca-datahub/macaca-datahub.data:/root/.macaca-datahub/macaca-datahub.data \
+  -v $HOME/.macaca-datahub:/root/.macaca-datahub \
   -p 9200:9200 \
   -p 9300:9300 \
   -d macacajs/macaca-datahub
