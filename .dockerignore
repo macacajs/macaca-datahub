@@ -1,3 +1,11 @@
-.git
-logs
+data
+coverage
 node_modules
+test
+run
+docker
+database
+logs
+.*
+*.md
+*.yml

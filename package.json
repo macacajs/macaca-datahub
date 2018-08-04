@@ -45,6 +45,8 @@
     "node": ">=8.9.0"
   },
   "scripts": {
+    "start": "eggctl start --port=9200 --title=egg-server-datahub",
+    "stop": "eggctl stop --title=egg-server-datahub",
     "dev": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "debug": "egg-bin debug",
     "test": "npm run test-local",

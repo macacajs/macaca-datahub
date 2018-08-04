@@ -32,13 +32,13 @@ module.exports = appInfo => {
   };
 
   config.dataHubView = {
-    assetsUrl: '//unpkg.com/datahub-view@2',
+    assetsUrl: 'https://unpkg.com/datahub-view@2',
   };
 
-  config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL;
+  config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';
 
   config.dataHubSocket = {
-    port: 9300,
+    port: process.env.DATAHUB_SOCKET_IO_PORT || 9300,
   };
 
   config.security = {

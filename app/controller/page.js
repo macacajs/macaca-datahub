@@ -32,7 +32,7 @@ class PageController extends Controller {
     const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
     this.ctx.body = await this.app.render({
       ...res.get({ plain: true }),
-      socket: this.app.config.socket,
+      socket: this.app.config.dataHubSocket,
     }, {
       ...this.commonPageConfig,
       title: `${this.ctx.gettext('project')} - ${projectName}`,

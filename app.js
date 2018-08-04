@@ -1,34 +1,14 @@
 'use strict';
 
-const _ = require('xutil');
-
-const socket = require('./app/socket');
-
-const chalk = _.chalk;
-const detectPort = _.detectPort;
+const { chalk } = require('xutil');
 
 module.exports = app => {
-  app.logger.info(`${chalk.cyan('launch datahub at:')} ${app.config.sequelize.storage}`);
-
-  app.beforeStart(async () => {
-    const exportArchiveBaseDir = app.config.exportArchiveBaseDir;
-
-    await app.model.sync({
-      force: !!exportArchiveBaseDir,
-    });
-
-    if (exportArchiveBaseDir) {
-      const ctx = app.createAnonymousContext();
+  app.messenger.on('worker_import_data', exportArchiveBaseDir => {
+    const ctx = app.createAnonymousContext();
+    ctx.runInBackground(async () => {
+      app.logger.info(`${chalk.cyan('import datahub from:')} ${exportArchiveBaseDir}`);
       await ctx.service.database.importData();
-    }
-
-    const socketPort = await detectPort(app.config.dataHubSocket.port);
-
-    app.config.socket = {
-      port: socketPort,
-    };
-
-    socket.listen(socketPort);
+    });
   });
 };
 

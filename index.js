@@ -13,6 +13,7 @@ const defaultOptions = {
   port: 9200,
   mode: 'unittest',
   protocol: 'http',
+  socketIoPort: 9300,
 };
 
 class DataHub {
@@ -20,7 +21,7 @@ class DataHub {
     this.options = Object.assign(defaultOptions, options);
   }
 
-  startServer() {
+  async startServer() {
     const args = Array.prototype.slice.call(arguments);
     const options = Object.assign(this.options, args[0] || {});
 
@@ -40,36 +41,19 @@ class DataHub {
     process.env.EGG_SERVER_ENV = options.mode;
     process.env.EGG_MASTER_LOGGER_LEVEL = 'ERROR';
 
-    const promise = detectPort(options.port)
-      .then(_port => {
-        if (options.port === _port) {
-          const inDocker = process.env.RUN_MODE === 'docker';
-          const ip = inDocker ? '127.0.0.1' : ipv4;
-          const host = chalk.cyan.underline(`http://${ip}:${(_port)}`);
-          console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
-          return eggServer.startCluster({
-            workers: 1,
-            port: _port,
-            baseDir: __dirname,
-          });
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    const socketIoPort = await detectPort(options.socketIoPort);
+    process.env.DATAHUB_SOCKET_IO_PORT = socketIoPort;
 
-    if (args.length > 1) {
-      const cb = args[1];
-
-      return promise
-        .then(data => {
-          cb.call(this, null, data);
-        })
-        .catch(err => {
-          cb.call(this, `Error occurred: ${err}`);
-        });
-    }
-    return promise;
+    const serverPort = await detectPort(options.port);
+    const inDocker = process.env.RUN_MODE === 'docker';
+    const ip = inDocker ? '127.0.0.1' : ipv4;
+    const host = chalk.cyan.underline(`http://${ip}:${(serverPort)}`);
+    console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
+    return eggServer.startCluster({
+      workers: 1,
+      port: serverPort,
+      baseDir: __dirname,
+    });
   }
 }
 
