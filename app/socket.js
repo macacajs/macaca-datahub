@@ -19,7 +19,7 @@ class SocketMQ {
   }
 
   listen(port) {
-    console.log(`websocket server start at: ${chalk.cyan(port)}`);
+    console.log(`Websocket server start at: ${chalk.cyan(port)}`);
     io.listen(port);
   }
 }

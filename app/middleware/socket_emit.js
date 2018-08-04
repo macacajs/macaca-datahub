@@ -6,8 +6,6 @@ const useProxy = Symbol.for('context#useProxy');
 const proxyResponseStatus = Symbol.for('context#proxyResponseStatus');
 const rewriteResponseStatus = Symbol.for('context#rewriteResponseStatus');
 
-const socket = require('../socket');
-
 module.exports = () => {
   return async function socketEmit(ctx, next) {
     await next();
@@ -17,7 +15,7 @@ module.exports = () => {
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
 
     if (ctx[useProxy]) {
-      socket.emit({
+      ctx.app.messenger.sendToAgent('emit_socket_data', {
         type: 'http',
         date,
         req: {
@@ -34,7 +32,7 @@ module.exports = () => {
         },
       });
     } else {
-      socket.emit({
+      ctx.app.messenger.sendToAgent('emit_socket_data', {
         type: 'http',
         date,
         req: {

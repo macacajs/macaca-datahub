@@ -1,14 +1,21 @@
-FROM node:8.11.1-alpine
+FROM node:8-alpine
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.aliyun.com/g' /etc/apk/repositories
 
-RUN apk --no-cache add bash
+RUN apk --no-cache add bash python
 
-RUN npm i -g --verbose macaca-datahub --registry=https://registry.npm.taobao.org
+ENV RUN_MODE=docker
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY . /root/datahub
+
+WORKDIR /root/datahub
+
+RUN npm install --production --verbose && ln -s /root/logs .
 
 HEALTHCHECK --interval=10s --retries=6 \
   CMD wget -O /dev/null localhost:9200 || exit 1
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
+
+EXPOSE 9200 9300
+CMD ["npm", "start"]
