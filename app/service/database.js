@@ -28,18 +28,16 @@ class DataBaseService extends Service {
     await this.ensureDir(this.baseDir);
     const baseDir = ctx.app.config.exportArchiveBaseDir;
     const contents = await fs.readdir(baseDir);
-    await contents.map(content => {
-      return (async () => {
-        const constentPath = path.join(baseDir, content);
-        const stat = await fs.stat(constentPath);
-        if (stat.isFile() && content.endsWith('.json')) {
-          await this.importProject(constentPath);
-        }
-        if (stat.isDirectory()) {
-          await this.importProjectRelated(constentPath);
-        }
-      })();
-    });
+    await Promise.all(contents.map(async content => {
+      const constentPath = path.join(baseDir, content);
+      const stat = await fs.stat(constentPath);
+      if (stat.isFile() && content.endsWith('.json')) {
+        await this.importProject(constentPath);
+      }
+      if (stat.isDirectory()) {
+        await this.importProjectRelated(constentPath);
+      }
+    }));
   }
 
   async importProject(contentPath) {
@@ -50,19 +48,17 @@ class DataBaseService extends Service {
 
   async importProjectRelated(baseDir) {
     const contents = await fs.readdir(baseDir);
-    await contents.map(content => {
-      return (async () => {
-        const constentPath = path.join(baseDir, content);
-        const stat = await fs.stat(constentPath);
-        if (stat.isFile()) {
-          await this.importInterface(constentPath);
-        }
-        if (stat.isDirectory()) {
-          await this.importScene(path.join(constentPath, 'scene'));
-          await this.importSchema(path.join(constentPath, 'schema'));
-        }
-      })();
-    });
+    await Promise.all(contents.map(async content => {
+      const constentPath = path.join(baseDir, content);
+      const stat = await fs.stat(constentPath);
+      if (stat.isFile()) {
+        await this.importInterface(constentPath);
+      }
+      if (stat.isDirectory()) {
+        await this.importScene(path.join(constentPath, 'scene'));
+        await this.importSchema(path.join(constentPath, 'schema'));
+      }
+    }));
   }
 
   async importInterface(contentPath) {
@@ -74,25 +70,21 @@ class DataBaseService extends Service {
   async importScene(baseDir) {
     if (!fs.existsSync(baseDir)) return;
     const contents = await fs.readdir(baseDir);
-    await contents.map(content => {
-      return (async () => {
-        const buffer = await fs.readFile(path.join(baseDir, content));
-        const data = JSON.parse(buffer);
-        await this.ctx.model.Scene.upsert(data);
-      })();
-    });
+    await Promise.all(contents.map(async content => {
+      const buffer = await fs.readFile(path.join(baseDir, content));
+      const data = JSON.parse(buffer);
+      await this.ctx.model.Scene.upsert(data);
+    }));
   }
 
   async importSchema(baseDir) {
     if (!fs.existsSync(baseDir)) return;
     const contents = await fs.readdir(baseDir);
-    await contents.map(content => {
-      return (async () => {
-        const buffer = await fs.readFile(path.join(baseDir, content));
-        const data = JSON.parse(buffer);
-        await this.ctx.model.Schema.upsert(data);
-      })();
-    });
+    await Promise.all(contents.map(async content => {
+      const buffer = await fs.readFile(path.join(baseDir, content));
+      const data = JSON.parse(buffer);
+      await this.ctx.model.Schema.upsert(data);
+    }));
   }
 
   async exportData() {

@@ -58,9 +58,9 @@ class SdkController extends Controller {
     const ctx = this.ctx;
     const optionsList = ctx.request.body;
     if (Array.isArray(optionsList)) {
-      await optionsList.map(options => (async () => {
-        await this.switchOneScene(options);
-      })());
+      await Promise.all(optionsList.map(options => {
+        return this.switchOneScene(options);
+      }));
     }
     ctx.success();
   }
@@ -73,7 +73,7 @@ class SdkController extends Controller {
     const sceneName = options.scene;
     const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
     const interfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({ projectUniqId });
-    await interfaceList.map(interfaceData => (async () => {
+    await Promise.all(interfaceList.map(async interfaceData => {
       const sceneData = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
         interfaceUniqId: interfaceData.uniqId,
         sceneName,
@@ -86,7 +86,7 @@ class SdkController extends Controller {
           contextConfig: this.DEFAULT_CONTEXT_CONFIG,
         },
       });
-    })());
+    }));
     ctx.success();
   }
 }
