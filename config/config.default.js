@@ -74,6 +74,7 @@ module.exports = appInfo => {
     storage: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
     logging: false,
     operatorsAliases: false,
+    dialectModulePath: require.resolve('sqlite3'),
   };
 
   config.modelCommonOption = {
