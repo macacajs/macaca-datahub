@@ -35,12 +35,23 @@ class SdkController extends Controller {
     }
     if (typeof options.headers === 'object') contextConfig.responseHeaders = options.headers;
 
-    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
+    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    if (!projectData) {
+      ctx.logger.error(`SwitchScene failed: Can\'t find project ${projectName}`);
+      return;
+    }
+    const projectUniqId = projectData.uniqId;
     const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
       projectUniqId,
       pathname,
       method,
     });
+
+    if (!interfaceData) {
+      ctx.logger.error('SwitchScene failed: Can\'t find data for ' +
+      `${projectName}, pathname: ${pathname}, method: ${method}`);
+      return;
+    }
 
     const payload = {};
     if (sceneName) {
@@ -71,7 +82,12 @@ class SdkController extends Controller {
     // query interface options
     const projectName = options.hub;
     const sceneName = options.scene;
-    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
+    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    if (!projectData) {
+      ctx.logger.error(`SwitchAllScenes failed: Can\'t find project ${projectName}`);
+      return;
+    }
+    const projectUniqId = projectData.uniqId;
     const interfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({ projectUniqId });
     await Promise.all(interfaceList.map(async interfaceData => {
       const sceneData = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
