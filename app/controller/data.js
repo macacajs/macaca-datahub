@@ -50,7 +50,10 @@ class SceneController extends Controller {
       }
       const _res = await ctx.curl(proxyUrl, {
         method: ctx.method,
-        headers: ctx.headers,
+        headers: Object.assign({}, ctx.headers, {
+          host: parsedUrl.host,
+        }),
+        followRedirect: true,
         timeout: 5 * 1000,
         data: ctx.request.body,
         dataType: 'text',
