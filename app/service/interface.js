@@ -100,7 +100,7 @@ class InterfaceService extends Service {
     interfaces.map(async item => {
       const proxyConfig = Object.assign(item.proxyConfig, {
         enabled,
-      })
+      });
       return await this.updateInterface({
         uniqId: item.dataValues.uniqId,
         payload: {
