@@ -97,7 +97,7 @@ class InterfaceService extends Service {
       },
     });
 
-    interfaces.map(async item => {
+    Promise.all(interfaces.map(async item => {
       const proxyConfig = Object.assign(item.proxyConfig, {
         enabled,
       });
@@ -107,7 +107,7 @@ class InterfaceService extends Service {
           proxyConfig,
         },
       });
-    });
+    }));
 
     return null;
   }
