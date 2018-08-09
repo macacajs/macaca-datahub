@@ -48,6 +48,7 @@ module.exports = app => {
   router.post('/api/sdk/switch_scene', controller.api.sdk.switchScene);
   router.post('/api/sdk/switch_multi_scenes', controller.api.sdk.switchMultiScenes);
   router.post('/api/sdk/switch_all_scenes', controller.api.sdk.switchAllScenes);
+  router.post('/api/sdk/switch_all_proxy', controller.api.interface.updateAllProxy);
 
   router.all('/data/:projectName/:pathname+', contextMiddleWare, controller.data.index);
 };
