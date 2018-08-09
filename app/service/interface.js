@@ -90,6 +90,27 @@ class InterfaceService extends Service {
     );
   }
 
+  async updateAllProxy({ projectUniqId, enabled }) {
+    const interfaces = await this.ctx.model.Interface.findAll({
+      where: {
+        projectUniqId,
+      },
+    });
+
+    interfaces.map(async item => {
+      return await this.updateInterface({
+        uniqId: item.dataValues.uniqId,
+        payload: {
+          proxyConfig: {
+            enabled,
+          },
+        },
+      });
+    });
+
+    return null;
+  }
+
   async deleteInterfaceByUniqId({ uniqId }) {
     return await this.ctx.model.Interface.destroy({
       where: {
