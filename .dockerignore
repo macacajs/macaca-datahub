@@ -1,11 +1,12 @@
 data
 coverage
 node_modules
+package-lock.json
 test
-run
+run/
 docker
 database
-logs
+logs/
 .*
 *.md
 *.yml

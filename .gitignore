@@ -10,4 +10,4 @@ logs/
 *.sw*
 *.un~
 *.tgz
-data
+data/
