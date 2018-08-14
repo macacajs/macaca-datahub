@@ -129,7 +129,10 @@ for (const project of projects) {
     }, null, 2));
 
     // create interface dir
-    const proxyContent = JSON.parse(interfaceData.proxyContent);
+    let proxyContent = {};
+    try {
+      proxyContent = JSON.parse(interfaceData.proxyContent);
+    } catch (_) { /**/ }
     const proxyConfig = {};
     if (proxyContent.useProxy) proxyConfig.enabled = true;
     if (Array.isArray(proxyContent.proxies)) {
