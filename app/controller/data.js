@@ -37,6 +37,9 @@ class SceneController extends Controller {
     if (contextConfig.responseStatus) {
       ctx[Symbol.for('context#rewriteResponseStatus')] = Number.parseInt(contextConfig.responseStatus, 10);
     }
+    if (contextConfig.responseHeaders) {
+      ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
+    }
 
     const { enabled: proxyEnabled, proxyList = [], activeIndex = 0 } = proxyConfig;
     ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
