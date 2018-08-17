@@ -29,7 +29,7 @@ class PageController extends Controller {
 
   async project() {
     const projectName = this.ctx.params.projectName;
-    const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
+    const res = await this.ctx.service.project.queryProjectByName({ projectName });
     this.ctx.body = await this.app.render({
       ...res.get({ plain: true }),
       socket: this.app.config.dataHubSocket,
@@ -42,7 +42,7 @@ class PageController extends Controller {
 
   async doc() {
     const projectName = this.ctx.params.projectName;
-    const res = await this.ctx.service.project.queryProjectByProjectName({ projectName });
+    const res = await this.ctx.service.project.queryProjectByName({ projectName });
     this.ctx.body = await this.app.render(res, {
       ...this.commonPageConfig,
       title: `${this.ctx.gettext('document')} - ${projectName}`,
