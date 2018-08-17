@@ -8,6 +8,8 @@ module.exports = (/* appInfo */) => {
     // assetsUrl: 'http://localhost:8080',
   };
 
+  // config.exportArchiveBaseDir = require('path').join(__dirname, '..', 'data');
+
   exports.logger = {
     consoleLevel: 'INFO',
   };

@@ -48,7 +48,8 @@
   "scripts": {
     "start": "eggctl start --port=9200 --title=egg-server-datahub",
     "stop": "eggctl stop --title=egg-server-datahub",
-    "dev": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
+    "dev": "egg-bin dev",
+    "dev:bin": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "debug": "egg-bin debug",
     "test": "npm run test-local",
     "test-local": "egg-bin test",
@@ -57,7 +58,7 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "contributor": "git-contributor",
-    "build:docker": "docker build -t=macacajs/macaca-datahub . --no-cache"
+    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub ."
   },
   "pre-commit": [
     "lint"
