@@ -105,6 +105,13 @@ class SdkController extends Controller {
     }));
     ctx.success();
   }
+
+  async switchAllProxy() {
+    const ctx = this.ctx;
+    const { projectUniqId, enabled } = ctx.request.body;
+    const res = await ctx.service.interface.updateAllProxy({ projectUniqId, enabled });
+    ctx.success(res);
+  }
 }
 
 module.exports = SdkController;
