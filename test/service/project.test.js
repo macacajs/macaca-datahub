@@ -16,25 +16,19 @@ describe('test/app/service/project.js', () => {
   it('queryAllProject', async () => {
     const res = await ctx.service.project.queryAllProject();
     assert(res.length === 2);
+    assert(res[0] instanceof ctx.model.Project);
+    assert(res[1] instanceof ctx.model.Project);
     assert(res[0].projectName === 'baz');
     assert(res[0].description === 'bazd');
-    assert(res[0].uniqId.length === 36);
-    assert(res[0].createdAt);
-    assert(res[0].updatedAt);
     assert(res[1].projectName === 'qux');
     assert(res[1].description === 'quxd');
-    assert(res[1].uniqId.length === 36);
-    assert(res[1].createdAt);
-    assert(res[1].updatedAt);
   });
 
   it('queryProjectByName', async () => {
     const res = await ctx.service.project.queryProjectByName({ projectName: 'baz' });
     assert(res.projectName === 'baz');
     assert(res.description === 'bazd');
-    assert(res.uniqId.length === 36);
-    assert(res.createdAt);
-    assert(res.updatedAt);
+    assert(res instanceof ctx.model.Project);
   });
 
   it('queryProjectByUniqId', async () => {
@@ -43,9 +37,7 @@ describe('test/app/service/project.js', () => {
     res = await ctx.service.project.queryProjectByUniqId({ uniqId });
     assert(res.projectName === 'baz');
     assert(res.description === 'bazd');
-    assert(res.uniqId.length === 36);
-    assert(res.createdAt);
-    assert(res.updatedAt);
+    assert(res instanceof ctx.model.Project);
   });
 
   it('createProject', async () => {
@@ -61,9 +53,7 @@ describe('test/app/service/project.js', () => {
     });
     assert(res.projectName === 'cprojectName');
     assert(res.description === 'cdescription');
-    assert(res.uniqId.length === 36);
-    assert(res.createdAt);
-    assert(res.updatedAt);
+    assert(res instanceof ctx.model.Project);
   });
 
   it('updateProject', async () => {
@@ -82,9 +72,7 @@ describe('test/app/service/project.js', () => {
     });
     assert(res.projectName === 'uprojectName');
     assert(res.description === 'bazd');
-    assert(res.uniqId.length === 36);
-    assert(res.createdAt);
-    assert(res.updatedAt);
+    assert(res instanceof ctx.model.Project);
   });
 
   it('deleteProjectByUniqId', async () => {
@@ -95,9 +83,6 @@ describe('test/app/service/project.js', () => {
     assert(res.length === 1);
     assert(res[0].projectName === 'qux');
     assert(res[0].description === 'quxd');
-    assert(res[0].uniqId.length === 36);
-    assert(res[0].createdAt);
-    assert(res[0].updatedAt);
+    assert(res[0] instanceof ctx.model.Project);
   });
-
 });
