@@ -51,6 +51,10 @@ class SceneController extends Controller {
       if (parseOrigindUrl.search) {
         proxyUrl += parseOrigindUrl.search;
       }
+      let dataType = 'text';
+      if (ctx.get('content-type') === 'application/json') {
+        dataType = 'json';
+      }
       const _res = await ctx.curl(proxyUrl, {
         method: ctx.method,
         headers: Object.assign({}, ctx.headers, {
@@ -59,7 +63,7 @@ class SceneController extends Controller {
         followRedirect: true,
         timeout: 5 * 1000,
         data: ctx.request.body,
-        dataType: 'text',
+        dataType,
       });
       for (const key of ALLOWED_PROXY_HEADERS) {
         _res.headers[key] && ctx.set(key, _res.headers[key]);
