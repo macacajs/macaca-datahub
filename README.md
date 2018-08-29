@@ -1,3 +1,13 @@
+<p align="center">
+  <a href="//macacajs.github.io">
+    <img
+      alt="Macaca"
+      src="https://macacajs.github.io/macaca-datahub/logo/logo-color.svg"
+      width="160"
+    />
+  </a>
+</p>
+
 # Macaca DataHub
 
 [中文版](./README.zh.md)
@@ -28,9 +38,11 @@
 [docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
 [docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
-> Continuous data provider for development, testing, staging and production.
+> Just enjoy the data out-of-the-box.📦
 
 ## Introduction
+
+Macaca DataHub is a continuous data provider for development, testing, staging and production.
 
 ### A Comprehensive Solution
 

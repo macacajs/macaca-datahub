@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "2.1.13",
+  "version": "2.1.16",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -50,8 +50,8 @@
   "scripts": {
     "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub",
     "stop": "eggctl stop --title=egg-server-datahub",
-    "dev": "npm run db:migrate && egg-bin dev",
-    "dev:bin": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
+    "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
+    "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",

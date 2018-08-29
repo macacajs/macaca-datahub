@@ -14,6 +14,14 @@ module.exports = () => {
 
     const date = _.moment().format('YY-MM-DD HH:mm:ss');
 
+    const tryBuildJSON = value => {
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        return value;
+      }
+    };
+
     if (ctx[useProxy]) {
       ctx.app.messenger.sendToAgent('emit_socket_data', {
         type: 'http',
@@ -27,7 +35,7 @@ module.exports = () => {
         res: {
           status: rewriteResponseStatusCode || ctx[proxyResponseStatus],
           host: ctx.host,
-          body: ctx.response.body,
+          body: tryBuildJSON(ctx.response.body),
           headers: ctx.response.headers,
         },
       });
