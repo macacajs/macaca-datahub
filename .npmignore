@@ -4,6 +4,7 @@ coverage/
 docs/
 logs/
 run/
+logo/
 *.md
 *.tgz
 *.yml
