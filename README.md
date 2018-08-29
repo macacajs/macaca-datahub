@@ -1,3 +1,13 @@
+<p align="center">
+  <a href="//macacajs.github.io">
+    <img
+      alt="Macaca"
+      src="https://macacajs.github.io/macaca-datahub/logo-color.svg"
+      width="200"
+    />
+  </a>
+</p>
+
 # Macaca DataHub
 
 [中文版](./README.zh.md)
