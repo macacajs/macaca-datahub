@@ -36,9 +36,11 @@
     "egg-mock": "^3.13.1",
     "eslint": "^4.12.1",
     "eslint-config-egg": "^5.1.1",
+    "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.2",
+    "sequelize-cli": "^4.0.0",
     "uuid": "^3.3.2",
     "webstorm-disable-index": "^1.2.0"
   },
@@ -46,19 +48,22 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "start": "eggctl start --port=9200 --title=egg-server-datahub",
+    "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub",
     "stop": "eggctl stop --title=egg-server-datahub",
     "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    "test": "npm run test-local",
+    "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint . --fix",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "contributor": "git-contributor",
-    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub ."
+    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub .",
+    "db:migrate": "sequelize db:migrate",
+    "db:migrate:undo": "sequelize db:migrate:undo",
+    "migration:create": "sequelize migration:create --name"
   },
   "pre-commit": [
     "lint"

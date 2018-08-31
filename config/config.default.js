@@ -4,6 +4,8 @@ const _ = require('xutil');
 const fs = require('fs');
 const path = require('path');
 
+const sequelizeConfig = require('../database/config');
+
 module.exports = appInfo => {
 
   const config = exports = {};
@@ -66,16 +68,7 @@ module.exports = appInfo => {
     jsonLimit: '500kb',
   };
 
-  const databasePath = path.join(appInfo.HOME, `.${appInfo.name}`);
-  _.mkdir(databasePath);
-
-  config.sequelize = {
-    dialect: 'sqlite',
-    storage: process.env.DATAHUB_DATABASE || path.join(databasePath, `${appInfo.name}.data`),
-    logging: false,
-    operatorsAliases: false,
-    dialectModulePath: require.resolve('sqlite3'),
-  };
+  config.sequelize = sequelizeConfig;
 
   config.modelCommonOption = {
     underscored: false,

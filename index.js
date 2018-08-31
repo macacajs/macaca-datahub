@@ -7,6 +7,7 @@ const {
 } = require('xutil');
 const path = require('path');
 const EOL = require('os').EOL;
+const execa = require('execa');
 const eggServer = require('egg');
 
 const defaultOptions = {
@@ -31,6 +32,8 @@ class DataHub {
 
     if (options.store) {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);
+    } else {
+      await execa(`${require.resolve('sequelize-cli/lib/sequelize')}`, [ 'db:migrate' ]);
     }
 
     if (options.view && options.view.assetsUrl) {

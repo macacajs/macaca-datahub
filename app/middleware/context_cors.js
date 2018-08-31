@@ -17,6 +17,7 @@ module.exports = () => {
     // preflight OPTIONS request
     ctx.set('Access-Control-Allow-Headers', ctx.get('Access-Control-Request-Headers'));
     ctx.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
+    ctx.set('Access-Control-Max-Age', 10 * 60 * 1000);
     ctx.status = 204;
   };
 };

@@ -32,14 +32,6 @@ class ProjectService extends Service {
     });
   }
 
-  async queryProjectByProjectName({ projectName }) {
-    return await this.ctx.model.Project.findOne({
-      where: {
-        projectName,
-      },
-    });
-  }
-
   async createProject({ projectName, description }) {
     return await this.ctx.model.Project.create({
       projectName,

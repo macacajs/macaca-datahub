@@ -9,9 +9,9 @@ module.exports = agent => {
   agent.beforeStart(async () => {
     socket.listen(agent.config.dataHubSocket.port);
     const exportArchiveBaseDir = agent.config.exportArchiveBaseDir;
-    await agent.model.sync({
-      force: !!exportArchiveBaseDir,
-    });
+    if (exportArchiveBaseDir) {
+      await agent.model.sync({ force: true });
+    }
   });
 
   agent.messenger.once('egg-ready', () => {

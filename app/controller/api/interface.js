@@ -50,13 +50,6 @@ class InterfaceController extends Controller {
     ctx.success(res);
   }
 
-  async updateAllProxy() {
-    const ctx = this.ctx;
-    const { projectUniqId, enabled } = ctx.request.body;
-    const res = await ctx.service.interface.updateAllProxy({ projectUniqId, enabled });
-    ctx.success(res);
-  }
-
   async delete() {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;

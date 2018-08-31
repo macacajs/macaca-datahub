@@ -11,3 +11,4 @@ logs/
 *.un~
 *.tgz
 data/
+test/fixtures/unittest_export_data/

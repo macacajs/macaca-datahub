@@ -6,12 +6,14 @@ module.exports = () => {
   return async function contextResponseHeaders(ctx, next) {
     await next();
     const headers = ctx[responseHeaders];
+    const headerSet = [];
     if (headers && typeof headers === 'object') {
-      ctx.set('x-datahub-response-headers',
-        Object.keys(headers).join(','));
       for (const key in headers) {
         ctx.set(key, headers[key]);
+        headerSet.push(key);
       }
+      headerSet.length && ctx.set('x-datahub-custom-response-headers',
+        headerSet.join(','));
     }
   };
 };
