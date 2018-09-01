@@ -230,7 +230,7 @@ DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema 
 
 ## Project Integration
 
-[Quick start in your web project](./docs/quick-start.md)
+[Quick start in your web project](./docs/quick-start-with-webpack.md)
 
 - [android-datahub-sample](//github.com/app-bootstrap/android-app-bootstrap) - Android sample for DataHub
 - [ios-datahub-sample](//github.com/app-bootstrap/ios-app-bootstrap) - iOS sample for DataHub

@@ -188,7 +188,7 @@ DataHub 采用 [标准的 JSON schema 语法](//github.com/epoberezkin/ajv) 来�
 
 ## 项目集成
 
-[Web 工程集成指引](./docs/quick-start.zh.md)
+[Web 工程集成指引](./docs/quick-start-with-webpack.zh.md)
 
 Macaca DataHub 也可与所有类型的iOS, Android 和 Web 工程集成，以下有些参考示例：
 
