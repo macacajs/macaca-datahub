@@ -129,7 +129,7 @@ $ datahub server -c path/to/config.js --verbose
 
 ## Schema 语法
 
-DataHub 采用 [标准的 JSON schema 语法](//github.com/epoberezkin/ajv) 来描述接口，用以校验数据和自动生成文档，schema 需要以下格式： 
+DataHub 采用 [标准的 JSON schema 语法](//github.com/epoberezkin/ajv) 来描述接口，用以校验数据和自动生成文档，schema 需要以下格式：
 
 ```json
 {
@@ -186,16 +186,17 @@ DataHub 采用 [标准的 JSON schema 语法](//github.com/epoberezkin/ajv) 来�
 }
 ```
 
-webpack 项目可作为示例： [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)
+## 项目集成
 
-## 项目集成示例
+[Web 工程集成指引](./docs/quick-start.zh.md)
 
-Macaca DataHub 可与所有类型的iOS, Android 和 Web 工程集成，以下有些参考示例：
+Macaca DataHub 也可与所有类型的iOS, Android 和 Web 工程集成，以下有些参考示例：
 
 - [android-datahub-sample](//github.com/app-bootstrap/android-app-bootstrap) - Android 的例子
 - [ios-datahub-sample](//github.com/app-bootstrap/ios-app-bootstrap) - iOS 的例子
 - [antd-sample](//github.com/macaca-sample/antd-sample) - Ant Design 的例子
 - [angular-datahub-sample](//github.com/macaca-sample/angular-datahub-sample) - Angular 的例子
+- [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample) - Webpack 的例子
 
 ### 中间件集成
 
