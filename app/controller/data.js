@@ -57,7 +57,7 @@ class SceneController extends Controller {
           host: parsedUrl.host,
         }),
         followRedirect: true,
-        timeout: 5 * 1000,
+        timeout: 120 * 1000,
         data: ctx.request.body,
         dataType: 'text',
       });
