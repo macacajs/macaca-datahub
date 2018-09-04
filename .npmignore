@@ -10,3 +10,4 @@ logo/
 *.yml
 *.sw*
 *.un~
+!.sequelizerc

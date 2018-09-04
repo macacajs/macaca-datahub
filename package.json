@@ -23,6 +23,7 @@
     "path-to-regexp": "^2.2.1",
     "request": "^2.85.0",
     "semver": "^5.5.0",
+    "sequelize-cli": "^4.1.1",
     "socket.io": "^2.0.4",
     "sqlite3": "^4.0.2",
     "xutil": "^1.0.11"
@@ -40,7 +41,6 @@
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.2",
-    "sequelize-cli": "^4.0.0",
     "uuid": "^3.3.2",
     "webstorm-disable-index": "^1.2.0"
   },

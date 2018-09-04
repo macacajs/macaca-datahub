@@ -33,7 +33,9 @@ class DataHub {
     if (options.store) {
       process.env.DATAHUB_STORE_PATH = path.resolve(options.store);
     } else {
-      await execa(`${require.resolve('sequelize-cli/lib/sequelize')}`, [ 'db:migrate' ]);
+      await execa(`${require.resolve('sequelize-cli/lib/sequelize')}`, [ 'db:migrate' ], {
+        cwd: __dirname,
+      });
     }
 
     if (options.view && options.view.assetsUrl) {
