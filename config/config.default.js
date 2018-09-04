@@ -10,6 +10,10 @@ module.exports = appInfo => {
 
   const config = exports = {};
 
+  config.siteFile = {
+    '/favicon.ico': 'https://macacajs.github.io/macaca-datahub/logo/favicon.ico',
+  };
+
   config.keys = appInfo.name;
 
   config.middleware = [
