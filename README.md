@@ -34,7 +34,7 @@
 [download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square
 [download-url]: https://npmjs.org/package/macaca-datahub
 [docker-pull-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
-[docker-size-image]: https://img.shields.io/microbadger/image-size/marmotjs/marmot-web.svg?style=flat-square&logo=dockbit
+[docker-size-image]: https://img.shields.io/microbadger/image-size/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
 [docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
 [docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
