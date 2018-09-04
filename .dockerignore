@@ -5,8 +5,14 @@ package-lock.json
 test
 run/
 docker
-database
 logs/
-.*
+.idea
+.npmignore
+.travis.yml
+.gitignore
+.git
+.eslintrc
+.eslintignore
+.autod.conf.js
 *.md
 *.yml
