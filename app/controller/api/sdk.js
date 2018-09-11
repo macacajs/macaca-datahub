@@ -116,6 +116,7 @@ class SdkController extends Controller {
   async exportData() {
     const ctx = this.ctx;
     await ctx.service.database.exportData();
+    ctx.success();
   }
 }
 
