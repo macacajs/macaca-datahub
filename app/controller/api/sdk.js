@@ -112,6 +112,11 @@ class SdkController extends Controller {
     const res = await ctx.service.interface.updateAllProxy({ projectUniqId, enabled });
     ctx.success(res);
   }
+
+  async exportData() {
+    const ctx = this.ctx;
+    await ctx.service.database.exportData();
+  }
 }
 
 module.exports = SdkController;

@@ -23,7 +23,8 @@ module.exports = appInfo => {
 
   config.exportData = {
     match(ctx) {
-      return [
+      const datahubClient = ctx.get('x-datahub-client');
+      return datahubClient === 'datahub-view' && [
         '/api/project',
         '/api/interface',
         '/api/scene',
