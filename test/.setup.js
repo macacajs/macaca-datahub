@@ -2,5 +2,12 @@
 
 const { app } = require('egg-mock/bootstrap');
 
-before(async () => await app.model.sync({ force: true }))
-afterEach(async () => await app.model.sync({ force: true }));
+const restore = async () => {
+  await app.model.Project.truncate();
+  await app.model.Interface.truncate();
+  await app.model.Scene.truncate();
+  await app.model.Schema.truncate();
+}
+
+before(restore)
+afterEach(restore);
