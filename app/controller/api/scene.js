@@ -38,6 +38,8 @@ class SceneController extends Controller {
   async update() {
     const ctx = this.ctx;
     const uniqId = ctx.params.uniqId;
+    const { interfaceUniqId } = ctx.request.body;
+    ctx.assertParam({ interfaceUniqId });
     const payload = {};
     [ 'sceneName', 'data' ].forEach(i => {
       if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
@@ -46,6 +48,14 @@ class SceneController extends Controller {
       uniqId,
       payload,
     });
+    if (ctx.request.body.sceneName) {
+      await ctx.service.interface.updateInterface({
+        uniqId: interfaceUniqId,
+        payload: {
+          currentScene: ctx.request.body.sceneName,
+        },
+      });
+    }
     ctx.success(res);
   }
 
