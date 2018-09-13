@@ -42,6 +42,8 @@ module.exports = app => {
   router.put('/api/scene/:uniqId', controller.api.scene.update);
   router.delete('/api/scene/:uniqId', controller.api.scene.delete);
 
+  router.get('/api/preview/scene', controller.api.preview.scene);
+
   router.get('/api/schema', controller.api.schema.showAll);
   router.put('/api/schema/:type', controller.api.schema.update);
 
