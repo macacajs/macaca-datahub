@@ -43,6 +43,14 @@ class InterfaceController extends Controller {
     ].forEach(i => {
       if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
     });
+    const proxyConfig = payload.proxyConfig;
+    if (proxyConfig) {
+      const activeIndex = proxyConfig.activeIndex || 0;
+      const proxyList = proxyConfig.proxyList || [];
+      if (activeIndex >= proxyList.length) {
+        proxyConfig.activeIndex = proxyList.length - 1;
+      }
+    }
     const res = await ctx.service.interface.updateInterface({
       uniqId,
       payload,
