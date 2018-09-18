@@ -47,7 +47,7 @@ class InterfaceController extends Controller {
     if (proxyConfig) {
       const activeIndex = proxyConfig.activeIndex || 0;
       const proxyList = proxyConfig.proxyList || [];
-      if (activeIndex >= proxyList.length) {
+      if (activeIndex && activeIndex >= proxyList.length) {
         proxyConfig.activeIndex = proxyList.length - 1;
       }
     }
