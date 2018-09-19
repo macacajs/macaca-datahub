@@ -175,6 +175,17 @@ module.exports = {
 };
 ```
 
+You can also use the Third-part UI platform, for example use [datahub-platform](//github.com/zhuyali/datahub-platform), only need to point `assetsUrl`.
+
+```javascript
+module.exports = {
+  view: {
+    assetsUrl: 'https://unpkg.com/datahub-platform@latest',
+  },
+};
+
+```
+
 Pass config file[`.js`|`.json`] to DataHub server.
 
 ```bash

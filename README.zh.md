@@ -121,6 +121,17 @@ module.exports = {
 };
 ```
 
+你也可以自己定制界面操作台，或者使用其他第三方用户开发的界面，比如 [datahub-platform](//github.com/zhuyali/datahub-platform) 只需要指定 `assetsUrl` 即可。
+
+```javascript
+module.exports = {
+  view: {
+    assetsUrl: 'https://unpkg.com/datahub-platform@latest',
+  },
+};
+
+```
+
 可以通过指定 [`.js`|`.json`] 后缀格式的配置文件。
 
 ```bash
