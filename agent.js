@@ -4,7 +4,9 @@ const { chalk } = require('xutil');
 const socket = require('./app/socket');
 
 module.exports = agent => {
-  agent.logger.info(`${chalk.cyan('launch datahub at:')} ${agent.config.sequelize.storage}`);
+  if (agent.config.sequelize.storage) {
+    agent.logger.info(`${chalk.cyan('launch datahub at:')} ${agent.config.sequelize.storage}`);
+  }
 
   agent.beforeStart(async () => {
     socket.listen(agent.config.dataHubSocket.port);

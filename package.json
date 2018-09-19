@@ -39,6 +39,7 @@
     "eslint-config-egg": "^5.1.1",
     "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
+    "mysql2": "^1.6.1",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.2",
     "uuid": "^3.3.2",

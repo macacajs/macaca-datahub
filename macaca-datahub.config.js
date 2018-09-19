@@ -8,4 +8,5 @@ module.exports = {
   view: {
     // assetsUrl: 'http://localhost:8080',
   },
+  // skipMigrate: true,
 };
