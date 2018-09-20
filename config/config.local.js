@@ -10,7 +10,7 @@ module.exports = (/* appInfo */) => {
 
   // config.exportArchiveBaseDir = require('path').join(__dirname, '..', 'data');
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: 'INFO',
   };
 
