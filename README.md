@@ -23,19 +23,19 @@
 [![docker pull][docker-size-image]][docker-url]
 [![docker pull][docker-layers-image]][docker-url]
 
-[npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?style=flat-square&logo=npm
 [npm-url]: https://npmjs.org/package/macaca-datahub
 [travis-image]: https://img.shields.io/travis/macacajs/macaca-datahub.svg?style=flat-square&logo=travis
 [travis-url]: https://travis-ci.org/macacajs/macaca-datahub
-[codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?style=flat-square
+[codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?style=flat-square&logo=javascript
 [codecov-url]: https://codecov.io/gh/macacajs/macaca-datahub
-[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square
+[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square&logo=node.js
 [node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square
+[download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square&logo=npm
 [download-url]: https://npmjs.org/package/macaca-datahub
-[docker-pull-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
-[docker-size-image]: https://img.shields.io/microbadger/image-size/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
-[docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?style=flat-square&logo=dockbit
+[docker-pull-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
+[docker-size-image]: https://img.shields.io/microbadger/image-size/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
+[docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
 [docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
 > Just enjoy the data out-of-the-box.📦
