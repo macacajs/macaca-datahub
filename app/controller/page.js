@@ -29,9 +29,15 @@ class PageController extends Controller {
 
   async project() {
     const projectName = this.ctx.params.projectName;
-    const res = await this.ctx.service.project.queryProjectByName({ projectName });
+    const res = await this.ctx.service.project.queryProjectByName({
+      projectName,
+    });
+    const allProjects = await this.ctx.service.project.queryAllProject();
     this.ctx.body = await this.app.render({
-      ...res.get({ plain: true }),
+      ...res.get({
+        plain: true,
+      }),
+      allProjects,
       socket: this.app.config.dataHubSocket,
     }, {
       ...this.commonPageConfig,
