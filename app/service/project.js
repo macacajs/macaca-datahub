@@ -101,7 +101,7 @@ class ProjectService extends Service {
         },
       });
 
-      for(const interfaceData of projectData.data) {
+      for (const interfaceData of projectData.data) {
         const interfaceStatus = await this.ctx.model.Interface.create({
           projectUniqId,
           pathname: interfaceData.pathname,
@@ -110,7 +110,7 @@ class ProjectService extends Service {
           currentScene: interfaceData.currentScene,
         });
 
-        for(const scene of interfaceData.scenes) {
+        for (const scene of interfaceData.scenes) {
           await this.ctx.model.Scene.create({
             interfaceUniqId: interfaceStatus.uniqId,
             sceneName: scene.sceneName,

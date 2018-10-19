@@ -144,7 +144,7 @@ class InterfaceService extends Service {
         currentScene: interfaceOldData.currentScene,
       });
 
-      for(const scene of interfaceNewData.data) {
+      for (const scene of interfaceNewData.data) {
         await this.ctx.model.Scene.create({
           interfaceUniqId: interfaceStatus.uniqId,
           sceneName: scene.sceneName,
