@@ -68,6 +68,12 @@ class InterfaceController extends Controller {
     }
     ctx.fail(ctx.gettext('common.delete.fail'));
   }
+
+  async upload() {
+    const ctx = this.ctx;
+    const res = await ctx.service.interface.uploadInterfaceByUniqId();
+    ctx.success(res);
+  }
 }
 
 module.exports = InterfaceController;

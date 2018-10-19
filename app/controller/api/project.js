@@ -77,6 +77,19 @@ class ProjectController extends Controller {
     const res = await ctx.service.project.deleteProjectByUniqId({ uniqId });
     ctx.success(res);
   }
+
+  async download() {
+    const ctx = this.ctx;
+    const { uniqId } = ctx.params;
+    const res = await ctx.service.project.downloadProjectByUniqId({ uniqId });
+    ctx.success(res);
+  }
+
+  async upload() {
+    const ctx = this.ctx;
+    const res = await ctx.service.project.uploadProjectByUniqId();
+    ctx.success(res);
+  }
 }
 
 module.exports = ProjectController;
