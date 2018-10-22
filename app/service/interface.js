@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 const pathToRegexp = require('path-to-regexp');
-const toString = require('stream-to-string');
+const bfj = require('bfj');
 
 class InterfaceService extends Service {
 
@@ -121,10 +121,17 @@ class InterfaceService extends Service {
     });
   }
 
+  async downloadInterfaceByUniqId({ interfaceUniqId }) {
+    return await this.ctx.model.Scene.findAll({
+      where: {
+        interfaceUniqId,
+      },
+    });
+  }
+
   async uploadInterfaceByUniqId() {
     const stream = await this.ctx.getFileStream();
-    const interfaceStr = await toString(stream);
-    const interfaceNewData = JSON.parse(interfaceStr);
+    const interfaceNewData = await bfj.parse(stream);
     const interfaceUniqId = stream.fieldname;
 
     try {
@@ -144,7 +151,7 @@ class InterfaceService extends Service {
         currentScene: interfaceOldData.currentScene,
       });
 
-      for (const scene of interfaceNewData.data) {
+      for (const scene of interfaceNewData) {
         await this.ctx.model.Scene.create({
           interfaceUniqId: interfaceStatus.uniqId,
           sceneName: scene.sceneName,
@@ -156,7 +163,7 @@ class InterfaceService extends Service {
     }
 
     return {
-      status: 'success',
+      success: true,
     };
   }
 }

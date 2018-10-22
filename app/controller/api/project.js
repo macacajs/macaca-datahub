@@ -82,13 +82,19 @@ class ProjectController extends Controller {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;
     const res = await ctx.service.project.downloadProjectByUniqId({ uniqId });
-    ctx.success(res);
+
+    const info = await ctx.service.project.queryProjectByUniqId({ uniqId });
+    const fileName = `project_${info.projectName}.json`;
+
+    ctx.body = res;
+    ctx.set('content-type', 'application/octet-stream');
+    ctx.set('content-disposition', `attachment; filename=${fileName}`);
   }
 
   async upload() {
     const ctx = this.ctx;
     const res = await ctx.service.project.uploadProjectByUniqId();
-    ctx.success(res);
+    ctx.body = res;
   }
 }
 

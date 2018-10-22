@@ -33,6 +33,7 @@ module.exports = app => {
   router.post('/api/project/upload', controller.api.project.upload);
 
   router.get('/api/interface', controller.api.interface.showAll);
+  router.get('/api/interface/download', controller.api.interface.download);
   router.get('/api/interface/:uniqId', controller.api.interface.show);
   router.post('/api/interface', controller.api.interface.create);
   router.put('/api/interface/:uniqId', controller.api.interface.update);

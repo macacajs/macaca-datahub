@@ -1,7 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
-const toString = require('stream-to-string');
+const bfj = require('bfj');
 
 class ProjectService extends Service {
 
@@ -64,10 +64,6 @@ class ProjectService extends Service {
       projectUniqId: uniqId,
     });
 
-    if (!interfaces || !interfaces.length) {
-      return null;
-    }
-
     const result = [];
 
     for (const interfaceData of interfaces) {
@@ -90,8 +86,7 @@ class ProjectService extends Service {
 
   async uploadProjectByUniqId() {
     const stream = await this.ctx.getFileStream();
-    const projectStr = await toString(stream);
-    const projectData = JSON.parse(projectStr);
+    const projectData = await bfj.parse(stream);
     const projectUniqId = stream.fieldname;
 
     try {
@@ -101,7 +96,7 @@ class ProjectService extends Service {
         },
       });
 
-      for (const interfaceData of projectData.data) {
+      for (const interfaceData of projectData) {
         const interfaceStatus = await this.ctx.model.Interface.create({
           projectUniqId,
           pathname: interfaceData.pathname,
@@ -123,7 +118,7 @@ class ProjectService extends Service {
     }
 
     return {
-      status: 'success',
+      success: true,
     };
   }
 }

@@ -10,6 +10,7 @@
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
+    "bfj": "^6.1.1",
     "commander": "^2.12.2",
     "datahub-view": "^2.0.0",
     "egg": "^2.0.0",
@@ -26,7 +27,6 @@
     "sequelize-cli": "^4.1.1",
     "socket.io": "^2.0.4",
     "sqlite3": "^4.0.2",
-    "stream-to-string": "^1.1.0",
     "xutil": "^1.0.11"
   },
   "devDependencies": {
