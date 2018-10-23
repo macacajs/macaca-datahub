@@ -121,26 +121,41 @@ class InterfaceService extends Service {
     });
   }
 
-  async downloadInterfaceByUniqId({ interfaceUniqId }) {
-    const data = await this.ctx.model.Scene.findAll({
+  async queryInterfaceAllInfo({ interfaceUniqId }) {
+    const scenes = await this.ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
       },
     });
-    const info = await this.ctx.service.interface.queryInterfaceByUniqId({
+
+    const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
+      interfaceUniqId,
+    });
+
+    const interfaceData = await this.ctx.service.interface.queryInterfaceByUniqId({
       uniqId: interfaceUniqId,
     });
-    const fileName = `interface_${info.pathname}_${info.method}.json`;
+    const fileName = `interface_${interfaceData.pathname}_${interfaceData.method}.json`;
 
     return {
       fileName,
-      data,
+      data: {
+        pathname: interfaceData.pathname,
+        method: interfaceData.method,
+        projectUniqId: interfaceData.uniqId,
+        description: interfaceData.description,
+        contextConfig: interfaceData.contextConfig,
+        currentScene: interfaceData.currentScene,
+        proxyConfig: interfaceData.proxyConfig,
+        scenes,
+        schemas,
+      },
     };
   }
 
   async uploadInterfaceByUniqId() {
     const stream = await this.ctx.getFileStream();
-    const interfaceNewData = await bfj.parse(stream);
+    const interfaceData = await bfj.parse(stream);
     const interfaceUniqId = stream.fieldname;
 
     try {
@@ -153,18 +168,28 @@ class InterfaceService extends Service {
       });
 
       const interfaceStatus = await this.ctx.model.Interface.create({
-        projectUniqId: interfaceOldData.projectUniqId,
         pathname: interfaceOldData.pathname,
         method: interfaceOldData.method,
+        projectUniqId: interfaceOldData.projectUniqId,
         description: interfaceOldData.description,
-        currentScene: interfaceOldData.currentScene,
+        contextConfig: interfaceData.contextConfig,
+        currentScene: interfaceData.currentScene,
+        proxyConfig: interfaceData.proxyConfig,
       });
 
-      for (const scene of interfaceNewData) {
+      for (const scene of interfaceData.scenes) {
         await this.ctx.model.Scene.create({
           interfaceUniqId: interfaceStatus.uniqId,
           sceneName: scene.sceneName,
           data: scene.data,
+        });
+      }
+
+      for (const schema of interfaceData.schemas) {
+        await this.ctx.model.Schema.upsert({
+          interfaceUniqId: interfaceStatus.uniqId,
+          type: schema.type,
+          data: schema.data,
         });
       }
     } catch (err) {

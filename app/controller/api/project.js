@@ -81,7 +81,7 @@ class ProjectController extends Controller {
   async download() {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;
-    const res = await ctx.service.project.downloadProjectByUniqId({ uniqId });
+    const res = await ctx.service.project.queryProjectAllInfo({ uniqId });
 
     ctx.body = res.data;
     ctx.set('content-type', 'application/octet-stream');

@@ -216,20 +216,20 @@ describe('test/app/service/interface.js', () => {
     assert(res.length === 0);
   });
 
-  it('downloadProjectByUniqId', async () => {
+  it('queryProjectAllInfo', async () => {
     await ctx.service.interface.createInterface({
       projectUniqId,
       pathname: 'api/one',
       method: 'ALL',
       description: 'api one',
     });
-    const res = await ctx.service.project.downloadProjectByUniqId({
+    const res = await ctx.service.project.queryProjectAllInfo({
       uniqId: projectUniqId,
     });
-    assert(res.length === 1);
-    assert(res[0].pathname === 'api/one');
-    assert(res[0].method === 'ALL');
-    assert(res[0].description === 'api one');
+    assert(res.data.length === 1);
+    assert(res.data[0].pathname === 'api/one');
+    assert(res.data[0].method === 'ALL');
+    assert(res.data[0].description === 'api one');
   });
 
   it('uploadProjectByUniqId', async () => {

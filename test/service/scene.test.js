@@ -132,14 +132,14 @@ describe('test/app/service/scene.js', () => {
       assert(res[0].sceneName === 'fail');
     });
 
-    it('downloadInterfaceByUniqId', async () => {
-      const res = await ctx.service.interface.downloadInterfaceByUniqId({
+    it('queryInterfaceAllInfo', async () => {
+      const res = await ctx.service.interface.queryInterfaceAllInfo({
         interfaceUniqId,
       });
 
-      assert(res.length === 2);
-      assert(res[0].sceneName === 'success');
-      assert(res[1].sceneName === 'fail');
+      assert(res.data.scenes.length === 2);
+      assert(res.data.scenes[0].sceneName === 'success');
+      assert(res.data.scenes[1].sceneName === 'fail');
     });
 
     it('uploadInterfaceByUniqId', async () => {

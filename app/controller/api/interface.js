@@ -72,7 +72,7 @@ class InterfaceController extends Controller {
   async download() {
     const ctx = this.ctx;
     const { interfaceUniqId } = ctx.query;
-    const res = await ctx.service.interface.downloadInterfaceByUniqId({ interfaceUniqId });
+    const res = await ctx.service.interface.queryInterfaceAllInfo({ interfaceUniqId });
 
     ctx.body = res.data;
     ctx.set('content-type', 'application/octet-stream');

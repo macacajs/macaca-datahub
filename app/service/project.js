@@ -59,7 +59,7 @@ class ProjectService extends Service {
     });
   }
 
-  async downloadProjectByUniqId({ uniqId }) {
+  async queryProjectAllInfo({ uniqId }) {
     const interfaces = await this.ctx.service.interface.queryInterfaceByProjectUniqId({
       projectUniqId: uniqId,
     });
@@ -71,13 +71,20 @@ class ProjectService extends Service {
         interfaceUniqId: interfaceData.uniqId,
       });
 
+      const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
+        interfaceUniqId: interfaceData.uniqId,
+      });
+
       data.push({
         pathname: interfaceData.pathname,
         method: interfaceData.method,
         description: interfaceData.description,
         uniqId: interfaceData.uniqId,
+        contextConfig: interfaceData.contextConfig,
         currentScene: interfaceData.currentScene,
+        proxyConfig: interfaceData.proxyConfig,
         scenes,
+        schemas,
       });
     }
 
@@ -108,7 +115,9 @@ class ProjectService extends Service {
           pathname: interfaceData.pathname,
           method: interfaceData.method,
           description: interfaceData.description,
+          contextConfig: interfaceData.contextConfig,
           currentScene: interfaceData.currentScene,
+          proxyConfig: interfaceData.proxyConfig,
         });
 
         for (const scene of interfaceData.scenes) {
@@ -118,6 +127,15 @@ class ProjectService extends Service {
             data: scene.data,
           });
         }
+
+        for (const schema of interfaceData.schemas) {
+          await this.ctx.model.Schema.upsert({
+            interfaceUniqId: interfaceStatus.uniqId,
+            type: schema.type,
+            data: schema.data,
+          });
+        }
+
       }
     } catch (err) {
       return err;
