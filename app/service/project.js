@@ -64,14 +64,14 @@ class ProjectService extends Service {
       projectUniqId: uniqId,
     });
 
-    const result = [];
+    const data = [];
 
     for (const interfaceData of interfaces) {
       const scenes = await this.ctx.service.scene.querySceneByInterfaceUniqId({
         interfaceUniqId: interfaceData.uniqId,
       });
 
-      result.push({
+      data.push({
         pathname: interfaceData.pathname,
         method: interfaceData.method,
         description: interfaceData.description,
@@ -81,7 +81,13 @@ class ProjectService extends Service {
       });
     }
 
-    return result;
+    const info = await this.ctx.service.project.queryProjectByUniqId({ uniqId });
+    const fileName = `project_${info.projectName}.json`;
+
+    return {
+      data,
+      fileName,
+    };
   }
 
   async uploadProjectByUniqId() {

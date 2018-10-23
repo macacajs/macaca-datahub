@@ -72,17 +72,11 @@ class InterfaceController extends Controller {
   async download() {
     const ctx = this.ctx;
     const { interfaceUniqId } = ctx.query;
-    ctx.assertParam({ interfaceUniqId });
     const res = await ctx.service.interface.downloadInterfaceByUniqId({ interfaceUniqId });
 
-    const info = await ctx.service.interface.queryInterfaceByUniqId({
-      uniqId: interfaceUniqId,
-    });
-    const fileName = `interface_${info.pathname}_${info.method}.json`;
-
-    ctx.body = res;
+    ctx.body = res.data;
     ctx.set('content-type', 'application/octet-stream');
-    ctx.set('content-disposition', `attachment; filename=${fileName}`);
+    ctx.set('content-disposition', `attachment; filename=${res.fileName}`);
   }
 
   async upload() {

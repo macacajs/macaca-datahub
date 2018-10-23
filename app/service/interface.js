@@ -122,11 +122,20 @@ class InterfaceService extends Service {
   }
 
   async downloadInterfaceByUniqId({ interfaceUniqId }) {
-    return await this.ctx.model.Scene.findAll({
+    const data = await this.ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
       },
     });
+    const info = await this.ctx.service.interface.queryInterfaceByUniqId({
+      uniqId: interfaceUniqId,
+    });
+    const fileName = `interface_${info.pathname}_${info.method}.json`;
+
+    return {
+      fileName,
+      data,
+    };
   }
 
   async uploadInterfaceByUniqId() {

@@ -83,12 +83,9 @@ class ProjectController extends Controller {
     const { uniqId } = ctx.params;
     const res = await ctx.service.project.downloadProjectByUniqId({ uniqId });
 
-    const info = await ctx.service.project.queryProjectByUniqId({ uniqId });
-    const fileName = `project_${info.projectName}.json`;
-
-    ctx.body = res;
+    ctx.body = res.data;
     ctx.set('content-type', 'application/octet-stream');
-    ctx.set('content-disposition', `attachment; filename=${fileName}`);
+    ctx.set('content-disposition', `attachment; filename=${res.fileName}`);
   }
 
   async upload() {
