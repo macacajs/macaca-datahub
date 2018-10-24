@@ -1,5 +1,6 @@
 'use strict';
 
+const bfj = require('bfj');
 const Controller = require('egg').Controller;
 
 class InterfaceController extends Controller {
@@ -72,16 +73,23 @@ class InterfaceController extends Controller {
   async download() {
     const ctx = this.ctx;
     const { interfaceUniqId } = ctx.query;
-    const res = await ctx.service.interface.queryInterfaceAllInfo({ interfaceUniqId });
+    const res = await ctx.service.transfer.downloadInterface({ interfaceUniqId });
 
-    ctx.body = res.data;
+    ctx.body = JSON.stringify(res.data, null, 2);
     ctx.set('content-type', 'application/octet-stream');
     ctx.set('content-disposition', `attachment; filename=${res.fileName}`);
   }
 
   async upload() {
     const ctx = this.ctx;
-    const res = await ctx.service.interface.uploadInterfaceByUniqId();
+    const stream = await this.ctx.getFileStream();
+    const interfaceData = await bfj.parse(stream);
+    const interfaceUniqId = stream.fieldname;
+
+    const res = await ctx.service.transfer.uploadInterface({
+      interfaceData,
+      interfaceUniqId,
+    });
     ctx.body = res;
   }
 }

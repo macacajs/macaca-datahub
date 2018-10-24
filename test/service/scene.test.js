@@ -132,8 +132,8 @@ describe('test/app/service/scene.js', () => {
       assert(res[0].sceneName === 'fail');
     });
 
-    it('queryInterfaceAllInfo', async () => {
-      const res = await ctx.service.interface.queryInterfaceAllInfo({
+    it('downloadInterface', async () => {
+      const res = await ctx.service.transfer.downloadInterface({
         interfaceUniqId,
       });
 
@@ -142,7 +142,7 @@ describe('test/app/service/scene.js', () => {
       assert(res.data.scenes[1].sceneName === 'fail');
     });
 
-    it('uploadInterfaceByUniqId', async () => {
+    it('uploadInterface', async () => {
       const res = await app.httpRequest()
         .post('/api/interface/upload')
         .attach(interfaceUniqId, path.join(__dirname, '..', 'fixtures/upload_data/', 'interface.json'))

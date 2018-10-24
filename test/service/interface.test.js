@@ -216,14 +216,14 @@ describe('test/app/service/interface.js', () => {
     assert(res.length === 0);
   });
 
-  it('queryProjectAllInfo', async () => {
+  it('downloadProject', async () => {
     await ctx.service.interface.createInterface({
       projectUniqId,
       pathname: 'api/one',
       method: 'ALL',
       description: 'api one',
     });
-    const res = await ctx.service.project.queryProjectAllInfo({
+    const res = await ctx.service.transfer.downloadProject({
       uniqId: projectUniqId,
     });
     assert(res.data.length === 1);
@@ -232,7 +232,7 @@ describe('test/app/service/interface.js', () => {
     assert(res.data[0].description === 'api one');
   });
 
-  it('uploadProjectByUniqId', async () => {
+  it('uploadProject', async () => {
     const res = await app.httpRequest()
       .post('/api/project/upload')
       .attach('file', path.join(__dirname, '..', 'fixtures/upload_data/', 'project.json'))

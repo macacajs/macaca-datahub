@@ -2,7 +2,6 @@
 
 const Service = require('egg').Service;
 const pathToRegexp = require('path-to-regexp');
-const bfj = require('bfj');
 
 class InterfaceService extends Service {
 
@@ -119,86 +118,6 @@ class InterfaceService extends Service {
         uniqId,
       },
     });
-  }
-
-  async queryInterfaceAllInfo({ interfaceUniqId }) {
-    const scenes = await this.ctx.model.Scene.findAll({
-      where: {
-        interfaceUniqId,
-      },
-    });
-
-    const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
-      interfaceUniqId,
-    });
-
-    const interfaceData = await this.ctx.service.interface.queryInterfaceByUniqId({
-      uniqId: interfaceUniqId,
-    });
-    const fileName = `interface_${interfaceData.pathname}_${interfaceData.method}.json`;
-
-    return {
-      fileName,
-      data: {
-        pathname: interfaceData.pathname,
-        method: interfaceData.method,
-        projectUniqId: interfaceData.uniqId,
-        description: interfaceData.description,
-        contextConfig: interfaceData.contextConfig,
-        currentScene: interfaceData.currentScene,
-        proxyConfig: interfaceData.proxyConfig,
-        scenes,
-        schemas,
-      },
-    };
-  }
-
-  async uploadInterfaceByUniqId() {
-    const stream = await this.ctx.getFileStream();
-    const interfaceData = await bfj.parse(stream);
-    const interfaceUniqId = stream.fieldname;
-
-    try {
-      const interfaceOldData = await this.queryInterfaceByUniqId({
-        uniqId: interfaceUniqId,
-      });
-
-      await this.deleteInterfaceByUniqId({
-        uniqId: interfaceUniqId,
-      });
-
-      const interfaceStatus = await this.ctx.model.Interface.create({
-        pathname: interfaceOldData.pathname,
-        method: interfaceOldData.method,
-        projectUniqId: interfaceOldData.projectUniqId,
-        description: interfaceOldData.description,
-        contextConfig: interfaceData.contextConfig,
-        currentScene: interfaceData.currentScene,
-        proxyConfig: interfaceData.proxyConfig,
-      });
-
-      for (const scene of interfaceData.scenes) {
-        await this.ctx.model.Scene.create({
-          interfaceUniqId: interfaceStatus.uniqId,
-          sceneName: scene.sceneName,
-          data: scene.data,
-        });
-      }
-
-      for (const schema of interfaceData.schemas) {
-        await this.ctx.model.Schema.upsert({
-          interfaceUniqId: interfaceStatus.uniqId,
-          type: schema.type,
-          data: schema.data,
-        });
-      }
-    } catch (err) {
-      return err;
-    }
-
-    return {
-      success: true,
-    };
   }
 }
 
