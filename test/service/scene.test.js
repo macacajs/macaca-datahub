@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const { assert, app } = require('egg-mock/bootstrap');
 
 describe('test/app/service/scene.js', () => {
@@ -129,6 +130,35 @@ describe('test/app/service/scene.js', () => {
       });
       assert(res.length === 1);
       assert(res[0].sceneName === 'fail');
+    });
+
+    it('downloadInterface', async () => {
+      const res = await ctx.service.transfer.downloadInterface({
+        interfaceUniqId,
+      });
+
+      assert(res.data.scenes.length === 2);
+      assert(res.data.scenes[0].sceneName === 'success');
+      assert(res.data.scenes[1].sceneName === 'fail');
+    });
+
+    it('uploadInterface', async () => {
+      const res = await app.httpRequest()
+        .post('/api/interface/upload')
+        .attach(interfaceUniqId, path.join(__dirname, '..', 'fixtures/upload_data/', 'interface.json'))
+        .expect(200);
+
+      assert(res.body.success === true);
+
+      const scenes = await ctx.model.Scene.findAll({
+        where: {
+          interfaceUniqId,
+        },
+      });
+
+      assert(scenes.length === 2);
+      assert(scenes[0].sceneName === 'success');
+      assert(scenes[1].sceneName === 'fail');
     });
   });
 });

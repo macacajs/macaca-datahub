@@ -1,5 +1,6 @@
 'use strict';
 
+const bfj = require('bfj');
 const Controller = require('egg').Controller;
 
 class InterfaceController extends Controller {
@@ -67,6 +68,28 @@ class InterfaceController extends Controller {
       return;
     }
     ctx.fail(ctx.gettext('common.delete.fail'));
+  }
+
+  async download() {
+    const ctx = this.ctx;
+    const { interfaceUniqId } = ctx.query;
+    const res = await ctx.service.transfer.downloadInterface({ interfaceUniqId });
+
+    ctx.body = JSON.stringify(res.data, null, 2);
+    ctx.attachment(res.fileName);
+  }
+
+  async upload() {
+    const ctx = this.ctx;
+    const stream = await this.ctx.getFileStream();
+    const interfaceData = await bfj.parse(stream);
+    const interfaceUniqId = stream.fieldname;
+
+    const res = await ctx.service.transfer.uploadInterface({
+      interfaceData,
+      interfaceUniqId,
+    });
+    ctx.body = res;
   }
 }
 

@@ -29,12 +29,16 @@ module.exports = app => {
   router.post('/api/project', controller.api.project.create);
   router.put('/api/project/:uniqId', controller.api.project.update);
   router.delete('/api/project/:uniqId', controller.api.project.delete);
+  router.get('/api/project/download/:uniqId', controller.api.project.download);
+  router.post('/api/project/upload', controller.api.project.upload);
 
   router.get('/api/interface', controller.api.interface.showAll);
+  router.get('/api/interface/download', controller.api.interface.download);
   router.get('/api/interface/:uniqId', controller.api.interface.show);
   router.post('/api/interface', controller.api.interface.create);
   router.put('/api/interface/:uniqId', controller.api.interface.update);
   router.delete('/api/interface/:uniqId', controller.api.interface.delete);
+  router.post('/api/interface/upload', controller.api.interface.upload);
 
   router.get('/api/scene', controller.api.scene.showAll);
   router.get('/api/scene/:uniqId', controller.api.scene.show);

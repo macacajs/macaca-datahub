@@ -10,6 +10,7 @@
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
+    "bfj": "^6.1.1",
     "commander": "^2.12.2",
     "datahub-view": "^2.0.0",
     "egg": "^2.0.0",

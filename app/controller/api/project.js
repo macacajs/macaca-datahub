@@ -1,5 +1,6 @@
 'use strict';
 
+const bfj = require('bfj');
 const Controller = require('egg').Controller;
 
 class ProjectController extends Controller {
@@ -76,6 +77,28 @@ class ProjectController extends Controller {
     const { uniqId } = ctx.params;
     const res = await ctx.service.project.deleteProjectByUniqId({ uniqId });
     ctx.success(res);
+  }
+
+  async download() {
+    const ctx = this.ctx;
+    const { uniqId } = ctx.params;
+    const res = await ctx.service.transfer.downloadProject({ uniqId });
+
+    ctx.body = JSON.stringify(res.data, null, 2);
+    ctx.attachment(res.fileName);
+  }
+
+  async upload() {
+    const ctx = this.ctx;
+    const stream = await this.ctx.getFileStream();
+    const projectData = await bfj.parse(stream);
+    const projectUniqId = stream.fieldname;
+
+    const res = await ctx.service.transfer.uploadProject({
+      projectData,
+      projectUniqId,
+    });
+    ctx.body = res;
   }
 }
 

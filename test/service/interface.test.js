@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const { assert, app } = require('egg-mock/bootstrap');
 
 describe('test/app/service/interface.js', () => {
@@ -213,5 +214,38 @@ describe('test/app/service/interface.js', () => {
     });
     assert(deleteCount === 1);
     assert(res.length === 0);
+  });
+
+  it('downloadProject', async () => {
+    await ctx.service.interface.createInterface({
+      projectUniqId,
+      pathname: 'api/one',
+      method: 'ALL',
+      description: 'api one',
+    });
+    const res = await ctx.service.transfer.downloadProject({
+      uniqId: projectUniqId,
+    });
+    assert(res.data.length === 1);
+    assert(res.data[0].pathname === 'api/one');
+    assert(res.data[0].method === 'ALL');
+    assert(res.data[0].description === 'api one');
+  });
+
+  it('uploadProject', async () => {
+    const res = await app.httpRequest()
+      .post('/api/project/upload')
+      .attach('file', path.join(__dirname, '..', 'fixtures/upload_data/', 'project.json'))
+      .expect(200);
+
+    assert(res.body.success === true);
+
+    const interfaces = await ctx.model.Interface.findAll();
+
+    assert(interfaces.length === 2);
+    assert(interfaces[0].pathname === 'add');
+    assert(interfaces[0].description === 'add data');
+    assert(interfaces[1].pathname === 'delete');
+    assert(interfaces[1].description === 'delete data');
   });
 });
