@@ -76,8 +76,7 @@ class InterfaceController extends Controller {
     const res = await ctx.service.transfer.downloadInterface({ interfaceUniqId });
 
     ctx.body = JSON.stringify(res.data, null, 2);
-    ctx.set('content-type', 'application/octet-stream');
-    ctx.set('content-disposition', `attachment; filename=${res.fileName}`);
+    ctx.attachment(res.fileName);
   }
 
   async upload() {
