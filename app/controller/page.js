@@ -59,7 +59,7 @@ class PageController extends Controller {
   async notfound() {
     this.ctx.body = {
       success: false,
-      errorMessage: 'databub interface not found',
+      errorMessage: 'databub interface not found, try to update macaca-datahub.',
     };
   }
 }
