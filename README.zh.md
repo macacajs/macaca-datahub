@@ -67,21 +67,19 @@ DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ati9ij21kw13ado5.jpg" width="75%" />
 </div>
 
-### 实验特性 - 上传下载
-
-#### 打开上传下载功能
+### 打开上传下载功能
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6dmyoij22b21i8gwb.jpg" width="75%" />
 </div>
 
-#### 上传下载项目数据
+### 上传下载项目数据
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6d422ij22a41g8447.jpg" width="75%" />
 </div>
 
-#### 上传下载接口数据
+### 上传下载接口数据
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ctlipj22a41g8484.jpg" width="75%" />

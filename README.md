@@ -123,21 +123,19 @@ DataHub can save the response of each request by taking snapshot. You can use th
 
 [More intro](//macacajs.github.io/datahub)
 
-### Experiment - Upload and Download
-
-#### Use Upload and Download
+### Use Upload and Download
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9idygpj22ai1i2wor.jpg" style="width: 75%;" />
 </div>
 
-#### Upload and Download Project Data
+### Upload and Download Project Data
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hd0x4j229m1hete8.jpg" style="width: 75%;" />
 </div>
 
-#### Upload and Download Interface Data
+### Upload and Download Interface Data
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hn40kj229m1heqcl.jpg" style="width: 75%;" />
