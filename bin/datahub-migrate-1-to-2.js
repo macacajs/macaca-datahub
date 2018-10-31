@@ -101,7 +101,7 @@ for (const project of projects) {
       exportName,
       'schema'
     ));
-    const reqSchemaContent = JSON.parse(interfaceData.reqSchemaContent) || {};
+    const reqSchemaContent = interfaceData.reqSchemaContent ? JSON.parse(interfaceData.reqSchemaContent) : {};
     fs.writeFileSync(path.join(
       baseDir,
       project.identifer,
@@ -114,7 +114,7 @@ for (const project of projects) {
       interfaceUniqId: interfaceDataUniqId,
       uniqId: uuid(),
     }, null, 2));
-    const resSchemaContent = JSON.parse(interfaceData.resSchemaContent) || {};
+    const resSchemaContent = interfaceData.resSchemaContent ? JSON.parse(interfaceData.resSchemaContent) : {};
     fs.writeFileSync(path.join(
       baseDir,
       project.identifer,
