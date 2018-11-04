@@ -3,7 +3,6 @@
 const {
   Controller,
 } = require('egg');
-const cookie = require('cookie');
 
 class SdkController extends Controller {
 
@@ -24,6 +23,7 @@ class SdkController extends Controller {
     const projectName = options.hub;
     const pathname = options.pathname;
     const method = options.method || 'ALL';
+    const tagName = options.tagName;
 
     // change interface currentScene
     const sceneName = options.scene;
@@ -53,14 +53,12 @@ class SdkController extends Controller {
 
     let interfaceData;
 
-    const cookieKeyPair = cookie.parse(ctx.header.cookie);
-
-    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+    if (tagName) {
       interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
         projectUniqId,
         pathname,
         method,
-        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+        tagName,
       });
     } else {
       interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
@@ -83,11 +81,11 @@ class SdkController extends Controller {
     }
     payload.contextConfig = contextConfig;
 
-    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+    if (tagName) {
       await ctx.service.interface.updateInterfaceFromCache({
         uniqId: interfaceData.uniqId,
         payload,
-        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+        tagName,
       });
     } else {
       await ctx.service.interface.updateInterface({
@@ -114,7 +112,7 @@ class SdkController extends Controller {
     // query interface options
     const projectName = options.hub;
     const sceneName = options.scene;
-    const cookieKeyPair = cookie.parse(ctx.header.cookie);
+    const tagName = options.tagName;
     const projectData = await ctx.service.project.queryProjectByName({
       projectName,
     });
@@ -132,14 +130,14 @@ class SdkController extends Controller {
       if (!sceneData) {
         return;
       }
-      if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      if (tagName) {
         await ctx.service.interface.updateInterfaceFromCache({
           uniqId: interfaceData.uniqId,
           payload: {
             currentScene: sceneData.sceneName,
             contextConfig: this.DEFAULT_CONTEXT_CONFIG,
           },
-          tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+          tagName,
         });
       } else {
         await ctx.service.interface.updateInterface({
