@@ -19,7 +19,7 @@ class SchemaController extends Controller {
     const payload = {};
     for (const key of [
       'enableSchemaValidate',
-      'schemaData'
+      'schemaData',
     ]) {
       if (typeof ctx.request.body[key] !== 'undefined') {
         payload[key] = ctx.request.body[key];
