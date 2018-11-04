@@ -4,7 +4,9 @@ const Service = require('egg').Service;
 
 class SchemaService extends Service {
 
-  async querySchemaByInterfaceUniqId({ interfaceUniqId }, options = {}) {
+  async querySchemaByInterfaceUniqId({
+    interfaceUniqId,
+  }, options = {}) {
     return await this.ctx.model.Schema.findAll({
       ...options,
       where: {
@@ -19,9 +21,16 @@ class SchemaService extends Service {
     });
   }
 
-  async updateSchema({ interfaceUniqId, type, payload }) {
+  async updateSchema({
+    interfaceUniqId,
+    type,
+    payload,
+  }) {
     const res = await this.ctx.model.Schema.findOne({
-      where: { interfaceUniqId, type },
+      where: {
+        interfaceUniqId,
+        type,
+      },
     });
     let newValue = {};
     if (res && res.data) {
@@ -33,7 +42,9 @@ class SchemaService extends Service {
       newValue = payload;
     }
     return await this.ctx.model.Schema.upsert({
-      interfaceUniqId, type, data: newValue,
+      interfaceUniqId,
+      type,
+      data: newValue,
     });
   }
 }

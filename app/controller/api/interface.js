@@ -1,7 +1,9 @@
 'use strict';
 
+const {
+  Controller,
+} = require('egg');
 const bfj = require('bfj');
-const Controller = require('egg').Controller;
 
 class InterfaceController extends Controller {
 
@@ -42,9 +44,12 @@ class InterfaceController extends Controller {
       'proxyConfig',
       'contextConfig',
     ].forEach(i => {
-      if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
+      if (ctx.request.body[i]) {
+        payload[i] = ctx.request.body[i];
+      }
     });
     const proxyConfig = payload.proxyConfig;
+
     if (proxyConfig) {
       const activeIndex = proxyConfig.activeIndex || 0;
       const proxyList = proxyConfig.proxyList || [];
@@ -72,8 +77,12 @@ class InterfaceController extends Controller {
 
   async download() {
     const ctx = this.ctx;
-    const { interfaceUniqId } = ctx.query;
-    const res = await ctx.service.transfer.downloadInterface({ interfaceUniqId });
+    const {
+      interfaceUniqId,
+    } = ctx.query;
+    const res = await ctx.service.transfer.downloadInterface({
+      interfaceUniqId,
+    });
 
     ctx.body = JSON.stringify(res.data, null, 2);
     ctx.attachment(res.fileName);

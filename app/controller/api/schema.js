@@ -17,7 +17,10 @@ class SchemaController extends Controller {
     const { interfaceUniqId } = ctx.request.body;
     ctx.assertParam({ interfaceUniqId });
     const payload = {};
-    for (const key of [ 'enableSchemaValidate', 'schemaData' ]) {
+    for (const key of [
+      'enableSchemaValidate',
+      'schemaData',
+    ]) {
       if (typeof ctx.request.body[key] !== 'undefined') {
         payload[key] = ctx.request.body[key];
       }

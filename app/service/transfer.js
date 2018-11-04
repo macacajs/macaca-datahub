@@ -1,10 +1,14 @@
 'use strict';
 
-const Service = require('egg').Service;
+const {
+  Service,
+} = require('egg');
 
 class TransferService extends Service {
 
-  async downloadProject({ uniqId }) {
+  async downloadProject({
+    uniqId,
+  }) {
     const interfaces = await this.ctx.service.interface.queryInterfaceByProjectUniqId({
       projectUniqId: uniqId,
     });
@@ -42,7 +46,10 @@ class TransferService extends Service {
     };
   }
 
-  async uploadProject({ projectData, projectUniqId }) {
+  async uploadProject({
+    projectData,
+    projectUniqId,
+  }) {
     try {
       await this.ctx.model.Interface.destroy({
         where: {
@@ -88,7 +95,9 @@ class TransferService extends Service {
     };
   }
 
-  async downloadInterface({ interfaceUniqId }) {
+  async downloadInterface({
+    interfaceUniqId,
+  }) {
     const scenes = await this.ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
@@ -120,7 +129,10 @@ class TransferService extends Service {
     };
   }
 
-  async uploadInterface({ interfaceData, interfaceUniqId }) {
+  async uploadInterface({
+    interfaceData,
+    interfaceUniqId,
+  }) {
     try {
       const interfaceOldData = await this.ctx.service.interface.queryInterfaceByUniqId({
         uniqId: interfaceUniqId,

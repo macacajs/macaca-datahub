@@ -1,7 +1,10 @@
 'use strict';
 
+const {
+  Controller,
+} = require('egg');
 const url = require('url');
-const Controller = require('egg').Controller;
+const cookie = require('cookie');
 
 const ALLOWED_PROXY_HEADERS = [
   'set-cookie',
@@ -17,19 +20,40 @@ class SceneController extends Controller {
     const pathname = params.pathname;
     const method = ctx.method;
 
-    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({ projectName });
-    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-      projectUniqId,
-      pathname,
-      method,
+    const {
+      uniqId: projectUniqId,
+    } = await ctx.service.project.queryProjectByName({
+      projectName,
     });
+
+    let interfaceData;
+
+    const cookieKeyPair = cookie.parse(ctx.header.cookie || '');
+
+    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
+        projectUniqId,
+        pathname,
+        method,
+        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+      });
+    } else {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+    }
 
     if (!interfaceData) {
       this.fail(`${method} ${pathname} not found`);
       return;
     }
 
-    const { contextConfig, proxyConfig } = interfaceData;
+    const {
+      contextConfig,
+      proxyConfig,
+    } = interfaceData;
 
     if (contextConfig.responseDelay) {
       ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
@@ -41,7 +65,11 @@ class SceneController extends Controller {
       ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
     }
 
-    const { enabled: proxyEnabled, proxyList = [], activeIndex = 0 } = proxyConfig;
+    const {
+      enabled: proxyEnabled,
+      proxyList = [],
+      activeIndex = 0,
+    } = proxyConfig;
     ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
     if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
       ctx[Symbol.for('context#useProxy')] = true;
@@ -75,9 +103,11 @@ class SceneController extends Controller {
       sceneName: interfaceData.currentScene,
     });
 
-    res ?
-      ctx.body = res.data :
+    if (res) {
+      ctx.body = res.data;
+    } else {
       this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
+    }
   }
 
   fail(message) {

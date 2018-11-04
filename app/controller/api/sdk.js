@@ -1,6 +1,8 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const {
+  Controller,
+} = require('egg');
 
 class SdkController extends Controller {
 
@@ -21,31 +23,50 @@ class SdkController extends Controller {
     const projectName = options.hub;
     const pathname = options.pathname;
     const method = options.method || 'ALL';
+    const tagName = options.tagName;
 
     // change interface currentScene
     const sceneName = options.scene;
 
     // change interface contextConfig
     const contextConfig = this.DEFAULT_CONTEXT_CONFIG;
+
     if (!isNaN(options.status)) {
       contextConfig.responseStatus = parseInt(options.status, 10);
     }
     if (!isNaN(options.delay)) {
       contextConfig.responseDelay = parseFloat(options.delay);
     }
-    if (typeof options.headers === 'object') contextConfig.responseHeaders = options.headers;
+    if (typeof options.headers === 'object') {
+      contextConfig.responseHeaders = options.headers;
+    }
 
-    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    const projectData = await ctx.service.project.queryProjectByName({
+      projectName,
+    });
+
     if (!projectData) {
       ctx.logger.error(`SwitchScene failed: Can\'t find project ${projectName}`);
       return;
     }
     const projectUniqId = projectData.uniqId;
-    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-      projectUniqId,
-      pathname,
-      method,
-    });
+
+    let interfaceData;
+
+    if (tagName) {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
+        projectUniqId,
+        pathname,
+        method,
+        tagName,
+      });
+    } else {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+    }
 
     if (!interfaceData) {
       ctx.logger.error('SwitchScene failed: Can\'t find data for ' +
@@ -54,15 +75,24 @@ class SdkController extends Controller {
     }
 
     const payload = {};
+
     if (sceneName) {
       payload.currentScene = sceneName;
     }
     payload.contextConfig = contextConfig;
 
-    await ctx.service.interface.updateInterface({
-      uniqId: interfaceData.uniqId,
-      payload,
-    });
+    if (tagName) {
+      await ctx.service.interface.updateInterfaceFromCache({
+        uniqId: interfaceData.uniqId,
+        payload,
+        tagName,
+      });
+    } else {
+      await ctx.service.interface.updateInterface({
+        uniqId: interfaceData.uniqId,
+        payload,
+      });
+    }
   }
 
   async switchMultiScenes() {
@@ -82,7 +112,10 @@ class SdkController extends Controller {
     // query interface options
     const projectName = options.hub;
     const sceneName = options.scene;
-    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    const tagName = options.tagName;
+    const projectData = await ctx.service.project.queryProjectByName({
+      projectName,
+    });
     if (!projectData) {
       ctx.logger.error(`SwitchAllScenes failed: Can\'t find project ${projectName}`);
       return;
@@ -94,22 +127,41 @@ class SdkController extends Controller {
         interfaceUniqId: interfaceData.uniqId,
         sceneName,
       });
-      if (!sceneData) return;
-      await ctx.service.interface.updateInterface({
-        uniqId: interfaceData.uniqId,
-        payload: {
-          currentScene: sceneData.sceneName,
-          contextConfig: this.DEFAULT_CONTEXT_CONFIG,
-        },
-      });
+      if (!sceneData) {
+        return;
+      }
+      if (tagName) {
+        await ctx.service.interface.updateInterfaceFromCache({
+          uniqId: interfaceData.uniqId,
+          payload: {
+            currentScene: sceneData.sceneName,
+            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
+          },
+          tagName,
+        });
+      } else {
+        await ctx.service.interface.updateInterface({
+          uniqId: interfaceData.uniqId,
+          payload: {
+            currentScene: sceneData.sceneName,
+            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
+          },
+        });
+      }
     }));
     ctx.success();
   }
 
   async switchAllProxy() {
     const ctx = this.ctx;
-    const { projectUniqId, enabled } = ctx.request.body;
-    const res = await ctx.service.interface.updateAllProxy({ projectUniqId, enabled });
+    const {
+      projectUniqId,
+      enabled,
+    } = ctx.request.body;
+    const res = await ctx.service.interface.updateAllProxy({
+      projectUniqId,
+      enabled,
+    });
     ctx.success(res);
   }
 
