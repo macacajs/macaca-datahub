@@ -114,6 +114,7 @@ class SdkController extends Controller {
     // query interface options
     const projectName = options.hub;
     const sceneName = options.scene;
+    const cookieKeyPair = cookie.parse(ctx.header.cookie);
     const projectData = await ctx.service.project.queryProjectByName({
       projectName,
     });
@@ -131,13 +132,24 @@ class SdkController extends Controller {
       if (!sceneData) {
         return;
       }
-      await ctx.service.interface.updateInterface({
-        uniqId: interfaceData.uniqId,
-        payload: {
-          currentScene: sceneData.sceneName,
-          contextConfig: this.DEFAULT_CONTEXT_CONFIG,
-        },
-      });
+      if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+        await ctx.service.interface.updateInterfaceFromCache({
+          uniqId: interfaceData.uniqId,
+          payload: {
+            currentScene: sceneData.sceneName,
+            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
+          },
+          tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+        });
+      } else {
+        await ctx.service.interface.updateInterface({
+          uniqId: interfaceData.uniqId,
+          payload: {
+            currentScene: sceneData.sceneName,
+            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
+          },
+        });
+      }
     }));
     ctx.success();
   }
