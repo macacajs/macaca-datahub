@@ -13,8 +13,9 @@ module.exports = () => {
       method,
     });
 
-    if (!interfaceData) return await next();
-
+    if (!interfaceData) {
+      return await next();
+    }
     const schemaList = await ctx.service.schema.querySchemaByInterfaceUniqId({
       interfaceUniqId: interfaceData.uniqId,
     });

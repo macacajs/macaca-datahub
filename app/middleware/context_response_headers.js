@@ -12,8 +12,9 @@ module.exports = () => {
         ctx.set(key, headers[key]);
         headerSet.push(key);
       }
-      headerSet.length && ctx.set('x-datahub-custom-response-headers',
-        headerSet.join(','));
+      if (headerSet.length) {
+        ctx.set('x-datahub-custom-response-headers', headerSet.join(','));
+      }
     }
   };
 };
