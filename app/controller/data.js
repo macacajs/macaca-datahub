@@ -87,8 +87,8 @@ class SceneController extends Controller {
 
     const cookieKeyPair = cookie.parse(ctx.header.cookie);
 
-    if (cookieKeyPair && cookieKeyPair['DATAHUB_CACHE_TAG']) {
-      console.log(cookieKeyPair['DATAHUB_CACHE_TAG']);
+    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      console.log(cookieKeyPair.DATAHUB_CACHE_TAG);
     } else {
       const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
         interfaceUniqId: interfaceData.uniqId,
