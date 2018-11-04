@@ -5,6 +5,8 @@ const {
 } = require('egg');
 const pathToRegexp = require('path-to-regexp');
 
+const cacheStore = new Map();
+
 class InterfaceService extends Service {
 
   async queryInterfaceByHTTPContext({
@@ -20,7 +22,7 @@ class InterfaceService extends Service {
         method: {
           [Op.or]: [
             method,
-            'ALL'
+            'ALL',
           ],
         },
       },
@@ -35,6 +37,26 @@ class InterfaceService extends Service {
     return res;
   }
 
+  async queryInterfaceByHTTPContextFromCache({
+    projectUniqId,
+    pathname,
+    method,
+    tagName,
+  }) {
+    const cacheKey = `${tagName}#${projectUniqId}`;
+
+    if (!cacheStore.get(cacheKey)) {
+      const res = await this.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+      cacheStore.set(cacheKey, res);
+    }
+
+    return cacheStore.get(cacheKey);
+  }
+
   async queryInterfaceByHTTPContextAndPathRegexp({
     projectUniqId,
     pathname,
@@ -47,7 +69,7 @@ class InterfaceService extends Service {
         method: {
           [Op.or]: [
             method,
-            'ALL'
+            'ALL',
           ],
         },
       },
@@ -85,7 +107,9 @@ class InterfaceService extends Service {
     });
   }
 
-  async queryInterfaceByUniqId({ uniqId }) {
+  async queryInterfaceByUniqId({
+    uniqId,
+  }) {
     return await this.ctx.model.Interface.findOne({
       where: {
         uniqId,
@@ -107,7 +131,10 @@ class InterfaceService extends Service {
     });
   }
 
-  async updateInterface({ uniqId, payload }) {
+  async updateInterface({
+    uniqId,
+    payload,
+  }) {
     return await this.ctx.model.Interface.update(
       payload,
       {
@@ -116,6 +143,16 @@ class InterfaceService extends Service {
         },
       }
     );
+  }
+
+  async updateInterfaceFromCache({
+    uniqId,
+    payload,
+    tagName,
+  }) {
+    const cacheKey = `${tagName}#${uniqId}`;
+    const data = cacheStore.get(cacheKey);
+    cacheStore.set(cacheKey, Object.assign(data, payload));
   }
 
   async updateAllProxy({

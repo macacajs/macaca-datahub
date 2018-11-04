@@ -38,7 +38,10 @@ class SceneController extends Controller {
   async update() {
     const ctx = this.ctx;
     const uniqId = ctx.params.uniqId;
-    const { interfaceUniqId, ...payload } = ctx.request.body;
+    const {
+      interfaceUniqId,
+      ...payload
+    } = ctx.request.body;
     ctx.assertParam({ interfaceUniqId });
     const currentScene = await ctx.service.scene.querySceneByUniqId({ uniqId });
     const currentInterface = await ctx.service.interface.queryInterfaceByUniqId({

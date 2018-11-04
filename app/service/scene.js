@@ -52,7 +52,9 @@ class SceneService extends Service {
     data,
   }) {
     return await this.ctx.model.Scene.create({
-      interfaceUniqId, sceneName, data,
+      interfaceUniqId,
+      sceneName,
+      data,
     });
   }
 

@@ -1,6 +1,9 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const {
+  Controller,
+} = require('egg');
+const cookie = require('cookie');
 
 class SdkController extends Controller {
 
@@ -27,25 +30,45 @@ class SdkController extends Controller {
 
     // change interface contextConfig
     const contextConfig = this.DEFAULT_CONTEXT_CONFIG;
+
     if (!isNaN(options.status)) {
       contextConfig.responseStatus = parseInt(options.status, 10);
     }
     if (!isNaN(options.delay)) {
       contextConfig.responseDelay = parseFloat(options.delay);
     }
-    if (typeof options.headers === 'object') contextConfig.responseHeaders = options.headers;
+    if (typeof options.headers === 'object') {
+      contextConfig.responseHeaders = options.headers;
+    }
 
-    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    const projectData = await ctx.service.project.queryProjectByName({
+      projectName,
+    });
+
     if (!projectData) {
       ctx.logger.error(`SwitchScene failed: Can\'t find project ${projectName}`);
       return;
     }
     const projectUniqId = projectData.uniqId;
-    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-      projectUniqId,
-      pathname,
-      method,
-    });
+
+    let interfaceData;
+
+    const cookieKeyPair = cookie.parse(ctx.header.cookie);
+
+    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
+        projectUniqId,
+        pathname,
+        method,
+        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+      });
+    } else {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+    }
 
     if (!interfaceData) {
       ctx.logger.error('SwitchScene failed: Can\'t find data for ' +
@@ -54,15 +77,24 @@ class SdkController extends Controller {
     }
 
     const payload = {};
+
     if (sceneName) {
       payload.currentScene = sceneName;
     }
     payload.contextConfig = contextConfig;
 
-    await ctx.service.interface.updateInterface({
-      uniqId: interfaceData.uniqId,
-      payload,
-    });
+    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      await ctx.service.interface.updateInterfaceFromCache({
+        uniqId: interfaceData.uniqId,
+        payload,
+        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+      });
+    } else {
+      await ctx.service.interface.updateInterface({
+        uniqId: interfaceData.uniqId,
+        payload,
+      });
+    }
   }
 
   async switchMultiScenes() {
@@ -82,7 +114,9 @@ class SdkController extends Controller {
     // query interface options
     const projectName = options.hub;
     const sceneName = options.scene;
-    const projectData = await ctx.service.project.queryProjectByName({ projectName });
+    const projectData = await ctx.service.project.queryProjectByName({
+      projectName,
+    });
     if (!projectData) {
       ctx.logger.error(`SwitchAllScenes failed: Can\'t find project ${projectName}`);
       return;
@@ -94,7 +128,9 @@ class SdkController extends Controller {
         interfaceUniqId: interfaceData.uniqId,
         sceneName,
       });
-      if (!sceneData) return;
+      if (!sceneData) {
+        return;
+      }
       await ctx.service.interface.updateInterface({
         uniqId: interfaceData.uniqId,
         payload: {
@@ -108,8 +144,14 @@ class SdkController extends Controller {
 
   async switchAllProxy() {
     const ctx = this.ctx;
-    const { projectUniqId, enabled } = ctx.request.body;
-    const res = await ctx.service.interface.updateAllProxy({ projectUniqId, enabled });
+    const {
+      projectUniqId,
+      enabled,
+    } = ctx.request.body;
+    const res = await ctx.service.interface.updateAllProxy({
+      projectUniqId,
+      enabled,
+    });
     ctx.success(res);
   }
 

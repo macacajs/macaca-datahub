@@ -26,11 +26,24 @@ class SceneController extends Controller {
       projectName,
     });
 
-    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-      projectUniqId,
-      pathname,
-      method,
-    });
+    let interfaceData;
+
+    const cookieKeyPair = cookie.parse(ctx.header.cookie);
+
+    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
+        projectUniqId,
+        pathname,
+        method,
+        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
+      });
+    } else {
+      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+    }
 
     if (!interfaceData) {
       this.fail(`${method} ${pathname} not found`);
@@ -85,21 +98,15 @@ class SceneController extends Controller {
       return;
     }
 
-    const cookieKeyPair = cookie.parse(ctx.header.cookie);
+    const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+      interfaceUniqId: interfaceData.uniqId,
+      sceneName: interfaceData.currentScene,
+    });
 
-    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
-      console.log(cookieKeyPair.DATAHUB_CACHE_TAG);
+    if (res) {
+      ctx.body = res.data;
     } else {
-      const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-        interfaceUniqId: interfaceData.uniqId,
-        sceneName: interfaceData.currentScene,
-      });
-
-      if (res) {
-        ctx.body = res.data;
-      } else {
-        this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
-      }
+      this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
     }
   }
 

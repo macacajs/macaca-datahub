@@ -1,6 +1,8 @@
 'use strict';
 
-const Service = require('egg').Service;
+const {
+  Service,
+} = require('egg');
 
 class TransferService extends Service {
 
@@ -93,7 +95,9 @@ class TransferService extends Service {
     };
   }
 
-  async downloadInterface({ interfaceUniqId }) {
+  async downloadInterface({
+    interfaceUniqId,
+  }) {
     const scenes = await this.ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
@@ -125,7 +129,10 @@ class TransferService extends Service {
     };
   }
 
-  async uploadInterface({ interfaceData, interfaceUniqId }) {
+  async uploadInterface({
+    interfaceData,
+    interfaceUniqId,
+  }) {
     try {
       const interfaceOldData = await this.ctx.service.interface.queryInterfaceByUniqId({
         uniqId: interfaceUniqId,
