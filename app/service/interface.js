@@ -151,7 +151,20 @@ class InterfaceService extends Service {
     tagName,
   }) {
     const cacheKey = `${tagName}#${uniqId}`;
-    const data = cacheStore.get(cacheKey);
+
+    let data = cacheStore.get(cacheKey);
+    if (!data) {
+      const currentInterface = await this.queryInterfaceByUniqId({
+        uniqId
+      });
+      const { projectUniqId, pathname, method } = currentInterface;
+      data = await this.queryInterfaceByHTTPContext({
+        projectUniqId,
+        pathname,
+        method,
+      });
+      cacheStore.set(cacheKey, data);
+    }
     cacheStore.set(cacheKey, Object.assign(data, payload));
   }
 

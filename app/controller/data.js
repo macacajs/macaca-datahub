@@ -28,7 +28,7 @@ class SceneController extends Controller {
 
     let interfaceData;
 
-    const cookieKeyPair = cookie.parse(ctx.header.cookie);
+    const cookieKeyPair = cookie.parse(ctx.header.cookie || '');
 
     if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
       interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
