@@ -89,8 +89,8 @@ class SceneController extends Controller {
     }
 
     let sceneName;
-    if (tagName && interfaceData.multiCurrentScene[tagName]) {
-      sceneName = interfaceData.multiCurrentScene[tagName];
+    if (tagName) {
+      sceneName = interfaceData.multiCurrentScene[tagName] || interfaceData.currentScene;
     } else {
       sceneName = interfaceData.currentScene;
     }
