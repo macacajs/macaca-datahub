@@ -26,24 +26,14 @@ class SceneController extends Controller {
       projectName,
     });
 
-    let interfaceData;
-
     const cookieKeyPair = cookie.parse(ctx.header.cookie || '');
+    const tagName = cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG;
 
-    if (cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG) {
-      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
-        projectUniqId,
-        pathname,
-        method,
-        tagName: cookieKeyPair.DATAHUB_CACHE_TAG,
-      });
-    } else {
-      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-        projectUniqId,
-        pathname,
-        method,
-      });
-    }
+    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname,
+      method,
+    });
 
     if (!interfaceData) {
       this.fail(`${method} ${pathname} not found`);
@@ -98,9 +88,16 @@ class SceneController extends Controller {
       return;
     }
 
+    let sceneName;
+    if (tagName && interfaceData.multiCurrentScene[tagName]) {
+      sceneName = interfaceData.multiCurrentScene[tagName];
+    } else {
+      sceneName = interfaceData.currentScene;
+    }
+
     const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
       interfaceUniqId: interfaceData.uniqId,
-      sceneName: interfaceData.currentScene,
+      sceneName,
     });
 
     if (res) {

@@ -36,6 +36,11 @@ module.exports = app => {
       defaultValue: '',
       allowNull: false,
     },
+    multiCurrentScene: {
+      type: JSON,
+      defaultValue: {},
+      allowNull: false,
+    },
     proxyConfig: {
       type: JSON,
       defaultValue: {},

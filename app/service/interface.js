@@ -5,8 +5,6 @@ const {
 } = require('egg');
 const pathToRegexp = require('path-to-regexp');
 
-const cacheStore = new Map();
-
 class InterfaceService extends Service {
 
   async queryInterfaceByHTTPContext({
@@ -35,26 +33,6 @@ class InterfaceService extends Service {
       });
     }
     return res;
-  }
-
-  async queryInterfaceByHTTPContextFromCache({
-    projectUniqId,
-    pathname,
-    method,
-    tagName,
-  }) {
-    const cacheKey = `${tagName}#${projectUniqId}`;
-
-    if (!cacheStore.get(cacheKey)) {
-      const res = await this.queryInterfaceByHTTPContext({
-        projectUniqId,
-        pathname,
-        method,
-      });
-      cacheStore.set(cacheKey, res);
-    }
-
-    return cacheStore.get(cacheKey);
   }
 
   async queryInterfaceByHTTPContextAndPathRegexp({
@@ -143,29 +121,6 @@ class InterfaceService extends Service {
         },
       }
     );
-  }
-
-  async updateInterfaceFromCache({
-    uniqId,
-    payload,
-    tagName,
-  }) {
-    const cacheKey = `${tagName}#${uniqId}`;
-
-    let data = cacheStore.get(cacheKey);
-    if (!data) {
-      const currentInterface = await this.queryInterfaceByUniqId({
-        uniqId
-      });
-      const { projectUniqId, pathname, method } = currentInterface;
-      data = await this.queryInterfaceByHTTPContext({
-        projectUniqId,
-        pathname,
-        method,
-      });
-      cacheStore.set(cacheKey, data);
-    }
-    cacheStore.set(cacheKey, Object.assign(data, payload));
   }
 
   async updateAllProxy({

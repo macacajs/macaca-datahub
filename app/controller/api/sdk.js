@@ -51,22 +51,11 @@ class SdkController extends Controller {
     }
     const projectUniqId = projectData.uniqId;
 
-    let interfaceData;
-
-    if (tagName) {
-      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContextFromCache({
-        projectUniqId,
-        pathname,
-        method,
-        tagName,
-      });
-    } else {
-      interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
-        projectUniqId,
-        pathname,
-        method,
-      });
-    }
+    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname,
+      method,
+    });
 
     if (!interfaceData) {
       ctx.logger.error('SwitchScene failed: Can\'t find data for ' +
@@ -76,23 +65,20 @@ class SdkController extends Controller {
 
     const payload = {};
 
-    if (sceneName) {
+    if (tagName && sceneName) {
+      payload.multiCurrentScene = {
+        ...interfaceData.get('multiCurrentScene'),
+        [tagName]: sceneName,
+      };
+    } else if (sceneName) {
       payload.currentScene = sceneName;
     }
     payload.contextConfig = contextConfig;
 
-    if (tagName) {
-      await ctx.service.interface.updateInterfaceFromCache({
-        uniqId: interfaceData.uniqId,
-        payload,
-        tagName,
-      });
-    } else {
-      await ctx.service.interface.updateInterface({
-        uniqId: interfaceData.uniqId,
-        payload,
-      });
-    }
+    await ctx.service.interface.updateInterface({
+      uniqId: interfaceData.uniqId,
+      payload,
+    });
   }
 
   async switchMultiScenes() {
@@ -130,24 +116,21 @@ class SdkController extends Controller {
       if (!sceneData) {
         return;
       }
-      if (tagName) {
-        await ctx.service.interface.updateInterfaceFromCache({
-          uniqId: interfaceData.uniqId,
-          payload: {
-            currentScene: sceneData.sceneName,
-            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
-          },
-          tagName,
-        });
-      } else {
-        await ctx.service.interface.updateInterface({
-          uniqId: interfaceData.uniqId,
-          payload: {
-            currentScene: sceneData.sceneName,
-            contextConfig: this.DEFAULT_CONTEXT_CONFIG,
-          },
-        });
+      const payload = {
+        contextConfig: this.DEFAULT_CONTEXT_CONFIG,
+      };
+      if (tagName && sceneName) {
+        payload.multiCurrentScene = {
+          ...interfaceData.get('multiCurrentScene'),
+          [tagName]: sceneData.sceneName,
+        };
+      } else if (sceneName) {
+        payload.currentScene = sceneData.sceneName;
       }
+      await ctx.service.interface.updateInterface({
+        uniqId: interfaceData.uniqId,
+        payload,
+      });
     }));
     ctx.success();
   }
