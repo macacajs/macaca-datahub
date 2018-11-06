@@ -51,6 +51,11 @@ module.exports = app => {
       defaultValue: {},
       allowNull: false,
     },
+    multiContextConfig: {
+      type: JSON,
+      defaultValue: {},
+      allowNull: false,
+    },
     uniqId: {
       type: UUID,
       defaultValue: UUIDV4,
