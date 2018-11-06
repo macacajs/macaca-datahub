@@ -73,7 +73,15 @@ class SdkController extends Controller {
     } else if (sceneName) {
       payload.currentScene = sceneName;
     }
-    payload.contextConfig = contextConfig;
+
+    if (tagName) {
+      payload.multiContextConfig = {
+        ...interfaceData.get('multiContextConfig'),
+        [tagName]: contextConfig,
+      };
+    } else {
+      payload.contextConfig = contextConfig;
+    }
 
     await ctx.service.interface.updateInterface({
       uniqId: interfaceData.uniqId,

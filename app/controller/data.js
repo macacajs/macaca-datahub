@@ -40,10 +40,14 @@ class SceneController extends Controller {
       return;
     }
 
-    const {
-      contextConfig,
-      proxyConfig,
-    } = interfaceData;
+    let contextConfig = {};
+
+    if (tagName) {
+      contextConfig = interfaceData.multiContextConfig[tagName] || {};
+    } else {
+      contextConfig = interfaceData.contextConfig;
+    }
+    const { proxyConfig } = interfaceData;
 
     if (contextConfig.responseDelay) {
       ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
