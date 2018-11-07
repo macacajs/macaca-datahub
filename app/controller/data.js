@@ -33,6 +33,7 @@ class SceneController extends Controller {
       projectUniqId,
       pathname,
       method,
+      tagName,
     });
 
     if (!interfaceData) {
@@ -40,14 +41,10 @@ class SceneController extends Controller {
       return;
     }
 
-    let contextConfig = {};
-
-    if (tagName) {
-      contextConfig = interfaceData.multiContextConfig[tagName] || {};
-    } else {
-      contextConfig = interfaceData.contextConfig;
-    }
-    const { proxyConfig } = interfaceData;
+    const {
+      proxyConfig,
+      contextConfig,
+    } = interfaceData;
 
     if (contextConfig.responseDelay) {
       ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
@@ -92,22 +89,20 @@ class SceneController extends Controller {
       return;
     }
 
-    let sceneName;
-    if (tagName) {
-      sceneName = interfaceData.multiCurrentScene[tagName] || interfaceData.currentScene;
-    } else {
-      sceneName = interfaceData.currentScene;
-    }
+    const {
+      currentScene,
+      uniqId,
+    } = interfaceData;
 
     const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-      interfaceUniqId: interfaceData.uniqId,
-      sceneName,
+      interfaceUniqId: uniqId,
+      sceneName: currentScene,
     });
 
     if (res) {
       ctx.body = res.data;
     } else {
-      this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
+      this.fail(`${method} ${pathname} '${currentScene}' scene not found`);
     }
   }
 

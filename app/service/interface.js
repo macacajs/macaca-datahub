@@ -11,6 +11,7 @@ class InterfaceService extends Service {
     projectUniqId,
     pathname,
     method,
+    tagName,
   }) {
     const Op = this.ctx.app.Sequelize.Op;
     const res = await this.ctx.model.Interface.findOne({
@@ -32,7 +33,29 @@ class InterfaceService extends Service {
         method,
       });
     }
+    const originInterfaceId = res.uniqId;
+    const shadowRes = await this.queryShadowInterfaceById({
+      originInterfaceId,
+      tagName,
+    });
+
+    if (shadowRes) {
+      shadowRes.uniqId = originInterfaceId;
+      return shadowRes;
+    }
     return res;
+  }
+
+  async queryShadowInterfaceById({
+    originInterfaceId,
+    tagName,
+  }) {
+    return await this.ctx.model.ShadowInterface.findOne({
+      where: {
+        originInterfaceId,
+        tagName,
+      },
+    });
   }
 
   async queryInterfaceByHTTPContextAndPathRegexp({
@@ -118,6 +141,22 @@ class InterfaceService extends Service {
       {
         where: {
           uniqId,
+        },
+      }
+    );
+  }
+
+  async updateShadowInterface({
+    originInterfaceId,
+    tagName,
+    payload,
+  }) {
+    return await this.ctx.model.ShadowInterface.upsert(
+      payload,
+      {
+        where: {
+          originInterfaceId,
+          tagName,
         },
       }
     );
