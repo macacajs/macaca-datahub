@@ -55,7 +55,6 @@ class SdkController extends Controller {
       projectUniqId,
       pathname,
       method,
-      tagName,
     });
 
     if (!interfaceData) {

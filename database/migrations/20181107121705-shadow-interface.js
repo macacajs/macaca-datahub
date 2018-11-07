@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
     const { STRING, UUID, UUIDV4, JSON, DATE } = Sequelize;
 
-    await queryInterface.createTable('shadowInterface', {
+    await queryInterface.createTable('shadowInterfaces', {
       tagName: {
         type: STRING,
         allowNull: false,
@@ -47,15 +47,21 @@ module.exports = {
         },
       ],
     });
+    await queryInterface.addIndex('shadowInterfaces', [ 'tagName', 'originInterfaceId' ]);
+    await queryInterface.removeColumn('interfaces', 'multiCurrentScene');
+    await queryInterface.removeColumn('interfaces', 'multiContextConfig');
   },
 
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
-  }
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeIndex('shadowInterfaces', [ 'tagName', 'originInterfaceId' ]);
+    await queryInterface.dropTable('shadowInterfaces');
+    await queryInterface.addColumn('interfaces', 'multiCurrentScene', {
+      type: Sequelize.JSON,
+      defaultValue: {},
+    });
+    await queryInterface.addColumn('interfaces', 'multiContextConfig', {
+      type: Sequelize.JSON,
+      defaultValue: {},
+    });
+  },
 };
