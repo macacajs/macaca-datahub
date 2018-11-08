@@ -11,9 +11,10 @@ class InterfaceService extends Service {
     projectUniqId,
     pathname,
     method,
+    tagName,
   }) {
     const Op = this.ctx.app.Sequelize.Op;
-    const res = await this.ctx.model.Interface.findOne({
+    let res = await this.ctx.model.Interface.findOne({
       where: {
         projectUniqId,
         pathname,
@@ -26,13 +27,32 @@ class InterfaceService extends Service {
       },
     });
     if (!res) {
-      return await this.queryInterfaceByHTTPContextAndPathRegexp({
+      res = await this.queryInterfaceByHTTPContextAndPathRegexp({
         projectUniqId,
         pathname,
         method,
       });
     }
+    if (tagName) {
+      const originInterfaceId = res.uniqId;
+      res = await this.queryShadowInterfaceById({
+        originInterfaceId,
+        tagName,
+      });
+    }
     return res;
+  }
+
+  async queryShadowInterfaceById({
+    originInterfaceId,
+    tagName,
+  }) {
+    return await this.ctx.model.ShadowInterface.findOne({
+      where: {
+        originInterfaceId,
+        tagName,
+      },
+    });
   }
 
   async queryInterfaceByHTTPContextAndPathRegexp({
@@ -121,6 +141,32 @@ class InterfaceService extends Service {
         },
       }
     );
+  }
+
+  async updateShadowInterface({
+    originInterfaceId,
+    tagName,
+    payload,
+  }) {
+    const res = await this.ctx.model.ShadowInterface.findOne({
+      where: {
+        originInterfaceId,
+        tagName,
+      },
+    });
+    if (res) {
+      await this.ctx.model.ShadowInterface.update(
+        payload,
+        {
+          where: {
+            originInterfaceId,
+            tagName,
+          },
+        }
+      );
+      return;
+    }
+    await this.ctx.model.ShadowInterface.create(payload);
   }
 
   async updateAllProxy({

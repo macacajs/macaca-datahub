@@ -8,37 +8,19 @@ module.exports = app => {
     JSON,
   } = app.Sequelize;
 
-  const Interface = app.model.define('interface', {
-    protocol: {
+  const ShadowInterface = app.model.define('shadowInterface', {
+    tagName: {
       type: STRING,
-      defaultValue: 'http',
+      defaultValue: '',
       allowNull: false,
     },
-    pathname: {
-      type: STRING,
-      allowNull: false,
-    },
-    method: {
-      type: STRING,
-      defaultValue: 'GET',
-      allowNull: false,
-    },
-    projectUniqId: {
-      type: STRING,
-      allowNull: false,
-    },
-    description: {
+    originInterfaceId: {
       type: STRING,
       allowNull: false,
     },
     currentScene: {
       type: STRING,
       defaultValue: '',
-      allowNull: false,
-    },
-    proxyConfig: {
-      type: JSON,
-      defaultValue: {},
       allowNull: false,
     },
     contextConfig: {
@@ -57,14 +39,6 @@ module.exports = app => {
     indexes: [
       {
         fields: [
-          'projectUniqId',
-          'pathname',
-          'method',
-        ],
-        unique: true,
-      },
-      {
-        fields: [
           'uniqId',
         ],
         unique: true,
@@ -72,5 +46,5 @@ module.exports = app => {
     ],
   });
 
-  return Interface;
+  return ShadowInterface;
 };

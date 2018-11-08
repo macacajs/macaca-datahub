@@ -65,28 +65,27 @@ class SdkController extends Controller {
 
     const payload = {};
 
-    if (tagName && sceneName) {
-      payload.multiCurrentScene = {
-        ...interfaceData.get('multiCurrentScene'),
-        [tagName]: sceneName,
-      };
-    } else if (sceneName) {
+    if (sceneName) {
       payload.currentScene = sceneName;
     }
 
-    if (tagName) {
-      payload.multiContextConfig = {
-        ...interfaceData.get('multiContextConfig'),
-        [tagName]: contextConfig,
-      };
-    } else {
-      payload.contextConfig = contextConfig;
-    }
+    payload.contextConfig = contextConfig;
 
-    await ctx.service.interface.updateInterface({
-      uniqId: interfaceData.uniqId,
-      payload,
-    });
+    if (tagName) {
+      payload.originInterfaceId = interfaceData.uniqId;
+      payload.tagName = tagName;
+
+      await ctx.service.interface.updateShadowInterface({
+        originInterfaceId: interfaceData.uniqId,
+        tagName,
+        payload,
+      });
+    } else {
+      await ctx.service.interface.updateInterface({
+        uniqId: interfaceData.uniqId,
+        payload,
+      });
+    }
   }
 
   async switchMultiScenes() {
@@ -110,6 +109,7 @@ class SdkController extends Controller {
     const projectData = await ctx.service.project.queryProjectByName({
       projectName,
     });
+
     if (!projectData) {
       ctx.logger.error(`SwitchAllScenes failed: Can\'t find project ${projectName}`);
       return;
@@ -127,18 +127,25 @@ class SdkController extends Controller {
       const payload = {
         contextConfig: this.DEFAULT_CONTEXT_CONFIG,
       };
-      if (tagName && sceneName) {
-        payload.multiCurrentScene = {
-          ...interfaceData.get('multiCurrentScene'),
-          [tagName]: sceneData.sceneName,
-        };
-      } else if (sceneName) {
+
+      if (sceneName) {
         payload.currentScene = sceneData.sceneName;
       }
-      await ctx.service.interface.updateInterface({
-        uniqId: interfaceData.uniqId,
-        payload,
-      });
+
+      if (tagName) {
+        payload.originInterfaceId = interfaceData.uniqId;
+        payload.tagName = tagName;
+        await ctx.service.interface.updateShadowInterface({
+          originInterfaceId: interfaceData.uniqId,
+          tagName,
+          payload,
+        });
+      } else {
+        await ctx.service.interface.updateInterface({
+          uniqId: interfaceData.uniqId,
+          payload,
+        });
+      }
     }));
     ctx.success();
   }

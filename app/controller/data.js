@@ -33,6 +33,7 @@ class SceneController extends Controller {
       projectUniqId,
       pathname,
       method,
+      tagName,
     });
 
     if (!interfaceData) {
@@ -40,14 +41,10 @@ class SceneController extends Controller {
       return;
     }
 
-    let contextConfig = {};
-
-    if (tagName) {
-      contextConfig = interfaceData.multiContextConfig[tagName] || {};
-    } else {
-      contextConfig = interfaceData.contextConfig;
-    }
-    const { proxyConfig } = interfaceData;
+    const {
+      proxyConfig,
+      contextConfig,
+    } = interfaceData;
 
     if (contextConfig.responseDelay) {
       ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
@@ -59,55 +56,57 @@ class SceneController extends Controller {
       ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
     }
 
-    const {
-      enabled: proxyEnabled,
-      proxyList = [],
-      activeIndex = 0,
-    } = proxyConfig;
-    ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
-    if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
-      ctx[Symbol.for('context#useProxy')] = true;
-      const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
-      let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
-      const parseOrigindUrl = url.parse(ctx.request.url);
-      if (parseOrigindUrl.search) {
-        proxyUrl += parseOrigindUrl.search;
+    if (!tagName) {
+      const {
+        enabled: proxyEnabled,
+        proxyList = [],
+        activeIndex = 0,
+      } = proxyConfig;
+
+      ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
+      if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
+        ctx[Symbol.for('context#useProxy')] = true;
+        const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
+        let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
+        const parseOrigindUrl = url.parse(ctx.request.url);
+        if (parseOrigindUrl.search) {
+          proxyUrl += parseOrigindUrl.search;
+        }
+        const _res = await ctx.curl(proxyUrl, {
+          method: ctx.method,
+          headers: Object.assign({}, ctx.headers, {
+            host: parsedUrl.host,
+          }),
+          followRedirect: true,
+          timeout: 120 * 1000,
+          data: ctx.request.body,
+          dataType: 'text',
+        });
+        for (const key of ALLOWED_PROXY_HEADERS) {
+          _res.headers[key] && ctx.set(key, _res.headers[key]);
+        }
+        ctx[Symbol.for('context#proxyResponseStatus')] = _res.status;
+        ctx.status = _res.status;
+        ctx.body = _res.data;
+        return;
       }
-      const _res = await ctx.curl(proxyUrl, {
-        method: ctx.method,
-        headers: Object.assign({}, ctx.headers, {
-          host: parsedUrl.host,
-        }),
-        followRedirect: true,
-        timeout: 120 * 1000,
-        data: ctx.request.body,
-        dataType: 'text',
-      });
-      for (const key of ALLOWED_PROXY_HEADERS) {
-        _res.headers[key] && ctx.set(key, _res.headers[key]);
-      }
-      ctx[Symbol.for('context#proxyResponseStatus')] = _res.status;
-      ctx.status = _res.status;
-      ctx.body = _res.data;
-      return;
     }
 
-    let sceneName;
-    if (tagName) {
-      sceneName = interfaceData.multiCurrentScene[tagName] || interfaceData.currentScene;
-    } else {
-      sceneName = interfaceData.currentScene;
-    }
+    const {
+      currentScene,
+      uniqId,
+      originInterfaceId,
+    } = interfaceData;
 
     const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-      interfaceUniqId: interfaceData.uniqId,
-      sceneName,
+      interfaceUniqId: tagName ? originInterfaceId : uniqId,
+      sceneName: currentScene,
     });
 
     if (res) {
       ctx.body = res.data;
     } else {
-      this.fail(`${method} ${pathname} '${interfaceData.currentScene}' scene not found`);
+      this.fail(`${method} ${pathname} '${currentScene}' scene not found`);
     }
   }
 
