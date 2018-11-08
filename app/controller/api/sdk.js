@@ -10,7 +10,7 @@ class SdkController extends Controller {
     return {};
   }
 
-  async getSceneData(options) {
+  async sceneData(options) {
     const ctx = this.ctx;
     // query interface options
     const projectName = options.hub;
