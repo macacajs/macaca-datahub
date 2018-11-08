@@ -39,13 +39,6 @@ module.exports = app => {
     indexes: [
       {
         fields: [
-          'tagName',
-          'originInterfaceId',
-        ],
-        unique: true,
-      },
-      {
-        fields: [
           'uniqId',
         ],
         unique: true,

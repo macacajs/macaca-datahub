@@ -47,13 +47,11 @@ module.exports = {
         },
       ],
     });
-    await queryInterface.addIndex('shadowInterfaces', [ 'tagName', 'originInterfaceId' ]);
     await queryInterface.removeColumn('interfaces', 'multiCurrentScene');
     await queryInterface.removeColumn('interfaces', 'multiContextConfig');
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeIndex('shadowInterfaces', [ 'tagName', 'originInterfaceId' ]);
     await queryInterface.dropTable('shadowInterfaces');
     await queryInterface.addColumn('interfaces', 'multiCurrentScene', {
       type: Sequelize.JSON,
