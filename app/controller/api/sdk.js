@@ -18,7 +18,7 @@ class SdkController extends Controller {
       pathname,
       method = 'ALL',
       scene,
-    } = ctx.params;
+    } = ctx.query;
 
     const projectData = await ctx.service.project.queryProjectByName({
       projectName: hub,
@@ -42,10 +42,12 @@ class SdkController extends Controller {
       return;
     }
 
-    await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+    const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
       interfaceUniqId: interfaceData.uniqId,
       sceneName: scene,
     });
+
+    ctx.success(res.data);
   }
 
   async switchScene() {
