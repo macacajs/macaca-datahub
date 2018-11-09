@@ -51,6 +51,7 @@ module.exports = app => {
   router.get('/api/schema', controller.api.schema.showAll);
   router.put('/api/schema/:type', controller.api.schema.update);
 
+  router.get('/api/sdk/scene_data', controller.api.sdk.sceneData);
   router.post('/api/sdk/export_data', controller.api.sdk.exportData);
   router.post('/api/sdk/switch_scene', controller.api.sdk.switchScene);
   router.post('/api/sdk/switch_multi_scenes', controller.api.sdk.switchMultiScenes);

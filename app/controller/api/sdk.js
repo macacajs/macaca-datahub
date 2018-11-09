@@ -10,6 +10,46 @@ class SdkController extends Controller {
     return {};
   }
 
+  async sceneData() {
+    const ctx = this.ctx;
+    // query scene params
+    const {
+      hub,
+      pathname,
+      method = 'ALL',
+      scene,
+    } = ctx.query;
+
+    const projectData = await ctx.service.project.queryProjectByName({
+      projectName: hub,
+    });
+
+    if (!projectData) {
+      ctx.logger.error(`getSceneData failed: Can\'t find project ${hub}`);
+      return;
+    }
+    const projectUniqId = projectData.uniqId;
+
+    const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname,
+      method,
+    });
+
+    if (!interfaceData) {
+      ctx.logger.error('getSceneData failed: Can\'t find data for ' +
+      `${hub}, pathname: ${pathname}, method: ${method}`);
+      return;
+    }
+
+    const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+      interfaceUniqId: interfaceData.uniqId,
+      sceneName: scene,
+    });
+
+    ctx.success(res.data);
+  }
+
   async switchScene() {
     const ctx = this.ctx;
     const options = ctx.request.body;
