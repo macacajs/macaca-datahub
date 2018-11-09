@@ -98,8 +98,10 @@ class SceneController extends Controller {
       originInterfaceId,
     } = interfaceData;
 
+    const interfaceUniqId = (tagName && originInterfaceId) ? originInterfaceId : uniqId;
+
     const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-      interfaceUniqId: tagName ? originInterfaceId : uniqId,
+      interfaceUniqId,
       sceneName: currentScene,
     });
 

@@ -35,10 +35,14 @@ class InterfaceService extends Service {
     }
     if (tagName) {
       const originInterfaceId = res.uniqId;
-      res = await this.queryShadowInterfaceById({
+      const shadowRes = await this.queryShadowInterfaceById({
         originInterfaceId,
         tagName,
       });
+
+      if (shadowRes) {
+        return shadowRes;
+      }
     }
     return res;
   }
