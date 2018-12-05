@@ -1,7 +1,10 @@
 'use strict';
 
-const bfj = require('bfj');
+const getStream = require('get-stream');
+const YAML = require('yamljs');
 const Controller = require('egg').Controller;
+
+const swaggerConvert = require('../../util').swaggerConvert;
 
 class ProjectController extends Controller {
 
@@ -91,8 +94,19 @@ class ProjectController extends Controller {
   async upload() {
     const ctx = this.ctx;
     const stream = await this.ctx.getFileStream();
-    const projectData = await bfj.parse(stream);
     const projectUniqId = stream.fieldname;
+    let projectData = null;
+    const projectString = await getStream(stream);
+
+    if (/.yaml$/.test(stream.filename)) {
+      projectData = YAML.parse(projectString);
+    } else {
+      projectData = JSON.parse(projectString);
+    }
+
+    if (projectData.swagger) {
+      projectData = swaggerConvert(projectData);
+    }
 
     const res = await ctx.service.transfer.uploadProject({
       projectData,

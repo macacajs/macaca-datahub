@@ -21,6 +21,13 @@ module.exports = appInfo => {
     'errorHandler',
   ];
 
+  config.multipart = {
+    fileSize: '10mb',
+    fileExtensions: [
+      '.yaml',
+    ],
+  };
+
   config.exportData = {
     match(ctx) {
       const datahubClient = ctx.get('x-datahub-client');

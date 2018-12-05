@@ -10,7 +10,6 @@
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
-    "bfj": "^6.1.1",
     "commander": "^2.12.2",
     "cookie": "^0.3.1",
     "datahub-view": "^2.0.0",
@@ -18,6 +17,7 @@
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^4.1.0",
+    "get-stream": "^4.1.0",
     "koa-compose": "^4.0.0",
     "macaca-logo": "^1.0.0",
     "mz": "^2.7.0",
@@ -30,7 +30,8 @@
     "socket.io": "^2.0.4",
     "sqlite3": "^4.0.2",
     "uuid": "^3.3.2",
-    "xutil": "^1.0.11"
+    "xutil": "^1.0.11",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
