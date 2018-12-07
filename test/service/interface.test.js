@@ -248,4 +248,38 @@ describe('test/app/service/interface.js', () => {
     assert(interfaces[1].pathname === 'delete');
     assert(interfaces[1].description === 'delete data');
   });
+
+  it('uploadProject swagger.json', async () => {
+    const res = await app.httpRequest()
+      .post('/api/project/upload')
+      .attach('file', path.join(__dirname, '..', 'fixtures/upload_data/', 'swagger.json'))
+      .expect(200);
+
+    assert(res.body.success === true);
+
+    const interfaces = await ctx.model.Interface.findAll();
+
+    assert(interfaces.length === 20);
+    assert(interfaces[0].pathname === 'pet');
+    assert(interfaces[0].description === 'Add a new pet to the store. ');
+    assert(interfaces[19].pathname === 'user/:username');
+    assert(interfaces[19].description === 'Delete user. This can only be done by the logged in user.');
+  });
+
+  it('uploadProject swagger.yaml', async () => {
+    const res = await app.httpRequest()
+      .post('/api/project/upload')
+      .attach('file', path.join(__dirname, '..', 'fixtures/upload_data/', 'swagger.yaml'))
+      .expect(200);
+
+    assert(res.body.success === true);
+
+    const interfaces = await ctx.model.Interface.findAll();
+
+    assert(interfaces.length === 20);
+    assert(interfaces[0].pathname === 'pet');
+    assert(interfaces[0].description === 'Add a new pet to the store. ');
+    assert(interfaces[19].pathname === 'user/:username');
+    assert(interfaces[19].description === 'Delete user. This can only be done by the logged in user.');
+  });
 });

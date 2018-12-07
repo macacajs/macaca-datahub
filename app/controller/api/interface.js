@@ -3,7 +3,7 @@
 const {
   Controller,
 } = require('egg');
-const bfj = require('bfj');
+const getStream = require('get-stream');
 
 class InterfaceController extends Controller {
 
@@ -91,7 +91,8 @@ class InterfaceController extends Controller {
   async upload() {
     const ctx = this.ctx;
     const stream = await this.ctx.getFileStream();
-    const interfaceData = await bfj.parse(stream);
+    const interfaceString = await getStream(stream);
+    const interfaceData = JSON.parse(interfaceString);
     const interfaceUniqId = stream.fieldname;
 
     const res = await ctx.service.transfer.uploadInterface({
