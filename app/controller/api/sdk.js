@@ -24,7 +24,7 @@ class SdkController extends Controller {
       projectName: hub,
     });
 
-    if (!projectData) {
+    if (!projectData || !projectData.uniqId) {
       ctx.logger.error(`getSceneData failed: Can\'t find project ${hub}`);
       return;
     }
@@ -36,7 +36,7 @@ class SdkController extends Controller {
       method,
     });
 
-    if (!interfaceData) {
+    if (!interfaceData || !interfaceData.uniqId) {
       ctx.logger.error('getSceneData failed: Can\'t find data for ' +
       `${hub}, pathname: ${pathname}, method: ${method}`);
       return;
@@ -53,8 +53,12 @@ class SdkController extends Controller {
   async switchScene() {
     const ctx = this.ctx;
     const options = ctx.request.body;
-    await this.switchOneScene(options);
-    ctx.success();
+    const status = await this.switchOneScene(options);
+    if (status) {
+      ctx.success();
+    } else {
+      ctx.fail();
+    }
   }
 
   async switchOneScene(options) {
@@ -85,9 +89,9 @@ class SdkController extends Controller {
       projectName,
     });
 
-    if (!projectData) {
+    if (!projectData || !projectData.uniqId) {
       ctx.logger.error(`SwitchScene failed: Can\'t find project ${projectName}`);
-      return;
+      return false;
     }
     const projectUniqId = projectData.uniqId;
 
@@ -97,10 +101,10 @@ class SdkController extends Controller {
       method,
     });
 
-    if (!interfaceData) {
+    if (!interfaceData || !interfaceData.uniqId) {
       ctx.logger.error('SwitchScene failed: Can\'t find data for ' +
       `${projectName}, pathname: ${pathname}, method: ${method}`);
-      return;
+      return false;
     }
 
     const payload = {};
@@ -126,6 +130,7 @@ class SdkController extends Controller {
         payload,
       });
     }
+    return true;
   }
 
   async switchMultiScenes() {
@@ -150,7 +155,7 @@ class SdkController extends Controller {
       projectName,
     });
 
-    if (!projectData) {
+    if (!projectData || !projectData.uniqId) {
       ctx.logger.error(`SwitchAllScenes failed: Can\'t find project ${projectName}`);
       return;
     }
@@ -161,7 +166,8 @@ class SdkController extends Controller {
         interfaceUniqId: interfaceData.uniqId,
         sceneName,
       });
-      if (!sceneData) {
+
+      if (!sceneData || !sceneData.uniqId) {
         return;
       }
       const payload = {
