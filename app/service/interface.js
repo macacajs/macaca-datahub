@@ -159,7 +159,7 @@ class InterfaceService extends Service {
       },
     });
     if (res) {
-      await this.ctx.model.ShadowInterface.update(
+      return await this.ctx.model.ShadowInterface.update(
         payload,
         {
           where: {
@@ -168,9 +168,12 @@ class InterfaceService extends Service {
           },
         }
       );
-      return;
     }
-    await this.ctx.model.ShadowInterface.create(payload);
+    return await this.ctx.model.ShadowInterface.create({
+      originInterfaceId,
+      tagName,
+      payload,
+    });
   }
 
   async updateAllProxy({

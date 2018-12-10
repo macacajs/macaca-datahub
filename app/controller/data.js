@@ -105,11 +105,7 @@ class SceneController extends Controller {
       sceneName: currentScene,
     });
 
-    if (res) {
-      ctx.body = res.data;
-    } else {
-      this.fail(`${method} ${pathname} '${currentScene}' scene not found`);
-    }
+    ctx.body = res.data;
   }
 
   fail(message) {

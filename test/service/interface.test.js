@@ -63,6 +63,31 @@ describe('test/app/service/interface.js', () => {
     assert(res.description === 'api one :id GET');
   });
 
+  it('queryInterfaceByHTTPContext with shadowInterface', async () => {
+    await ctx.model.Interface.bulkCreate([
+      { pathname: 'api/one', method: 'POST', projectUniqId, description: 'api one POST' },
+      { pathname: 'api/one/1', method: 'GET', projectUniqId, description: 'api one 1 GET' },
+      { pathname: 'api/one/:id', method: 'GET', projectUniqId, description: 'api one :id GET' },
+      { pathname: 'api/two', method: 'ALL', projectUniqId, description: 'api two ALL' },
+    ]);
+    const res = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname: 'api/two',
+      method: 'ALL',
+    });
+    await ctx.model.ShadowInterface.bulkCreate([
+      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default', contextConfig: {} },
+    ]);
+    const res1 = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname: 'api/two',
+      tagName: 'one',
+    });
+    assert(res1.currentScene === 'default');
+    assert(res1.tagName === 'one');
+    assert(res1.originInterfaceId === res.uniqId);
+  });
+
   it('queryInterfaceByHTTPContextAndPathRegexp', async () => {
     await ctx.model.Interface.bulkCreate([
       { pathname: 'api/one/:id', method: 'GET', projectUniqId, description: 'api one :id GET' },
@@ -166,6 +191,40 @@ describe('test/app/service/interface.js', () => {
     assert(res[0].currentScene === '');
     assert.deepEqual(res[0].proxyConfig, {});
     assert.deepEqual(res[0].contextConfig, {});
+  });
+
+  it('updateShadowInterface', async () => {
+    await ctx.model.Interface.bulkCreate([
+      { pathname: 'api/one', method: 'POST', projectUniqId, description: 'api one POST' },
+      { pathname: 'api/one/1', method: 'GET', projectUniqId, description: 'api one 1 GET' },
+      { pathname: 'api/one/:id', method: 'GET', projectUniqId, description: 'api one :id GET' },
+      { pathname: 'api/two', method: 'ALL', projectUniqId, description: 'api two ALL' },
+    ]);
+    const res = await ctx.service.interface.queryInterfaceByHTTPContext({
+      projectUniqId,
+      pathname: 'api/two',
+      method: 'ALL',
+    });
+    await ctx.model.ShadowInterface.bulkCreate([
+      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default', contextConfig: {} },
+    ]);
+    const res1 = await ctx.service.interface.updateShadowInterface({
+      originInterfaceId: res.uniqId,
+      tagName: 'one',
+      payload: {
+        name: 'DataHub',
+      },
+    });
+    assert(res1[0] === 1);
+
+    const res2 = await ctx.service.interface.updateShadowInterface({
+      originInterfaceId: res.uniqId,
+      tagName: 'two',
+      payload: {
+        name: 'DataHub',
+      },
+    });
+    assert(res2.tagName === 'two');
   });
 
   it('updateAllProxy', async () => {

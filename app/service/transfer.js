@@ -50,44 +50,39 @@ class TransferService extends Service {
     projectData,
     projectUniqId,
   }) {
-    try {
-      await this.ctx.model.Interface.destroy({
-        where: {
-          projectUniqId,
-        },
+    await this.ctx.model.Interface.destroy({
+      where: {
+        projectUniqId,
+      },
+    });
+
+    for (const interfaceData of projectData) {
+      const interfaceStatus = await this.ctx.model.Interface.create({
+        projectUniqId,
+        pathname: interfaceData.pathname,
+        method: interfaceData.method,
+        description: interfaceData.description,
+        contextConfig: interfaceData.contextConfig,
+        currentScene: interfaceData.currentScene,
+        proxyConfig: interfaceData.proxyConfig,
       });
 
-      for (const interfaceData of projectData) {
-        const interfaceStatus = await this.ctx.model.Interface.create({
-          projectUniqId,
-          pathname: interfaceData.pathname,
-          method: interfaceData.method,
-          description: interfaceData.description,
-          contextConfig: interfaceData.contextConfig,
-          currentScene: interfaceData.currentScene,
-          proxyConfig: interfaceData.proxyConfig,
+      for (const scene of interfaceData.scenes) {
+        await this.ctx.model.Scene.create({
+          interfaceUniqId: interfaceStatus.uniqId,
+          sceneName: scene.sceneName,
+          data: scene.data,
         });
-
-        for (const scene of interfaceData.scenes) {
-          await this.ctx.model.Scene.create({
-            interfaceUniqId: interfaceStatus.uniqId,
-            sceneName: scene.sceneName,
-            data: scene.data,
-          });
-        }
-
-        for (const schema of interfaceData.schemas) {
-          await this.ctx.model.Schema.upsert({
-            interfaceUniqId: interfaceStatus.uniqId,
-            type: schema.type,
-            data: schema.data,
-          });
-        }
-
       }
-    } catch (err) {
-      console.log('err', err);
-      return err;
+
+      for (const schema of interfaceData.schemas) {
+        await this.ctx.model.Schema.upsert({
+          interfaceUniqId: interfaceStatus.uniqId,
+          type: schema.type,
+          data: schema.data,
+        });
+      }
+
     }
 
     return {
@@ -133,43 +128,38 @@ class TransferService extends Service {
     interfaceData,
     interfaceUniqId,
   }) {
-    try {
-      const interfaceOldData = await this.ctx.service.interface.queryInterfaceByUniqId({
-        uniqId: interfaceUniqId,
+    const interfaceOldData = await this.ctx.service.interface.queryInterfaceByUniqId({
+      uniqId: interfaceUniqId,
+    });
+
+    await this.ctx.service.interface.deleteInterfaceByUniqId({
+      uniqId: interfaceUniqId,
+    });
+
+    const interfaceStatus = await this.ctx.model.Interface.create({
+      pathname: interfaceOldData.pathname,
+      method: interfaceOldData.method,
+      projectUniqId: interfaceOldData.projectUniqId,
+      description: interfaceOldData.description,
+      contextConfig: interfaceData.contextConfig,
+      currentScene: interfaceData.currentScene,
+      proxyConfig: interfaceData.proxyConfig,
+    });
+
+    for (const scene of interfaceData.scenes) {
+      await this.ctx.model.Scene.create({
+        interfaceUniqId: interfaceStatus.uniqId,
+        sceneName: scene.sceneName,
+        data: scene.data,
       });
+    }
 
-      await this.ctx.service.interface.deleteInterfaceByUniqId({
-        uniqId: interfaceUniqId,
+    for (const schema of interfaceData.schemas) {
+      await this.ctx.model.Schema.upsert({
+        interfaceUniqId: interfaceStatus.uniqId,
+        type: schema.type,
+        data: schema.data,
       });
-
-      const interfaceStatus = await this.ctx.model.Interface.create({
-        pathname: interfaceOldData.pathname,
-        method: interfaceOldData.method,
-        projectUniqId: interfaceOldData.projectUniqId,
-        description: interfaceOldData.description,
-        contextConfig: interfaceData.contextConfig,
-        currentScene: interfaceData.currentScene,
-        proxyConfig: interfaceData.proxyConfig,
-      });
-
-      for (const scene of interfaceData.scenes) {
-        await this.ctx.model.Scene.create({
-          interfaceUniqId: interfaceStatus.uniqId,
-          sceneName: scene.sceneName,
-          data: scene.data,
-        });
-      }
-
-      for (const schema of interfaceData.schemas) {
-        await this.ctx.model.Schema.upsert({
-          interfaceUniqId: interfaceStatus.uniqId,
-          type: schema.type,
-          data: schema.data,
-        });
-      }
-    } catch (err) {
-      console.log('err', err);
-      return err;
     }
 
     return {
