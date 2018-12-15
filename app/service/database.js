@@ -19,7 +19,11 @@ class DataBaseService extends Service {
 
   async ensureNewDir(dir) {
     if (fs.existsSync(dir)) rimraf.sync(dir);
-    await fs.mkdir(dir);
+
+    // support Docker volume data
+    if (!fs.existsSync(dir)) {
+      await fs.mkdir(dir);
+    }
   }
 
   async importData() {
