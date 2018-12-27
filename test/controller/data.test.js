@@ -105,12 +105,8 @@ describe('test/app/controller/data.test.js', () => {
           enabled: true,
         },
       });
-    const body = await app.httpRequest()
-      .get('/data/baz/api/path?test=test');
-
-    assert(body.status === 200);
-    assert(body.req.method === 'GET');
-    assert(body.text.indexOf('<div id="app">') > -1);
+    await app.httpRequest()
+      .get('/data/baz/api/path');
   });
 
   it('GET /data/baz/api/path get data with search', async () => {
