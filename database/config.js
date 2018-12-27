@@ -3,7 +3,7 @@
 const path = require('path');
 const _ = require('xutil');
 
-const databasePath = path.join(process.env.HOME, '.macaca-datahub', process.cwd());
+const databasePath = path.join(process.env.HOME, '.macaca-datahub');
 _.mkdir(databasePath);
 
 module.exports = {

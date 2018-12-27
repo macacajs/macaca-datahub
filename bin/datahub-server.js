@@ -23,7 +23,9 @@ program
   .option('-o, --optionstr <s>', 'set options string')
   .parse(process.argv);
 
-let options = {};
+let options = {
+  isCli: true,
+};
 
 if (program.config) {
   const configFile = path.resolve(program.config);
