@@ -102,6 +102,20 @@ describe('test/app/controller/data.test.js', () => {
             { proxyUrl: 'http://www.b.com' },
           ],
           activeIndex: 0,
+          enabled: false,
+        },
+      });
+    const { body: createBody } = await app.httpRequest()
+      .get('/data/baz/api/path');
+    assert.deepStrictEqual(createBody, {
+      success: true,
+    });
+
+    await app.httpRequest()
+      .post(`/api/interface/${interfaceUniqId}`)
+      .send({
+        proxyConfig: {
+          activeIndex: 0,
           enabled: true,
         },
       });
