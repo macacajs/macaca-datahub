@@ -4,6 +4,7 @@ const {
   ipv4,
   chalk,
   detectPort,
+  mkdir,
 } = require('xutil');
 const path = require('path');
 const EOL = require('os').EOL;
@@ -28,6 +29,15 @@ class DataHub {
 
     if (options.database) {
       process.env.DATAHUB_DATABASE = options.database;
+    } else if (!options.isCli) {
+      const projectDirName = process.cwd()
+        .split(path.sep)
+        .slice(1)
+        .join('_');
+      const databasePath = path.join(process.env.HOME, '.macaca-datahub', projectDirName);
+      mkdir(databasePath);
+      process.env.DATAHUB_DATABASE = path.join(databasePath, 'macaca-datahub.data');
+      console.log(chalk.cyan(`DataHub storage: ${process.env.DATAHUB_DATABASE}`));
     }
 
     if (options.store) {

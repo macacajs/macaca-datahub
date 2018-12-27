@@ -7,6 +7,24 @@
     "macaca-datahub": "./bin/datahub.js",
     "datahub-migrate-1-to-2": "./bin/datahub-migrate-1-to-2.js"
   },
+  "scripts": {
+    "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub",
+    "stop": "eggctl stop --title=egg-server-datahub",
+    "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
+    "dev": "npm run db:migrate && egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint && npm run db:migrate && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "npm run db:migrate && egg-bin cov",
+    "lint": "eslint . --fix",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod",
+    "contributor": "git-contributor",
+    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub .",
+    "db:migrate": "sequelize db:migrate",
+    "db:migrate:undo": "sequelize db:migrate:undo",
+    "migration:create": "sequelize migration:create --name"
+  },
   "main": "./index.js",
   "dependencies": {
     "ajv": "^6.4.0",
@@ -49,24 +67,6 @@
   },
   "engines": {
     "node": ">=8.9.0"
-  },
-  "scripts": {
-    "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub",
-    "stop": "eggctl stop --title=egg-server-datahub",
-    "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
-    "dev": "egg-bin dev",
-    "debug": "egg-bin debug",
-    "test": "npm run lint && npm run db:migrate && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "npm run db:migrate && egg-bin cov",
-    "lint": "eslint . --fix",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod",
-    "contributor": "git-contributor",
-    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub .",
-    "db:migrate": "sequelize db:migrate",
-    "db:migrate:undo": "sequelize db:migrate:undo",
-    "migration:create": "sequelize migration:create --name"
   },
   "pre-commit": [
     "lint"
