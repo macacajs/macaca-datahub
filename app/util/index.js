@@ -3,18 +3,106 @@ const uuid = require('uuid/v4');
 
 const definitions = {};
 
-const replaceRef = obj => {
+const replaceRefForRequest = obj => {
   if (!obj) return;
 
   Object.keys(obj).forEach(item => {
-    if (!obj[item]) return;
-
     if (obj[item].$ref) {
       obj[item] = definitions[obj[item].$ref];
     } else if (typeof obj[item] === 'object') {
-      replaceRef(obj[item]);
+      replaceRefForRequest(obj[item]);
     }
   });
+};
+
+const replaceRefForResponse = obj => {
+  if (obj.$ref) {
+    obj.$ref = definitions[obj.$ref];
+  } else {
+    Object.keys(obj).forEach(item => {
+      if (typeof obj[item] === 'object') {
+        replaceRefForResponse(obj[item]);
+      }
+    });
+  }
+};
+
+// up object level when find '$ref'
+const repleceRefStringForResponse = obj => {
+  const jsonStr = JSON.stringify(obj);
+  const parseList = [];
+  const deleteIdxs = [];
+  const keyword = '"$ref":{';
+
+  /**
+   * '{"$ref":{"foo": "bar"}}' => ['{', '"$ref":{', '"foo": "bar"','}', '}']
+   */
+  const scan = () => {
+    let idx = 0;
+    let tmp = '';
+
+    function clearTmp() {
+      if (tmp) {
+        parseList.push(tmp);
+        tmp = '';
+      }
+    }
+
+    while (idx < jsonStr.length) {
+      const char = jsonStr[idx];
+      if (char === '{') {
+        if (tmp + char === keyword) {
+          parseList.push(tmp + char);
+          tmp = '';
+        } else {
+          clearTmp();
+          parseList.push(char);
+        }
+      } else if (char === '}') {
+        clearTmp();
+        parseList.push(char);
+      } else {
+        tmp += char;
+      }
+      idx++;
+    }
+  };
+
+  /**
+   * recursion parseList, collecte index
+   */
+  const find = () => {
+    let start = 0; // 第n个{
+    const list = [];
+    parseList.forEach((v, i) => {
+      if (v === '{') {
+        start += 1;
+      }
+      if (v === '}') {
+
+        // {{{}}}
+        if (list.indexOf(start) >= 0) {
+          deleteIdxs.push(i);
+        }
+        start -= 1;
+      }
+      if (v === keyword) {
+        deleteIdxs.push(i);
+        list.push(start); // key include '{'
+      }
+    });
+  };
+
+  scan();
+  find();
+
+  const result = parseList.map((v, i) => {
+    if (deleteIdxs.indexOf(i) >= 0) {
+      return '';
+    }
+    return v;
+  }).join('');
+  return JSON.parse(result);
 };
 
 const handleParamRequestSchema = (param, paramRequestSchema) => {
@@ -40,7 +128,7 @@ const swaggerConvert = data => {
   });
 
   Object.keys(definitions).forEach(definition => {
-    replaceRef(definitions[definition]);
+    replaceRefForRequest(definitions[definition]);
   });
 
   Object.keys(data.paths).forEach(pathname => {
@@ -51,14 +139,11 @@ const swaggerConvert = data => {
 
       const info = data.paths[pathname][method];
       const interfaceUniqId = uuid();
-      const willHandleResponse = info.responses
+      const responseSchema = info.responses
         && info.responses['200']
         && info.responses['200'].schema;
 
-      replaceRef(info.parameters);
-      if (willHandleResponse) {
-        replaceRef([ info.responses['200'].schema ]);
-      }
+      replaceRefForRequest(info.parameters);
 
       // handle Schema request param
       const paramRequestSchema = {
@@ -77,8 +162,19 @@ const swaggerConvert = data => {
         type: 'object',
         properties: {},
       };
-      if (willHandleResponse) {
-        paramReponseSchema = info.responses['200'].schema;
+      if (responseSchema) {
+        const needHandleRef = JSON.stringify(responseSchema).indexOf('$ref') !== -1;
+
+        // handle $ref
+        if (needHandleRef) {
+          replaceRefForResponse(responseSchema);
+          paramReponseSchema = repleceRefStringForResponse(responseSchema);
+        } else {
+          if (responseSchema.type === 'object') {
+            delete responseSchema.type;
+            paramReponseSchema.properties = responseSchema;
+          }
+        }
       }
 
       const interfaceData = {
