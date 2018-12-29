@@ -1,7 +1,7 @@
 ---
 
 home: true
-heroImage: https://macacajs.github.io/macaca-datahub/logo/logo-color.svg
+heroImage: /logo/logo-color.svg
 actionText: Try it Out →
 actionLink: /zh/guide/install.html
 features:

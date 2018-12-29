@@ -21,7 +21,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "70f640e07a16ab35f18171c9df30ef7e"
+    "revision": "77bda679f0da744b0dbafd3dd76be80b"
   },
   {
     "url": "assets/css/0.styles.f0400774.css",
@@ -64,32 +64,36 @@ self.__precacheManifest = [
     "revision": "d5a44794f076ff5417c90ddbf68094b4"
   },
   {
-    "url": "assets/js/app.22cd827e.js",
-    "revision": "ec46820a34a59a3157d4697668ebde43"
+    "url": "assets/js/app.31fc676e.js",
+    "revision": "c9a0e14ba879bb4a960d1eb7c0b0ad4d"
   },
   {
     "url": "guide/install.html",
-    "revision": "073cf9fc0b52a90a2bbd129dc3585590"
+    "revision": "ce4754d54d0f2268e0d0ebfcaf2007b4"
   },
   {
     "url": "guide/quick-start.html",
-    "revision": "c259fcbaf5e1fe04bb419f200ec3f24e"
+    "revision": "0b0377f78357f5af953bc65ea86d53f7"
   },
   {
     "url": "index.html",
-    "revision": "ae36b1d4301925a9496847deb7911dc9"
+    "revision": "ae8d7cc51fcaf3dd85bf5c697d64749a"
+  },
+  {
+    "url": "logo/logo-color.svg",
+    "revision": "ce025e5858229195d4fa7018ee849edd"
   },
   {
     "url": "zh/guide/install.html",
-    "revision": "e95bd1b90223816c1f884221e6addf36"
+    "revision": "bef11cf73151d3e07ebd5132b2a3a4f8"
   },
   {
     "url": "zh/guide/quick-start.html",
-    "revision": "84406018a38bc87f47f13a662f1f40bb"
+    "revision": "f6f67c6ae98012e35b9236e68087ef1f"
   },
   {
     "url": "zh/index.html",
-    "revision": "6cf739e41f705239da8a4b343cb663b9"
+    "revision": "824ff92b3b3154b1332aed2f8c70691d"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
