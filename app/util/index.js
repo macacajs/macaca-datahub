@@ -4,7 +4,11 @@ const uuid = require('uuid/v4');
 const definitions = {};
 
 const replaceRef = obj => {
+  if (!obj) return;
+
   Object.keys(obj).forEach(item => {
+    if (!obj[item]) return;
+
     if (obj[item].$ref) {
       obj[item] = definitions[obj[item].$ref];
     } else if (typeof obj[item] === 'object') {
@@ -40,16 +44,20 @@ const swaggerConvert = data => {
   });
 
   Object.keys(data.paths).forEach(pathname => {
+    if (!data.paths[pathname]) return;
+
     Object.keys(data.paths[pathname]).forEach(method => {
+      if (!data.paths[pathname][method]) return;
+
       const info = data.paths[pathname][method];
       const interfaceUniqId = uuid();
-      const willHandleResponse = data.paths[pathname][method].responses
-        && data.paths[pathname][method].responses['200']
-        && data.paths[pathname][method].responses['200'].schema;
+      const willHandleResponse = info.responses
+        && info.responses['200']
+        && info.responses['200'].schema;
 
-      replaceRef(data.paths[pathname][method].parameters);
+      replaceRef(info.parameters);
       if (willHandleResponse) {
-        replaceRef([ data.paths[pathname][method].responses['200'].schema ]);
+        replaceRef([ info.responses['200'].schema ]);
       }
 
       // handle Schema request param
@@ -57,9 +65,12 @@ const swaggerConvert = data => {
         type: 'object',
         properties: {},
       };
-      data.paths[pathname][method].parameters.forEach(param => {
-        handleParamRequestSchema(param, paramRequestSchema);
-      });
+
+      if (info.parameters) {
+        info.parameters.forEach(param => {
+          handleParamRequestSchema(param, paramRequestSchema);
+        });
+      }
 
       // handle Schema response param
       let paramReponseSchema = {
@@ -67,7 +78,7 @@ const swaggerConvert = data => {
         properties: {},
       };
       if (willHandleResponse) {
-        paramReponseSchema = data.paths[pathname][method].responses['200'].schema;
+        paramReponseSchema = info.responses['200'].schema;
       }
 
       const interfaceData = {
