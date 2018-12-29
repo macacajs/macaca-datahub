@@ -1,21 +1,21 @@
-# Macaca Datahub Webpack 配置
+# Webpack Tutorial
 
 ---
 
-## 安装
+## Installation
 
-通过 npm 安装 Macaca DataHub 命令行客户端与代理中间件：
+Macaca DataHub and DataHub Proxy Middleware are distibuted through npm. To install it, run the command line below:
 
 ```bash
 $ npm i macaca-datahub --save-dev
 $ npm i datahub-proxy-middleware --save-dev
 ```
 
-## 示例工程
+## Sample Project
 
 - [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)
 
-## Webpack 集成 Datahub 服务
+## How a webpack project integrates DataHub
 
 ```javascript
 const path = require('path');
@@ -54,70 +54,70 @@ devServer: {
 },
 ```
 
-更多 DataHub 配置信息可参考 [自定义配置项](https://github.com/macacajs/macaca-datahub#configuration)。
+You can also get others extra build infomation. If you want more, please modify the [custom config](//github.com/macacajs/macaca-datahub#configuration) file.
 
-## 快速上手
+## Quick Start
 
-### 第1步 - 创建项目
+### Step1 - Create New Project
 
-创建名字为 sample 项目。
+Create a new item named sample.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueeskabij21yg1bo43p.jpg" width="75%" />
 </div>
 
-### 第2步 - 添加接口
+### Step2 - Add An Interface
 
-添加 `test1` 接口, 则对 `http://localhost:8080/api/test1` 请求 mock 数据。
+Add the interface named `test1`, request the interface `http://localhost:8080/api/test1` and get the corresponding mock data.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesm0htj21xm1aidla.jpg" width="75%" />
 </div>
 
 
-### 第3步 - 接口构建
+### Step3 - Build Interface
 
-Rewrite Response, 接口响应状态及header进行设置, 如不进行特殊配置则返回 `200` 状态码。
+Rewrite Response, set the interface response information, and return status code `200` if not set.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesq1f2j21y21as45g.jpg" width="75%" />
 </div>
 
-场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。
+The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesm7o3j21xw1asdl2.jpg" width="75%" />
 </div>
 
-代理模式, 如有代理场景需求, 配置代理模式。
+The proxy pattern, it can be configured if required.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesyt33j21y61ay463.jpg" width="75%" />
 </div>
 
-请求字段描述, JSON Schema 格式, 可选是否开启校验, 可选配。
+Request field description, you can use scheme JSON for validation and choose whether to open validation or not.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesm12ej21y01aqtew.jpg" width="75%" />
 </div>
 
-响应字段描述, JSON Schema 格式, 可选是否开启校验, 根据场景数据自动生成。
+Response field description, you can use scheme JSON for validation and choose whether to open validation or not. Response descriptions are automatically generated based on scenario information configuration.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesmb50j21xe1bqq94.jpg" width="75%" />
 </div>
 
-### 第4步 - 生成接口文档
+### Step4 - Generating Document
 
-接口文档, 根据接口构建信息自动生成。
+Automatically generate documents based on interfaces.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueet04ehj21yk1b4gst.jpg" width="75%" />
 </div>
 
-### 第5步 - 应用
+### Step5 - Build Now
 
-具体代码参照示例项目[webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)。
+Specific code reference [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample).
 
 ```javascript
 var request = new XMLHttpRequest();
@@ -135,15 +135,16 @@ request.onreadystatechange = function() {
 request.send();
 ```
 
-请求结果, 如页面中显示对 `http://localhost:8080/api/test1` 请求结果为上述步骤 mock 数据 `default data`。
+The mock data is displayed in the page after requesting the `http://localhost:8080/api/test1` interface.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuugd10nbyj21t21amq9p.jpg" width="75%" />
 </div>
 
-### 第6步 - 查看实时快照
 
-对 mock 数据进行请求后可在实时快照中找到对应历史请求信息。
+### Step6 - History Request Information
+
+This page displays historical request details.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuuewr0rmyj21xu1aytet.jpg" width="75%" />

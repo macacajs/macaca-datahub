@@ -23,7 +23,9 @@
     "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub .",
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
-    "migration:create": "sequelize migration:create --name"
+    "migration:create": "sequelize migration:create --name",
+    "docs:dev": "vuepress dev docs_src",
+    "docs:build": "vuepress build docs_src"
   },
   "main": "./index.js",
   "dependencies": {
@@ -63,6 +65,7 @@
     "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
+    "vuepress": "^0.14.8",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
