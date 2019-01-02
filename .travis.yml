@@ -5,6 +5,14 @@ node_js:
 install:
   - npm i npminstall && npminstall
 script:
-  - npm run ci
+  - npm run docs:build
+  - cd ./docs
+  - git init
+  - git add --all .
+  - git commit -m "Travis CI Auto Builder"
+  - git push --quiet --force https://$REPO_TOKEN@github.com/macacajs/macaca-datahub.git master:gh-pages
+  - cd ..
+  - npm run lint
+  - npm run cov
 after_script:
   - npminstall codecov && codecov
