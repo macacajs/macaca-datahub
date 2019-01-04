@@ -94,6 +94,7 @@ function genSidebarConfig(title) {
         'config',
         'webpack-tutorial',
         'quick-start',
+        'use-in-test',
         'schema',
         'project-integration',
         'share',

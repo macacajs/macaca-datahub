@@ -13,6 +13,14 @@ $ npm i datahub-proxy-middleware --save-dev
 
 - [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)
 
+```bash
+$ cd webpack-datahub-sample
+$ npm i
+$ npm run dev
+```
+
+访问 DataHub 页面: [http://localhost:5678](http://localhost:5678)
+
 ## Webpack 集成 Datahub 服务
 
 ```javascript
