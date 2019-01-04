@@ -19,6 +19,7 @@ module.exports = {
     },
   },
   head: [
+    ['link', { rel: 'icon', href: 'logo/favicon.ico' }],
     ['script', {
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=UA-49226133-2',
