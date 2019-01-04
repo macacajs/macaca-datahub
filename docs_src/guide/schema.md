@@ -1,6 +1,6 @@
-# Schema 语法
+# Schema Syntax
 
-DataHub 采用 [标准的 JSON schema 语法](//github.com/epoberezkin/ajv) 来描述接口，用以校验数据和自动生成文档，schema 需要以下格式：
+DataHub use [standard JSON schema syntax](//github.com/epoberezkin/ajv), schema must has the `root` node.
 
 ```json
 {
