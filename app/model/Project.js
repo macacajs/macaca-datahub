@@ -17,6 +17,10 @@ module.exports = app => {
       type: STRING,
       allowNull: false,
     },
+    globalProxy: {
+      type: STRING,
+      allowNull: true,
+    },
     uniqId: {
       type: UUID,
       defaultValue: UUIDV4,

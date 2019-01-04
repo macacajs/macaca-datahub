@@ -209,6 +209,19 @@ class SdkController extends Controller {
     ctx.success(res);
   }
 
+  async addGlobalProxy() {
+    const ctx = this.ctx;
+    const {
+      projectUniqId,
+      globalProxy,
+    } = ctx.request.body;
+    const res = await ctx.service.project.addGlobalProxy({
+      projectUniqId,
+      globalProxy,
+    });
+    ctx.success(res);
+  }
+
   async exportData() {
     const ctx = this.ctx;
     await ctx.service.database.exportData();

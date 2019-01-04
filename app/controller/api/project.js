@@ -52,11 +52,13 @@ class ProjectController extends Controller {
     const {
       projectName,
       description,
+      globalProxy,
     } = ctx.request.body;
     ctx.assertParam({ projectName, description });
     const res = await ctx.service.project.createProject({
       projectName,
       description,
+      globalProxy,
     });
     ctx.success(res);
   }
@@ -65,7 +67,7 @@ class ProjectController extends Controller {
     const ctx = this.ctx;
     const { uniqId } = ctx.params;
     const payload = {};
-    [ 'description', 'projectName' ].forEach(i => {
+    [ 'description', 'projectName', 'globalProxy' ].forEach(i => {
       if (ctx.request.body[i]) payload[i] = ctx.request.body[i];
     });
     const res = await ctx.service.project.updateProject({

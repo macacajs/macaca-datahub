@@ -27,7 +27,7 @@ describe('test/app/controller/api/project.test.js', () => {
 
   it('POST /api/project create project', async () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
+      { projectName: 'baz', description: 'bazd', globaProxy: 'http://127.0.0.1' },
     ]);
     const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
       { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
