@@ -5,7 +5,6 @@ const name = 'macaca-datahub';
 module.exports = {
   dest: 'docs',
   base: `/${name}/`,
-  plugins: ['@vuepress/back-to-top'],
 
   locales: {
     '/': {

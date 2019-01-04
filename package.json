@@ -53,7 +53,6 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.0.0-alpha.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
     "deep-diff": "^0.3.8",
@@ -65,7 +64,7 @@
     "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
     "pre-commit": "^1.2.2",
-    "vuepress": "^1.0.0-alpha.30",
+    "vuepress": "^0.14.8",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
