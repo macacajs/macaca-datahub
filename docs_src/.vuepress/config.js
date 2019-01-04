@@ -89,6 +89,7 @@ function genSidebarConfig(title) {
       collapsable: false,
       children: [
         'introduce',
+        'design-concept',
         'install',
         'config',
         'webpack-tutorial',

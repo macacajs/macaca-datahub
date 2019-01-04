@@ -1,93 +1,39 @@
 # Introduction
 
-> Just enjoy the data out-of-the-box.📦
+In the development process of the front-end and the client (later called the terminal), environmental problems have been plaguing us. Lack of data or poor data management will lead to low overall efficiency of R&D. In the process of facing this problem, many excellent Mock programs were born, mostly with platforms and local tools.
 
-Macaca DataHub is a continuous data provider for development, testing, staging and production.
+In the face of these problems, we believe that there are three main points in the core points, data source issues, scenario issues, and lifecycle issues. Having a stable and iterative data source is the key to project development. The data source is actually a server interface, and most interfaces have a state. At this time, we also need to solve the problem of scene management. In addition, as the development process progresses, we usually enter the cycle of daily joint debugging, integration testing, grayscale publishing, etc., so the provision of data should always be a continuous process.
 
-## A Comprehensive Solution
+## Data source problem
 
-DataHub is born to solving the lifecycle needs of mock/testing data of software development, from development, testing, staging to final production. Software engineers and test engineers use DataHub to manage their mock/testing data.
+The data in the research and development period is missing, and the terminal students and the server end the business interaction field according to the product requirements or the existing service. At this point, the terminal classmate will create data that can be used for `Mock` according to the business field. The data source needs to meet the following principles:
 
-<div align="center">
-  <img src="https://wx4.sinaimg.cn/large/6d308bd9gy1fokqvum2gsj20s10l70vh.jpg" width="50%" />
-</div>
+* Standardization: Since the terminals are almost all based on the same level of data protocol, the versatility of each service in data interaction is sufficient to meet the unified requirements. Here, the personalized introduction of data sources increases the learning cost and backup cost.
+* Non-intrusive: data source injection does not intrude on the business code itself, which means that the code of the business logic does not sense where the data comes from.
+* Go to the center: no central service dependence, data backup in the project local, anyone can develop offline
 
-## Decentralization
+## Scene problem
 
-DataHub is flexible with how and where mock/testing data is stored.
+When it comes to complex services, the most frequently talked about is the scene problem. In addition to the services such as rich interactive editors, the complexity of display services often means more scenes, more scene combinations, and more branches in the process of business flow. The situation of combining scenes is easy to miss key scenarios and is not well managed. Once the multi-person cross-coordination, the interaction fields are adjusted to cause the information flow to be repeated, and the retroactive cost becomes higher.
 
-You can use a local instance of Datahub on your local machine to manage your local testing/mock data during development. The mock/testing data is in plain text. It can be versioned and archived with any version control software, together with your project files.
+* Manageable: The scene data needs to be maintainable and manageable, support the semantics of the scene data and the basic additions and deletions.
+* Versioning: The scene data needs to be the same as the business logic, with versionability, and the scene data is integrated in the current project in clear text.
 
-In addition, the local mock/testing data can be pushed and synchronized to a remote Datahub server to meet the needs of data sharing and collaboration.
+## Life cycle issues
 
-<div align="center">
-  <img src="https://wx3.sinaimg.cn/large/6d308bd9gy1fokxgydf80j20np0cr0ts.jpg" width="50%" />
-</div>
+The data in the research and development period is relatively well solved, but when looking at this problem from the perspective of the whole process of research and development, it is necessary to consider the problem of the follow-up to solve the problem as a whole.
 
-## Data Flow Management
+* Iterable: Scene data can be managed with the project via Git timeline and as a necessary part of delivery
+* Consistency: The data source should be continued from the previous cycle and docked to the real data source during system integration testing
+* Documentization: Consistency makes interface document maintenance no longer scattered and lagging, interface documents automatically generate and maintain iteration ability is the optimal solution
+* Testable: Whether it is function unit test before delivery, UI unit test, or system integration test during test period, it needs to rely on combinable data source. The stability of integration test phase is high, and data source service is required to shield peripheral service.
 
-DataHub adopts the principle of unidirectional data flow to make sure you will always get the latest data.
+## other questions
 
-<div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1fokxgywfajj20mx0g0wfj.jpg" width="50%" />
-</div>
+* Entry cost: The data source has a higher initial entry cost, especially in the joint adjustment period. It should support automatic entry by request snapshot.
+* Troubleshooting: Production environment should support switching data sources, support proxy and snapshot records
 
-## Consistency Between API Document and Mock Data
+---
 
-Datahub can also automatically generate an API document from your mock/testing data, to help keep your API document up to date and consistent with your mock data.
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkophwa8qj229m1gejyw.jpg" width="75%" />
-</div>
-
-## DataHub Dashboard
-
-DataHub adopts multi-scenario design, can group data according to the scene name, and provide scene data addition, deletion, and change, and can operate through DataHub's panel interface.
-
-DataHub provides a dashboard for you to manage your data. You can group data by scene, or by stage such as development, testing, or staging. Datahub provides standard CRUD funtions.
-
-Datahub use [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for dynamic path matching.
-
-API name example:
-
-| DataHub API name | matched request path |
-| ----             | ----                 |
-| api1/books       | api1/books           |
-| api2/:foo/:bar   | api2/group/project   |
-| api3/:id         | api3/fred            |
-| api3/:id         | api3/baz             |
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9g34dcj229m1ge12a.jpg" width="75%" />
-</div>
-
-## Save Snapshot
-
-DataHub can save the response of each request by taking snapshot. You can use the archieved snapshot to find out what happened.
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9fj6doj21kw13adnq.jpg" width="75%" />
-</div>
-
-[More intro](//macacajs.github.io/datahub)
-
-## Experiment - Upload and Download
-
-### Use Upload and Download
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9idygpj22ai1i2wor.jpg" width="75%" />
-</div>
-
-### Upload and Download Project Data
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hd0x4j229m1hete8.jpg" width="75%" />
-</div>
-
-### Upload and Download Interface Data
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hn40kj229m1heqcl.jpg" width="75%" />
-</div>
-
+Based on the above pain points and several principles, Ant International Wireless designed and implemented a data environment solution for the full cycle of research and development - DataHub, with features such as sustainability and decentralization.
+> DataHub - Continuous data provider for development, testing, staging and production.

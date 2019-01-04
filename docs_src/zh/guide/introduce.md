@@ -1,87 +1,39 @@
 # 介绍
 
+在前端和客户端(后面统一叫终端)研发过程中，环境问题一直困扰着我们，缺乏数据或数据管理不善都会导致研发整体效率低下。在面对这一问题的过程中，有很多优秀的 Mock 方案诞生，以平台和本地工具居多。
+
+在面对这些问题的时候，我们认为核心点主要有三方面，数据源问题、场景问题、生命周期问题。拥有稳定的、有可迭代能力的数据源是项目研发的关键，数据源实际上就是一个个服务端接口，而大多接口都是有种状态的，此时我们还需要解决场景管理的问题。另外，随着研发流程进行我们通常会进入日常联调、集成测试、灰度发布等周期，所以数据的提供应该始终是一个持续过程。
+
+## 数据源问题
+
+研发期数据缺失，终端同学与服务端根据产品需求，或者已有服务，约定业务交互字段。此时终端同学会根据业务字段创建可以用来 `Mock` 的数据，数据源需要满足如下几个原则：
+
+* 标准化：由于终端几乎都基于同一层面的数据协议，各业务在数据交互上的通用性足以满足统一的要求，这里杜绝的个性化引入数据源而增加学习成本和 backup 成本
+* 非侵入：数据源注入不侵入业务代码本身，也就是说业务逻辑的代码不会感知数据来自哪里
+* 去中心：无中心服务依赖，工程本地即有数据备份，任何人可离线开发
+
+## 场景问题
+
+在面向复杂业务时，最常讲到的就是场景问题，除富交互编辑器一类的业务外，展示型业务的复杂往往意味着场景多，场景组合情况多，业务流转过程中分支多。组合场景的情况很容易遗漏关键场景，而且不好管理。一旦多人交叉协同时，前后交互字段有调整导致信息流反复，追溯成本变高。
+
+* 可管理：场景数据需要可维护和管理，支持场景数据的语义化和基本的增删改
+* 版本化：场景数据需要与业务逻辑一样，具备可版本化能力，场景数据以明文形式在当前工程中集成
+
+## 生命周期问题
+
+研发期的数据相对好解决，但从研发全环节覆盖的视角看待这个问题时，需要考虑`后续`的问题才能从整体上解决。
+
+* 可迭代：场景数据可以随项目通过 Git timeline 管理，并作为交付必要部分
+* 一致性：数据源应该由上一个周期延续，并在系统集成测试时对接真实数据源
+* 文档化：一致性使得接口文档维护不再散乱、滞后，接口文档自动生成并保持迭代能力是最优解
+* 可测试：无论是进行交付前的函数单元测试、UI 单元测试，还是测试期的系统集成测试都需要依赖可组合数据源，集成测试阶段稳定性要求高，需要数据源服务对外围服务做屏蔽
+
+## 其它问题
+
+* 录入成本：数据源人工初次录入成本较高，尤其是在联调期应该支持由请求快照自动录入
+* 问题排查：生产环境应该支持切换数据源，支持代理和快照记录
+
 ---
 
-> 全周期的数据环境解决方案 - Macaca DataHub
-
-## 多环节覆盖
-
-DataHub 支持从本地开发阶段，到集成测试阶段，以及上线前验证阶段的一系列数据环境需求，研发与测试工程师只需面向 DataHub 管理数据即可。
-
-<div align="center">
-  <img src="https://wx4.sinaimg.cn/large/6d308bd9gy1fokqvum2gsj20s10l70vh.jpg" width="50%" />
-</div>
-
-## 去中心化
-
-DataHub 采用去中心化设计，本地研发阶段每项实例都拥有一份独立的数据，数据为明文，可随当前项目版本管理工具进行版本化归档，使得项目数据能做到随开随用，支持离线开发。
-
-另外，每份数据都可向远端服务推送并同步，满足中心化协同的需要。
-
-<div align="center">
-  <img src="https://wx3.sinaimg.cn/large/6d308bd9gy1fokxgydf80j20np0cr0ts.jpg" width="50%" />
-</div>
-
-## 数据流动管理
-
-DataHub 采用单向数据流动的原则，使当前项目下的数据状态及时变更。
-
-<div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1fokxgywfajj20mx0g0wfj.jpg" width="50%" />
-</div>
-
-## 文档一致性
-
-DataHub 将 Mock 数据与字段描述整合处理，自动生成接口文档。使得文档能够与交互字段随时保持一致。
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6c8rh3j22a41g8jzd.jpg" width="75%" />
-</div>
-
-## 场景管理
-
-DataHub 采用多场景设计，能够根据场景名称进行数据分组，同时提供了场景数据的增、删、改，可以通过 DataHub 的面板界面进行操作。
-
-Datahub 可以定义动态路径，底层使用的是 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 。
-
-| DataHub API 定义 | 匹配的 URL 路径      |
-| ----             | ----                 |
-| api1/books       | api1/books           |
-| api2/:foo/:bar   | api2/group/project   |
-| api3/:id         | api3/fred            |
-| api3/:id         | api3/baz             |
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6bxcllj22a41g848i.jpg" width="75%" />
-</div>
-
-## 快照录入
-
-DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便于归档。也就是说你可以通过已归档的快照随时复现当时的场景。
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ati9ij21kw13ado5.jpg" width="75%" />
-</div>
-
-## 实验特性 - 导入导出
-
-### 打开导入导出功能
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6dmyoij22b21i8gwb.jpg" width="75%" />
-</div>
-
-### 导入导出项目数据
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6d422ij22a41g8447.jpg" width="75%" />
-</div>
-
-### 导入导出接口数据
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ctlipj22a41g8484.jpg" width="75%" />
-</div>
-
-
-[更多请到 Macaca 官网](//macacajs.github.io/datahub)
+根据上面的痛点问题和几项原则，蚂蚁国际无线同学设计并实现面向研发全周期的数据环境方案 - DataHub，具备可持续和去中心化等特点。
+> DataHub - Continuous data provider for development, testing, staging and production.
