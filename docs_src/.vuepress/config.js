@@ -54,8 +54,8 @@ module.exports = {
           },
         ],
         sidebar: {
-          '/guide/': genSidebarConfig('Guide')
-        }
+          '/guide/': genSidebarConfig('Guide', 'Usage', 'Advanced'),
+        },
       },
       '/zh/': {
         label: '简体中文',
@@ -75,29 +75,41 @@ module.exports = {
           },
         ],
         sidebar: {
-          '/zh/guide/': genSidebarConfig('指南')
-        }
+          '/zh/guide/': genSidebarConfig('指南', '使用', '进阶'),
+        },
       },
     },
   },
 };
 
-function genSidebarConfig(title) {
+function genSidebarConfig(guide, usage, advanced) {
   return [
     {
-      title,
+      title: guide,
       collapsable: false,
       children: [
         'introduce',
         'design-concept',
+        'share',
+      ],
+    },
+    {
+      title: usage,
+      collapsable: false,
+      children: [
         'install',
         'config',
         'webpack-tutorial',
-        'quick-start',
-        'use-in-test',
         'schema',
+        'quick-start',
+      ],
+    },
+    {
+      title: advanced,
+      collapsable: false,
+      children: [
+        'use-in-test',
         'project-integration',
-        'share',
       ],
     },
   ];
