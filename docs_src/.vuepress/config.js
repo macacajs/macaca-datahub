@@ -1,5 +1,7 @@
 'use strict';
 
+const macacaEcosystem = require('macaca-ecosystem');
+
 const name = 'macaca-datahub';
 
 module.exports = {
@@ -52,6 +54,7 @@ module.exports = {
             text: 'Guide',
             link: '/guide/introduce.html'
           },
+          macacaEcosystem.en,
         ],
         sidebar: {
           '/guide/': genSidebarConfig('Guide')
@@ -73,6 +76,7 @@ module.exports = {
             text: '指南',
             link: '/zh/guide/introduce.html'
           },
+          macacaEcosystem.zh,
         ],
         sidebar: {
           '/zh/guide/': genSidebarConfig('指南')

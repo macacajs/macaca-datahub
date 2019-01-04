@@ -63,6 +63,7 @@
     "eslint-config-egg": "^5.1.1",
     "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
+    "macaca-ecosystem": "*",
     "pre-commit": "^1.2.2",
     "vuepress": "^0.14.8",
     "webstorm-disable-index": "^1.2.0"
