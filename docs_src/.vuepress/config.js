@@ -50,7 +50,7 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/introduce.html'
+            link: '/guide/introduction.html'
           },
         ],
         sidebar: {
@@ -71,7 +71,7 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/introduce.html'
+            link: '/zh/guide/introduction.html'
           },
         ],
         sidebar: {
@@ -88,7 +88,7 @@ function genSidebarConfig(guide, usage, advanced) {
       title: guide,
       collapsable: false,
       children: [
-        'introduce',
+        'introduction',
         'design-concept',
         'share',
       ],
