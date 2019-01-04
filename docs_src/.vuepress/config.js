@@ -50,7 +50,7 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/install.html'
+            link: '/guide/introduce.html'
           },
         ],
         sidebar: {
@@ -71,7 +71,7 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/install.html'
+            link: '/zh/guide/introduce.html'
           },
         ],
         sidebar: {
@@ -88,8 +88,14 @@ function genSidebarConfig(title) {
       title,
       collapsable: false,
       children: [
+        'introduce',
         'install',
+        'config',
+        'webpack-tutorial',
         'quick-start',
+        'schema',
+        'project-integration',
+        'share',
       ],
     },
   ];
