@@ -21,6 +21,7 @@ module.exports = {
     },
   },
   head: [
+    ['link', { rel: 'icon', href: 'https://macacajs.github.io/assets/favicon.ico' }],
     ['script', {
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=UA-49226133-2',
@@ -52,13 +53,13 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/introduce.html'
+            link: '/guide/introduction.html'
           },
           macacaEcosystem.en,
         ],
         sidebar: {
-          '/guide/': genSidebarConfig('Guide')
-        }
+          '/guide/': genSidebarConfig('Guide', 'Usage', 'Advanced'),
+        },
       },
       '/zh/': {
         label: '简体中文',
@@ -74,34 +75,46 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/introduce.html'
+            link: '/zh/guide/introduction.html'
           },
           macacaEcosystem.zh,
         ],
         sidebar: {
-          '/zh/guide/': genSidebarConfig('指南')
-        }
+          '/zh/guide/': genSidebarConfig('指南', '使用', '进阶'),
+        },
       },
     },
   },
 };
 
-function genSidebarConfig(title) {
+function genSidebarConfig(guide, usage, advanced) {
   return [
     {
-      title,
+      title: guide,
       collapsable: false,
       children: [
-        'introduce',
+        'introduction',
         'design-concept',
+        'share',
+      ],
+    },
+    {
+      title: usage,
+      collapsable: false,
+      children: [
         'install',
         'config',
         'webpack-tutorial',
-        'quick-start',
-        'use-in-test',
         'schema',
+        'quick-start',
+      ],
+    },
+    {
+      title: advanced,
+      collapsable: false,
+      children: [
+        'use-in-test',
         'project-integration',
-        'share',
       ],
     },
   ];
