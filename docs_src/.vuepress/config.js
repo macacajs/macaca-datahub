@@ -19,7 +19,7 @@ module.exports = {
     },
   },
   head: [
-    ['link', { rel: 'icon', href: 'logo/favicon.ico' }],
+    ['link', { rel: 'icon', href: 'https://macacajs.github.io/assets/favicon.ico' }],
     ['script', {
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=UA-49226133-2',
