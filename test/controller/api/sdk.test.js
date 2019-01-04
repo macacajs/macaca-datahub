@@ -387,6 +387,42 @@ describe('test/app/controller/sdk.test.js', () => {
     });
   });
 
+  it('POST /api/sdk/add_global_proxy add global proxy', async () => {
+    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
+      { projectName: 'baz', description: 'bazd' },
+    ]);
+    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
+    ]);
+
+    await app.httpRequest()
+      .post('/api/scene/')
+      .send({
+        interfaceUniqId,
+        sceneName: 'default',
+        data: { success: true },
+      });
+
+    await app.httpRequest()
+      .post('/api/sdk/add_global_proxy')
+      .send({
+        projectUniqId,
+        globalProxy: 'http://127.0.0.1',
+      });
+
+    const { body: createBody } = await app.httpRequest()
+      .post('/api/sdk/add_global_proxy')
+      .send({
+        projectUniqId,
+        globalProxy: 'http://127.0.0.2',
+      });
+
+    assert.deepStrictEqual(createBody, {
+      success: true,
+      data: null,
+    });
+  });
+
   it('POST /api/sdk/export_data export data', async () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd' },

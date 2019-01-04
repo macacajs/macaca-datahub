@@ -32,10 +32,11 @@ class ProjectService extends Service {
     });
   }
 
-  async createProject({ projectName, description }) {
+  async createProject({ projectName, description, globalProxy }) {
     return await this.ctx.model.Project.create({
       projectName,
       description,
+      globalProxy,
     });
   }
 
@@ -56,6 +57,70 @@ class ProjectService extends Service {
         uniqId,
       },
     });
+  }
+
+  async addGlobalProxy({
+    projectUniqId,
+    globalProxy,
+  }) {
+    if (!globalProxy) return null;
+
+    const projectInfo = await this.ctx.model.Project.findOne({
+      where: {
+        uniqId: projectUniqId,
+      },
+    });
+
+    const oldGlobalProxy = projectInfo.globalProxy;
+
+    if (globalProxy === oldGlobalProxy) return null;
+
+    const interfaces = await this.ctx.model.Interface.findAll({
+      where: {
+        projectUniqId,
+      },
+    });
+
+    // update global proxy
+    await Promise.all(interfaces.map(async item => {
+      if (item.proxyConfig &&
+        item.proxyConfig.proxyList &&
+        item.proxyConfig.proxyList.length
+      ) {
+        const list = item.proxyConfig.proxyList;
+        // remove old global proxy
+        list.splice(list.indexOf(list.find(i => i.proxyUrl === oldGlobalProxy)), 1);
+
+        // add new global proxy
+        if (!list.find(item => item.proxyUrl === globalProxy)) {
+          list.push({
+            proxyUrl: globalProxy,
+          });
+          item.proxyConfig.activeIndex = list.length - 1;
+        }
+
+      } else {
+        item.proxyConfig = {
+          enabled: false,
+          activeIndex: 0,
+          proxyList: [{
+            proxyUrl: globalProxy,
+          }],
+        };
+      }
+      return await this.ctx.model.Interface.update(
+        {
+          proxyConfig: item.proxyConfig,
+        },
+        {
+          where: {
+            uniqId: item.dataValues.uniqId,
+          },
+        }
+      );
+    }));
+
+    return null;
   }
 }
 

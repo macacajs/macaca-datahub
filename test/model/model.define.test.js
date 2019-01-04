@@ -13,6 +13,7 @@ describe('test/app/model.define.js', () => {
     const map = {
       projectName: 'STRING',
       description: 'STRING',
+      globalProxy: 'STRING',
       uniqId: 'UUID',
       createdAt: 'DATE',
       updatedAt: 'DATE',

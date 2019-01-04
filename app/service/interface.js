@@ -124,12 +124,14 @@ class InterfaceService extends Service {
     pathname,
     method,
     description,
+    proxyConfig,
   }) {
     return await this.ctx.model.Interface.create({
       projectUniqId,
       pathname,
       method,
       description,
+      proxyConfig,
     });
   }
 
