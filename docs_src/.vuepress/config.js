@@ -11,12 +11,12 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'DataHub',
+      title: 'Macaca DataHub',
       description: 'Just enjoy the data out-of-the-box.📦',
     },
     '/zh/': {
       lang: 'zh-CN',
-      title: 'DataHub',
+      title: 'Macaca DataHub',
       description: '全周期的数据环境解决方案',
     },
   },
