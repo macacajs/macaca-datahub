@@ -1,6 +1,6 @@
 # Macaca DataHub
 
-[English Edition](./README.md)
+[English Edition](./README.md) | [项目主页](//macacajs.github.io/macaca-datahub)
 
 ---
 
@@ -66,8 +66,6 @@ DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ati9ij21kw13ado5.jpg" width="75%" />
 </div>
-
-[了解更多，请到官网介绍](//macacajs.github.io/macaca-datahub)
 
 ## License
 

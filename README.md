@@ -10,7 +10,7 @@
 
 # Macaca DataHub
 
-[中文版](./README.zh.md)
+[中文版](./README.zh.md) | [Offical Site](//macacajs.github.io/macaca-datahub)
 
 ---
 
@@ -39,7 +39,6 @@
 [docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
 > Continuous data provider for development, testing, staging and production.
-> Just enjoy the data out-of-the-box.📦
 
 <!-- GITCONTRIBUTOR_START -->
 
@@ -49,7 +48,7 @@
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[<img src="https://avatars1.githubusercontent.com/u/17233599?v=4" width="100px;"/><br/><sub><b>Chan-Chun</b></sub>](https://github.com/Chan-Chun)<br/>|[<img src="https://avatars2.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|[<img src="https://avatars1.githubusercontent.com/u/15955374?v=4" width="100px;"/><br/><sub><b>gaius-qi</b></sub>](https://github.com/gaius-qi)<br/>|[<img src="https://avatars0.githubusercontent.com/u/465125?v=4" width="100px;"/><br/><sub><b>yesmeck</b></sub>](https://github.com/yesmeck)<br/>
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Fri Sep 21 2018 23:28:17 GMT+0800`.
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Sun Jan 13 2019 14:49:21 GMT+0800`.
 
 <!-- GITCONTRIBUTOR_END -->
 
@@ -121,8 +120,6 @@ DataHub can save the response of each request by taking snapshot. You can use th
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9fj6doj21kw13adnq.jpg" width="75%" />
 </div>
-
-[More intro](//macacajs.github.io/macaca-datahub)
 
 ## License
 
