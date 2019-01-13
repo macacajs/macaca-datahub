@@ -56,12 +56,16 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/introduction'
+            link: '/guide/'
           },
           macacaEcosystem.en,
         ],
         sidebar: {
-          '/guide/': genSidebarConfig('Guide', 'Usage', 'Advanced'),
+          '/guide/': genSidebarConfig([
+            'Guide',
+            'Advanced',
+            'Community'
+          ]),
         },
       },
       '/zh/': {
@@ -78,46 +82,50 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/introduction'
+            link: '/zh/guide/'
           },
           macacaEcosystem.zh,
         ],
         sidebar: {
-          '/zh/guide/': genSidebarConfig('指南', '使用', '进阶'),
+          '/zh/guide/': genSidebarConfig([
+            '使用指南',
+            '高级进阶',
+            '社区支持'
+          ]),
         },
       },
     },
   },
 };
 
-function genSidebarConfig(guide, usage, advanced) {
+function genSidebarConfig(arr) {
   return [
     {
-      title: guide,
+      title: arr[0],
       collapsable: false,
       children: [
-        'introduction',
         'design-concept',
-        'share',
-      ],
-    },
-    {
-      title: usage,
-      collapsable: false,
-      children: [
-        'install',
-        'config',
+        'installation',
         'webpack-tutorial',
-        'schema',
         'quick-start',
       ],
     },
     {
-      title: advanced,
+      title: arr[1],
       collapsable: false,
       children: [
-        'use-in-test',
-        'project-integration',
+        'configuration',
+        'schema-syntax',
+        'with-macaca-test',
+        'integration',
+        'experiment'
+      ],
+    },
+    {
+      title: arr[2],
+      collapsable: false,
+      children: [
+        'presentations',
       ],
     },
   ];

@@ -3,7 +3,7 @@
 home: true
 heroImage: /logo/logo-color.svg
 actionText: Quick Start
-actionLink: /guide/install.html
+actionLink: /guide/
 features:
 - title: Comprehensive Solution
   details: DataHub is born to solving the lifecycle needs of mock/testing data of software development, from development, testing, staging to final production.

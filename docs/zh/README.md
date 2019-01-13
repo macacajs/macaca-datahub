@@ -3,7 +3,7 @@
 home: true
 heroImage: /logo/logo-color.svg
 actionText: 快速上手
-actionLink: /zh/guide/install.html
+actionLink: /zh/guide/
 features:
 - title: 多环节覆盖
   details: 支持从本地开发阶段，到集成测试阶段，以及上线前验证阶段的一系列数据环境需求。

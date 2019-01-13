@@ -1,6 +1,6 @@
 # 快速上手
 
-## 第1步 - 创建项目
+## 创建项目
 
 创建名字为 sample 项目。
 
@@ -8,7 +8,7 @@
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueeskabij21yg1bo43p.jpg" width="75%" />
 </div>
 
-## 第2步 - 添加接口
+## 添加接口
 
 添加 `test1` 接口, 则对 `http://localhost:8080/api/test1` 请求 mock 数据。
 
@@ -17,7 +17,7 @@
 </div>
 
 
-## 第3步 - 接口构建
+## 接口构建
 
 Rewrite Response, 接口响应状态及header进行设置, 如不进行特殊配置则返回 `200` 状态码。
 
@@ -49,7 +49,7 @@ Rewrite Response, 接口响应状态及header进行设置, 如不进行特殊配
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesmb50j21xe1bqq94.jpg" width="75%" />
 </div>
 
-## 第4步 - 生成接口文档
+## 生成接口文档
 
 接口文档, 根据接口构建信息自动生成。
 
@@ -57,7 +57,7 @@ Rewrite Response, 接口响应状态及header进行设置, 如不进行特殊配
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueet04ehj21yk1b4gst.jpg" width="75%" />
 </div>
 
-## 第5步 - 应用
+## 看看效果
 
 具体代码参照示例项目[webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)。
 
@@ -83,7 +83,7 @@ request.send();
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuugd10nbyj21t21amq9p.jpg" width="75%" />
 </div>
 
-## 第6步 - 查看实时快照
+## 查看实时快照
 
 对 mock 数据进行请求后可在实时快照中找到对应历史请求信息。
 

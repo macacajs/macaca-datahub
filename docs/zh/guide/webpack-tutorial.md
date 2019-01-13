@@ -1,6 +1,6 @@
 # Webpack 配置
 
-## 安装
+## 安装依赖
 
 通过 npm 安装 Macaca DataHub 命令行客户端与代理中间件：
 
@@ -21,7 +21,7 @@ $ npm run dev
 
 访问 DataHub 页面: [http://localhost:5678](http://localhost:5678)
 
-## Webpack 集成 Datahub 服务
+## 集成 Datahub 服务
 
 ```javascript
 const path = require('path');
@@ -59,6 +59,3 @@ devServer: {
   },
 },
 ```
-
-更多 DataHub 配置信息可参考 [自定义配置项](https://github.com/macacajs/macaca-datahub#configuration)。
-

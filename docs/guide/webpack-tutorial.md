@@ -59,6 +59,3 @@ devServer: {
   },
 },
 ```
-
-You can also get others extra build infomation. If you want more, please modify the [custom config](//github.com/macacajs/macaca-datahub#configuration) file.
-
