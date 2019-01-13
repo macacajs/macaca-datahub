@@ -12,12 +12,12 @@ module.exports = {
     '/': {
       lang: 'en-US',
       title: 'Macaca DataHub',
-      description: 'Just enjoy the data out-of-the-box.📦',
+      description: 'Continuous data provider for development, testing, staging and production',
     },
     '/zh/': {
       lang: 'zh-CN',
       title: 'Macaca DataHub',
-      description: '全周期的数据环境解决方案',
+      description: '支持研发全周期的数据环境解决方案',
     },
   },
   head: [
