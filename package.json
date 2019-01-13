@@ -4,8 +4,7 @@
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
-    "macaca-datahub": "./bin/datahub.js",
-    "datahub-migrate-1-to-2": "./bin/datahub-migrate-1-to-2.js"
+    "macaca-datahub": "./bin/datahub.js"
   },
   "scripts": {
     "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub",
@@ -23,8 +22,8 @@
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
     "migration:create": "sequelize migration:create --name",
-    "docs:dev": "vuepress dev docs_src",
-    "docs:build": "vuepress build docs_src"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "main": "./index.js",
   "dependencies": {
@@ -63,6 +62,7 @@
     "eslint-config-egg": "^5.1.1",
     "execa": "^0.10.0",
     "git-contributor": "^1.0.8",
+    "macaca-ecosystem": "*",
     "pre-commit": "^1.2.2",
     "vuepress": "^0.14.8",
     "webstorm-disable-index": "^1.2.0"

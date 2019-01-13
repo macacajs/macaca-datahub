@@ -1,6 +1,7 @@
 'use strict';
 
 const { chalk } = require('xutil');
+
 const socket = require('./app/socket');
 
 module.exports = agent => {

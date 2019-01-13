@@ -1,24 +1,30 @@
 'use strict';
 
+const macacaEcosystem = require('macaca-ecosystem');
+
 const name = 'macaca-datahub';
 
 module.exports = {
-  dest: 'docs',
+  dest: 'docs_dist',
   base: `/${name}/`,
 
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'DataHub',
-      description: 'Just enjoy the data out-of-the-box.📦',
+      title: 'Macaca DataHub',
+      description: 'Continuous data provider for development, testing, staging and production',
     },
     '/zh/': {
       lang: 'zh-CN',
-      title: 'DataHub',
-      description: '全周期的数据环境解决方案',
+      title: 'Macaca DataHub',
+      description: '支持研发全周期的数据环境解决方案',
     },
   },
   head: [
+    ['link', {
+      rel: 'icon',
+      href: 'https://macacajs.github.io/assets/favicon.ico'
+    }],
     ['script', {
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=UA-49226133-2',
@@ -34,7 +40,7 @@ module.exports = {
   themeConfig: {
     repo: `macacajs/${name}`,
     editLinks: true,
-    docsDir: 'docs_src',
+    docsDir: 'docs',
     locales: {
       '/': {
         label: 'English',
@@ -50,12 +56,17 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/install.html'
+            link: '/guide/'
           },
+          macacaEcosystem.en,
         ],
         sidebar: {
-          '/guide/': genSidebarConfig('Guide')
-        }
+          '/guide/': genSidebarConfig([
+            'Guide',
+            'Advanced',
+            'Community'
+          ]),
+        },
       },
       '/zh/': {
         label: '简体中文',
@@ -71,25 +82,50 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/install.html'
+            link: '/zh/guide/'
           },
+          macacaEcosystem.zh,
         ],
         sidebar: {
-          '/zh/guide/': genSidebarConfig('指南')
-        }
+          '/zh/guide/': genSidebarConfig([
+            '使用指南',
+            '高级进阶',
+            '社区支持'
+          ]),
+        },
       },
     },
   },
 };
 
-function genSidebarConfig(title) {
+function genSidebarConfig(arr) {
   return [
     {
-      title,
+      title: arr[0],
       collapsable: false,
       children: [
-        'install',
+        'design-concept',
+        'installation',
+        'webpack-tutorial',
         'quick-start',
+      ],
+    },
+    {
+      title: arr[1],
+      collapsable: false,
+      children: [
+        'configuration',
+        'schema-syntax',
+        'with-macaca-test',
+        'integration',
+        'experiment'
+      ],
+    },
+    {
+      title: arr[2],
+      collapsable: false,
+      children: [
+        'presentations',
       ],
     },
   ];

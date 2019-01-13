@@ -1,64 +1,6 @@
-# Webpack Tutorial
+# Quick Start
 
----
-
-## Installation
-
-Macaca DataHub and DataHub Proxy Middleware are distibuted through npm. To install it, run the command line below:
-
-```bash
-$ npm i macaca-datahub --save-dev
-$ npm i datahub-proxy-middleware --save-dev
-```
-
-## Sample Project
-
-- [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample)
-
-## How a webpack project integrates DataHub
-
-```javascript
-const path = require('path');
-const DataHub = require('macaca-datahub');
-const datahubMiddleware = require('datahub-proxy-middleware');
-
-// datahub config
-// document: https://github.com/macacajs/macaca-datahub#configuration
-
-const datahubConfig = {
-  port: 5678,
-  hostname: '127.0.0.1',
-  store: path.join(__dirname, '..', 'data'),
-  proxy: {
-    '^/api': {
-      hub: 'sample',
-    },
-  },
-  showBoard: true,
-};
-
-const defaultDatahub = new DataHub({
-  port: datahubConfig.port,
-});
-
-// devServer field
-devServer: {
-  before: app => {
-    datahubMiddleware(app)(datahubConfig);
-  },
-  after: () => {
-    defaultDatahub.startServer(datahubConfig).then(() => {
-      console.log('datahub ready');
-    });
-  },
-},
-```
-
-You can also get others extra build infomation. If you want more, please modify the [custom config](//github.com/macacajs/macaca-datahub#configuration) file.
-
-## Quick Start
-
-### Step1 - Create New Project
+## Create New Project
 
 Create a new item named sample.
 
@@ -66,7 +8,7 @@ Create a new item named sample.
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueeskabij21yg1bo43p.jpg" width="75%" />
 </div>
 
-### Step2 - Add An Interface
+## Add An Interface
 
 Add the interface named `test1`, request the interface `http://localhost:8080/api/test1` and get the corresponding mock data.
 
@@ -75,7 +17,7 @@ Add the interface named `test1`, request the interface `http://localhost:8080/ap
 </div>
 
 
-### Step3 - Build Interface
+## Build Interface
 
 Rewrite Response, set the interface response information, and return status code `200` if not set.
 
@@ -107,7 +49,7 @@ Response field description, you can use scheme JSON for validation and choose wh
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesmb50j21xe1bqq94.jpg" width="75%" />
 </div>
 
-### Step4 - Generating Document
+## Generating Document
 
 Automatically generate documents based on interfaces.
 
@@ -115,7 +57,7 @@ Automatically generate documents based on interfaces.
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueet04ehj21yk1b4gst.jpg" width="75%" />
 </div>
 
-### Step5 - Build Now
+## Try Now
 
 Specific code reference [webpack-datahub-sample](//github.com/macaca-sample/webpack-datahub-sample).
 
@@ -142,10 +84,11 @@ The mock data is displayed in the page after requesting the `http://localhost:80
 </div>
 
 
-### Step6 - History Request Information
+## History Request Information
 
 This page displays historical request details.
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuuewr0rmyj21xu1aytet.jpg" width="75%" />
 </div>
+
