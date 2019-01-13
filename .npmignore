@@ -2,6 +2,7 @@
 test/
 coverage/
 docs/
+docs_dist/
 logs/
 run/
 logo/

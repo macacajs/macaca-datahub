@@ -5,7 +5,7 @@ const macacaEcosystem = require('macaca-ecosystem');
 const name = 'macaca-datahub';
 
 module.exports = {
-  dest: 'docs',
+  dest: 'docs_dist',
   base: `/${name}/`,
 
   locales: {
@@ -21,7 +21,10 @@ module.exports = {
     },
   },
   head: [
-    ['link', { rel: 'icon', href: 'https://macacajs.github.io/assets/favicon.ico' }],
+    ['link', {
+      rel: 'icon',
+      href: 'https://macacajs.github.io/assets/favicon.ico'
+    }],
     ['script', {
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=UA-49226133-2',
@@ -37,7 +40,7 @@ module.exports = {
   themeConfig: {
     repo: `macacajs/${name}`,
     editLinks: true,
-    docsDir: 'docs_src',
+    docsDir: 'docs',
     locales: {
       '/': {
         label: 'English',
@@ -53,7 +56,7 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/introduction.html'
+            link: '/guide/introduction'
           },
           macacaEcosystem.en,
         ],
@@ -75,7 +78,7 @@ module.exports = {
         nav: [
           {
             text: '指南',
-            link: '/zh/guide/introduction.html'
+            link: '/zh/guide/introduction'
           },
           macacaEcosystem.zh,
         ],
