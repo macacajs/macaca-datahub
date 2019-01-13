@@ -28,7 +28,7 @@ The data in the research and development period is relatively well solved, but w
 * Documentization: Consistency makes interface document maintenance no longer scattered and lagging, interface documents automatically generate and maintain iteration ability is the optimal solution
 * Testable: Whether it is function unit test before delivery, UI unit test, or system integration test during test period, it needs to rely on combinable data source. The stability of integration test phase is high, and data source service is required to shield peripheral service.
 
-## other questions
+## Other questions
 
 * Entry cost: The data source has a higher initial entry cost, especially in the joint adjustment period. It should support automatic entry by request snapshot.
 * Troubleshooting: Production environment should support switching data sources, support proxy and snapshot records
