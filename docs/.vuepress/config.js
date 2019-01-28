@@ -116,6 +116,7 @@ function genSidebarConfig(arr) {
       children: [
         'configuration',
         'schema-syntax',
+        'swagger',
         'with-macaca-test',
         'integration',
         'experiment'
