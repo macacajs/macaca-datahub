@@ -45,8 +45,12 @@ if (program.optionstr) {
 }
 
 (async () => {
-  const needUpdate = await update();
-  if (needUpdate) return;
+  try {
+    const needUpdate = await update();
+    if (needUpdate) return;
+  } catch (e) {
+    console.log('Network Error');
+  }
 
   const datahub = new DataHub(options);
 
