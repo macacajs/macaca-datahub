@@ -24,6 +24,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()
@@ -48,6 +49,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -74,6 +76,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -100,6 +103,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -134,6 +138,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       });
     assert.deepStrictEqual(createBody1, {
@@ -154,6 +159,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -168,6 +174,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       });
     assert.deepStrictEqual(createBody, {
@@ -188,6 +195,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -222,6 +230,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -238,6 +247,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send([{
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       }]);
     assert.deepStrictEqual(createBody, {
@@ -259,6 +269,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -267,6 +278,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
+        contextConfig: {},
         data: { success: false },
       });
 
@@ -288,6 +300,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       });
     assert.deepStrictEqual(createBody1, {
@@ -308,6 +321,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -321,6 +335,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       });
     assert(body.status === 302);
@@ -338,6 +353,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -351,6 +367,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         hub: 'baz',
         pathname: 'api/path',
+        contextConfig: {},
         scene: 'fail',
       });
     assert.deepStrictEqual(createBody1, {
@@ -372,6 +389,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -400,6 +418,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 
@@ -436,6 +455,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        contextConfig: {},
         data: { success: true },
       });
 

@@ -24,8 +24,8 @@ describe('test/app/service/scene.js', () => {
     let sceneUniqIdOne;
     beforeEach(async () => {
       const res = await ctx.model.Scene.bulkCreate([
-        { interfaceUniqId, sceneName: 'success', data: { id: 'success' } },
-        { interfaceUniqId, sceneName: 'fail', data: { id: 'fail' } },
+        { interfaceUniqId, sceneName: 'success', contextConfig: {}, data: { id: 'success' } },
+        { interfaceUniqId, sceneName: 'fail', contextConfig: {}, data: { id: 'fail' } },
       ]);
       sceneUniqIdOne = res[0].uniqId;
     });
@@ -37,6 +37,7 @@ describe('test/app/service/scene.js', () => {
       assert(res[0] instanceof ctx.model.Scene);
       assert(res[1] instanceof ctx.model.Scene);
       assert(res[0].sceneName === 'success');
+      assert.deepEqual(res[0].contextConfig, {});
       assert.deepStrictEqual(res[0].data, {
         id: 'success',
       });
@@ -46,6 +47,7 @@ describe('test/app/service/scene.js', () => {
         id: 'fail',
       });
       assert(res[1].interfaceUniqId === interfaceUniqId);
+      assert.deepEqual(res[1].contextConfig, {});
     });
 
     it('querySceneByInterfaceUniqIdAndSceneName', async () => {

@@ -43,18 +43,7 @@ class SceneController extends Controller {
 
     const {
       proxyConfig,
-      contextConfig,
     } = interfaceData;
-
-    if (contextConfig.responseDelay) {
-      ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
-    }
-    if (contextConfig.responseStatus) {
-      ctx[Symbol.for('context#rewriteResponseStatus')] = Number.parseInt(contextConfig.responseStatus, 10);
-    }
-    if (contextConfig.responseHeaders) {
-      ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
-    }
 
     if (!tagName) {
       const {
@@ -105,7 +94,22 @@ class SceneController extends Controller {
       sceneName: currentScene,
     });
 
-    ctx.body = res.data;
+    const {
+      contextConfig,
+      data,
+    } = res;
+
+    if (contextConfig.responseDelay) {
+      ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
+    }
+    if (contextConfig.responseStatus) {
+      ctx[Symbol.for('context#rewriteResponseStatus')] = Number.parseInt(contextConfig.responseStatus, 10);
+    }
+    if (contextConfig.responseHeaders) {
+      ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
+    }
+
+    ctx.body = data;
   }
 
   fail(message) {

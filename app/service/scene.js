@@ -49,11 +49,13 @@ class SceneService extends Service {
   async createScene({
     interfaceUniqId,
     sceneName,
+    contextConfig,
     data,
   }) {
     return await this.ctx.model.Scene.create({
       interfaceUniqId,
       sceneName,
+      contextConfig,
       data,
     });
   }

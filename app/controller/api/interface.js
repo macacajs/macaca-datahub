@@ -42,7 +42,6 @@ class InterfaceController extends Controller {
       'description',
       'currentScene',
       'proxyConfig',
-      'contextConfig',
     ].forEach(i => {
       if (ctx.request.body[i]) {
         payload[i] = ctx.request.body[i];

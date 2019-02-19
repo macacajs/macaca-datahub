@@ -22,6 +22,11 @@ module.exports = app => {
       type: STRING,
       allowNull: false,
     },
+    contextConfig: {
+      type: JSON,
+      defaultValue: {},
+      allowNull: false,
+    },
     uniqId: {
       type: UUID,
       defaultValue: UUIDV4,

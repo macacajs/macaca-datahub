@@ -24,6 +24,7 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()
@@ -53,6 +54,7 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     let interfaceData = await ctx.model.Interface.findOne({
@@ -90,6 +92,7 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
+        contextConfig: {},
         data: { success: false },
       });
     const { body: { data: { uniqId: sceneUniqId } } } = await app.httpRequest()
@@ -97,6 +100,7 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()

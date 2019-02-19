@@ -24,6 +24,7 @@ describe('test/app/controller/api/preivew.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()
@@ -46,6 +47,7 @@ describe('test/app/controller/api/preivew.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const body = await app.httpRequest()

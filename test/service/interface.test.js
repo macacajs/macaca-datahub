@@ -76,7 +76,7 @@ describe('test/app/service/interface.js', () => {
       method: 'ALL',
     });
     await ctx.model.ShadowInterface.bulkCreate([
-      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default', contextConfig: {} },
+      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default' },
     ]);
     const res1 = await ctx.service.interface.queryInterfaceByHTTPContext({
       projectUniqId,
@@ -117,7 +117,6 @@ describe('test/app/service/interface.js', () => {
     assert(res[0].description === 'api one');
     assert(res[0].currentScene === '');
     assert.deepEqual(res[0].proxyConfig, {});
-    assert.deepEqual(res[0].contextConfig, {});
     assert(res[1].protocol === 'http');
     assert(res[1].pathname === 'api/two');
     assert(res[1].method === 'GET');
@@ -125,7 +124,6 @@ describe('test/app/service/interface.js', () => {
     assert(res[1].description === 'api two');
     assert(res[1].currentScene === '');
     assert.deepEqual(res[1].proxyConfig, {});
-    assert.deepEqual(res[1].contextConfig, {});
   });
 
   it('queryInterfaceByUniqId', async () => {
@@ -144,7 +142,6 @@ describe('test/app/service/interface.js', () => {
     assert(res.description === 'api one');
     assert(res.currentScene === '');
     assert.deepEqual(res.proxyConfig, {});
-    assert.deepEqual(res.contextConfig, {});
   });
 
   it('createInterface', async () => {
@@ -164,7 +161,6 @@ describe('test/app/service/interface.js', () => {
     assert(res[0].description === 'api one');
     assert(res[0].currentScene === '');
     assert.deepEqual(res[0].proxyConfig, {});
-    assert.deepEqual(res[0].contextConfig, {});
   });
 
   it('updateInterface', async () => {
@@ -190,7 +186,6 @@ describe('test/app/service/interface.js', () => {
     assert(res[0].description === 'api one');
     assert(res[0].currentScene === '');
     assert.deepEqual(res[0].proxyConfig, {});
-    assert.deepEqual(res[0].contextConfig, {});
   });
 
   it('updateShadowInterface', async () => {
@@ -206,7 +201,7 @@ describe('test/app/service/interface.js', () => {
       method: 'ALL',
     });
     await ctx.model.ShadowInterface.bulkCreate([
-      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default', contextConfig: {} },
+      { tagName: 'one', originInterfaceId: res.uniqId, currentScene: 'default' },
     ]);
     const res1 = await ctx.service.interface.updateShadowInterface({
       originInterfaceId: res.uniqId,

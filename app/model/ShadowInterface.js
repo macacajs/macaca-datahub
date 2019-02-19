@@ -5,7 +5,6 @@ module.exports = app => {
     STRING,
     UUID,
     UUIDV4,
-    JSON,
   } = app.Sequelize;
 
   const ShadowInterface = app.model.define('shadowInterface', {
@@ -21,11 +20,6 @@ module.exports = app => {
     currentScene: {
       type: STRING,
       defaultValue: '',
-      allowNull: false,
-    },
-    contextConfig: {
-      type: JSON,
-      defaultValue: {},
       allowNull: false,
     },
     uniqId: {
