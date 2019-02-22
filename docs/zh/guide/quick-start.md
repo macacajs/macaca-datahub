@@ -19,16 +19,10 @@
 
 ## 接口构建
 
-Rewrite Response, 接口响应状态及header进行设置, 如不进行特殊配置则返回 `200` 状态码。
+场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。同时，可以对接口响应状态及 header 进行设置, 如不进行特殊配置则返回 `200` 状态码。
 
 <div align="center">
-  <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesq1f2j21y21as45g.jpg" width="75%" />
-</div>
-
-场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesm7o3j21xw1asdl2.jpg" width="75%" />
+  <img src="https://wx1.sinaimg.cn/large/bceaad1fly1g0fkasv54lj218t0u04id.jpg" width="75%" />
 </div>
 
 代理模式, 如有代理场景需求, 配置代理模式。

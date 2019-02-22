@@ -19,16 +19,10 @@ Add the interface named `test1`, request the interface `http://localhost:8080/ap
 
 ## Build Interface
 
-Rewrite Response, set the interface response information, and return status code `200` if not set.
+The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching. You cna set the interface response information, and return status code `200` if not set.
 
 <div align="center">
-  <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesq1f2j21y21as45g.jpg" width="75%" />
-</div>
-
-The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching.
-
-<div align="center">
-  <img src="https://ws1.sinaimg.cn/large/796b664dgy1fuueesm7o3j21xw1asdl2.jpg" width="75%" />
+  <img src="https://wx3.sinaimg.cn/large/bceaad1fly1g0fkh7hxmgj218t0u0h59.jpg" width="75%" />
 </div>
 
 The proxy pattern, it can be configured if required.
