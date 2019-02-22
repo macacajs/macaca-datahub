@@ -153,7 +153,6 @@ describe('test/app/controller/api/interface.test.js', () => {
       pathname: 'api/path',
       method: 'ALL',
       description: 'description',
-      contextConfig: {},
       currentScene: '',
       proxyConfig: {},
       scenes: [],

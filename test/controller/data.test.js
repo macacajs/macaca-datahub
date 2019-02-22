@@ -24,6 +24,7 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const body = await app.httpRequest()
@@ -59,11 +60,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        data: { success: true },
-      });
-    await app.httpRequest()
-      .put(`/api/interface/${interfaceUniqId}`)
-      .send({
         contextConfig: {
           responseDelay: '2',
           responseStatus: '204',
@@ -71,6 +67,7 @@ describe('test/app/controller/data.test.js', () => {
             name: 'DataHub',
           },
         },
+        data: { success: true },
       });
     const body = await app.httpRequest()
       .get('/data/baz/api/path');
@@ -91,6 +88,7 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     await app.httpRequest()
@@ -135,6 +133,7 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()

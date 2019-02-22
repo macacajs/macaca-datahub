@@ -72,19 +72,6 @@ class SdkController extends Controller {
     // change interface currentScene
     const sceneName = options.scene;
 
-    // change interface contextConfig
-    const contextConfig = this.DEFAULT_CONTEXT_CONFIG;
-
-    if (!isNaN(options.status)) {
-      contextConfig.responseStatus = parseInt(options.status, 10);
-    }
-    if (!isNaN(options.delay)) {
-      contextConfig.responseDelay = parseFloat(options.delay);
-    }
-    if (typeof options.headers === 'object') {
-      contextConfig.responseHeaders = options.headers;
-    }
-
     const projectData = await ctx.service.project.queryProjectByName({
       projectName,
     });
@@ -112,8 +99,6 @@ class SdkController extends Controller {
     if (sceneName) {
       payload.currentScene = sceneName;
     }
-
-    payload.contextConfig = contextConfig;
 
     if (tagName) {
       payload.originInterfaceId = interfaceData.uniqId;
@@ -170,9 +155,7 @@ class SdkController extends Controller {
       if (!sceneData || !sceneData.uniqId) {
         return;
       }
-      const payload = {
-        contextConfig: this.DEFAULT_CONTEXT_CONFIG,
-      };
+      const payload = {};
 
       if (sceneName) {
         payload.currentScene = sceneData.sceneName;

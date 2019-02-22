@@ -34,7 +34,6 @@ describe('test/app/model.define.js', () => {
       description: 'STRING',
       currentScene: 'STRING',
       proxyConfig: 'JSON',
-      contextConfig: 'JSON',
       uniqId: 'UUID',
       createdAt: 'DATE',
       updatedAt: 'DATE',
@@ -49,6 +48,7 @@ describe('test/app/model.define.js', () => {
     const attributes = ctx.model.Scene.tableAttributes;
     const map = {
       sceneName: 'STRING',
+      contextConfig: 'JSON',
       data: 'JSON',
       interfaceUniqId: 'STRING',
       uniqId: 'UUID',

@@ -9,4 +9,7 @@ module.exports = {
       allowNull: true,
     });
   },
+  down: async queryInterface => {
+    await queryInterface.removeColumn('projects', 'globalProxy');
+  },
 };
