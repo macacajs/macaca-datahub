@@ -8,6 +8,16 @@ module.exports = {
       defaultValue: {},
       allowNull: false,
     });
+    await queryInterface.addColumn('interfaces', 'contextConfig', {
+      type: JSON,
+      defaultValue: {},
+      allowNull: false,
+    });
+    await queryInterface.addColumn('shadowInterfaces', 'contextConfig', {
+      type: JSON,
+      defaultValue: {},
+      allowNull: false,
+    });
   },
 
   down: async queryInterface => {
