@@ -8,6 +8,12 @@ module.exports = {
       defaultValue: {},
       allowNull: false,
     });
+    await queryInterface.removeColumn('interfaces', 'contextConfig');
+    await queryInterface.removeColumn('shadowInterfaces', 'contextConfig');
+  },
+
+  down: async queryInterface => {
+    await queryInterface.removeColumn('scenes', 'contextConfig');
     await queryInterface.addColumn('interfaces', 'contextConfig', {
       type: JSON,
       defaultValue: {},
@@ -18,12 +24,6 @@ module.exports = {
       defaultValue: {},
       allowNull: false,
     });
-  },
-
-  down: async queryInterface => {
-    await queryInterface.removeColumn('scenes', 'contextConfig');
-    await queryInterface.removeColumn('interfaces', 'contextConfig');
-    await queryInterface.removeColumn('shadowInterfaces', 'contextConfig');
   },
 };
 
