@@ -11,6 +11,7 @@ module.exports = {
   },
 
   down: async queryInterface => {
+    await queryInterface.removeColumn('scenes', 'contextConfig');
     await queryInterface.removeColumn('interfaces', 'contextConfig');
     await queryInterface.removeColumn('shadowInterfaces', 'contextConfig');
   },
