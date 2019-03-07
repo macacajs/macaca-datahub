@@ -92,7 +92,7 @@ Datahub can also automatically generate an API document from your mock/testing d
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkophwa8qj229m1gejyw.jpg" width="75%" />
 </div>
 
-### DataHub Dashboard
+### Dashboard
 
 DataHub adopts multi-scenario design, can group data according to the scene name, and provide scene data addition, deletion, and change, and can operate through DataHub's panel interface.
 
@@ -119,6 +119,22 @@ DataHub can save the response of each request by taking snapshot. You can use th
 
 <div align="center">
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9fj6doj21kw13adnq.jpg" width="75%" />
+</div>
+
+### Automation Testing
+
+Through the seamless integration of the [switchScene(scenario) API](https://macacajs.github.io/macaca-wd/#switchScene) in test cases, higher test coverage can be achieved.
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2lea4j21950u0wyx.jpg" width="75%" />
+</div>
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2kkh3j21950u0wyg.jpg" width="75%" />
+</div>
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9ly1g0u0rdufm5j21640u0h8z.jpg" width="75%" />
 </div>
 
 ## License

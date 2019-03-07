@@ -52,3 +52,13 @@ API name example:
 DataHub can save the response of each request by taking snapshot. You can use the archieved snapshot to find out what happened.
 
 ![](https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9fj6doj21kw13adnq.jpg)
+
+## Automation Testing
+
+Through the seamless integration of the [switchScene(scenario) API](https://macacajs.github.io/macaca-wd/#switchScene) in test cases, higher test coverage can be achieved.
+
+![](https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2lea4j21950u0wyx.jpg)
+
+![](https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2kkh3j21950u0wyg.jpg)
+
+![](https://wx1.sinaimg.cn/large/6d308bd9ly1g0u0rdufm5j21640u0h8z.jpg)

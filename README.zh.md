@@ -67,6 +67,22 @@ DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便
   <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ati9ij21kw13ado5.jpg" width="75%" />
 </div>
 
+### 自动化测试
+
+通过[场景转换 API](https://macacajs.github.io/macaca-wd/#switchScene) 与测试用例的配合使用，可以做到较高的测试覆盖率。
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2lea4j21950u0wyx.jpg" width="75%" />
+</div>
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2kkh3j21950u0wyg.jpg" width="75%" />
+</div>
+
+<div align="center">
+  <img src="https://wx1.sinaimg.cn/large/6d308bd9ly1g0u0rdufm5j21640u0h8z.jpg" width="75%" />
+</div>
+
 ## License
 
 The MIT License (MIT)
