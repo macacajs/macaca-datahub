@@ -28,9 +28,6 @@ const path = require('path');
 const DataHub = require('macaca-datahub');
 const datahubMiddleware = require('datahub-proxy-middleware');
 
-// datahub config
-// document: https://github.com/macacajs/macaca-datahub#configuration
-
 const datahubConfig = {
   port: 5678,
   hostname: '127.0.0.1',
@@ -60,3 +57,7 @@ devServer: {
   },
 },
 ```
+
+## 代理配置
+
+- [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware#use-with-webpack-dev-server)
