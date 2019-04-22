@@ -16,7 +16,7 @@ class SceneService extends Service {
       },
       order: [
         [
-          'createdAt',
+          'updatedAt',
           'ASC',
         ],
       ],
