@@ -2,12 +2,12 @@
 
 ## Use Upload and Download
 
-![](https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9idygpj22ai1i2wor.jpg)
+![](https://cdn.nlark.com/yuque/0/2019/png/95383/1556086650491-f5126b12-7da6-4cef-9674-cff5f8fee43a.png)
 
 ## Upload and Download Project Data
 
-![](https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hd0x4j229m1hete8.jpg)
+![](https://cdn.nlark.com/yuque/0/2019/png/95383/1556086662394-c6301e41-61c9-474f-8eab-929550558e68.png)
 
 ## Upload and Download Interface Data
 
-![](https://ws1.sinaimg.cn/large/bceaad1fly1fwkm9hn40kj229m1heqcl.jpg)
+![](https://cdn.nlark.com/yuque/0/2019/png/95383/1556086685982-66cefd2e-b5da-4835-88d0-d095313883f2.png)

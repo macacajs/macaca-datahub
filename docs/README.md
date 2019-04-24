@@ -27,4 +27,4 @@ Support UI dashboard that will greatly enhance your R&D experience.
 
 ---
 
-![](https://ws1.sinaimg.cn/large/796b664dgy1fuueet04ehj21yk1b4gst.jpg)
+![](https://cdn.nlark.com/yuque/0/2019/png/95383/1556086852628-742b589d-d9b9-4953-b823-a05e1e29eb28.png)

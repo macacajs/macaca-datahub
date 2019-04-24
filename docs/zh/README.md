@@ -25,4 +25,4 @@ footer: MIT Licensed | Copyright © 2015-present Macaca
 DataHub 提供 UI 操作板，将大大提升你的研发体验。
 :::
 
-![](https://ws1.sinaimg.cn/large/796b664dgy1fuueet04ehj21yk1b4gst.jpg)
+![](https://cdn.nlark.com/yuque/0/2019/png/95383/1556087304638-428cd324-c3b4-4368-a22e-93b6eb87d413.png)

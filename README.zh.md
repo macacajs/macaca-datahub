@@ -13,7 +13,7 @@
 DataHub 支持从本地开发阶段，到集成测试阶段，以及上线前验证阶段的一系列数据环境需求，研发与测试工程师只需面向 DataHub 管理数据即可。
 
 <div align="center">
-  <img src="https://wx4.sinaimg.cn/large/6d308bd9gy1fokqvum2gsj20s10l70vh.jpg" width="50%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087517572-e20ae953-a33b-414d-99b4-eead40287fc9.png" width="50%" />
 </div>
 
 ### 去中心化
@@ -23,7 +23,7 @@ DataHub 采用去中心化设计，本地研发阶段每项实例都拥有一份
 另外，每份数据都可向远端服务推送并同步，满足中心化协同的需要。
 
 <div align="center">
-  <img src="https://wx3.sinaimg.cn/large/6d308bd9gy1fokxgydf80j20np0cr0ts.jpg" width="50%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087528896-efb81a7c-8f28-4c68-9738-5a0b1131c61d.png" width="50%" />
 </div>
 
 ### 数据流动管理
@@ -31,7 +31,7 @@ DataHub 采用去中心化设计，本地研发阶段每项实例都拥有一份
 DataHub 采用单向数据流动的原则，使当前项目下的数据状态及时变更。
 
 <div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1fokxgywfajj20mx0g0wfj.jpg" width="50%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087394548-1119e4c3-eb64-4e42-8cb8-b4b2a950478d.png" width="50%" />
 </div>
 
 ### 文档一致性
@@ -39,7 +39,7 @@ DataHub 采用单向数据流动的原则，使当前项目下的数据状态及
 DataHub 将 Mock 数据与字段描述整合处理，自动生成接口文档。使得文档能够与交互字段随时保持一致。
 
 <div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6c8rh3j22a41g8jzd.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087404156-e5c9fdc0-9211-4b2f-8e1e-055b9592bcb6.png" width="75%" />
 </div>
 
 ### 场景管理
@@ -56,7 +56,7 @@ Datahub 可以定义动态路径，底层使用的是 [path-to-regexp](https://g
 | api3/:id         | api3/baz             |
 
 <div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6bxcllj22a41g848i.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087414287-dd7ee841-564c-434a-8516-df9b1474246c.png" width="75%" />
 </div>
 
 ### 快照录入
@@ -64,7 +64,7 @@ Datahub 可以定义动态路径，底层使用的是 [path-to-regexp](https://g
 DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便于归档。也就是说你可以通过已归档的快照随时复现当时的场景。
 
 <div align="center">
-  <img src="https://ws1.sinaimg.cn/large/bceaad1fly1fwkm6ati9ij21kw13ado5.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087541969-d45b0057-0611-4445-8faa-c78f8e9b4f43.png" width="75%" />
 </div>
 
 ### 自动化测试
@@ -72,15 +72,15 @@ DataHub 兼备代理功能，会将最近请求的实时响应保存下来，便
 通过[场景转换 API](https://macacajs.github.io/macaca-wd/#switchScene) 与测试用例的配合使用，可以做到较高的测试覆盖率。
 
 <div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2lea4j21950u0wyx.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087551195-fad4b4e9-64ed-49ad-b05f-bdf2475a38d4.png" width="75%" />
 </div>
 
 <div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9gy1g03hp2kkh3j21950u0wyg.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087563001-4116b28e-1c7f-4fb6-88dd-0a1bbe4cbe90.png" width="75%" />
 </div>
 
 <div align="center">
-  <img src="https://wx1.sinaimg.cn/large/6d308bd9ly1g0u0rdufm5j21640u0h8z.jpg" width="75%" />
+  <img src="https://cdn.nlark.com/yuque/0/2019/png/95383/1556087580825-d073ffc3-c2ef-4e47-a165-6a4c5f8f87b4.png" width="75%" />
 </div>
 
 ## License
