@@ -12,7 +12,6 @@ module.exports = app => {
   const contextMiddleWare = compose([
     middleware.socketEmit(),
     middleware.schemaValidation(),
-    middleware.contextCors(),
     middleware.contextDelay(),
     middleware.contextStatus(),
     middleware.contextResponseHeaders(),

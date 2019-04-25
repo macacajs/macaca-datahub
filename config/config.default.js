@@ -17,6 +17,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name;
 
   config.middleware = [
+    'contextCors',
     'exportData',
     'errorHandler',
   ];
