@@ -32,6 +32,7 @@
     "cookie": "^0.3.1",
     "datahub-view": "^2.0.0",
     "egg": "^2.0.0",
+    "egg-cors": "^2.2.0",
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",
     "egg-sequelize": "^4.1.0",
