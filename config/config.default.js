@@ -3,6 +3,7 @@
 const _ = require('xutil');
 const fs = require('fs');
 const path = require('path');
+const copydir = require('copy-dir');
 
 const sequelizeConfig = require('../database/config');
 
@@ -91,6 +92,16 @@ module.exports = appInfo => {
     const storeDir = path.resolve(process.env.DATAHUB_STORE_PATH);
     if (!_.isExistedDir(storeDir)) fs.mkdirSync(storeDir);
     config.exportArchiveBaseDir = storeDir;
+
+    if (!fs.readdirSync(storeDir).length) { // empty direction
+      const demoDataDir = path.resolve(__dirname, '..', 'demodata');
+      copydir.sync(demoDataDir, storeDir, {
+        utimes: true,
+        mode: true,
+      }, err => {
+        console.log(err);
+      });
+    }
   }
 
   config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
