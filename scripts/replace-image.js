@@ -1,6 +1,7 @@
 // npm i request
 // create ./docs/.vuepress/public/assets/ directory
 // node ./scripts/replace-image.js docs/
+// Change relative urls to absolute urls in README.md and README.zh.md manually
 
 'use strict';
 
