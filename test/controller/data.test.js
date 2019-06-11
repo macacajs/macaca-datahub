@@ -34,6 +34,36 @@ describe('test/app/controller/data.test.js', () => {
     assert(body.text === '{\"success\":true}');
   });
 
+  it('GET /data/baz/api/path support query.__datahub_scene', async () => {
+    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
+      { projectName: 'baz', description: 'bazd' },
+    ]);
+    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
+    ]);
+    await app.httpRequest()
+      .post('/api/scene/')
+      .send({
+        interfaceUniqId,
+        sceneName: 'id_1',
+        contextConfig: {},
+        data: { id: 1 },
+      });
+    await app.httpRequest()
+      .post('/api/scene/')
+      .send({
+        interfaceUniqId,
+        sceneName: 'success',
+        contextConfig: {},
+        data: { success: true },
+      });
+    const body = await app.httpRequest()
+      .get('/data/baz/api/path?__datahub_scene=id_1');
+    assert(body.status === 200);
+    assert(body.req.method === 'GET');
+    assert(body.text === '{\"id\":1}');
+  });
+
   it('GET /data/baz/api/path project with empty', async () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd' },

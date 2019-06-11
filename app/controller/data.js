@@ -89,10 +89,20 @@ class SceneController extends Controller {
 
     const interfaceUniqId = (tagName && originInterfaceId) ? originInterfaceId : uniqId;
 
-    const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
-      interfaceUniqId,
-      sceneName: currentScene,
-    });
+    let res;
+    // try to use custom scene by default
+    if (ctx.query.__datahub_scene) {
+      res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+        interfaceUniqId,
+        sceneName: ctx.query.__datahub_scene,
+      });
+    }
+    if (!res) {
+      res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+        interfaceUniqId,
+        sceneName: currentScene,
+      });
+    }
 
     const {
       contextConfig,
