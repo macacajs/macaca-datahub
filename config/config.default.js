@@ -57,6 +57,7 @@ module.exports = appInfo => {
   };
 
   config.security = {
+    xframe: false,
     csrf: {
       enable: false,
     },
