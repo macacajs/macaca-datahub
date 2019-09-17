@@ -25,6 +25,19 @@ describe('test/app/controller/api/project.test.js', () => {
     assert(createBody.data[0].projectName, 'test');
   });
 
+  it('GET /api/project/capacity show all projects', async () => {
+    await app.httpRequest()
+      .post('/api/project')
+      .send({
+        description: 'test',
+        projectName: 'test',
+      });
+    const { body: createBody } = await app.httpRequest()
+      .get('/api/project/capacity');
+    assert(createBody.data[0].projectName, 'test');
+    assert(createBody.data[0].capacity.size, '0B');
+  });
+
   it('POST /api/project create project', async () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd', globaProxy: 'http://127.0.0.1' },
