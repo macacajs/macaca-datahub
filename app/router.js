@@ -24,7 +24,7 @@ module.exports = app => {
   router.get('/notfound', controller.page.notfound);
 
   router.get('/api/project', controller.api.project.showAll);
-  router.get('/api/project/capacity', controller.api.project.capacity);
+  router.get('/api/project/statistics', controller.api.project.statistics);
   router.get('/api/project/:uniqId', controller.api.project.show);
   router.post('/api/project', controller.api.project.create);
   router.put('/api/project/:uniqId', controller.api.project.update);

@@ -19,7 +19,7 @@ class ProjectController extends Controller {
     ctx.success(res);
   }
 
-  async capacity() {
+  async statistics() {
     const ctx = this.ctx;
     const res = [];
     const _res = await ctx.service.project.queryAllProject();
@@ -38,7 +38,7 @@ class ProjectController extends Controller {
           bufSize += buf.length;
         }
       }
-      const readableSize = bufSize >= 1024 * 1024 ?
+      const filesize = bufSize >= 1024 * 1024 ?
         `${(bufSize / 1024 / 1024).toFixed(2)}MB` :
         bufSize >= 1024 ?
           `${(bufSize / 1024).toFixed(2)}KB` :
@@ -46,7 +46,7 @@ class ProjectController extends Controller {
 
       item.capacity = {
         count: iterfaceList.length,
-        size: readableSize,
+        size: filesize,
       };
       res.push(item);
     }
