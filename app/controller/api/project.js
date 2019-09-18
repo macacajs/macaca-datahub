@@ -1,7 +1,8 @@
 'use strict';
 
-const getStream = require('get-stream');
 const YAML = require('yamljs');
+const filesize = require('filesize');
+const getStream = require('get-stream');
 const Controller = require('egg').Controller;
 
 const swaggerConvert = require('../../util').swaggerConvert;
@@ -38,15 +39,10 @@ class ProjectController extends Controller {
           bufSize += buf.length;
         }
       }
-      const filesize = bufSize >= 1024 * 1024 ?
-        `${(bufSize / 1024 / 1024).toFixed(2)}MB` :
-        bufSize >= 1024 ?
-          `${(bufSize / 1024).toFixed(2)}KB` :
-          `${bufSize}B`;
 
       item.capacity = {
         count: iterfaceList.length,
-        size: filesize,
+        size: filesize(bufSize),
       };
       res.push(item);
     }
