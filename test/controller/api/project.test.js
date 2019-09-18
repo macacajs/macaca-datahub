@@ -25,7 +25,7 @@ describe('test/app/controller/api/project.test.js', () => {
     assert(createBody.data[0].projectName, 'test');
   });
 
-  it('GET /api/project/capacity show all projects', async () => {
+  it('GET /api/project/statistics show all projects', async () => {
     await app.httpRequest()
       .post('/api/project')
       .send({
@@ -33,7 +33,7 @@ describe('test/app/controller/api/project.test.js', () => {
         projectName: 'test',
       });
     const { body: createBody } = await app.httpRequest()
-      .get('/api/project/capacity');
+      .get('/api/project/statistics');
     assert(createBody.data[0].projectName, 'test');
     assert(createBody.data[0].capacity.size, '0B');
   });
