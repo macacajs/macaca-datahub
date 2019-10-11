@@ -44,7 +44,6 @@ import Component from './Component';
 
 describe('__tests__/component.test.js', () => {
   beforeEach(() => {
-    // 在渲染 snapshot 前调整依赖 API 的数据
     return datahubClient.switchScene({
       ...
     });
