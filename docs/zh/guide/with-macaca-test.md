@@ -1,6 +1,66 @@
-# 测试中使用
+# 在测试中使用
 
-## 体验一下
+## 在 jest 中使用
+
+DataHub 能够与 jest 无缝集成，以满足 React 等生态用户的使用习惯。
+
+### 安装依赖
+
+```bash
+$ npm i datahub-nodejs-sdk -D
+```
+
+### 通过 helper 扩展
+
+```javascript
+// __tests__/helper.js
+import DataHubSDK from 'datahub-nodejs-sdk';
+
+const datahubClient = new DataHubSDK({});
+
+beforeAll(() => {
+  // 重置所有接口状态
+  return datahubClient.switchAllScenes({
+    hub: 'hub-name',
+    scene: 'default',
+  });
+});
+
+import { render } from '@testing-library/react';
+
+export {
+  render,
+  datahubClient,
+};
+```
+
+### 在用例中使用
+
+```javascript
+import React from 'react';
+
+import { render, datahubClient } from './helper';
+
+import Component from './Component';
+
+describe('__tests__/component.test.js', () => {
+  beforeEach(() => {
+    // 在渲染 snapshot 前调整依赖 API 的数据
+    return datahubClient.switchScene({
+      ...
+    });
+  });
+
+  test('should be work', () => {
+    const props = {
+    };
+    const { getByTestId } = render(<Component {...props} />);
+    expect(getByTestId('loaded')).not.toBeNull();
+  });
+});
+```
+
+## 在 Macaca E2E 中使用
 
 通过 [hackernews-datahub](https://github.com/eggjs/examples/tree/master/hackernews-datahub) 来体验如何在测试用例中使用 DataHub。
 
@@ -17,9 +77,9 @@ $ npm run test:e2e
 - 覆盖率报告：hackernews-datahub/coverage/index.html
 - 通过率报告：hackernews-datahub/reports/index.html
 
-## 如何使用
+### 如何使用
 
-### 添加配置文件
+#### 添加配置文件
 
 macaca-datahub.config.js
 
@@ -44,7 +104,7 @@ mocha.opts
 --timeout 60000
 ```
 
-### 添加 helper
+#### 添加 helper
 
 ```javascript
 'use strict';
@@ -65,7 +125,7 @@ exports.driver = wd.promiseChainRemote({
 exports.BASE_URL = 'http://127.0.0.1:7001/';
 ```
 
-### 编写测试用例
+#### 编写测试用例
 
 API Document: [https://macacajs.github.io/macaca-wd/](https://macacajs.github.io/macaca-wd/)
 
@@ -133,4 +193,3 @@ describe('test/datahub.test.js', () => {
   });
 });
 ```
-

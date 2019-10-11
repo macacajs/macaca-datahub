@@ -1,7 +1,64 @@
 # Use DataHub in testcase
 
-## Experience
+## Using with jest
 
+DataHub integrates seamlessly with jest to meet the habits of eco users such as React.
+
+### Installation
+
+```bash
+$ npm i datahub-nodejs-sdk -D
+```
+
+### Extend your helper
+
+```javascript
+// __tests__/helper.js
+import DataHubSDK from 'datahub-nodejs-sdk';
+
+const datahubClient = new DataHubSDK({});
+
+beforeAll(() => {
+  return datahubClient.switchAllScenes({
+    hub: 'hub-name',
+    scene: 'default',
+  });
+});
+
+import { render } from '@testing-library/react';
+
+export {
+  render,
+  datahubClient,
+};
+```
+
+### Test case sample
+
+```javascript
+import React from 'react';
+
+import { render, datahubClient } from './helper';
+
+import Component from './Component';
+
+describe('__tests__/component.test.js', () => {
+  beforeEach(() => {
+    return datahubClient.switchScene({
+      ...
+    });
+  });
+
+  test('should be work', () => {
+    const props = {
+    };
+    const { getByTestId } = render(<Component {...props} />);
+    expect(getByTestId('loaded')).not.toBeNull();
+  });
+});
+```
+
+## Using with Macaca E2E
 
 Experience how to use DataHub in your test cases with [hackernews-datahub](https://github.com/eggjs/examples/tree/master/hackernews-datahub).
 
@@ -18,9 +75,9 @@ After the test case is finished, you can view the following:
 - Coverage reporter: hackernews-datahub/coverage/index.html
 - Pass rate reporter: hackernews-datahub/reports/index.html
 
-## How to use
+### How to use
 
-### Add configuration file
+#### Add configuration file
 
 macaca-datahub.config.js
 
@@ -45,7 +102,7 @@ mocha.opts
 --timeout 60000
 ```
 
-### Add helper
+#### Add helper
 
 ```javascript
 'use strict';
@@ -66,7 +123,7 @@ exports.driver = wd.promiseChainRemote({
 exports.BASE_URL = 'http://127.0.0.1:7001/';
 ```
 
-### Write testcase
+#### Write testcase
 
 API Document: [https://macacajs.github.io/macaca-wd/](https://macacajs.github.io/macaca-wd/)
 
@@ -134,4 +191,3 @@ describe('test/datahub.test.js', () => {
   });
 });
 ```
-
