@@ -47,7 +47,7 @@ module.exports = appInfo => {
   };
 
   config.dataHubView = {
-    assetsUrl: 'https://unpkg.com/datahub-view@2',
+    assetsUrl: 'https://cdn.jsdelivr.net/npm/datahub-view@2',
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';
