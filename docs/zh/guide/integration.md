@@ -20,7 +20,7 @@ Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中�
 
 ## UmiJS 集成
 
-[UmiJS](//github.com/umijs/umi/tree/master/packages/umi-plugin-datahub) 极快的类 Next.js 的 React 应用框架。
+[UmiJS](//github.com/umijs/umi-plugin-datahub) 企业级 React 应用框架。
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 

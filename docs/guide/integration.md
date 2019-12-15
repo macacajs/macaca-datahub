@@ -18,7 +18,7 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 ## Integration with UmiJS
 
-[UmiJS](//github.com/umijs/umi/tree/master/packages/umi-plugin-datahub) is a blazing-fast next.js-like framework for React apps, and it's friendly to [ant-design](//github.com/ant-design/ant-design) project.
+[UmiJS](//github.com/umijs/umi-plugin-datahub) is a pluggable enterprise-level react application framework for React apps, and it's friendly to [ant-design](//github.com/ant-design/ant-design) project.
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
