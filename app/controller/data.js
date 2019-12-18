@@ -56,7 +56,7 @@ class SceneController extends Controller {
       if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
         ctx[Symbol.for('context#useProxy')] = true;
         const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
-        let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
+        let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}/${pathname}`;
         const parseOrigindUrl = url.parse(ctx.request.url);
         if (parseOrigindUrl.search) {
           proxyUrl += parseOrigindUrl.search;
