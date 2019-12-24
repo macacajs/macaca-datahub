@@ -35,7 +35,6 @@ const datahubConfig = {
   proxy: {
     '^/api': {
       hub: 'sample',
-      rewrite: '^/api',
     },
   },
   showBoard: true,
