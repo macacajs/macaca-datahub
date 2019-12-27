@@ -1,8 +1,7 @@
 'use strict';
 
-const {
-  chalk,
-} = require('xutil');
+const { chalk } = require('xutil');
+const { EOL } = require('os');
 const io = require('socket.io')();
 
 class SocketMQ {
@@ -19,7 +18,7 @@ class SocketMQ {
   }
 
   listen(port) {
-    console.log(`Websocket server start at: ${chalk.cyan(port)}`);
+    console.log(`${EOL}Websocket server start at: ${chalk.cyan(port)}${EOL}`);
     io.listen(port);
   }
 }
