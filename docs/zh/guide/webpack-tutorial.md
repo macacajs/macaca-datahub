@@ -57,6 +57,12 @@ devServer: {
 },
 ```
 
+通过开启 showBoard，可以在右下角看到操作入口，方便在当前页面使用 DataHub。
+
+![](/macaca-datahub/assets/databub-debugger-board-1.png)
+
+![](/macaca-datahub/assets/databub-debugger-board-2.png)
+
 ## 代理配置
 
 - [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware#use-with-webpack-dev-server)

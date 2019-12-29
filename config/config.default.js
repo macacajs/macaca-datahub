@@ -3,6 +3,7 @@
 const _ = require('xutil');
 const fs = require('fs');
 const path = require('path');
+const datahubViewRootPath = require.resolve('datahub-view');
 
 const sequelizeConfig = require('../database/config');
 
@@ -47,7 +48,7 @@ module.exports = appInfo => {
   };
 
   config.dataHubView = {
-    assetsUrl: 'https://cdn.jsdelivr.net/npm/datahub-view@2',
+    assetsUrl: '',
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';
@@ -95,6 +96,11 @@ module.exports = appInfo => {
   }
 
   config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
+
+  config.static = {
+    prefix: '',
+    dir: path.resolve(datahubViewRootPath, '..', '..'),
+  };
 
   return config;
 

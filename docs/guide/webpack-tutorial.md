@@ -57,6 +57,12 @@ devServer: {
 },
 ```
 
+set showBoard=true, then you can use the built-in DataHub in your page.
+
+![](/macaca-datahub/assets/databub-debugger-board-1.png)
+
+![](/macaca-datahub/assets/databub-debugger-board-2.png)
+
 ## How to proxy
 
 - [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middleware#use-with-webpack-dev-server)

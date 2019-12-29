@@ -43,3 +43,12 @@ Pass config file[`.js`|`.json`] to DataHub server.
 $ datahub server -c path/to/config.js --verbose
 ```
 
+## Database
+
+DataHub's data persistence relies on sqllite, and database management software can view the data in DataHub.
+
+```bash
+$ cd $HOME/.macaca-datahub
+```
+
+![](/macaca-datahub/assets/datahub-sqllite.png)

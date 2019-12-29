@@ -1,7 +1,7 @@
 'use strict';
 
 exports.static = {
-  enable: false,
+  enable: true,
 };
 
 exports.dataHubView = {
