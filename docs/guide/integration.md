@@ -22,6 +22,10 @@ More about [egg-datahub](//github.com/macacajs/egg-datahub)
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
+Use Umi UI to manage your UI assets.
+
+![](//umijs.github.io/umi-plugin-datahub/screenshots/1.png)
+
 ## SDKs
 
 DataHub provides SDKs in multiple languages for easy integration with your test code.

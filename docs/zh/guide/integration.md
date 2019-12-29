@@ -24,6 +24,10 @@ Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中�
 
 - [umi-examples](//github.com/umijs/umi-examples/tree/master/eleme-demo)
 
+通过 Umi UI 管理你的 UI 资产
+
+![](//umijs.github.io/umi-plugin-datahub/screenshots/1.png)
+
 ## SDK 接入
 
 DataHub 提供多个语言平台的 SDK，方便与你的主工程或测试工程集成，也方便通过 API 形式操作 DataHub。
