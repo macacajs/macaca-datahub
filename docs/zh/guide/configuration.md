@@ -18,11 +18,6 @@ module.exports = {
   port: 7001,
 
   store: path.resolve(__dirname, 'data'),
-
-  view: {
-    // set assets base url
-    assetsUrl: 'https://npmcdn.com/datahub-view@latest',
-  },
 };
 ```
 
