@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -30,7 +30,7 @@
     "ajv": "^6.4.0",
     "commander": "^2.12.2",
     "cookie": "^0.3.1",
-    "datahub-view": "^2.0.0",
+    "datahub-view": "^2.4.10",
     "egg": "^2.0.0",
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",

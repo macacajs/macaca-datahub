@@ -87,7 +87,7 @@ bootstrap.on('message', e => {
     case 'kill':
       bootstrap.kill();
       break;
-    default :
+    default:
       break;
   }
 });

@@ -1,6 +1,7 @@
 'use strict';
 
 const macacaEcosystem = require('macaca-ecosystem');
+const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const name = 'macaca-datahub';
 
@@ -34,7 +35,8 @@ module.exports = {
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-49226133-2');
-    `]
+    `],
+    ['script', {}, traceFragment],
   ],
   serviceWorker: true,
   themeConfig: {
