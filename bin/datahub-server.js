@@ -58,7 +58,6 @@ if (program.optionstr) {
     await datahub.startServer({});
   } catch (error) {
     console.log(chalk.red(`${EOL}DataHub start unsuccessfully: ${error}${EOL}`));
-    return;
   }
 })();
 

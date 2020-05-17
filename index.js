@@ -5,11 +5,14 @@ const {
   chalk,
   detectPort,
   mkdir,
+  semver,
 } = require('xutil');
 const path = require('path');
 const EOL = require('os').EOL;
 const execa = require('execa');
 const eggServer = require('egg');
+
+const MIN_PROXY_MIDDLEWARE_VERSION = '4.0.0';
 
 const defaultOptions = {
   port: 9200,
@@ -64,6 +67,13 @@ class DataHub {
     const ip = inDocker ? '127.0.0.1' : ipv4;
     const host = chalk.cyan.underline(`http://${ip}:${(serverPort)}`);
     console.log(`${EOL}DataHub server start at: ${host}${EOL}`);
+    try {
+      const proxyMwPkg = require('datahub-proxy-middleware/package');
+      if (semver.lt(proxyMwPkg.version, MIN_PROXY_MIDDLEWARE_VERSION)) {
+        console.log(chalk.red(`${EOL}${EOL}datahub-proxy-middleware's version is too low, please upgrade to version: ${MIN_PROXY_MIDDLEWARE_VERSION}${EOL}${EOL}`));
+      }
+    } catch (_) {
+    }
     return eggServer.startCluster({
       workers: 1,
       port: serverPort,
