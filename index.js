@@ -73,6 +73,7 @@ class DataHub {
         console.log(chalk.red(`${EOL}${EOL}datahub-proxy-middleware's version is too low, please upgrade to version: ${MIN_PROXY_MIDDLEWARE_VERSION}${EOL}${EOL}`));
       }
     } catch (_) {
+      // eslint-disable-line
     }
     return eggServer.startCluster({
       workers: 1,
