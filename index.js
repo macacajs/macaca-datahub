@@ -11,6 +11,7 @@ const path = require('path');
 const EOL = require('os').EOL;
 const execa = require('execa');
 const eggServer = require('egg');
+const homeDir = require('os').homedir();
 
 const MIN_PROXY_MIDDLEWARE_VERSION = '4.0.0';
 
@@ -37,7 +38,7 @@ class DataHub {
         .split(path.sep)
         .slice(1)
         .join('_');
-      const databasePath = path.join(process.env.HOME, '.macaca-datahub', projectDirName);
+      const databasePath = path.join(homeDir, '.macaca-datahub', projectDirName);
       mkdir(databasePath);
       process.env.DATAHUB_DATABASE = path.join(databasePath, 'macaca-datahub.data');
       console.log(chalk.cyan(`DataHub storage: ${process.env.DATAHUB_DATABASE}`));
