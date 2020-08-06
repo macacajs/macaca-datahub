@@ -1,13 +1,14 @@
 sudo: false
 language: node_js
 node_js:
-  - '8'
+  - 12
 cache:
   npm: false
 install:
-  - npm i npminstall && npminstall
+  - npm i
 script:
-  - npm run docs:build
+  - npm i vuepress -g
+  - vuepress build docs
   - $(npm bin)/macaca-ecosystem push --cwd ./docs_dist --branch gh-pages
   - npm run lint
   - npm run cov

@@ -22,8 +22,7 @@
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
     "migration:create": "sequelize migration:create --name",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:dev": "vuepress dev docs"
   },
   "main": "./index.js",
   "dependencies": {
@@ -65,7 +64,7 @@
     "git-contributor": "1",
     "husky": "^1.3.1",
     "macaca-ecosystem": "*",
-    "vuepress": "^0.14.8",
+    "vuepress": "^1.5.2",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
