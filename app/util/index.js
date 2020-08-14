@@ -1,5 +1,6 @@
 'use strict';
 const uuid = require('uuid/v4');
+const CircularJSON = require('macaca-circular-json');
 
 const definitions = {};
 
@@ -29,7 +30,7 @@ const replaceRefForResponse = obj => {
 
 // up object level when find '$ref'
 const repleceRefStringForResponse = obj => {
-  const jsonStr = JSON.stringify(obj);
+  const jsonStr = CircularJSON.stringify(obj);
   const parseList = [];
   const deleteIdxs = [];
   const keyword = '"$ref":{';
@@ -102,7 +103,7 @@ const repleceRefStringForResponse = obj => {
     }
     return v;
   }).join('');
-  return JSON.parse(result);
+  return CircularJSON.parse(result);
 };
 
 const handleParamRequestSchema = (param, paramRequestSchema) => {
@@ -163,7 +164,7 @@ const swaggerConvert = data => {
         properties: {},
       };
       if (responseSchema) {
-        const needHandleRef = JSON.stringify(responseSchema).indexOf('$ref') !== -1;
+        const needHandleRef = CircularJSON.stringify(responseSchema).indexOf('$ref') !== -1;
 
         // handle $ref
         if (needHandleRef) {
