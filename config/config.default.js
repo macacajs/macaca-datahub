@@ -26,6 +26,7 @@ module.exports = appInfo => {
   config.multipart = {
     fileSize: '1gb',
     mode: 'stream',
+    whitelist: () => true,
   };
 
   config.exportData = {
