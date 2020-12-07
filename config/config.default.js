@@ -24,10 +24,8 @@ module.exports = appInfo => {
   ];
 
   config.multipart = {
-    fileSize: '10mb',
-    fileExtensions: [
-      '.yaml',
-    ],
+    fileSize: '1gb',
+    mode: 'stream',
   };
 
   config.exportData = {
@@ -79,8 +77,8 @@ module.exports = appInfo => {
   };
 
   config.bodyParser = {
-    formLimit: '500kb',
-    jsonLimit: '500kb',
+    formLimit: '1gb',
+    jsonLimit: '1gb',
   };
 
   config.sequelize = sequelizeConfig;

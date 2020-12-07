@@ -5,6 +5,7 @@ const {
 } = require('egg');
 const url = require('url');
 const cookie = require('cookie');
+const sendToWormhole = require('stream-wormhole');
 
 const ALLOWED_PROXY_HEADERS = [
   'set-cookie',
@@ -117,6 +118,12 @@ class SceneController extends Controller {
     }
     if (contextConfig.responseHeaders) {
       ctx[Symbol.for('context#rewriteResponseHeaders')] = contextConfig.responseHeaders;
+    }
+
+    if (method === 'POST' && ctx.get('content-type').includes('multipart/form-data')) {
+      const stream = await ctx.getFileStream();
+      // send to wormhole if has binary file
+      await sendToWormhole(stream);
     }
 
     ctx.body = data;
