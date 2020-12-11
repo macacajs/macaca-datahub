@@ -30,6 +30,11 @@ class SceneController extends Controller {
     const cookieKeyPair = cookie.parse(ctx.header.cookie || '');
     const tagName = cookieKeyPair && cookieKeyPair.DATAHUB_CACHE_TAG;
 
+    const allSceneGroupData = await ctx.service.sceneGroup.querySceneGroupByProjectUniqId({
+      projectUniqId,
+    });
+    const sceneGroupList = allSceneGroupData.filter(item => item.enable === true);
+
     const interfaceData = await ctx.service.interface.queryInterfaceByHTTPContext({
       projectUniqId,
       pathname,
@@ -86,13 +91,32 @@ class SceneController extends Controller {
       currentScene,
       uniqId,
       originInterfaceId,
+      pathname: interfacePathname,
+      method: interfaceMethod,
     } = interfaceData;
 
     const interfaceUniqId = (tagName && originInterfaceId) ? originInterfaceId : uniqId;
 
+    let interfaceSceneInSceneGroup = '';
+    for (let i = 0; i < sceneGroupList.length; i++) {
+      const interfaceIndex = sceneGroupList[i].interfaceList.findIndex(item => {
+        return (item.interfacePathname === interfacePathname &&
+          item.interfaceMethod === interfaceMethod);
+      });
+      if (interfaceIndex > -1) {
+        interfaceSceneInSceneGroup = sceneGroupList[i].interfaceList[interfaceIndex].scene;
+        break;
+      }
+    }
+
     let res;
     // try to use custom scene by default
-    if (ctx.query.__datahub_scene) {
+    if (interfaceSceneInSceneGroup) {
+      res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+        interfaceUniqId,
+        sceneName: interfaceSceneInSceneGroup,
+      });
+    } else if (ctx.query.__datahub_scene) {
       res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
         interfaceUniqId,
         sceneName: ctx.query.__datahub_scene,

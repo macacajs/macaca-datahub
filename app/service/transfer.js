@@ -9,11 +9,16 @@ class TransferService extends Service {
   async downloadProject({
     uniqId,
   }) {
+    const sceneGroups = await this.ctx.service.sceneGroup.querySceneGroupByProjectUniqId({
+      projectUniqId: uniqId,
+    });
+
     const interfaces = await this.ctx.service.interface.queryInterfaceByProjectUniqId({
       projectUniqId: uniqId,
     });
 
-    const data = [];
+    const data = {};
+    const interfaceList = [];
 
     for (const interfaceData of interfaces) {
       const scenes = await this.ctx.service.scene.querySceneByInterfaceUniqId({
@@ -24,7 +29,7 @@ class TransferService extends Service {
         interfaceUniqId: interfaceData.uniqId,
       });
 
-      data.push({
+      interfaceList.push({
         pathname: interfaceData.pathname,
         method: interfaceData.method,
         description: interfaceData.description,
@@ -36,6 +41,9 @@ class TransferService extends Service {
         schemas,
       });
     }
+
+    data.sceneGroups = sceneGroups;
+    data.interfaceList = interfaceList;
 
     const info = await this.ctx.service.project.queryProjectByUniqId({ uniqId });
     const fileName = `project_${info.projectName}.json`;
@@ -50,13 +58,20 @@ class TransferService extends Service {
     projectData,
     projectUniqId,
   }) {
+    console.log('projectUniqId=========',projectUniqId)
     await this.ctx.model.Interface.destroy({
       where: {
         projectUniqId,
       },
     });
 
-    for (const interfaceData of projectData) {
+    await this.ctx.model.SceneGroup.destroy({
+      where: {
+        projectUniqId,
+      },
+    });
+
+    for (const interfaceData of projectData.interfaceList) {
       const interfaceStatus = await this.ctx.model.Interface.create({
         projectUniqId,
         pathname: interfaceData.pathname,
@@ -82,6 +97,16 @@ class TransferService extends Service {
           data: schema.data,
         });
       }
+
+      for (const sceneGroup of projectData.sceneGroups) {
+        await this.ctx.model.SceneGroup.create({
+          projectUniqId,
+          sceneGroupName: sceneGroup.sceneGroupName,
+          description: sceneGroup.description,
+          interfaceList: sceneGroup.interfaceList,
+          enable: sceneGroup.enable,
+        });
+      }  
 
     }
 

@@ -32,6 +32,12 @@ module.exports = app => {
   router.get('/api/project/download/:uniqId', controller.api.project.download);
   router.post('/api/project/upload', controller.api.project.upload);
 
+  router.get('/api/sceneGroup', controller.api.sceneGroup.showAll);
+  router.get('/api/sceneGroup/:uniqId', controller.api.sceneGroup.show);
+  router.post('/api/sceneGroup', controller.api.sceneGroup.create);
+  router.put('/api/sceneGroup/:uniqId', controller.api.sceneGroup.update);
+  router.delete('/api/sceneGroup/:uniqId', controller.api.sceneGroup.delete);
+
   router.get('/api/interface', controller.api.interface.showAll);
   router.get('/api/interface/download', controller.api.interface.download);
   router.get('/api/interface/:uniqId', controller.api.interface.show);
