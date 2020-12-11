@@ -96,17 +96,16 @@ class TransferService extends Service {
           data: schema.data,
         });
       }
+    }
 
-      for (const sceneGroup of projectData.sceneGroups) {
-        await this.ctx.model.SceneGroup.create({
-          projectUniqId,
-          sceneGroupName: sceneGroup.sceneGroupName,
-          description: sceneGroup.description,
-          interfaceList: sceneGroup.interfaceList,
-          enable: sceneGroup.enable,
-        });
-      }
-
+    for (const sceneGroup of projectData.sceneGroups) {
+      await this.ctx.model.SceneGroup.create({
+        projectUniqId,
+        sceneGroupName: sceneGroup.sceneGroupName,
+        description: sceneGroup.description,
+        interfaceList: sceneGroup.interfaceList,
+        enable: sceneGroup.enable,
+      });
     }
 
     return {
