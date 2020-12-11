@@ -58,7 +58,7 @@ class TransferService extends Service {
     projectData,
     projectUniqId,
   }) {
-    console.log('projectUniqId=========',projectUniqId)
+    console.log('projectUniqId=========', projectUniqId);
     await this.ctx.model.Interface.destroy({
       where: {
         projectUniqId,
@@ -106,7 +106,7 @@ class TransferService extends Service {
           interfaceList: sceneGroup.interfaceList,
           enable: sceneGroup.enable,
         });
-      }  
+      }
 
     }
 
