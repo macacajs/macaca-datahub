@@ -58,7 +58,6 @@ class TransferService extends Service {
     projectData,
     projectUniqId,
   }) {
-    console.log('projectUniqId=========', projectUniqId);
     await this.ctx.model.Interface.destroy({
       where: {
         projectUniqId,
