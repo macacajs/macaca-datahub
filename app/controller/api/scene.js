@@ -21,10 +21,10 @@ class SceneController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const { interfaceUniqId, sceneName, contextConfig, data } = ctx.request.body;
-    ctx.assertParam({ interfaceUniqId, sceneName, contextConfig, data });
+    const { interfaceUniqId, sceneName, contextConfig, data, format } = ctx.request.body;
+    ctx.assertParam({ interfaceUniqId, sceneName, contextConfig, data, format });
     const res = await ctx.service.scene.createScene({
-      interfaceUniqId, sceneName, contextConfig, data,
+      interfaceUniqId, sceneName, contextConfig, data, format,
     });
     await ctx.service.interface.updateInterface({
       uniqId: interfaceUniqId,

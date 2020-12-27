@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('interfaces', 'multiContextConfig', {
+  up: async (db, Sequelize) => {
+    await db.addColumn('interfaces', 'multiContextConfig', {
       type: Sequelize.JSON,
       defaultValue: {},
     });
   },
 
-  down: async queryInterface => {
-    await queryInterface.removeColumn('interfaces', 'multiContextConfig');
+  down: async db => {
+    await db.removeColumn('interfaces', 'multiContextConfig');
   },
 };

@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (db, Sequelize) => {
     const { STRING, UUID, UUIDV4, JSON, DATE } = Sequelize;
-    await queryInterface.createTable('projects', {
+    await db.createTable('projects', {
       projectName: {
         type: STRING,
         unique: true,
@@ -44,7 +44,7 @@ module.exports = {
       ],
     });
 
-    await queryInterface.createTable('interfaces', {
+    await db.createTable('interfaces', {
       protocol: {
         type: STRING,
         defaultValue: 'http',
@@ -115,7 +115,7 @@ module.exports = {
       ],
     });
 
-    await queryInterface.createTable('scenes', {
+    await db.createTable('scenes', {
       sceneName: {
         type: STRING,
         allowNull: false,
@@ -161,7 +161,7 @@ module.exports = {
       ],
     });
 
-    await queryInterface.createTable('schemas', {
+    await db.createTable('schemas', {
       type: {
         type: STRING,
         allowNull: false,
@@ -208,10 +208,10 @@ module.exports = {
     });
   },
 
-  down: async queryInterface => {
-    await queryInterface.dropTable('interfaces');
-    await queryInterface.dropTable('projects');
-    await queryInterface.dropTable('scenes');
-    await queryInterface.dropTable('schemas');
+  down: async db => {
+    await db.dropTable('interfaces');
+    await db.dropTable('projects');
+    await db.dropTable('scenes');
+    await db.dropTable('schemas');
   },
 };
