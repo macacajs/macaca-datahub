@@ -1,5 +1,11 @@
 # 实验特性
 
+## 动态执行 Node.js 脚本
+
+![](/macaca-datahub/assets/datahub-js-run-zh.png)
+
+![](/macaca-datahub/assets/datahub-js-run-code-zh.png)
+
 ## 打开导入导出功能
 
 ![](/macaca-datahub/assets/1556087017130-d28c06f4-fc93-496a-8eec-ec5e6f1ce83d.png)
