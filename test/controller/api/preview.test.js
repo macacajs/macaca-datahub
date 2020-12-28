@@ -5,7 +5,7 @@ const {
   assert,
 } = require('egg-mock/bootstrap');
 
-describe('test/app/controller/api/preivew.test.js', () => {
+describe('test/controller/api/preivew.test.js', () => {
   let ctx;
 
   beforeEach(async () => {

@@ -52,6 +52,7 @@ describe('test/app/model.define.js', () => {
       data: 'JSON',
       interfaceUniqId: 'STRING',
       uniqId: 'UUID',
+      format: 'STRING',
       createdAt: 'DATE',
       updatedAt: 'DATE',
     };
