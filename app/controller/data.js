@@ -15,7 +15,7 @@ const ALLOWED_PROXY_HEADERS = [
 class SceneController extends Controller {
 
   async index() {
-    const ctx = this.ctx;
+    const { ctx } = this;
     const params = ctx.params;
     const projectName = params.projectName;
     const pathname = params.pathname;
@@ -108,6 +108,7 @@ class SceneController extends Controller {
     const {
       contextConfig,
       data,
+      format,
     } = res;
 
     if (contextConfig.responseDelay) {
@@ -126,7 +127,18 @@ class SceneController extends Controller {
       await sendToWormhole(stream);
     }
 
-    ctx.body = data;
+    if (format === 'json') {
+      ctx.body = data;
+    } else if (format === 'javascript') {
+      const { constructor: AsyncFunction } = Object.getPrototypeOf(async () => {});
+      try {
+        const code = decodeURIComponent(data);
+        const func = AsyncFunction('ctx', code);
+        await func(ctx);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
   fail(message) {

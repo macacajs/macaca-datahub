@@ -5,7 +5,6 @@ const {
 } = require('egg');
 
 class SceneService extends Service {
-
   async querySceneByInterfaceUniqId({
     interfaceUniqId,
   }, options = {}) {
@@ -51,12 +50,14 @@ class SceneService extends Service {
     sceneName,
     contextConfig,
     data,
+    format,
   }) {
     return await this.ctx.model.Scene.create({
       interfaceUniqId,
       sceneName,
       contextConfig,
       data,
+      format,
     });
   }
 

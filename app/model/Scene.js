@@ -33,6 +33,11 @@ module.exports = app => {
       primaryKey: true,
       allowNull: false,
     },
+    format: {
+      type: STRING,
+      defaultValue: 'json',
+      allowNull: false,
+    },
   }, {
     ...app.config.modelCommonOption,
     indexes: [

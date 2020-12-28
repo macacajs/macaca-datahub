@@ -3,13 +3,14 @@
 module.exports = {
   up: async (db, Sequelize) => {
     const { STRING } = Sequelize;
-    await db.addColumn('projects', 'globalProxy', {
+    await db.addColumn('scenes', 'format', {
       type: STRING,
-      defaultValue: '',
-      allowNull: true,
+      defaultValue: 'json',
+      allowNull: false,
     });
   },
+
   down: async db => {
-    await db.removeColumn('projects', 'globalProxy');
+    await db.removeColumn('scenes', 'format');
   },
 };

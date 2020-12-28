@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (db, Sequelize) => {
     const { STRING, UUID, UUIDV4, JSON, DATE } = Sequelize;
 
-    await queryInterface.createTable('shadowInterfaces', {
+    await db.createTable('shadowInterfaces', {
       tagName: {
         type: STRING,
         allowNull: false,
@@ -47,17 +47,17 @@ module.exports = {
         },
       ],
     });
-    await queryInterface.removeColumn('interfaces', 'multiCurrentScene');
-    await queryInterface.removeColumn('interfaces', 'multiContextConfig');
+    await db.removeColumn('interfaces', 'multiCurrentScene');
+    await db.removeColumn('interfaces', 'multiContextConfig');
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('shadowInterfaces');
-    await queryInterface.addColumn('interfaces', 'multiCurrentScene', {
+  down: async (db, Sequelize) => {
+    await db.dropTable('shadowInterfaces');
+    await db.addColumn('interfaces', 'multiCurrentScene', {
       type: Sequelize.JSON,
       defaultValue: {},
     });
-    await queryInterface.addColumn('interfaces', 'multiContextConfig', {
+    await db.addColumn('interfaces', 'multiContextConfig', {
       type: Sequelize.JSON,
       defaultValue: {},
     });

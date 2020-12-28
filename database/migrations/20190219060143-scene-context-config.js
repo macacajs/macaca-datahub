@@ -1,25 +1,25 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (db, Sequelize) => {
     const { JSON } = Sequelize;
-    await queryInterface.addColumn('scenes', 'contextConfig', {
+    await db.addColumn('scenes', 'contextConfig', {
       type: JSON,
       defaultValue: {},
       allowNull: false,
     });
-    await queryInterface.removeColumn('interfaces', 'contextConfig');
-    await queryInterface.removeColumn('shadowInterfaces', 'contextConfig');
+    await db.removeColumn('interfaces', 'contextConfig');
+    await db.removeColumn('shadowInterfaces', 'contextConfig');
   },
 
-  down: async queryInterface => {
-    await queryInterface.removeColumn('scenes', 'contextConfig');
-    await queryInterface.addColumn('interfaces', 'contextConfig', {
+  down: async db => {
+    await db.removeColumn('scenes', 'contextConfig');
+    await db.addColumn('interfaces', 'contextConfig', {
       type: JSON,
       defaultValue: {},
       allowNull: false,
     });
-    await queryInterface.addColumn('shadowInterfaces', 'contextConfig', {
+    await db.addColumn('shadowInterfaces', 'contextConfig', {
       type: JSON,
       defaultValue: {},
       allowNull: false,
