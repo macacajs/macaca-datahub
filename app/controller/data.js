@@ -134,6 +134,19 @@ class SceneController extends Controller {
       try {
         const code = decodeURIComponent(data);
         const func = AsyncFunction('ctx', code);
+        ctx.getSceneData = async sceneName => {
+          if (sceneName === currentScene) return {};
+          const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
+            interfaceUniqId,
+            sceneName: sceneName,
+          });
+          if (!res) return {};
+          const { format, data } = res;
+          if (format === 'json' && data) {
+            return data;
+          }
+          return {};
+        };
         await func(ctx);
       } catch (e) {
         console.log(e);

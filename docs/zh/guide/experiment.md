@@ -6,6 +6,20 @@
 
 ![](/macaca-datahub/assets/datahub-js-run-code-zh.png)
 
+示例：
+
+```javascript
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+sleep(500); // sleep 500 milliseconds
+
+ctx.body = {
+  query: ctx.query, // get querystring
+  body: ctx.request.body, // get post json body
+  inner_scene_data: await ctx.getSceneData('default'), // get other scene data
+};
+```
+
 ## 打开导入导出功能
 
 ![](/macaca-datahub/assets/1556087017130-d28c06f4-fc93-496a-8eec-ec5e6f1ce83d.png)

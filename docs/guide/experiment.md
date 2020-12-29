@@ -6,6 +6,20 @@
 
 ![](/macaca-datahub/assets/datahub-js-run-code-en.png)
 
+e.g.
+
+```javascript
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+sleep(500); // sleep 500 milliseconds
+
+ctx.body = {
+  query: ctx.query, // get querystring
+  body: ctx.request.body, // get post json body
+  inner_scene_data: await ctx.getSceneData('default'), // get other scene data
+};
+```
+
 ## Use Upload and Download
 
 ![](/macaca-datahub/assets/1556086650491-f5126b12-7da6-4cef-9674-cff5f8fee43a.png)
