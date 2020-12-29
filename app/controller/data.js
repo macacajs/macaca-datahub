@@ -6,7 +6,6 @@ const {
 const url = require('url');
 const cookie = require('cookie');
 const sendToWormhole = require('stream-wormhole');
-const Mock = require('mockjs');
 
 const ALLOWED_PROXY_HEADERS = [
   'set-cookie',
@@ -134,7 +133,7 @@ class SceneController extends Controller {
       const { constructor: AsyncFunction } = Object.getPrototypeOf(async () => {});
       try {
         const code = decodeURIComponent(data);
-        const func = AsyncFunction('ctx', '$Mock', code);
+        const func = AsyncFunction('ctx', '$mock', code);
         ctx.getSceneData = async sceneName => {
           if (sceneName === currentScene) return {};
           const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
@@ -148,7 +147,13 @@ class SceneController extends Controller {
           }
           return {};
         };
-        await func(ctx, Mock);
+        const Mock = require('mockjs');
+        const Faker = require('faker');
+        const $mock = {
+          Mock,
+          Faker,
+        };
+        await func(ctx, $mock);
       } catch (e) {
         console.log(e);
       }
