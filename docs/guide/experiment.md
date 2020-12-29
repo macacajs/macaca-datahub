@@ -17,6 +17,11 @@ ctx.body = {
   query: ctx.query, // get querystring
   body: ctx.request.body, // get post json body
   inner_scene_data: await ctx.getSceneData('default'), // get other scene data
+  from_mockjs: $Mock.mock({
+    'list|1-10': [{
+      'id|+1': 1
+    }],
+  }), // http://mockjs.com/examples.html
 };
 ```
 
