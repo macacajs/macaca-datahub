@@ -221,6 +221,7 @@ class InterfaceService extends Service {
       await this.ctx.model.Scene.create({
         interfaceUniqId: uniqId,
         sceneName: scene.sceneName,
+        contextConfig: scene.contextConfig,
         data: scene.data,
       });
     }
