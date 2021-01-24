@@ -212,6 +212,34 @@ class InterfaceService extends Service {
       },
     });
   }
+
+  async duplicateScenes({
+    uniqId,
+    scenes
+  }) {
+    for (const scene of scenes) {
+      await this.ctx.model.Scene.create({
+        interfaceUniqId: uniqId,
+        sceneName: scene.sceneName,
+        data: scene.data,
+      });
+    }
+    return null
+  }
+
+  async duplicateSchemas({
+    uniqId,
+    schemas
+  }) {
+    for (const schema of schemas) {
+      await this.ctx.model.Schema.upsert({
+        interfaceUniqId: uniqId,
+        type: schema.type,
+        data: schema.data,
+      });
+    }
+    return null
+  }
 }
 
 module.exports = InterfaceService;
