@@ -67,21 +67,15 @@ class TransferService extends Service {
         proxyConfig: interfaceData.proxyConfig,
       });
 
-      for (const scene of interfaceData.scenes) {
-        await this.ctx.model.Scene.create({
-          interfaceUniqId: interfaceStatus.uniqId,
-          sceneName: scene.sceneName,
-          data: scene.data,
-        });
-      }
-
-      for (const schema of interfaceData.schemas) {
-        await this.ctx.model.Schema.upsert({
-          interfaceUniqId: interfaceStatus.uniqId,
-          type: schema.type,
-          data: schema.data,
-        });
-      }
+      await this.ctx.service.interface.duplicateScenes({
+        uniqId: interfaceStatus.uniqId,
+        scenes: interfaceData.scenes,
+      });
+  
+      await this.ctx.service.interface.duplicateSchemas({
+        uniqId: interfaceStatus.uniqId,
+        schemas: interfaceData.schemas,
+      });
 
     }
 
@@ -146,21 +140,15 @@ class TransferService extends Service {
       proxyConfig: interfaceData.proxyConfig,
     });
 
-    for (const scene of interfaceData.scenes) {
-      await this.ctx.model.Scene.create({
-        interfaceUniqId: interfaceStatus.uniqId,
-        sceneName: scene.sceneName,
-        data: scene.data,
-      });
-    }
+    await this.ctx.service.interface.duplicateScenes({
+      uniqId: interfaceStatus.uniqId,
+      scenes: interfaceData.scenes,
+    });
 
-    for (const schema of interfaceData.schemas) {
-      await this.ctx.model.Schema.upsert({
-        interfaceUniqId: interfaceStatus.uniqId,
-        type: schema.type,
-        data: schema.data,
-      });
-    }
+    await this.ctx.service.interface.duplicateSchemas({
+      uniqId: interfaceStatus.uniqId,
+      schemas: interfaceData.schemas,
+    });
 
     return {
       success: true,
