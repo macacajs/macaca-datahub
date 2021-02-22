@@ -123,8 +123,13 @@ class SceneController extends Controller {
 
     if (method === 'POST' && ctx.get('content-type').includes('multipart/form-data')) {
       const stream = await ctx.getFileStream();
+      const filename = stream.filename;
       // send to wormhole if has binary file
       await sendToWormhole(stream);
+      // fake stream
+      ctx.stream = {
+        filename,
+      };
     }
 
     if (format === 'json') {
