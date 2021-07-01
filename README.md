@@ -23,19 +23,19 @@
 [![docker pull][docker-size-image]][docker-url]
 [![docker pull][docker-layers-image]][docker-url]
 
-[npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?style=flat-square&logo=npm
+[npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?logo=npm
 [npm-url]: https://npmjs.org/package/macaca-datahub
-[travis-image]: https://img.shields.io/travis/macacajs/macaca-datahub.svg?style=flat-square&logo=travis
-[travis-url]: https://travis-ci.org/macacajs/macaca-datahub
-[codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?style=flat-square&logo=javascript
+[travis-image]: https://travis-ci.com/macacajs/macaca-datahub.svg?branch=master
+[travis-url]: https://travis-ci.com/macacajs/macaca-datahub
+[codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?logo=javascript
 [codecov-url]: https://codecov.io/gh/macacajs/macaca-datahub
-[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square&logo=node.js
+[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?logo=node.js
 [node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?style=flat-square&logo=npm
+[download-image]: https://img.shields.io/npm/dm/macaca-datahub.svg?logo=npm
 [download-url]: https://npmjs.org/package/macaca-datahub
-[docker-pull-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
-[docker-size-image]: https://img.shields.io/microbadger/image-size/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
-[docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?style=flat-square&logo=docker
+[docker-pull-image]: https://img.shields.io/docker/pulls/macacajs/macaca-datahub.svg?logo=docker
+[docker-size-image]: https://img.shields.io/microbadger/image-size/macacajs/macaca-datahub.svg?logo=docker
+[docker-layers-image]: https://img.shields.io/microbadger/layers/macacajs/macaca-datahub.svg?logo=docker
 [docker-url]: https://hub.docker.com/r/macacajs/macaca-datahub/
 
 > Continuous data provider for development, testing, staging and production.
