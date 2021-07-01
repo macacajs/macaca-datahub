@@ -26,7 +26,7 @@
 [npm-image]: https://img.shields.io/npm/v/macaca-datahub.svg?style=flat-square&logo=npm
 [npm-url]: https://npmjs.org/package/macaca-datahub
 [travis-image]: https://img.shields.io/travis/macacajs/macaca-datahub.svg?style=flat-square&logo=travis
-[travis-url]: https://travis-ci.org/macacajs/macaca-datahub
+[travis-url]: https://travis-ci.com/macacajs/macaca-datahub
 [codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?style=flat-square&logo=javascript
 [codecov-url]: https://codecov.io/gh/macacajs/macaca-datahub
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square&logo=node.js
