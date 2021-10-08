@@ -76,10 +76,17 @@ class DataHub {
     } catch (_) {
       // eslint-disable-line
     }
-    return eggServer.startCluster({
-      workers: 1,
-      port: serverPort,
-      baseDir: __dirname,
+    return new Promise((resolve) => {
+      return eggServer.startCluster(
+        {
+          workers: 1,
+          port: serverPort,
+          baseDir: __dirname,
+        },
+        (...args) => {
+          resolve(...args);
+        },
+      );
     });
   }
 }
