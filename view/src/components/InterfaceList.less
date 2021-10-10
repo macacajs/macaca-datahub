@@ -1,0 +1,126 @@
+.interface-list {
+  margin-bottom: 10vh;
+
+  .interface-filter-row {
+    margin: 20px 6px;
+  }
+
+  .add-input {
+    vertical-align: bottom;
+    margin: 10px 0;
+  }
+
+  .ant-btn {
+    width: 100%;
+  }
+
+  ul {
+    padding: 0;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-bottom: 110px;
+
+    .is-compact-view {
+      min-height: 45px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .interface-item-title {
+        padding-left: 10px;
+        margin-bottom: auto;
+        word-break: break-all;
+      }
+
+      .interface-item-method-value {
+        position: absolute;
+        top: 0;
+        left: -5px;
+        width: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #8b14e0;
+      }
+
+      .interface-item-method-name,
+      .interface-item-desc {
+        display: none;
+      }
+
+      .interface-control {
+        position: relative;
+        bottom: auto;
+        right: auto;
+      }
+    }
+
+    li {
+      cursor: pointer;
+      position: relative;
+      padding: 12px 20px 12px 16px;
+      border-top: 1px solid rgba(0, 0, 0, .05);
+      min-height: 100px;
+      overflow: hidden;
+
+      &:last-child {
+        border-bottom: 1px solid rgba(0, 0, 0, .05);
+      }
+
+      &:hover {
+        .interface-control {
+          opacity: 1;
+        }
+      }
+
+      .interface-item {
+        position: relative;
+      }
+
+      .interface-control {
+        position: absolute;
+        bottom: 10px;
+        right: 14px;
+        transition: opacity .5s linear;
+        opacity: 0;
+        margin-right: 5px;
+      }
+    }
+
+    .clicked {
+      .interface-control {
+        opacity: 1;
+      }
+      background: linear-gradient(
+        to right, #1890ff 0, #1890ff 6px, #fff 4px, #fff 100%
+      ) no-repeat;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 14px;
+      word-wrap: break-word;
+      color: #1890ff;
+    }
+
+    p {
+      color: #888;
+      margin: 0;
+      word-wrap: break-word;
+    }
+  }
+
+  &.uncontrolled .interface-item {
+    margin-right: initial;
+  }
+
+  .setting-icon,
+  .delete-icon,
+  .download-icon,
+  .upload-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+}

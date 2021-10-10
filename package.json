@@ -1,16 +1,30 @@
 {
   "name": "macaca-datahub",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
     "macaca-datahub": "./bin/datahub.js"
   },
+  "files": [
+    "app/**/*.js",
+    "bin/**/*.js",
+    "config/**/*.js",
+    "database/**/*.js",
+    "lib/**/*.js",
+    "view//dist/**/*.js",
+    "view//dist/**/*.css",
+    "agent.js",
+    "app.js",
+    "index.js"
+  ],
   "scripts": {
     "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub --workers=1",
     "stop": "eggctl stop --title=egg-server-datahub",
     "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
-    "dev": "npm run db:migrate && egg-bin dev",
+    "dev:server": "npm run db:migrate && egg-bin dev",
+    "dev:view": "cd view && npm run dev",
+    "dev": "concurrently \"npm run dev:view\" \"npm run dev:server\"",
     "debug": "egg-bin debug",
     "test": "npm run lint && npm run db:migrate && npm run test-local",
     "test-local": "egg-bin test",
@@ -29,7 +43,6 @@
     "ajv": "^6.4.0",
     "commander": "^2.12.2",
     "cookie": "^0.3.1",
-    "datahub-view": "3",
     "egg": "^2.0.0",
     "egg-i18n": "^2.0.0",
     "egg-scripts": "^2.4.0",
@@ -59,6 +72,7 @@
   "devDependencies": {
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
+    "concurrently": "4.0.1",
     "deep-diff": "^0.3.8",
     "egg-bin": "^4.3.6",
     "egg-ci": "^1.8.0",

@@ -3,7 +3,6 @@
 const _ = require('xutil');
 const fs = require('fs');
 const path = require('path');
-const datahubViewRootPath = require.resolve('datahub-view');
 
 const sequelizeConfig = require('../database/config');
 
@@ -98,7 +97,7 @@ module.exports = appInfo => {
 
   config.static = {
     prefix: '',
-    dir: path.resolve(datahubViewRootPath, '..', '..'),
+    dir: path.resolve(__dirname, '..', 'view'),
   };
 
   return config;

@@ -5,7 +5,6 @@ const Controller = require('egg').Controller;
 class PageController extends Controller {
   get commonPageConfig() {
     return {
-      assetsUrl: process.env.DATAHUB_VIEW_CONFIG_ASSETSURL || this.config.dataHubView.assetsUrl,
       version: this.app.config.pkg.version,
     };
   }

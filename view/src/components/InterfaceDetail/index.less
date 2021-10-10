@@ -1,0 +1,140 @@
+/* code mirroe override start */
+@import '../../common/style/mixin.less';
+
+.CodeMirror {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 420px;
+}
+
+.CodeMirror-lint-tooltip {
+  z-index: 9999;
+}
+
+.CodeMirror-lint-marker-error, .CodeMirror-lint-message-error {
+  background-image: url(./lint-error.png);
+  background-size: 16px;
+}
+
+.CodeMirror pre.CodeMirror-placeholder {
+  color: #999;
+}
+
+.cm-trailingspace {
+  background-image: url(./whitespace.png);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.schema-modal .CodeMirror {
+  height: 500px;
+}
+
+.context-config-modal .CodeMirror {
+  height: 200px;
+}
+/* code mirroe override end */
+
+.interface-detail {
+  padding: 12px 0;
+  section {
+    > div {
+      margin-top: 10px;
+      overflow: hidden;
+    }
+  }
+}
+
+.interface-detail-navigation {
+  padding-left: 20px;
+}
+
+.interface-detail-content {
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f2f5;
+  > section:not(:first-of-type) {
+    margin-top: 20px;
+  }
+}
+
+
+.context-config-fields > div {
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 10px;
+  margin-right: 8px;
+  line-height: 30px;
+  cursor: default;
+}
+
+.common-list-item.disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f5f5f5;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+.common-list-item {
+  cursor: pointer;
+  position: relative;
+  line-height: 40px;
+  padding: 0 60px 0 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  transition: all .3s;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .common-list-item-name {
+    width: 100%;
+    .ellipsis()
+  }
+  .common-list-item-operation {
+    transition: all .3s;
+    opacity: 0;
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+
+    .anticon {
+      padding: 10px 5px;
+    }
+
+    .anticon-delete {
+      color: #f5222d;
+    }
+  }
+
+  &:hover, &-active {
+    .common-list-item-operation {
+      opacity: 1;
+    }
+  }
+
+  &-active {
+    border-color: #40a9ff;
+    border-left-width: 3px;
+  }
+}
+
+.scene-doc-button {
+  position: absolute;
+  right: 20px;
+}
+
+.context-config-modal  .ant-form-item {
+  margin-bottom: 0;
+}
+
+.res-header-info {
+  span:first-child {
+    color: #262626;
+  }
+
+  span:last-child {
+    color: #595959;
+  }
+}
