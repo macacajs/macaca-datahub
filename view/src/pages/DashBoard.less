@@ -1,0 +1,64 @@
+.dashboard {
+  margin-bottom: 10px;
+  .content {
+    padding: 15px;
+    .anticon {
+      cursor: pointer;
+    }
+    .main-icon {
+      .anticon {
+        transition: color .5s linear;
+        cursor: pointer;
+        font-size: 80px;
+        color: rgba(128, 128, 128, 0.4);
+        &:hover {
+          color: #1890ff;
+        }
+      }
+    }
+    .main-info {
+      color: gray;
+      .anticon {
+        margin-left: 10px;
+        margin-right: 3px;
+      }
+    }
+    .ant-col-24.main-icon {
+      text-align: center;
+    }
+    .sub-info {
+      width: 100%;
+      border-top: 1px solid rgba(171, 171, 171, 0.2);
+      margin-top: 12px;
+      padding-top: 8px;
+      min-height: 30px;
+      &.blank {
+        border-top: 1px solid transparent;
+      }
+      .ant-col-22 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .delete-icon {
+      color: #f5222d;
+      transition: opacity .5s linear;
+      opacity: .3;
+    }
+    .setting-icon {
+      margin-right: 8px;
+      transition: opacity .5s linear;
+      opacity: .3;
+    }
+    &:hover {
+      .setting-icon,
+      .delete-icon {
+        opacity: 1;
+      }
+    }
+  }
+  .dashboard-table {
+    margin: 5px;
+  }
+}

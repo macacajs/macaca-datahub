@@ -1,0 +1,61 @@
+@import './common/style/mixin.less';
+@import './common/style/util.less';
+
+body {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background-color: #f0f2f5;
+}
+
+.ant-layout {
+  &.ant-layout-has-sider {
+    background: #fff;
+  }
+}
+
+.ant-card-body {
+  padding: 15px 24px;
+}
+
+.ant-layout-header {
+  background: #fff;
+}
+
+.ant-card-head-title {
+  padding: 10px 0;
+}
+
+.ant-layout-content {
+  min-height: 90vh;
+}
+
+.main-content {
+  padding-bottom: 32px;
+  margin-top: -20px;
+  padding-top: 20px;
+}
+
+.main-content-mobile {
+  padding-top: 30%;
+  display: none;
+  font-size: 20px;
+  text-align: center;
+  .info {
+    font-size: 18px;
+  }
+  .link {
+    margin-top: 10%;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .footer-side-items,
+  .main-content {
+    display: none !important;
+  }
+
+
+  .main-content-mobile {
+    display: block;
+  }
+}

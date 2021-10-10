@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><!-- title --></title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  </head>
+  <body>
+    <div id="app">
+      <script>
+        if (document.title === '<!-- title -->') {
+          window.pageConfig = {
+            pageId: 'home'
+          };
+        }
+      </script>
+      <!-- data -->
+      <script>
+        window.pageConfig = window.pageConfig || {};
+        var assetsUrl = window.pageConfig.assetsUrl || '//' + location.hostname + ':' + location.port;
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = assetsUrl + '/dist/datahub-view.js';
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = assetsUrl + '/dist/datahub-view.css';
+        var head = document.getElementsByTagName('head')[0];
+        head.appendChild(link);
+        head.appendChild(script);
+      </script>
+    </div>
+  </body>
+</html>

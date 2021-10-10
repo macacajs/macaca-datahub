@@ -1,0 +1,43 @@
+.real-time {
+  height: calc(100vh - 136px);
+  overflow-y: scroll;
+}
+
+.real-time-line {
+  font-size: 10px;
+  cursor: pointer;
+  padding: 10px;
+
+  &:hover {
+    background: #eee;
+  }
+
+  &.clicked {
+    background: #eee;
+  }
+
+  .real-time-date {
+    color: #ccc;
+    float: right;
+  }
+  .real-time-method,
+  .real-time-status {
+    width: 60px;
+    display: inline-block;
+  }
+  .real-time-method {
+    color: #c1c1c1;
+    &.get {
+      color: #70cf1f;
+    }
+    &.post {
+      color: #f0811c;
+    }
+    &.del {
+      color: #e63239;
+    }
+    &.put {
+      color: #3b7bda;
+    }
+  }
+}
