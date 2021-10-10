@@ -28,8 +28,8 @@
 [npm-url]: https://npmjs.org/package/macaca-datahub
 [quality-image]: https://packagequality.com/shield/macaca-datahub.svg
 [quality-url]: https://packagequality.com/#?package=macaca-datahub
-[travis-image]: https://travis-ci.com/macacajs/macaca-datahub.svg?branch=master
-[travis-url]: https://travis-ci.com/macacajs/macaca-datahub
+[travis-image]: https://app.travis-ci.com/macacajs/macaca-datahub.svg?branch=master
+[travis-url]: https://app.travis-ci.com/macacajs/macaca-datahub
 [codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?logo=javascript
 [codecov-url]: https://codecov.io/gh/macacajs/macaca-datahub
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?logo=node.js
