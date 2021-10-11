@@ -3,11 +3,6 @@
 module.exports = (/* appInfo */) => {
   const config = exports = {};
 
-  // for datahub-view
-  config.dataHubView = {
-    // assetsUrl: 'http://localhost:8080',
-  };
-
   // config.exportArchiveBaseDir = require('path').join(__dirname, '..', 'data');
 
   config.logger = {
