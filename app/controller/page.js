@@ -4,8 +4,10 @@ const Controller = require('egg').Controller;
 
 class PageController extends Controller {
   get commonPageConfig() {
+    const { app } = this;
     return {
-      version: this.app.config.pkg.version,
+      env: app.config.env,
+      version: app.config.pkg.version,
     };
   }
 

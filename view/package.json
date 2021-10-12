@@ -30,7 +30,6 @@
     "codemirror": "^5.39.0",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.11",
-    "datahub-proxy-middleware": "4",
     "debug": "^3.1.0",
     "deepmerge": "^4.0.0",
     "eslint": "^4.5.0",
@@ -43,7 +42,6 @@
     "less-loader": "^4.1.0",
     "lodash": "^4.17.4",
     "macaca-cli": "2",
-    "macaca-datahub": "3",
     "macaca-ecosystem": "1",
     "macaca-electron": "11",
     "macaca-wd": "3",
@@ -76,14 +74,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development",
     "dev:test": "cross-env NODE_ENV=test webpack-dev-server --mode development",
-    "build": "cross-env NODE_ENV=production webpack -p --mode production",
-    "build:report": "npm run build --report",
-    "lint": "eslint . --ext js,jsx --fix && stylelint --fix src/**/*.less -s less",
-    "prepublishOnly": "npm run build",
-    "serve": "npm run dev:test &",
-    "test": "macaca run -d ./test",
-    "ci": "npm run lint && npm run serve && npm run test",
-    "contributor": "git-contributor"
+    "build": "cross-env NODE_ENV=production webpack -p --mode production"
   },
   "license": "MIT"
 }
