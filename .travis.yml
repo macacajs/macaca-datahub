@@ -6,6 +6,7 @@ cache:
   npm: false
 install:
   - npm i
+  - cd view && npm i
 script:
   - npm i vuepress -g
   - vuepress build docs
