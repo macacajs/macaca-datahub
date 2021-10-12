@@ -1,6 +1,6 @@
 {
   "name": "datahub-view",
-  "version": "x.x.x",
+  "version": "0.1.0",
   "description": "view layer for DataHub",
   "pravite": true,
   "links": {
