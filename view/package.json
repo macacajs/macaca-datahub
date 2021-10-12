@@ -74,7 +74,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development",
     "dev:test": "cross-env NODE_ENV=test webpack-dev-server --mode development",
-    "build": "cross-env NODE_ENV=production webpack -p --mode production"
+    "build": "cross-env NODE_ENV=production webpack -p --mode production",
+    "lint": "eslint . --ext js,jsx --fix && stylelint --fix src/**/*.less -s less"
   },
   "license": "MIT"
 }
