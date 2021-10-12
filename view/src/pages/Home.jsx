@@ -75,7 +75,7 @@ function Home (props) {
                   </Button>
                 </a>
                 <p className="versioning">
-                    server: v{ window.pageConfig.version }, view: v{ pkg.version }
+                  v{ window.pageConfig.version }
                 </p>
               </Col>
             </Row>
