@@ -8,24 +8,6 @@ const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const pkg = require('./package');
 
-const DataHub = require('macaca-datahub');
-const datahubProxyMiddle = require('datahub-proxy-middleware');
-
-const datahubConfig = {
-  port: 5678,
-  mode: 'local',
-  store: path.join(__dirname, 'data'),
-  proxy: {
-    '^/datahubview': {
-      hub: 'datahubview',
-    },
-  },
-  view: {
-    // use local resource for test
-    assetsUrl: 'http://localhost:8080',
-  },
-};
-
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 
@@ -151,12 +133,6 @@ module.exports = (env, argv) => {
       hot: true,
       host: '0.0.0.0',
       stats: 'errors-only',
-      before: app => {
-        datahubProxyMiddle(app)(datahubConfig);
-      },
-      after: () => {
-        new DataHub().startServer(datahubConfig);
-      },
     },
   };
 

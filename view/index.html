@@ -17,7 +17,9 @@
       <!-- data -->
       <script>
         window.pageConfig = window.pageConfig || {};
-        var assetsUrl = window.pageConfig.assetsUrl || '//' + location.hostname + ':' + location.port;
+        var assetsUrl = window.pageConfig.env === 'local'
+          ? 'http://localhost:8080'
+          : '//' + location.hostname + ':' + location.port;
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = assetsUrl + '/dist/datahub-view.js';

@@ -6,7 +6,7 @@ const path = require('path');
 const template = path.join(__dirname, '..', 'index.html');
 
 module.exports = (context, pageConfig = {}) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const content = fs
       .readFileSync(template, 'utf8')
       .replace(/<!--\s*data\s*-->/, () => {
