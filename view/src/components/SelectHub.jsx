@@ -6,9 +6,10 @@ import React, {
 
 import {
   Menu,
-  Icon,
   Dropdown,
 } from 'antd';
+
+import { DownOutlined } from '@ant-design/icons';
 
 export default class SelectHub extends PureComponent {
   render () {
@@ -39,7 +40,7 @@ export default class SelectHub extends PureComponent {
       <span style={{ marginLeft: '20px' }}>
         <Dropdown overlay={menu}>
           <span data-accessbilityid="dropdonw-list">
-            { projectName } <Icon type="down" />
+            { projectName } <DownOutlined />
           </span>
         </Dropdown>
       </span>

@@ -1,6 +1,4 @@
-import React, {
-  Component,
-} from 'react';
+import React from 'react';
 
 import {
   Form,
@@ -13,24 +11,18 @@ import {
   injectIntl,
 } from 'react-intl';
 
-const FormItem = Form.Item;
+function ProxyFormComponent(props) {
+  const {
+    visible,
+    onCancel,
+    onOk,
+    confirmLoading,
+  } = props;
+  const formatMessage = id => props.intl.formatMessage({ id });
+  const [form] = Form.useForm();
 
-class ProxyFormComponent extends Component {
-  formatMessage = id => this.props.intl.formatMessage({ id });
-
-  render () {
-    const {
-      visible,
-      onCancel,
-      onOk,
-      form,
-      confirmLoading,
-    } = this.props;
-    const {
-      getFieldDecorator,
-    } = form;
-    const formatMessage = this.formatMessage;
-    return <Modal
+  return (
+    <Modal
       visible={visible}
       destroyOnClose={true}
       title={formatMessage('proxyConfig.addProxyUrl')}
@@ -39,39 +31,41 @@ class ProxyFormComponent extends Component {
       destroyOnClose={true}
       onCancel={onCancel}
       onOk={() => {
-        form.validateFields((err, values) => {
-          if (err) {
-            message.warn(formatMessage('common.input.invalid'));
-            return;
-          }
+        form.validateFields().then(values => {
           const { proxyUrl } = values;
           if (!/^https?:\/\/.+$/.test(proxyUrl)) {
             message.warn(formatMessage('proxyConfig.invalidProxyUrl'));
             return;
           }
           onOk(values);
+        }).catch(errorInfo => {
+            message.warn(formatMessage('common.input.invalid'));
+            return;
         });
       }}
       confirmLoading={confirmLoading}
     >
-      <Form layout="vertical">
-        <FormItem label="Url">
-          {getFieldDecorator('proxyUrl', {
-            rules: [
-              {
-                required: true,
-              },
-              { max: 128 },
-            ],
-          })(
-            <Input
-              placeholder="http://example.com/api/user"
-            />
-          )}
-        </FormItem>
+      <Form
+        form={form}
+        layout="vertical"
+      >
+        <Form.Item
+          name="proxyUrl"
+          label="Url"
+          rules={[
+            {
+              required: true,
+              max: 128,
+            },
+          ]}
+        >
+          <Input
+            placeholder="http://example.com/api/user"
+          />
+        </Form.Item>
       </Form>
-    </Modal>;
-  }
+    </Modal>
+  );
 }
 
-export default Form.create()(injectIntl(ProxyFormComponent));
+export default injectIntl(ProxyFormComponent);

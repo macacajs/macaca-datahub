@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Icon, Input, Button,
+  Input, Button,
   Tooltip, Popconfirm,
 } from 'antd';
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import {
   injectIntl,
@@ -132,7 +137,7 @@ class InterfaceSceneList extends Component {
                 {
                   !disabled && <div className="common-list-item-operation">
                     <Tooltip title={formatMessage('sceneList.updateScene')}>
-                      <Icon type="edit"
+                      <EditOutlined
                         onClick={() => this.showUpdateForm(value)}
                       />
                     </Tooltip>
@@ -144,7 +149,7 @@ class InterfaceSceneList extends Component {
                         okText={formatMessage('common.confirm')}
                         cancelText={formatMessage('common.cancel')}
                       >
-                        <Icon type="delete"/>
+                        <DeleteOutlined />
                       </Popconfirm>
                     </Tooltip>
                   </div>
@@ -222,7 +227,7 @@ class InterfaceSceneList extends Component {
               data-accessbilityid="project-api-scene-add-btn"
               onClick={this.showSceneForm}
             >
-              <Icon type="plus-circle-o" />
+              <PlusCircleOutlined />
               {formatMessage('sceneList.createScene')}
             </Button>
           </Col>

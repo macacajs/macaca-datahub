@@ -7,7 +7,6 @@ import React, {
 import {
   Row,
   Col,
-  Icon,
   Input,
   Upload,
   Button,
@@ -15,6 +14,13 @@ import {
   Tooltip,
   Popconfirm,
 } from 'antd';
+
+import {
+  DeleteOutlined,
+  SettingOutlined,
+  UploadOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
 
 import {
   injectIntl,
@@ -174,17 +180,15 @@ class InterfaceList extends Component {
           {!unControlled && <div className="interface-control" style={{fontSize: '16px'}}>
             {this.props.experimentConfig.isOpenDownloadAndUpload ? <span>
               <Upload name={ value.uniqId } {...this.uploadProps()}>
-                <Icon className="upload-icon" type="upload" />
+                <UploadOutlined className="upload-icon" />
               </Upload>
-              <Icon
-                type="download"
+              <DownloadOutlined
                 className="download-icon"
                 onClick={() => this.downloadInterface(value)}
               />
             </span> : null}
             <Tooltip title={formatMessage('interfaceList.updateInterface')}>
-              <Icon
-                type="setting"
+              <SettingOutlined
                 className="setting-icon"
                 onClick={() => this.showUpdateForm(value)}
               />
@@ -195,7 +199,7 @@ class InterfaceList extends Component {
               okText={formatMessage('common.confirm')}
               cancelText={formatMessage('common.cancel')}
             >
-              <Icon style={{color: '#f5222d'}} className="delete-icon" type="delete" />
+              <DeleteOutlined style={{color: '#f5222d'}} className="delete-icon" />
             </Popconfirm>
           </div>}
         </li>

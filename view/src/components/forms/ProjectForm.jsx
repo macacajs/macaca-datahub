@@ -13,21 +13,18 @@ import {
 
 const FormItem = Form.Item;
 
-export default Form.create()(injectIntl(ProjectFormComponent));
+export default injectIntl(ProjectFormComponent);
 
 function ProjectFormComponent (props) {
   const {
     visible,
     onCancel,
     onOk,
-    form,
     loading,
     stageData,
   } = props;
-  const {
-    getFieldDecorator,
-  } = form;
   const formatMessage = id => props.intl.formatMessage({ id });
+  const [form] = Form.useForm();
   return <Modal
     visible={visible}
     destroyOnClose={true}
@@ -36,60 +33,64 @@ function ProjectFormComponent (props) {
     cancelText={formatMessage('common.cancel')}
     onCancel={onCancel}
     onOk={() => {
-      form.validateFields((err, values) => {
-        if (err) {
+      form.validateFields().then(values => {
+        onOk(values);
+      }).catch(errorInfo => {
           message.warn(formatMessage('common.input.invalid'));
           return;
-        }
-        onOk(values);
       });
     }}
     confirmLoading={loading}
   >
-    <Form layout="vertical">
-      <FormItem label={formatMessage('project.name')}>
-        {getFieldDecorator('projectName', {
-          initialValue: stageData && stageData.projectName,
-          rules: [
-            {
-              required: true,
-              message: formatMessage('project.name.invalid'),
-              pattern: /^[a-z0-9_-]+$/,
-            },
-            { max: 32 },
-          ],
-        })(
-          <Input />
-        )}
+    <Form
+      layout="vertical"
+      form={form}
+      initialValues={{
+        projectName: stageData && stageData.projectName,
+        description: stageData && stageData.description,
+        globalProxy: stageData && stageData.globalProxy,
+      }}
+    >
+      <FormItem
+        name="projectName"
+        label={formatMessage('project.name')}
+        rules={[
+          {
+            required: true,
+            message: formatMessage('project.name.invalid'),
+            pattern: /^[a-z0-9_-]+$/,
+          },
+          { max: 32 },
+        ]}
+      >
+        <Input />
       </FormItem>
-      <FormItem label={formatMessage('project.description')}>
-        {getFieldDecorator('description', {
-          initialValue: stageData && stageData.description,
-          rules: [
-            {
-              required: true,
-              pattern: /^[^\s].*$/,
-              message: formatMessage('project.description.invalid'),
-            },
-            { max: 32 },
-          ],
-        })(
-          <Input />
-        )}
+      <FormItem
+        name="description"
+        label={formatMessage('project.description')}
+        rules={[
+          {
+            required: true,
+            pattern: /^[^\s].*$/,
+            message: formatMessage('project.description.invalid'),
+          },
+          { max: 32 },
+        ]}
+      >
+        <Input />
       </FormItem>
-      <FormItem label={formatMessage('project.globalProxy')}>
-        {getFieldDecorator('globalProxy', {
-          initialValue: stageData && stageData.globalProxy,
-          rules: [
-            {
-              required: false,
-              pattern: /^https?:\/\/.+$/,
-              message: formatMessage('project.globalProxy.invalid'),
-            },
-          ],
-        })(
-          <Input />
-        )}
+      <FormItem
+        name="globalProxy"
+        label={formatMessage('project.globalProxy')}
+        rules={[
+          {
+            required: false,
+            pattern: /^https?:\/\/.+$/,
+            message: formatMessage('project.globalProxy.invalid'),
+          },
+        ]}
+      >
+        <Input />
       </FormItem>
     </Form>
   </Modal>;

@@ -33,9 +33,6 @@ function SaveSceneFormComponent (props) {
     form,
     loading,
   } = props;
-  const {
-    getFieldDecorator,
-  } = form;
   const formatMessage = id => props.intl.formatMessage({ id });
   let defaultInterface = '';
   const projectName = window.context && window.context.projectName;
@@ -66,44 +63,46 @@ function SaveSceneFormComponent (props) {
     }}
     confirmLoading={loading}
   >
-    <Form layout="vertical">
+    <Form
+      layout="vertical"
+      initialValues={{
+        interfaceUniqId: defaultInterface,
+      }}
+    >
       <FormItem
+        name="interfaceUniqId"
         label={formatMessage('interfaceDetail.selectInterface')}
       >
-        {getFieldDecorator('interfaceUniqId', {
-          initialValue: defaultInterface,
-        })(
-          <Select>
-            {
-              props.interfaceList.map((interfaceData, index) => {
-                return <Option
-                  key={index}
-                  value={interfaceData.uniqId}
-                >{`${interfaceData.pathname} (${interfaceData.method})`}</Option>;
-              })
-            }
-          </Select>
-        )}
+        <Select>
+          {
+            props.interfaceList.map((interfaceData, index) => {
+              return <Option
+                key={index}
+                value={interfaceData.uniqId}
+              >{`${interfaceData.pathname} (${interfaceData.method})`}</Option>;
+            })
+          }
+        </Select>
       </FormItem>
-      <FormItem label={formatMessage('sceneList.sceneName')}>
-        {getFieldDecorator('sceneName', {
-          rules: [
-            {
-              required: true,
-              message: formatMessage('sceneList.invalidSceneName'),
-              pattern: /^[a-z0-9_-]+$/,
-            },
-            { max: 32 },
-          ],
-        })(
-          <Input />
-        )}
+      <FormItem
+        name="sceneName"
+        label={formatMessage('sceneList.sceneName')}
+        rules={[
+          {
+            required: true,
+            message: formatMessage('sceneList.invalidSceneName'),
+            pattern: /^[a-z0-9_-]+$/,
+          },
+          { max: 32 },
+        ]}
+      >
+        <Input />
       </FormItem>
     </Form>
   </Modal>;
 };
 
-const SaveSceneForm = Form.create()(injectIntl(SaveSceneFormComponent));
+const SaveSceneForm = injectIntl(SaveSceneFormComponent);
 class RealTimeDetail extends React.Component {
   state = {
     sceneFormVisible: false,

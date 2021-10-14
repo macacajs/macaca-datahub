@@ -3,13 +3,14 @@ import React, {
 } from 'react';
 
 import {
-  Icon,
   Switch,
   Button,
   Popover,
   Tooltip,
   Popconfirm,
 } from 'antd';
+
+import { DeleteOutlined } from '@ant-design/icons';
 
 import {
   Row,
@@ -95,7 +96,7 @@ class InterfaceProxyConfig extends Component {
                     okText={this.formatMessage('common.confirm')}
                     cancelText={this.formatMessage('common.cancel')}
                   >
-                    <Icon type="delete"/>
+                    <DeleteOutlined />
                   </Popconfirm>
                 </Tooltip>
               </div>
