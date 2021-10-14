@@ -83,7 +83,6 @@ function SceneFormComponent(props) {
       onCancel={onCancel}
       onOk={() => {
         form.validateFields().then(values => {
-          console.log(values);
           const { data, responseHeaders, error } = validateCode(stageData.format);
           if (error) {
             message.warn(formatMessage('sceneList.invalidSceneData'));
@@ -96,7 +95,6 @@ function SceneFormComponent(props) {
             responseHeaders,
           };
           values.format = stageData.format || 'json';
-          console.log(values);
           onOk(values);
         }).catch(errorInfo => {
             message.warn(formatMessage('common.input.invalid'));
