@@ -225,10 +225,10 @@ class DashBoard extends Component {
                   >
                     <Row type="flex">
                       <Col span={24} className="main-icon">
-                      <FolderAddOutlined
-                         data-accessbilityid="dashboard-folder-add"
-                         onClick={this.showCreateForm}
-                      />
+                        <FolderAddOutlined
+                          data-accessbilityid="dashboard-folder-add"
+                          onClick={this.showCreateForm}
+                        />
                       </Col>
                       <Row type="flex" className="sub-info blank">
                       </Row>

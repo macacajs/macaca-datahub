@@ -23,7 +23,7 @@ const getCode = stageData => {
   return JSON.stringify(stageData.data, null, 2);
 };
 
-function SceneFormComponent(props) {
+function SceneFormComponent (props) {
   const {
     visible,
     onCancel,
@@ -67,7 +67,7 @@ function SceneFormComponent(props) {
       }
     }
     return { data, responseHeaders, error };
-  }
+  };
 
   return (
     <Modal
@@ -97,8 +97,8 @@ function SceneFormComponent(props) {
           values.format = stageData.format || 'json';
           onOk(values);
         }).catch(errorInfo => {
-            message.warn(formatMessage('common.input.invalid'));
-            return;
+          message.warn(formatMessage('common.input.invalid'));
+          return;
         });
       }}
       confirmLoading={confirmLoading}

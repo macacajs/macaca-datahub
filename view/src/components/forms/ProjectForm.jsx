@@ -36,8 +36,8 @@ function ProjectFormComponent (props) {
       form.validateFields().then(values => {
         onOk(values);
       }).catch(errorInfo => {
-          message.warn(formatMessage('common.input.invalid'));
-          return;
+        message.warn(formatMessage('common.input.invalid'));
+        return;
       });
     }}
     confirmLoading={loading}

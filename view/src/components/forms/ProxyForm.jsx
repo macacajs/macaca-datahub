@@ -11,7 +11,7 @@ import {
   injectIntl,
 } from 'react-intl';
 
-function ProxyFormComponent(props) {
+function ProxyFormComponent (props) {
   const {
     visible,
     onCancel,
@@ -39,8 +39,8 @@ function ProxyFormComponent(props) {
           }
           onOk(values);
         }).catch(errorInfo => {
-            message.warn(formatMessage('common.input.invalid'));
-            return;
+          message.warn(formatMessage('common.input.invalid'));
+          return;
         });
       }}
       confirmLoading={confirmLoading}
