@@ -7,13 +7,23 @@ import React, {
 import {
   Row,
   Col,
-  Icon,
   Card,
   Upload,
   message,
   Tooltip,
   Popconfirm,
 } from 'antd';
+
+import {
+  FolderAddOutlined,
+  InboxOutlined,
+  FileOutlined,
+  HddOutlined,
+  DeleteOutlined,
+  SettingOutlined,
+  UploadOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
 
 import {
   injectIntl,
@@ -155,33 +165,30 @@ class DashBoard extends Component {
             <Row type="flex">
               <Col span={24} className="main-icon">
                 <a href={`/project/${item.projectName}`}>
-                  <Icon type="inbox" />
+                  <InboxOutlined />
                 </a>
               </Col>
               <Row type="flex" className="sub-info">
                 <Col span={15} key={item.projectName}>
                   {item.projectName}
                   <span className="main-info">
-                    <Icon type="file" />{item.capacity && item.capacity.count}
-                    <Icon type="hdd" />{item.capacity && item.capacity.size}
+                    <FileOutlined />{item.capacity && item.capacity.count}
+                    <HddOutlined />{item.capacity && item.capacity.size}
                   </span>
                 </Col>
                 <Col span={9} style={{ textAlign: 'right' }}>
                   <Tooltip title={formatMessage('project.update')}>
-                    <Icon
+                    <SettingOutlined
                       className="setting-icon"
-                      type="setting"
                       onClick={() => this.updateProject(item)}
                     />
                   </Tooltip>
                   {this.props.experimentConfig.isOpenDownloadAndUpload ? <span>
                     <Upload name={ item.uniqId } {...this.uploadProps()}>
-                      <Icon className="setting-icon" type="upload" />
+                      <UploadOutlined className="setting-icon" />
                     </Upload>
-                    <Icon
-                      type="download"
+                    <DownloadOutlined
                       className="setting-icon"
-                      theme="outlined"
                       onClick={() => this.downloadProject(item)}
                     />
                   </span> : null}
@@ -191,7 +198,7 @@ class DashBoard extends Component {
                     okText={formatMessage('common.confirm')}
                     cancelText={formatMessage('common.cancel')}
                   >
-                    <Icon className="delete-icon" type="delete" />
+                    <DeleteOutlined className="delete-icon" />
                   </Popconfirm>
                 </Col>
               </Row>
@@ -218,11 +225,10 @@ class DashBoard extends Component {
                   >
                     <Row type="flex">
                       <Col span={24} className="main-icon">
-                        <Icon
-                          data-accessbilityid="dashboard-folder-add"
-                          onClick={this.showCreateForm}
-                          type="folder-add"
-                        />
+                      <FolderAddOutlined
+                         data-accessbilityid="dashboard-folder-add"
+                         onClick={this.showCreateForm}
+                      />
                       </Col>
                       <Row type="flex" className="sub-info blank">
                       </Row>

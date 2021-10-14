@@ -5,8 +5,20 @@ import {
   Row,
   Col,
   Button,
-  Icon,
 } from 'antd';
+
+import {
+  RocketOutlined, GithubOutlined,
+  CloudOutlined, TeamOutlined,
+  CameraOutlined, SyncOutlined,
+  EyeOutlined, ClockCircleOutlined,
+  BookOutlined, ForkOutlined,
+  ToolOutlined, DatabaseOutlined,
+  SaveOutlined, DisconnectOutlined,
+  ApiOutlined, CodeOutlined,
+  GlobalOutlined, DownloadOutlined,
+  ExperimentOutlined,
+} from '@ant-design/icons';
 
 import {
   injectIntl,
@@ -19,24 +31,24 @@ const pkg = require('../../package.json');
 function Home (props) {
   const formatMessage = props.intl.formatMessage;
   const features = [
-    { icon: 'cloud-o', text: 'home.icon.cloud' },
-    { icon: 'team', text: 'home.icon.team' },
-    { icon: 'camera-o', text: 'home.icon.snapshot' },
-    { icon: 'sync', text: 'home.icon.dataflow' },
-    { icon: 'rocket', text: 'home.icon.quick' },
-    { icon: 'eye-o', text: 'home.icon.scene' },
-    { icon: 'clock-circle-o', text: 'home.icon.continues' },
-    { icon: 'book', text: 'home.icon.document' },
-    { icon: 'fork', text: 'home.icon.versioning' },
-    { icon: 'tool', text: 'home.icon.setting' },
-    { icon: 'database', text: 'home.icon.database' },
-    { icon: 'save', text: 'home.icon.save' },
-    { icon: 'disconnect', text: 'home.icon.decentration' },
-    { icon: 'api', text: 'home.icon.api' },
-    { icon: 'code-o', text: 'home.icon.cli' },
-    { icon: 'global', text: 'home.icon.i18n' },
-    { icon: 'github', text: 'home.icon.github' },
-    { icon: 'download', text: 'home.icon.download', experiment: true },
+    { text: 'home.icon.cloud', icon: <CloudOutlined /> },
+    { text: 'home.icon.team', icon: <TeamOutlined /> },
+    { text: 'home.icon.snapshot', icon: <CameraOutlined /> },
+    { text: 'home.icon.dataflow', icon: <SyncOutlined /> },
+    { text: 'home.icon.quick', icon: <RocketOutlined /> },
+    { text: 'home.icon.scene', icon: <EyeOutlined /> },
+    { text: 'home.icon.continues', icon: <ClockCircleOutlined /> },
+    { text: 'home.icon.document', icon: <BookOutlined /> },
+    { text: 'home.icon.versioning', icon: <ForkOutlined /> },
+    { text: 'home.icon.setting', icon: <ToolOutlined /> },
+    { text: 'home.icon.database', icon: <DatabaseOutlined /> },
+    { text: 'home.icon.save', icon: <SaveOutlined /> },
+    { text: 'home.icon.decentration', icon: <DisconnectOutlined /> },
+    { text: 'home.icon.api', icon: <ApiOutlined /> },
+    { text: 'home.icon.cli', icon: <CodeOutlined /> },
+    { text: 'home.icon.i18n', icon: <GlobalOutlined /> },
+    { text: 'home.icon.github', icon: <GithubOutlined /> },
+    { text: 'home.icon.download', icon: <DownloadOutlined />, experiment: true },
   ];
   return (
     <Row type="flex" justify="center">
@@ -55,7 +67,7 @@ function Home (props) {
                   <Button
                     data-accessbilityid="go-btn-dashboard"
                     type="primary"
-                    icon="rocket"
+                    icon={<RocketOutlined />}
                     size="large"
                     ghost
                   >{formatMessage({id: 'home.go'})}
@@ -68,7 +80,7 @@ function Home (props) {
                 >
                   <Button
                     type="primary"
-                    icon="github"
+                    icon={<GithubOutlined />}
                     size="large"
                     ghost
                   >GITHUB
@@ -85,12 +97,12 @@ function Home (props) {
           <Col span={18}>
             <Row className="desc-icons">
               {
-                features.map(({ icon, text, experiment = false }) => {
+                features.map(({ text, icon, experiment = false }) => {
                   return (
-                    <Col key={`${icon}-${text}`} span={4}>
-                      <Icon type={icon} />
+                    <Col key={text} span={4}>
+                      {icon}
                       <div className="text">{formatMessage({ id: text })}
-                        { experiment && <Icon type="experiment" style={{
+                        { experiment && <ExperimentOutlined style={{
                           fontSize: '12px',
                           transform: 'scale(.6)',
                         }}/> }

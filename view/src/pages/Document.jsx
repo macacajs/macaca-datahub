@@ -8,10 +8,10 @@ import {
 
 import {
   Tabs,
-  Icon,
   Button,
   Layout,
 } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
 
 import {
   Controlled as CodeMirror,
@@ -62,7 +62,7 @@ class Document extends React.Component {
     currentScene: '',
   }
 
-  // 根据 hash 值初始化数据
+  // Initialize data based on hash value
   getIndexByHash (res) {
     const params = queryParse(location.hash);
 
@@ -178,7 +178,7 @@ class Document extends React.Component {
             className="scene-doc-button"
             onClick={this.toProjectPage}
           >
-            <Icon type="setting"/>
+            <SettingOutlined />
             <FormattedMessage id="topNav.projectConfig"/>
           </Button>
           <h2>{

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {
-  Icon,
   Menu,
   Dropdown,
 } from 'antd';
+import { GlobalOutlined } from '@ant-design/icons';
 
 import './footer.less';
 import Experiment from '../Experiment';
@@ -49,7 +49,7 @@ export default ({
       <ul className="footer-side-items">
         <li>
           <Dropdown overlay={menu} placement="topCenter">
-            <a rel="noopener noreferrer">{ <Icon type="global"/> } { currentLocale }</a>
+            <a rel="noopener noreferrer">{ <GlobalOutlined /> } { currentLocale }</a>
           </Dropdown>
         </li>
         { showSideItems &&

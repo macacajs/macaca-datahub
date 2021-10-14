@@ -12,23 +12,19 @@ import {
   injectIntl,
 } from 'react-intl';
 
-const Option = Select.Option;
-const FormItem = Form.Item;
+const { Option } = Select;
 
-export default Form.create()(injectIntl(InterfaceFormComponent));
+export default injectIntl(InterfaceFormComponent);
 
 function InterfaceFormComponent (props) {
   const {
     visible,
     onCancel,
     onOk,
-    form,
     confirmLoading,
     stageData,
   } = props;
-  const {
-    getFieldDecorator,
-  } = form;
+  const [form] = Form.useForm();
   const formatMessage = id => props.intl.formatMessage({ id });
   return <Modal
     visible={visible}
@@ -38,62 +34,65 @@ function InterfaceFormComponent (props) {
     cancelText={formatMessage('common.cancel')}
     onCancel={onCancel}
     onOk={() => {
-      form.validateFields((err, values) => {
-        if (err) {
+      form.validateFields().then(values => {
+        onOk(values);
+      }).catch(errorInfo => {
           message.warn(formatMessage('common.input.invalid'));
           return;
-        }
-        onOk(values);
       });
     }}
     confirmLoading={confirmLoading}
   >
-    <Form layout="vertical">
-      <FormItem label={formatMessage('interfaceList.interfacePathnameInput')}>
-        {getFieldDecorator('pathname', {
-          initialValue: stageData && stageData.pathname,
-          rules: [
-            {
-              required: true,
-              message: formatMessage('interfaceList.invalidPathname'),
-              pattern: /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/,
-            },
-            { max: 128 },
-          ],
-        })(
-          <Input
-            placeholder="path/name"
-          />
-        )}
-      </FormItem>
-      <FormItem label={formatMessage('interfaceList.interfaceDescription')}>
-        {getFieldDecorator('description', {
-          initialValue: stageData && stageData.description,
-          rules: [
-            {
-              required: true,
-              pattern: /^[^\s].*$/,
-              message: formatMessage('interfaceList.invalidDescription'),
-            },
-            { max: 128 },
-          ],
-        })(
-          <Input />
-        )}
-      </FormItem>
-      <FormItem label={formatMessage('interfaceList.interfaceMethod')}>
-        {getFieldDecorator('method', {
-          initialValue: stageData && stageData.method || 'ALL',
-        })(
-          <Select>
-            <Option value="ALL">ALL</Option>
-            <Option value="GET">GET</Option>
-            <Option value="POST">POST</Option>
-            <Option value="PUT">PUT</Option>
-            <Option value="DELETE">DELETE</Option>
-          </Select>
-        )}
-      </FormItem>
+    <Form
+      layout="vertical"
+      form={form}
+      initialValues={{
+        pathname: stageData && stageData.pathname,
+        description: stageData && stageData.description,
+        method: stageData && stageData.method || 'ALL',
+      }}
+    >
+      <Form.Item
+        name="pathname"
+        label={formatMessage('interfaceList.interfacePathnameInput')}
+        rules={[
+          {
+            required: true,
+            message: formatMessage('interfaceList.invalidPathname'),
+            pattern: /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/,
+          },
+          { max: 128 },
+        ]}
+      >
+        <Input
+          placeholder="path/name"
+        />
+      </Form.Item>
+      <Form.Item
+        name="description"
+        label={formatMessage('interfaceList.interfaceDescription')}
+        rules= {[
+          {
+            required: true,
+            pattern: /^[^\s].*$/,
+            message: formatMessage('interfaceList.invalidDescription'),
+          },
+          { max: 128 },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="method"
+        label={formatMessage('interfaceList.interfaceMethod')}>
+        <Select>
+          <Option value="ALL">ALL</Option>
+          <Option value="GET">GET</Option>
+          <Option value="POST">POST</Option>
+          <Option value="PUT">PUT</Option>
+          <Option value="DELETE">DELETE</Option>
+        </Select>
+      </Form.Item>
     </Form>
   </Modal>;
 }

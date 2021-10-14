@@ -1,6 +1,6 @@
 {
   "name": "datahub-view",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "view layer for DataHub",
   "pravite": true,
   "links": {
@@ -13,6 +13,7 @@
     "semver": "^5.6.0"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
@@ -21,7 +22,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "antd": "^3.11.6",
+    "antd": "^4.16.13",
     "autoprefixer": "^9.0.1",
     "babel-loader": "^8.0.0",
     "babel-plugin-import": "^1.2.1",

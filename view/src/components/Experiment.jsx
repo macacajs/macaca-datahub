@@ -5,10 +5,13 @@ import React, {
 } from 'react';
 
 import {
-  Icon,
   Drawer,
   Switch,
 } from 'antd';
+
+import {
+  ExperimentOutlined,
+} from '@ant-design/icons';
 
 import {
   injectIntl,
@@ -134,7 +137,7 @@ class Experiment extends Component {
           </p>
         </Drawer>
         <a data-accessbilityid="experiment-container" onClick={() => this.setState({ showPanel: true })}>
-          <Icon type="experiment" />
+          <ExperimentOutlined />
           { 'Lab' }
         </a>
       </div>

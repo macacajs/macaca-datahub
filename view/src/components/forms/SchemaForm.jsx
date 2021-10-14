@@ -186,4 +186,4 @@ class SchemaFormComponent extends Component {
   }
 }
 
-export default Form.create()(injectIntl(SchemaFormComponent));
+export default injectIntl(SchemaFormComponent);

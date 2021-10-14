@@ -7,10 +7,11 @@ import {
 } from 'react-intl';
 
 import {
-  Icon,
   Button,
   Breadcrumb,
 } from 'antd';
+
+import { BookOutlined } from '@ant-design/icons';
 
 import InterfaceSceneList from './InterfaceSceneList';
 import InterfaceProxyConfig from './InterfaceProxyConfig';
@@ -123,7 +124,7 @@ class InterfaceDetail extends React.Component {
       const result = data.find(item => item.sceneName === params.scene);
 
       if (result) {
-        // 若参数与当前场景不同，需要更新场景
+        // If the params.scene are different from the currentScene, the params.scene needs to be updated
         if (params.scene !== this.props.selectedInterface.currentScene) {
           this.updateSceneFetch(params.scene);
         }
@@ -260,7 +261,7 @@ class InterfaceDetail extends React.Component {
             className="scene-doc-button"
             onClick={this.toDocPage}
           >
-            <Icon type="book"/>
+            <BookOutlined />
             <FormattedMessage id="topNav.documentation"/>
           </Button>
           <InterfaceSceneList
