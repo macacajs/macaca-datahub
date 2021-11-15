@@ -39,7 +39,7 @@ module.exports = (appInfo) => {
   };
 
   config.featureConfig = {
-    enableJavascript: true,
+    enableJavascript: process.env.ENABLE_JAVASCRIPT === 'Y',
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';

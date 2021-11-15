@@ -11,7 +11,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { setExperimentConfig } from '../common/helper';
 import styles from './Experiment.module.less';
 
-const serverFeatureConfig = (window.pageConfig.featureConfig && window.pageConfig.featureConfig.featureConfig) || {};
+const serverFeatureConfig = window.pageConfig.featureConfig || {};
 
 const compareVersion = (base, target) => {
   // assuming simple semver
@@ -66,7 +66,7 @@ class Experiment extends Component {
     });
   };
 
-  render () {
+  render() {
     return (
       <div className={styles.wrapper}>
         <Drawer
