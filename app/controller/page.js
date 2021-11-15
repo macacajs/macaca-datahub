@@ -8,6 +8,7 @@ class PageController extends Controller {
     return {
       env: app.config.env,
       version: app.config.pkg.version,
+      featureConfig: app.config.featureConfig,
     };
   }
 
