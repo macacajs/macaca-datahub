@@ -1,19 +1,13 @@
 'use strict';
 
-const {
-  Controller,
-} = require('egg');
+const { Controller } = require('egg');
 const url = require('url');
 const cookie = require('cookie');
 const sendToWormhole = require('stream-wormhole');
 
-const ALLOWED_PROXY_HEADERS = [
-  'set-cookie',
-  'content-type',
-];
+const ALLOWED_PROXY_HEADERS = ['set-cookie', 'content-type'];
 
 class SceneController extends Controller {
-
   async index() {
     const { ctx } = this;
     const params = ctx.params;
@@ -21,9 +15,12 @@ class SceneController extends Controller {
     const pathname = params.pathname;
     const method = ctx.method;
 
-    const {
-      uniqId: projectUniqId,
-    } = await ctx.service.project.queryProjectByName({
+    // The global, highest priority server side config.
+    const featureConfig = ctx.app.config.featureConfig;
+    const enableJavascript = featureConfig && featureConfig.enableJavascript;
+    const enableRequestProxy = featureConfig && featureConfig.enableRequestProxy;
+
+    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({
       projectName,
     });
 
@@ -42,19 +39,13 @@ class SceneController extends Controller {
       return;
     }
 
-    const {
-      proxyConfig,
-    } = interfaceData;
+    const { proxyConfig } = interfaceData;
 
     if (!tagName) {
-      const {
-        enabled: proxyEnabled,
-        proxyList = [],
-        activeIndex = 0,
-      } = proxyConfig;
+      const { enabled: proxyEnabled, proxyList = [], activeIndex = 0 } = proxyConfig;
 
       ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
-      if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
+      if (enableRequestProxy && proxyEnabled && proxyList[activeIndex].proxyUrl) {
         ctx[Symbol.for('context#useProxy')] = true;
         const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
         let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
@@ -82,13 +73,9 @@ class SceneController extends Controller {
       }
     }
 
-    const {
-      currentScene,
-      uniqId,
-      originInterfaceId,
-    } = interfaceData;
+    const { currentScene, uniqId, originInterfaceId } = interfaceData;
 
-    const interfaceUniqId = (tagName && originInterfaceId) ? originInterfaceId : uniqId;
+    const interfaceUniqId = tagName && originInterfaceId ? originInterfaceId : uniqId;
 
     let res;
     // try to use custom scene by default
@@ -105,11 +92,7 @@ class SceneController extends Controller {
       });
     }
 
-    const {
-      contextConfig,
-      data,
-      format,
-    } = res;
+    const { contextConfig, data, format } = res;
 
     if (contextConfig.responseDelay) {
       ctx[Symbol.for('context#rewriteResponseDelay')] = Number.parseFloat(contextConfig.responseDelay);
@@ -134,12 +117,12 @@ class SceneController extends Controller {
 
     if (format === 'json') {
       ctx.body = data;
-    } else if (format === 'javascript') {
+    } else if (enableJavascript && format === 'javascript') {
       const { constructor: AsyncFunction } = Object.getPrototypeOf(async () => {});
       try {
         const code = decodeURIComponent(data);
         const func = AsyncFunction('ctx', '$mock', code);
-        ctx.getSceneData = async sceneName => {
+        ctx.getSceneData = async (sceneName) => {
           if (sceneName === currentScene) return {};
           const res = await ctx.service.scene.querySceneByInterfaceUniqIdAndSceneName({
             interfaceUniqId,
@@ -162,6 +145,8 @@ class SceneController extends Controller {
       } catch (e) {
         console.log(e);
       }
+    } else {
+      ctx.body = '';
     }
   }
 

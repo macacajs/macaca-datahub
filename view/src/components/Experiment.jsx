@@ -1,29 +1,21 @@
 'use strict';
 
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Drawer,
-  Switch,
-} from 'antd';
+import { Drawer, Switch } from 'antd';
 
-import {
-  ExperimentOutlined,
-} from '@ant-design/icons';
+import { ExperimentOutlined } from '@ant-design/icons';
 
-import {
-  injectIntl,
-  FormattedMessage,
-} from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 import { setExperimentConfig } from '../common/helper';
 import styles from './Experiment.module.less';
 
+const serverFeatureConfig = window.pageConfig.featureConfig || {};
+
 const compareVersion = (base, target) => {
   // assuming simple semver
-  if (!((/^\d+\.\d+\.\d+$/).test(base) && (/^\d+\.\d+\.\d+$/).test(target))) {
+  if (!(/^\d+\.\d+\.\d+$/.test(base) && /^\d+\.\d+\.\d+$/.test(target))) {
     return;
   }
   const baseVersion = base.split('.');
@@ -43,44 +35,46 @@ const compareVersion = (base, target) => {
 class Experiment extends Component {
   state = {
     showPanel: false,
-  }
+  };
 
-  formatMessage = id => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => this.props.intl.formatMessage({ id });
 
-  toggleDownloadAndUpload = value => {
+  toggleDownloadAndUpload = (value) => {
     setExperimentConfig({
       isOpenDownloadAndUpload: value,
     });
     this.props.updateExperimentConfig({
       isOpenDownloadAndUpload: value,
     });
-  }
+  };
 
-  toggleCompactView = value => {
+  toggleCompactView = (value) => {
     setExperimentConfig({
       isOpenCompactView: value,
     });
     this.props.updateExperimentConfig({
       isOpenCompactView: value,
     });
-  }
+  };
 
-  toggleRunJsMode = value => {
+  toggleRunJsMode = (value) => {
     setExperimentConfig({
       isOpenRunJsMode: value,
     });
     this.props.updateExperimentConfig({
       isOpenRunJsMode: value,
     });
-  }
+  };
 
-  render () {
+  render() {
     return (
       <div className={styles.wrapper}>
         <Drawer
           title={this.formatMessage('experiment.title')}
           placement="right"
-          onClose={() => { this.setState({ showPanel: false }); }}
+          onClose={() => {
+            this.setState({ showPanel: false });
+          }}
           visible={this.state.showPanel}
           width="30%"
           className={styles.drawer}
@@ -96,22 +90,24 @@ class Experiment extends Component {
               onChange={this.toggleDownloadAndUpload}
               defaultChecked={this.props.experimentConfig.isOpenDownloadAndUpload}
             />
-            {compareVersion(window.pageConfig.version, '2.2.10') === -1 &&
-              <span style={{marginLeft: '8px'}}>(Only for Datahub>=2.2.10)</span>
-            }
+            {compareVersion(window.pageConfig.version, '2.2.10') === -1 && (
+              <span style={{ marginLeft: '8px' }}>(Only for Datahub>=2.2.10)</span>
+            )}
           </section>
-          <section className={styles.item}>
-            <label style={{ verticalAlign: 'middle' }}>
-              <FormattedMessage id="experiment.runJsMode" />
-            </label>
-            <Switch
-              data-accessbilityid="experiment-compactview-switch"
-              checkedChildren={this.formatMessage('experiment.open')}
-              unCheckedChildren={this.formatMessage('experiment.close')}
-              onChange={this.toggleRunJsMode}
-              defaultChecked={this.props.experimentConfig.isOpenRunJsMode}
-            />
-          </section>
+          {serverFeatureConfig.enableJavascript && (
+            <section className={styles.item}>
+              <label style={{ verticalAlign: 'middle' }}>
+                <FormattedMessage id="experiment.runJsMode" />
+              </label>
+              <Switch
+                data-accessbilityid="experiment-compactview-switch"
+                checkedChildren={this.formatMessage('experiment.open')}
+                unCheckedChildren={this.formatMessage('experiment.close')}
+                onChange={this.toggleRunJsMode}
+                defaultChecked={this.props.experimentConfig.isOpenRunJsMode}
+              />
+            </section>
+          )}
           <section className={styles.item}>
             <label style={{ verticalAlign: 'middle' }}>
               <FormattedMessage id="experiment.compactView" />
@@ -125,20 +121,22 @@ class Experiment extends Component {
             />
           </section>
           <hr />
-          <p><FormattedMessage id="experiment.description" /></p>
-          <p><FormattedMessage id="experiment.tips1" /></p>
-          <p><FormattedMessage id="experiment.tips2" />
-            <a
-              href="https://github.com/macacajs/macaca-datahub/issues"
-              target="_blank"
-            >
-            issue
+          <p>
+            <FormattedMessage id="experiment.description" />
+          </p>
+          <p>
+            <FormattedMessage id="experiment.tips1" />
+          </p>
+          <p>
+            <FormattedMessage id="experiment.tips2" />
+            <a href="https://github.com/macacajs/macaca-datahub/issues" target="_blank">
+              issue
             </a>
           </p>
         </Drawer>
         <a data-accessbilityid="experiment-container" onClick={() => this.setState({ showPanel: true })}>
           <ExperimentOutlined />
-          { 'Lab' }
+          {'Lab'}
         </a>
       </div>
     );

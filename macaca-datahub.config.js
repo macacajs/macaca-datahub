@@ -6,6 +6,8 @@ module.exports = {
   port: 7001,
   // store: require('path').join(__dirname, 'data'),
   view: {
-    // assetsUrl: 'http://localhost:8080',
+    assetsUrl: 'http://localhost:8080',
   },
+  enableJavascript: true,
+  enableRequestProxy: true,
 };
