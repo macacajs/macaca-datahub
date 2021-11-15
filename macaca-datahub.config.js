@@ -9,4 +9,5 @@ module.exports = {
     assetsUrl: 'http://localhost:8080',
   },
   enableJavascript: true,
+  enableRequestProxy: true,
 };

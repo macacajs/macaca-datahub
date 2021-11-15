@@ -15,6 +15,7 @@ const defaultOptions = {
   protocol: 'http',
   socketIoPort: 9300,
   enableJavascript: true,
+  enableRequestProxy: true,
 };
 
 class DataHub {
@@ -38,6 +39,9 @@ class DataHub {
 
     if (options.enableJavascript) {
       process.env.ENABLE_JAVASCRIPT = 'Y';
+    }
+    if (options.enableRequestProxy) {
+      process.env.ENABLE_REQUEST_PROXY = 'Y';
     }
 
     if (options.store) {

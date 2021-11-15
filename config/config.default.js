@@ -40,6 +40,7 @@ module.exports = (appInfo) => {
 
   config.featureConfig = {
     enableJavascript: process.env.ENABLE_JAVASCRIPT === 'Y',
+    enableRequestProxy: process.env.ENABLE_REQUEST_PROXY === 'Y',
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';

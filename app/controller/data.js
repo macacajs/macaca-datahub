@@ -15,8 +15,10 @@ class SceneController extends Controller {
     const pathname = params.pathname;
     const method = ctx.method;
 
+    // The global, highest priority server side config.
     const featureConfig = ctx.app.config.featureConfig;
     const enableJavascript = featureConfig && featureConfig.enableJavascript;
+    const enableRequestProxy = featureConfig && featureConfig.enableRequestProxy;
 
     const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({
       projectName,
@@ -43,7 +45,7 @@ class SceneController extends Controller {
       const { enabled: proxyEnabled, proxyList = [], activeIndex = 0 } = proxyConfig;
 
       ctx.logger.debug('proxy config %s', JSON.stringify(proxyConfig, null, 2));
-      if (proxyEnabled && proxyList[activeIndex].proxyUrl) {
+      if (enableRequestProxy && proxyEnabled && proxyList[activeIndex].proxyUrl) {
         ctx[Symbol.for('context#useProxy')] = true;
         const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
         let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
