@@ -26,6 +26,7 @@
     "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "dev:server": "npm run db:migrate && egg-bin dev",
     "dev:view": "cd view && npm run dev",
+    "prepare": "husky install",
     "dev": "concurrently \"npm run dev:view\" \"npm run dev:server\"",
     "prepublishOnly": "cd view && npm run build",
     "debug": "egg-bin debug",
@@ -73,18 +74,20 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
     "concurrently": "4.0.1",
     "deep-diff": "^0.3.8",
     "egg-bin": "^4.3.6",
-    "egg-ci": "^1.8.0",
     "egg-mock": "^3.13.1",
     "eslint": "^7.29.0",
     "eslint-config-egg": "^7.1.0",
     "eslint-config-prettier": "^4.1.0",
     "git-contributor": "1",
-    "husky": "^1.3.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.0.2",
     "macaca-ecosystem": "*",
     "prettier": "^2.0.5",
     "vuepress": "^1.5.2",
@@ -93,13 +96,19 @@
   "engines": {
     "node": ">=8.9.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
-  "ci": {
-    "version": "8"
+  "lint-staged": {
+    "*.{less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "eslint --fix"
+    ]
   },
   "repository": {
     "type": "git",

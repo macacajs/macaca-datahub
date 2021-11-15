@@ -12,11 +12,14 @@ class PageController extends Controller {
   }
 
   async home() {
-    this.ctx.body = await this.app.render({}, {
-      ...this.commonPageConfig,
-      title: this.ctx.gettext('homepage'),
-      pageId: 'home',
-    });
+    this.ctx.body = await this.app.render(
+      {},
+      {
+        ...this.commonPageConfig,
+        title: this.ctx.gettext('homepage'),
+        pageId: 'home',
+      },
+    );
   }
 
   async dashboard() {
@@ -34,17 +37,20 @@ class PageController extends Controller {
       projectName,
     });
     const allProjects = await this.ctx.service.project.queryAllProject();
-    this.ctx.body = await this.app.render({
-      ...res.get({
-        plain: true,
-      }),
-      allProjects,
-      socket: this.app.config.dataHubSocket,
-    }, {
-      ...this.commonPageConfig,
-      title: `${this.ctx.gettext('project')} - ${projectName}`,
-      pageId: 'project',
-    });
+    this.ctx.body = await this.app.render(
+      {
+        ...res.get({
+          plain: true,
+        }),
+        allProjects,
+        socket: this.app.config.dataHubSocket,
+      },
+      {
+        ...this.commonPageConfig,
+        title: `${this.ctx.gettext('project')} - ${projectName}`,
+        pageId: 'project',
+      },
+    );
   }
 
   async doc() {
@@ -66,4 +72,3 @@ class PageController extends Controller {
 }
 
 module.exports = PageController;
-

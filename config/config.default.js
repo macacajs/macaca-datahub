@@ -6,9 +6,8 @@ const path = require('path');
 
 const sequelizeConfig = require('../database/config');
 
-module.exports = appInfo => {
-
-  const config = exports = {};
+module.exports = (appInfo) => {
+  const config = (exports = {});
 
   config.siteFile = {
     '/favicon.ico': 'https://macacajs.github.io/macaca-datahub/logo/favicon.ico',
@@ -16,11 +15,7 @@ module.exports = appInfo => {
 
   config.keys = appInfo.name;
 
-  config.middleware = [
-    'contextCors',
-    'exportData',
-    'errorHandler',
-  ];
+  config.middleware = ['contextCors', 'exportData', 'errorHandler'];
 
   config.multipart = {
     fileSize: '1gb',
@@ -31,13 +26,11 @@ module.exports = appInfo => {
   config.exportData = {
     match(ctx) {
       const datahubClient = ctx.get('x-datahub-client');
-      return datahubClient === 'datahub-view' && [
-        '/api/project',
-        '/api/interface',
-        '/api/scene',
-        '/api/schema',
-      ].some(path => ctx.path.startsWith(path))
-      && [ 'POST', 'PUT', 'DELETE' ].includes(ctx.method);
+      return (
+        datahubClient === 'datahub-view' &&
+        ['/api/project', '/api/interface', '/api/scene', '/api/schema'].some((path) => ctx.path.startsWith(path)) &&
+        ['POST', 'PUT', 'DELETE'].includes(ctx.method)
+      );
     },
   };
 
@@ -45,8 +38,8 @@ module.exports = appInfo => {
     pageUrl: '/notfound',
   };
 
-  config.dataHubView = {
-    assetsUrl: '',
+  config.featureConfig = {
+    enableJavascript: true,
   };
 
   config.dataHubRpcType = process.env.DATAHUB_RPC_PROTOCOL || 'http';
@@ -93,7 +86,7 @@ module.exports = appInfo => {
     config.exportArchiveBaseDir = storeDir;
   }
 
-  config.exportExcludeAttributes = [ 'createdAt', 'updatedAt' ];
+  config.exportExcludeAttributes = ['createdAt', 'updatedAt'];
 
   config.static = {
     prefix: '',
@@ -101,6 +94,4 @@ module.exports = appInfo => {
   };
 
   return config;
-
 };
-
