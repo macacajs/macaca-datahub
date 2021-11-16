@@ -1,4 +1,6 @@
-FROM node:16-alpine
+FROM node:lts-alpine
+
+RUN apk --no-cache add bash python3
 
 ENV RUN_MODE=docker
 
@@ -14,5 +16,8 @@ HEALTHCHECK --interval=10s --retries=6 \
 ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 9200 9300
+
+ENV ENABLE_JAVASCRIPT=Y \
+    ENABLE_REQUEST_PROXY=Y
 
 CMD ["npm", "start"]

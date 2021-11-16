@@ -3,6 +3,7 @@ docs_dist
 data
 coverage
 node_modules
+view/node_modules
 package-lock.json
 test
 run/
