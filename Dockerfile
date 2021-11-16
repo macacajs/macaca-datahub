@@ -1,8 +1,4 @@
-FROM node:12-alpine
-
-RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.aliyun.com/g' /etc/apk/repositories
-
-RUN apk --no-cache add bash python
+FROM node:16-alpine
 
 ENV RUN_MODE=docker
 
@@ -10,7 +6,7 @@ COPY . /root/datahub
 
 WORKDIR /root/datahub
 
-RUN npm install --production --verbose
+RUN npm i --production --verbose
 
 HEALTHCHECK --interval=10s --retries=6 \
   CMD wget -O /dev/null localhost:9200 || exit 1
