@@ -26,6 +26,7 @@
     "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "dev:server": "npm run db:migrate && egg-bin dev",
     "dev:view": "cd view && npm run dev",
+    "prepare": "husky install || exit 0",
     "dev": "concurrently \"npm run dev:view\" \"npm run dev:server\"",
     "prepublishOnly": "cd view && npm run build",
     "debug": "egg-bin debug",
@@ -35,7 +36,7 @@
     "lint": "eslint . --fix && cd view && npm run lint",
     "autod": "autod",
     "contributor": "git-contributor",
-    "build:docker": "docker build --no-cache --pull -t=macacajs/macaca-datahub .",
+    "build:docker": "docker build --pull -t=macacajs/macaca-datahub .",
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
     "migration:create": "sequelize migration:create --name",
@@ -101,8 +102,12 @@
     ]
   },
   "lint-staged": {
-    "*.{less,md,json}": [
+    "*.{less,md}": [
       "prettier --write"
+    ],
+    "*.js?(x)": [
+      "prettier --write",
+      "eslint --fix"
     ],
     "*.ts?(x)": [
       "prettier --parser=typescript --write",
