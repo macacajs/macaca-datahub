@@ -38,6 +38,10 @@ module.exports = app => {
       defaultValue: 'json',
       allowNull: false,
     },
+    groupUniqId: {
+      type: STRING,
+      allowNull: true,
+    },
   }, {
     ...app.config.modelCommonOption,
     indexes: [

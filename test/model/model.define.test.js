@@ -2,7 +2,7 @@
 
 const { assert, app } = require('egg-mock/bootstrap');
 
-describe('test/app/model.define.js', () => {
+describe('test/app/model.define.test.js', () => {
   let ctx;
   beforeEach(() => {
     ctx = app.mockContext();
@@ -15,6 +15,22 @@ describe('test/app/model.define.js', () => {
       description: 'STRING',
       globalProxy: 'STRING',
       uniqId: 'UUID',
+      createdAt: 'DATE',
+      updatedAt: 'DATE',
+    };
+    for (const k in map) {
+      assert(map[k] === attributes[k].type.constructor.key);
+    }
+    assert(Object.keys(map).length === Object.keys(attributes).length);
+  });
+
+  it('Group model', () => {
+    const attributes = ctx.model.Group.tableAttributes;
+    const map = {
+      uniqId: 'UUID',
+      groupName: 'STRING',
+      groupType: 'STRING',
+      belongedUniqId: 'STRING',
       createdAt: 'DATE',
       updatedAt: 'DATE',
     };
@@ -37,6 +53,7 @@ describe('test/app/model.define.js', () => {
       uniqId: 'UUID',
       createdAt: 'DATE',
       updatedAt: 'DATE',
+      groupUniqId: 'STRING',
     };
     for (const k in map) {
       assert(map[k] === attributes[k].type.constructor.key);
@@ -55,6 +72,7 @@ describe('test/app/model.define.js', () => {
       format: 'STRING',
       createdAt: 'DATE',
       updatedAt: 'DATE',
+      groupUniqId: 'STRING',
     };
     for (const k in map) {
       assert(map[k] === attributes[k].type.constructor.key);

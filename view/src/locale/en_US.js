@@ -38,7 +38,7 @@ const enUS = {
 
   'project.interfaceList': 'API list',
   'project.realtimeList': 'Realtime snapshot',
-  'project.createApi': 'Please add API',
+  'project.createApi': 'No data, please add API',
   'project.create': 'Create a hub',
   'project.update': 'Update hub',
   'project.name': 'Hub name',
@@ -48,6 +48,15 @@ const enUS = {
   'project.add': 'Add hub',
   'project.globalProxy': 'Global proxy',
   'project.globalProxy.invalid': 'Please input URL',
+
+  'group.create': 'New group',
+  'group.updateName': 'Modify group',
+  'group.delete': 'Delete group',
+  'group.newGroupInputPlaceholder': 'Please input group name',
+  'group.selectGroup': 'Please select group',
+  'group.deleteGroupSuccess': 'Group deleted successfully.',
+  'group.deleteInterfaceGroupWarning': 'There are interfaces in the group that have not been removed. Please delete or transfer the interfaces first.',
+  'group.deleteSceneGroupWarning': 'There are scenes in the group that have not been moved out, please delete or transfer the scenes first.',
 
   'interfaceList.addInterface': 'Add API',
   'interfaceList.updateInterface': 'Update API',
@@ -71,6 +80,7 @@ const enUS = {
   'sceneList.switchSceneDisabledHint': 'To use scene data, please disable proxy mode',
   'sceneList.searchScene': 'Search scene',
   'sceneList.createScene': 'Create scene',
+  'sceneList.createSceneGroup': 'Create group',
   'sceneList.deleteScene': 'Delete scene',
   'sceneList.updateScene': 'Update scene',
   'sceneList.sceneName': 'Scene name',

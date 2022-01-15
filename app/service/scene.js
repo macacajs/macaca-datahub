@@ -1,8 +1,7 @@
 'use strict';
 
-const {
-  Service,
-} = require('egg');
+const { Service } = require('egg');
+const _ = require('lodash');
 
 class SceneService extends Service {
   async querySceneByInterfaceUniqId({
@@ -20,6 +19,79 @@ class SceneService extends Service {
         ],
       ],
     });
+  }
+
+  async querySceneGroupListByInterfaceUniqId({
+    interfaceUniqId,
+  }, options = {}) {
+    const { ctx } = this;
+
+    const groups = await ctx.model.Group.findAll({
+      ...options,
+      where: {
+        belongedUniqId: interfaceUniqId,
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
+
+    // 初始化默认分组
+    if (!groups.length) {
+      const group = await ctx.model.Group.create({
+        groupName: ctx.gettext('defaultGroupName'),
+        groupType: 'Scene',
+        belongedUniqId: interfaceUniqId,
+      });
+
+      groups.push(group);
+
+      await ctx.model.Scene.update({ groupUniqId: group.uniqId }, {
+        where: {
+          interfaceUniqId,
+        }
+      });
+    }
+
+    const scenes = await ctx.model.Scene.findAll({
+      ...options,
+      where: {
+        interfaceUniqId,
+      },
+      order: [
+        [
+          'updatedAt',
+          'ASC',
+        ],
+      ],
+    });
+
+    const sceneGroupList = _.chain(scenes)
+    .groupBy("groupUniqId")
+    .toPairs()
+    .map(currentItem => {
+      return _.zipObject(["groupUniqId", "sceneList"], currentItem);
+    })
+    .value();
+
+    const sceneGroupListNew = [];
+
+    groups.forEach(element => {
+      const sceneGroup = sceneGroupList.find(item => item.groupUniqId === element.uniqId);
+      sceneGroupListNew.push({
+        groupName: element.groupName,
+        groupUniqId: element.uniqId,
+        sceneList: sceneGroup ? sceneGroup.sceneList : [],
+      })
+    });
+
+    return {
+      sceneGroupList: sceneGroupListNew,
+      sceneList: scenes,
+    };
   }
 
   async querySceneByInterfaceUniqIdAndSceneName({
@@ -48,6 +120,7 @@ class SceneService extends Service {
   async createScene({
     interfaceUniqId,
     sceneName,
+    groupUniqId,
     contextConfig,
     data,
     format,
@@ -55,6 +128,7 @@ class SceneService extends Service {
     return await this.ctx.model.Scene.create({
       interfaceUniqId,
       sceneName,
+      groupUniqId,
       contextConfig,
       data,
       format,

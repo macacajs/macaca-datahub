@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Form,
@@ -22,7 +22,10 @@ const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 const Option = Select.Option;
 
-import { sceneService } from '../service';
+import {
+  sceneService,
+  groupService,
+} from '../service';
 import './RealTimeDetail.less';
 
 function SaveSceneFormComponent (props) {
@@ -30,9 +33,10 @@ function SaveSceneFormComponent (props) {
     visible,
     onCancel,
     onOk,
-    form,
     loading,
   } = props;
+  const [form] = Form.useForm();
+  const [groupList, setGroupList] = useState([]);
   const formatMessage = id => props.intl.formatMessage({ id });
   let defaultInterface = '';
   const projectName = window.context && window.context.projectName;
@@ -45,6 +49,18 @@ function SaveSceneFormComponent (props) {
     }
   }
 
+  const fetchGroupList = async (selectedInterfaceUniqId) => {
+    const res = await groupService.getGroupList({
+      belongedUniqId: selectedInterfaceUniqId,
+      groupType: 'Scene',
+    });
+    setGroupList(res.data || []);
+  };
+
+  useEffect(() => {
+    fetchGroupList(defaultInterface);
+  }, []);
+
   return <Modal
     visible={visible}
     destroyOnClose={true}
@@ -53,18 +69,18 @@ function SaveSceneFormComponent (props) {
     cancelText={formatMessage('common.cancel')}
     onCancel={onCancel}
     onOk={() => {
-      form.validateFields((err, values) => {
-        if (err) {
-          message.warn(formatMessage('common.input.invalid'));
-          return;
-        }
+      form.validateFields().then(values => {
         onOk(values);
+      }).catch(errorInfo => {
+        message.warn(formatMessage('common.input.invalid'));
+        return;
       });
     }}
     confirmLoading={loading}
   >
     <Form
       layout="vertical"
+      form={form}
       initialValues={{
         interfaceUniqId: defaultInterface,
       }}
@@ -73,7 +89,9 @@ function SaveSceneFormComponent (props) {
         name="interfaceUniqId"
         label={formatMessage('interfaceDetail.selectInterface')}
       >
-        <Select>
+        <Select
+          onChange={fetchGroupList}
+        >
           {
             props.interfaceList.map((interfaceData, index) => {
               return <Option
@@ -97,6 +115,21 @@ function SaveSceneFormComponent (props) {
         ]}
       >
         <Input />
+      </FormItem>
+      <FormItem
+        name="sceneGroupUniqId"
+        label={formatMessage('group.selectGroup')}
+      >
+        <Select>
+          {
+            groupList.map((group, index) => {
+              return <Option
+                key={index}
+                value={group.uniqId}
+              >{group.groupName}</Option>;
+            })
+          }
+        </Select>
       </FormItem>
     </Form>
   </Modal>;
@@ -144,13 +177,14 @@ class RealTimeDetail extends React.Component {
     });
   }
 
-  confirmSceneForm = async ({ sceneName, interfaceUniqId }) => {
+  confirmSceneForm = async ({ sceneName, interfaceUniqId, sceneGroupUniqId }) => {
     this.setState({
       sceneFormLoading: true,
     });
     const res = await sceneService.createScene({
       interfaceUniqId,
       sceneName,
+      groupUniqId: sceneGroupUniqId,
       contextConfig: {
         responseDelay: 0,
         responseStatus: 200,

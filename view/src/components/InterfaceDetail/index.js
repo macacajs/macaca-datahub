@@ -3,12 +3,14 @@
 import React from 'react';
 
 import {
+  injectIntl,
   FormattedMessage,
 } from 'react-intl';
 
 import {
   Button,
   Breadcrumb,
+  message,
 } from 'antd';
 
 import { BookOutlined } from '@ant-design/icons';
@@ -26,6 +28,7 @@ import {
   sceneService,
   schemaService,
   interfaceService,
+  groupService,
 } from '../../service';
 
 import {
@@ -37,13 +40,18 @@ import {
 class InterfaceDetail extends React.Component {
   state = {
     selectedScene: {},
+    sceneGroupList: [],
     sceneList: [],
+    groupList: [],
     schemaData: [],
   }
 
   componentWillMount () {
     this.fetchSceneList();
+    this.fetchGroupList();
   }
+
+  formatMessage = id => this.props.intl.formatMessage({ id });
 
   updateSceneFetch = async (scene) => {
     await interfaceService.updateInterface({
@@ -67,10 +75,21 @@ class InterfaceDetail extends React.Component {
   fetchSceneList = async () => {
     const res = await sceneService.getSceneList({ interfaceUniqId: this.props.selectedInterface.uniqId });
     this.setState({
-      sceneList: res.data || [],
-      selectedScene: res.data && this.getDefaultScene(res.data),
+      sceneList: res.data.sceneList || [],
+      sceneGroupList: res.data.sceneGroupList || [],
+      selectedScene: res.data.sceneList && this.getDefaultScene(res.data.sceneList),
     });
     this.fetchSchema();
+  }
+
+  fetchGroupList = async () => {
+    const res = await groupService.getGroupList({
+      belongedUniqId: this.props.selectedInterface.uniqId,
+      groupType: 'Scene',
+    });
+    this.setState({
+      groupList: res.data || [],
+    });
   }
 
   getInitResSchema = (sceneData, schemaData) => {
@@ -144,9 +163,25 @@ class InterfaceDetail extends React.Component {
     await this.updateInterFaceAndScene();
   }
 
+  deleteSceneGroup = async (value) => {
+    if (value.sceneList.length !== 0) {
+      message.warn(this.formatMessage('group.deleteSceneGroupWarning'));
+      return;
+    }
+
+    const res = await groupService.deleteGroup({
+      uniqId: value.groupUniqId,
+    });
+    if (res) {
+      message.success(this.formatMessage('group.deleteGroupSuccess'));
+    }
+    await this.updateInterFaceAndScene();
+  }
+
   updateInterFaceAndScene = async () => {
     await this.props.updateInterfaceList();
     await this.fetchSceneList();
+    await this.fetchGroupList(); ;
   }
 
   toggleProxy = async () => {
@@ -268,10 +303,12 @@ class InterfaceDetail extends React.Component {
             experimentConfig={this.props.experimentConfig}
             disabled={selectedInterface.proxyConfig.enabled}
             previewLink={previewLink}
-            sceneList={this.state.sceneList}
+            sceneGroupList={this.state.sceneGroupList}
+            groupList={this.state.groupList}
             selectedScene={this.state.selectedScene}
             interfaceData={selectedInterface}
             deleteScene={this.deleteScene}
+            deleteSceneGroup={this.deleteSceneGroup}
             changeSelectedScene={this.changeSelectedScene}
             updateInterFaceAndScene={this.updateInterFaceAndScene}
           />
@@ -296,4 +333,4 @@ class InterfaceDetail extends React.Component {
   }
 }
 
-export default InterfaceDetail;
+export default injectIntl(InterfaceDetail);

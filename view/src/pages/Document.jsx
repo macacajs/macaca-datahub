@@ -46,6 +46,7 @@ import {
   sceneService,
   schemaService,
   interfaceService,
+  groupService,
 } from '../service';
 
 import './Document.less';
@@ -53,13 +54,18 @@ import './Document.less';
 const Sider = Layout.Sider;
 const Content = Layout.Content;
 
+const { uniqId: projectUniqId } = window.context || {};
+
 class Document extends React.Component {
   state = {
     interfaceList: [],
+    interfaceGroupList: [],
     selectedInterface: {},
     schemaData: [],
     sceneList: [],
-    currentScene: '',
+    sceneGroupList: [],
+    currentScene: {},
+    groupList: [],
   }
 
   // Initialize data based on hash value
@@ -82,10 +88,19 @@ class Document extends React.Component {
     return 0;
   }
 
+  getDefaultSelectedInterface (interfaceGroupList) {
+    if (!interfaceGroupList.length) return {};
+
+    const interfaceGroup = interfaceGroupList.find(item => !!item.interfaceList.length);
+
+    return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
+  }
+
   async componentDidMount () {
+    await this.fetchGroupList();
     const interfaceRes = await this.initInterfaceList();
-    const index = this.getIndexByHash(interfaceRes);
-    const selectedInterface = (interfaceRes.data && interfaceRes.data[index]) || {};
+    // const index = this.getIndexByHash(interfaceRes);
+    const selectedInterface = this.getDefaultSelectedInterface(interfaceRes.data.interfaceGroupList) || {};
     let schemaRes = {};
     let sceneRes = {};
     if (selectedInterface.uniqId) {
@@ -93,10 +108,12 @@ class Document extends React.Component {
       sceneRes = await sceneService.getSceneList({ interfaceUniqId: selectedInterface.uniqId });
     }
     this.setState({
-      interfaceList: interfaceRes.data || [],
+      interfaceList: interfaceRes.data.interfaceList || [],
+      interfaceGroupList: interfaceRes.data.interfaceGroupList || [],
       selectedInterface,
       schemaData: schemaRes.data || [],
-      sceneList: sceneRes.data || [],
+      sceneList: sceneRes.data.sceneList || [],
+      sceneGroupList: sceneRes.data.sceneGroupList || [],
     });
   }
 
@@ -110,9 +127,20 @@ class Document extends React.Component {
       const sceneRes = await sceneService.getSceneList({ interfaceUniqId });
       this.setState({
         schemaData: schemaRes.data || [],
-        sceneList: sceneRes.data || [],
+        sceneList: sceneRes.data.sceneList || [],
+        sceneGroupList: sceneRes.data.sceneGroupList || [],
       });
     }
+  }
+
+  fetchGroupList = async () => {
+    const res = await groupService.getGroupList({
+      belongedUniqId: projectUniqId,
+      groupType: 'Interface',
+    });
+    this.setState({
+      groupList: res.data || [],
+    });
   }
 
   setSelectedInterface = async (uniqId) => {
@@ -137,25 +165,52 @@ class Document extends React.Component {
   }
 
   changeSceneDoc = value => {
+    const scene = this.state.sceneList.find(item => item.uniqId === value);
     const params = queryParse(location.hash);
-    params.scene = value;
+    params.scene = scene.sceneName;
     location.hash = `#/?${serialize(params)}`;
 
     this.setState({
-      currentScene: value,
+      currentScene: scene,
     });
+  }
+
+  changeSceneGroup = value => {
+    const sceneGroup = this.state.sceneGroupList.find(item => item.groupUniqId === value);
+    const params = queryParse(location.hash);
+    params.scene_group = sceneGroup.groupName;
+    params.scene = null;
+    if (sceneGroup.sceneList.length) {
+      params.scene = sceneGroup.sceneList[0].sceneName;
+      this.setState({
+        currentScene: sceneGroup.sceneList[0],
+      });
+    } else {
+      this.setState({
+        currentScene: {},
+      });
+    }
+    location.hash = `#/?${serialize(params)}`;
   }
 
   render () {
     const params = queryParse(location.hash);
     const sceneList = this.state.sceneList;
+    const sceneGroupList = this.state.sceneGroupList;
     const sceneData = sceneList.find(item => item.sceneName === params.scene);
+    const sceneGroupData = sceneGroupList.find(item => item.groupName === params.scene_group);
     let currentScene = this.state.currentScene;
 
-    if (sceneData && sceneData.sceneName) {
-      currentScene = sceneData.sceneName;
+    if (sceneData) {
+      currentScene = sceneData;
     } else {
-      currentScene = sceneList[0] && sceneList[0].sceneName;
+      if (sceneGroupData) {
+        currentScene = {
+          groupUniqId: sceneGroupData && sceneGroupData.groupUniqId,
+        };
+      } else {
+        currentScene = (sceneGroupList[0] && sceneGroupList[0].sceneList[0] && sceneGroupList[0].sceneList[0]) || {};
+      }
     }
 
     return (
@@ -170,7 +225,8 @@ class Document extends React.Component {
             selectedInterface={this.state.selectedInterface}
             setSelectedInterface={this.setSelectedInterface}
             experimentConfig={this.props.experimentConfig}
-            interfaceList={this.state.interfaceList}
+            interfaceGroupList={this.state.interfaceGroupList}
+            groupList={this.state.groupList}
           />
         </Sider>
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
@@ -194,21 +250,37 @@ class Document extends React.Component {
           <section>
             <h1 style={{marginTop: '20px'}}><FormattedMessage id="sceneList.sceneData"/></h1>
             <Tabs
-              onChange={this.changeSceneDoc}
+              onChange={this.changeSceneGroup}
               animated={false}
-              activeKey={currentScene}
+              activeKey={currentScene.groupUniqId}
             >
               {
-                sceneList.map((sceneData, index) =>
+                this.state.sceneGroupList.map((sceneGroupData, index) =>
                   <TabPane
-                    size="small"
-                    tab={sceneData.sceneName}
-                    key={sceneData.sceneName}
+                    size="large"
+                    tab={sceneGroupData.groupName}
+                    key={sceneGroupData.groupUniqId}
                   >
-                    <CodeMirror
-                      value={JSON.stringify(sceneData.data, null, 2)}
-                      options={codeMirrorOptions}
-                    />
+                    <Tabs
+                      onChange={this.changeSceneDoc}
+                      animated={false}
+                      activeKey={currentScene.uniqId}
+                    >
+                      {
+                        sceneGroupData.sceneList.map((sceneData, index) =>
+                          <TabPane
+                            size="small"
+                            tab={sceneData.sceneName}
+                            key={sceneData.uniqId}
+                          >
+                            <CodeMirror
+                              value={JSON.stringify(sceneData.data, null, 2)}
+                              options={codeMirrorOptions}
+                            />
+                          </TabPane>
+                        )
+                      }
+                    </Tabs>
                   </TabPane>
                 )
               }

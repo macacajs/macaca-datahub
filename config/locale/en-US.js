@@ -5,6 +5,7 @@ module.exports = {
   dashboard: 'Dashboard',
   project: 'Project',
   document: 'Document',
+  defaultGroupName: 'Default group',
 
   // resource manage
   'common.delete.fail': 'deletion execute failed',

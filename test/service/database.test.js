@@ -5,7 +5,7 @@ const rimraf = require('rimraf');
 const path = require('path');
 const { fs } = require('mz');
 
-describe('test/app/service/database.js', () => {
+describe('test/app/service/database.test.js', () => {
   let ctx;
 
   beforeEach(async () => {

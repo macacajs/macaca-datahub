@@ -88,7 +88,7 @@ class InterfaceProxyConfig extends Component {
     );
   };
 
-  render() {
+  render () {
     const props = this.props;
     const formatMessage = this.formatMessage;
     const { enabled, proxyList = [] } = props.proxyConfig;

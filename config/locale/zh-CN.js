@@ -5,6 +5,7 @@ module.exports = {
   dashboard: '我的项目',
   project: '项目配置',
   document: '项目文档',
+  defaultGroupName: '默认分组',
 
   // resource manage
   'common.delete.fail': '数据不存在，删除失败',

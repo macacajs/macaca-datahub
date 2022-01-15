@@ -33,11 +33,21 @@ class ProjectService extends Service {
   }
 
   async createProject({ projectName, description, globalProxy }) {
-    return await this.ctx.model.Project.create({
+    const { ctx } = this;
+
+    const project = await ctx.model.Project.create({
       projectName,
       description,
       globalProxy,
     });
+
+    await ctx.model.Group.create({
+      groupName: ctx.gettext('defaultGroupName'),
+      groupType: 'Interface',
+      belongedUniqId: project.uniqId,
+    });
+
+    return project;
   }
 
   async updateProject({ uniqId, payload }) {
