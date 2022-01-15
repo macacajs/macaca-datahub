@@ -3,32 +3,62 @@
 const path = require('path');
 const { assert, app } = require('egg-mock/bootstrap');
 
-describe('test/app/service/scene.js', () => {
+describe('test/app/service/scene.test.js', () => {
   let ctx;
   let projectUniqId;
+  let interfaceGroupUniqId;
   let interfaceUniqId;
+  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
-    const { uniqId: pid } = await ctx.model.Project.create(
-      { projectName: 'baz', description: 'bazd' }
-    );
-    projectUniqId = pid;
-    const { uniqId: iid } = await ctx.model.Interface.create(
-      { projectUniqId, pathname: 'api/one', method: 'ALL', description: '' }
-    );
-    interfaceUniqId = iid;
+
+    const [{ uniqId: _projectUniqId }] = await ctx.model.Project.bulkCreate([
+      {
+        projectName: 'baz',
+        description: 'bazd',
+      },
+    ]);
+    projectUniqId = _projectUniqId;
+    const [{ uniqId: _interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'interfaceGroup1',
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      },
+    ]);
+    interfaceGroupUniqId = _interfaceGroupUniqId;
+    const [{ uniqId: _interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      {
+        projectUniqId,
+        pathname: 'api/one',
+        method: 'ALL',
+        description: 'description',
+        groupUniqId: interfaceGroupUniqId,
+      },
+    ]);
+    interfaceUniqId = _interfaceUniqId;
+    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'sceneGroup1',
+        groupType: 'Scene',
+        belongedUniqId: interfaceUniqId,
+      },
+    ]);
+    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   describe('query scene', () => {
     let sceneUniqIdOne;
+
     beforeEach(async () => {
       const res = await ctx.model.Scene.bulkCreate([
-        { interfaceUniqId, sceneName: 'success', contextConfig: {}, data: { id: 'success' } },
-        { interfaceUniqId, sceneName: 'fail', contextConfig: {}, data: { id: 'fail' } },
+        { interfaceUniqId, sceneName: 'success', groupUniqId: sceneGroupUniqId, contextConfig: {}, data: { id: 'success' } },
+        { interfaceUniqId, sceneName: 'fail', groupUniqId: sceneGroupUniqId, contextConfig: {}, data: { id: 'fail' } },
       ]);
       sceneUniqIdOne = res[0].uniqId;
     });
+
     it('querySceneByInterfaceUniqId', async () => {
       const res = await ctx.service.scene.querySceneByInterfaceUniqId({
         interfaceUniqId,
@@ -48,6 +78,31 @@ describe('test/app/service/scene.js', () => {
       });
       assert(res[1].interfaceUniqId === interfaceUniqId);
       assert.deepEqual(res[1].contextConfig, {});
+    });
+
+    it('querySceneGroupListByInterfaceUniqId', async () => {
+      const res = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({
+        interfaceUniqId,
+      });
+      
+      assert(res.sceneGroupList.length === 1);
+      assert(res.sceneGroupList[0].groupName === 'sceneGroup1');
+      assert(res.sceneGroupList[0].groupUniqId === sceneGroupUniqId);
+      assert(res.sceneGroupList[0].sceneList.length === 2);
+      assert(res.sceneGroupList[0].sceneList[0] instanceof ctx.model.Scene);
+      assert(res.sceneGroupList[0].sceneList[1] instanceof ctx.model.Scene);
+      assert(res.sceneGroupList[0].sceneList[0].sceneName === 'success');
+      assert.deepEqual(res.sceneGroupList[0].sceneList[0].contextConfig, {});
+      assert.deepStrictEqual(res.sceneGroupList[0].sceneList[0].data, {
+        id: 'success',
+      });
+      assert(res.sceneGroupList[0].sceneList[0].interfaceUniqId === interfaceUniqId);
+      assert(res.sceneGroupList[0].sceneList[1].sceneName === 'fail');
+      assert.deepStrictEqual(res.sceneGroupList[0].sceneList[1].data, {
+        id: 'fail',
+      });
+      assert(res.sceneGroupList[0].sceneList[1].interfaceUniqId === interfaceUniqId);
+      assert.deepEqual(res.sceneGroupList[0].sceneList[1].contextConfig, {});
     });
 
     it('querySceneByInterfaceUniqIdAndSceneName', async () => {
@@ -76,12 +131,12 @@ describe('test/app/service/scene.js', () => {
     });
   });
 
-  describe('opetation', () => {
+  describe('operation', () => {
     let sceneUniqIdOne;
     beforeEach(async () => {
       const res = await ctx.model.Scene.bulkCreate([
-        { interfaceUniqId, sceneName: 'success', data: { id: 'success' } },
-        { interfaceUniqId, sceneName: 'fail', data: { id: 'fail' } },
+        { interfaceUniqId, sceneName: 'success', groupUniqId: sceneGroupUniqId, data: { id: 'success' } },
+        { interfaceUniqId, sceneName: 'fail', groupUniqId: sceneGroupUniqId, data: { id: 'fail' } },
       ]);
       sceneUniqIdOne = res[0].uniqId;
     });
@@ -90,6 +145,7 @@ describe('test/app/service/scene.js', () => {
       await ctx.service.scene.createScene({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         data: { id: 'default' },
       });
       const res = await ctx.model.Scene.findAll({
@@ -139,9 +195,9 @@ describe('test/app/service/scene.js', () => {
         interfaceUniqId,
       });
 
-      assert(res.data.scenes.length === 2);
-      assert(res.data.scenes[0].sceneName === 'success');
-      assert(res.data.scenes[1].sceneName === 'fail');
+      assert(res.data.sceneGroupList[0].sceneList.length === 2);
+      assert(res.data.sceneGroupList[0].sceneList[0].sceneName === 'success');
+      assert(res.data.sceneGroupList[0].sceneList[1].sceneName === 'fail');
     });
 
     it('uploadInterface', async () => {
@@ -154,7 +210,26 @@ describe('test/app/service/scene.js', () => {
 
       const scenes = await ctx.model.Scene.findAll({
         where: {
-          interfaceUniqId,
+          interfaceUniqId: res.body.newInterfaceUniqId,
+        },
+      });
+
+      assert(scenes.length === 2);
+      assert(scenes[0].sceneName === 'success');
+      assert(scenes[1].sceneName === 'fail');
+    });
+
+    it('uploadInterfaceNewData', async () => {
+      const res = await app.httpRequest()
+        .post('/api/interface/upload')
+        .attach(interfaceUniqId, path.join(__dirname, '..', 'fixtures/upload_data/', 'interface_new.json'))
+        .expect(200);
+
+      assert(res.body.success === true);
+
+      const scenes = await ctx.model.Scene.findAll({
+        where: {
+          interfaceUniqId: res.body.newInterfaceUniqId,
         },
       });
 

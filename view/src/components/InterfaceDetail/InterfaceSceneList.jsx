@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Input, Button,
-  Tooltip, Popconfirm,
+  Input,
+  Button,
+  Tooltip,
+  Popconfirm,
+  Collapse,
 } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
   PlusCircleOutlined,
+  CaretRightOutlined,
 } from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import {
@@ -15,16 +19,32 @@ import {
 } from 'react-intl';
 
 import SceneForm from '../forms/SceneForm';
-import { sceneService } from '../../service';
+import GroupForm from '../forms/GroupForm';
+import { sceneService, groupService } from '../../service';
 
 const Search = Input.Search;
+const { Panel } = Collapse;
 
 class InterfaceSceneList extends Component {
   state = {
     sceneFormVisible: false,
     sceneFormLoading: false,
+    groupFormVisible: false,
+    groupFormLoading: false,
     filterString: '',
     stageData: {},
+    activeKeyArray: [],
+    editGroupNameIndex: -1, // 编辑态分组索引，默认 -1
+  }
+
+  componentDidMount = () => {
+    this.groupInputRefs = [];
+  }
+
+  componentDidUpdate = () => {
+    if (this.state.editGroupNameIndex !== -1) {
+      this.groupInputRefs[this.state.editGroupNameIndex].focus();
+    }
   }
 
   formatMessage = id => this.props.intl.formatMessage({ id })
@@ -34,6 +54,14 @@ class InterfaceSceneList extends Component {
       formType: 'create',
       stageData: {},
       sceneFormVisible: true,
+    });
+  }
+
+  showGroupForm = () => {
+    this.setState({
+      formType: 'create',
+      stageData: {},
+      groupFormVisible: true,
     });
   }
 
@@ -51,7 +79,13 @@ class InterfaceSceneList extends Component {
     });
   }
 
-  confirmSceneForm = async ({ sceneName, contextConfig, data, format }) => {
+  hideGroupForm = () => {
+    this.setState({
+      groupFormVisible: false,
+    });
+  }
+
+  confirmSceneForm = async ({ sceneName, groupUniqId, contextConfig, data, format }) => {
     const { uniqId: interfaceUniqId } = this.props.interfaceData;
     this.setState({
       sceneFormLoading: true,
@@ -64,6 +98,7 @@ class InterfaceSceneList extends Component {
       uniqId: this.state.stageData.uniqId,
       interfaceUniqId,
       sceneName,
+      groupUniqId,
       contextConfig,
       data,
       format,
@@ -76,6 +111,52 @@ class InterfaceSceneList extends Component {
       this.setState({
         sceneFormVisible: false,
       }, this.postCreate);
+    }
+  }
+
+  confirmGroupForm = async ({ groupName }) => {
+    const { uniqId: interfaceUniqId } = this.props.interfaceData;
+    this.setState({
+      groupFormLoading: true,
+    });
+    const apiName = this.state.stageData.uniqId
+      ? 'updateGroup'
+      : 'createGroup';
+
+    const params = {
+      uniqId: this.state.stageData.uniqId,
+      belongedUniqId: interfaceUniqId,
+      groupName,
+      groupType: 'Scene',
+    };
+    const res = await groupService[apiName](params);
+    this.setState({
+      groupFormLoading: false,
+    });
+    if (res.success) {
+      this.setState({
+        groupFormVisible: false,
+      }, this.postCreate);
+    }
+  }
+
+  updateGroupName = async ({ uniqId, groupNameNew }) => {
+    if (!groupNameNew) {
+      this.setState({
+        editGroupNameIndex: -1,
+      });
+      return;
+    }
+    const res = await groupService.updateGroupName({
+      uniqId,
+      groupName: groupNameNew,
+    });
+
+    if (res.success) {
+      this.setState({
+        editGroupNameIndex: -1,
+      });
+      this.props.updateInterFaceAndScene();
     }
   }
 
@@ -105,60 +186,115 @@ class InterfaceSceneList extends Component {
     lg: 3,
   }
 
-  renderSceneList = () => {
+  renderSceneGroupList = () => {
     const formatMessage = this.formatMessage;
-    const { sceneList, selectedScene } = this.props;
+    const { sceneGroupList, selectedScene } = this.props;
     const disabled = this.props.disabled;
     return (
-      <Row>
+      <Collapse
+        defaultActiveKey={['0']}
+        className="scene-group-collapse"
+        ghost
+        expandIconPosition="left"
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+      >
         {
-          sceneList.filter(value => {
-            return value.sceneName.toLowerCase().includes(this.state.filterString);
-          }).map((value, index) => {
-            const isAvtive = selectedScene.uniqId === value.uniqId;
-            const classNames = isAvtive ? [
-              'common-list-item',
-              'common-list-item-active',
-            ] : [ 'common-list-item' ];
-            if (disabled) classNames.push('disabled');
-            return <Col
-              {...this.defaultColProps}
-              key={value.uniqId}
-              data-accessbilityid={`project-api-scene-list-${index}`}
-              disabled={this.props.disabled}
-            >
-              <div className={classNames.join(' ')}>
-                <div className="common-list-item-name"
-                  title={`${formatMessage('sceneList.sceneName')} ${value.sceneName}`}
-                  onClick={() => !disabled && this.props.changeSelectedScene(value)}
-                >
-                  {value.sceneName}
-                </div>
-                {
-                  !disabled && <div className="common-list-item-operation">
-                    <Tooltip title={formatMessage('sceneList.updateScene')}>
-                      <EditOutlined
-                        onClick={() => this.showUpdateForm(value)}
-                      />
-                    </Tooltip>
-                    <Tooltip title={this.formatMessage('sceneList.deleteScene')}>
-                      <Popconfirm
-                        placement="right"
-                        title={formatMessage('common.deleteTip')}
-                        onConfirm={() => this.props.deleteScene(value)}
-                        okText={formatMessage('common.confirm')}
-                        cancelText={formatMessage('common.cancel')}
-                      >
-                        <DeleteOutlined />
-                      </Popconfirm>
-                    </Tooltip>
-                  </div>
+          sceneGroupList.map((value, index) => {
+            return (
+              <Panel
+                className="scene-group-collapse-panel"
+                header={
+                  this.state.editGroupNameIndex === index ? (
+                    <Input
+                      defaultValue={value.groupName}
+                      ref={(groupInputRef) => { this.groupInputRefs[index] = groupInputRef; }}
+                      onBlur={(e) => {
+                        this.updateGroupName({
+                          uniqId: value.groupUniqId,
+                          groupNameNew: e.target.value,
+                        });
+                      }}
+                      onPressEnter={(e) => {
+                        this.updateGroupName({
+                          uniqId: value.groupUniqId,
+                          groupNameNew: e.target.value,
+                        });
+                      }}
+                    />
+                  ) : (
+                    <span>{value.groupName}</span>
+                  )
                 }
-              </div>
-            </Col>;
+                collapsible="header"
+                key={index}
+                extra={
+                  <span className="scene-group-control">
+                    <EditOutlined onClick={() => { this.setState({ editGroupNameIndex: index }); }} style={{ marginRight: '4px' }} />
+                    <Popconfirm
+                      title={formatMessage('common.deleteTip')}
+                      onConfirm={() => this.props.deleteSceneGroup(value)}
+                      okText={formatMessage('common.confirm')}
+                      cancelText={formatMessage('common.cancel')}
+                    >
+                      <DeleteOutlined style={{color: '#f5222d'}} className="delete-icon" />
+                    </Popconfirm>
+                  </span>
+                }
+              >
+                <Row>
+                  {
+                    value.sceneList.filter(value => {
+                      return value.sceneName.toLowerCase().includes(this.state.filterString);
+                    }).map((value, index) => {
+                      const isAvtive = selectedScene.uniqId === value.uniqId;
+                      const classNames = isAvtive ? [
+                        'common-list-item',
+                        'common-list-item-active',
+                      ] : [ 'common-list-item' ];
+                      if (disabled) classNames.push('disabled');
+                      return <Col
+                        {...this.defaultColProps}
+                        key={value.uniqId}
+                        data-accessbilityid={`project-api-scene-list-${index}`}
+                        disabled={this.props.disabled}
+                      >
+                        <div className={classNames.join(' ')}>
+                          <div className="common-list-item-name"
+                            title={`${formatMessage('sceneList.sceneName')} ${value.sceneName}`}
+                            onClick={() => !disabled && this.props.changeSelectedScene(value)}
+                          >
+                            {value.sceneName}
+                          </div>
+                          {
+                            !disabled && <div className="common-list-item-operation">
+                              <Tooltip title={formatMessage('sceneList.updateScene')}>
+                                <EditOutlined
+                                  onClick={() => this.showUpdateForm(value)}
+                                />
+                              </Tooltip>
+                              <Tooltip title={this.formatMessage('sceneList.deleteScene')}>
+                                <Popconfirm
+                                  placement="right"
+                                  title={formatMessage('common.deleteTip')}
+                                  onConfirm={() => this.props.deleteScene(value)}
+                                  okText={formatMessage('common.confirm')}
+                                  cancelText={formatMessage('common.cancel')}
+                                >
+                                  <DeleteOutlined />
+                                </Popconfirm>
+                              </Tooltip>
+                            </div>
+                          }
+                        </div>
+                      </Col>;
+                    })
+                  }
+                </Row>
+              </Panel>
+            );
           })
         }
-      </Row>
+      </Collapse>
     );
   }
 
@@ -196,7 +332,7 @@ class InterfaceSceneList extends Component {
           )
         }
         {contextConfig && showResInfo
-          ? <div>
+          ? <div className="res-info">
             <div className="res-header-info">
               <span>{formatMessage('sceneList.responseDelayShowInfo')}：</span>
               <span>{contextConfig.responseDelay}s</span>
@@ -230,6 +366,16 @@ class InterfaceSceneList extends Component {
               <PlusCircleOutlined />
               {formatMessage('sceneList.createScene')}
             </Button>
+            &nbsp;&nbsp;
+            <Button
+              disabled={disabled}
+              type="primary"
+              data-accessbilityid="project-api-scene-group-add-btn"
+              onClick={this.showGroupForm}
+            >
+              <PlusCircleOutlined />
+              {formatMessage('sceneList.createSceneGroup')}
+            </Button>
           </Col>
         </Row>
 
@@ -238,7 +384,9 @@ class InterfaceSceneList extends Component {
             ? <FormattedMessage id='sceneList.switchSceneDisabledHint'/>
             : <FormattedMessage id='sceneList.switchSceneHint'/> }
         </div>
-        { this.renderSceneList() }
+
+        { this.renderSceneGroupList() }
+
         <SceneForm
           experimentConfig={this.props.experimentConfig}
           visible={this.state.sceneFormVisible}
@@ -246,6 +394,15 @@ class InterfaceSceneList extends Component {
           onOk={this.confirmSceneForm}
           onChangeMode={this.onChangeMode}
           confirmLoading={this.state.sceneFormLoading}
+          stageData={this.state.stageData}
+          groupList={this.props.groupList}
+        />
+
+        <GroupForm
+          visible={this.state.groupFormVisible}
+          onCancel={this.hideGroupForm}
+          onOk={this.confirmGroupForm}
+          confirmLoading={this.state.groupFormLoading}
           stageData={this.state.stageData}
         />
       </section>

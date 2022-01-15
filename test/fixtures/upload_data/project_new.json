@@ -1,0 +1,143 @@
+[
+  {
+    "groupName": "默认分组",
+    "groupUniqId": "e0d3d49c-1818-4cad-8482-5568c7a88440",
+    "interfaceList": [
+      {
+        "pathname": "add",
+        "method": "ALL",
+        "description": "add data",
+        "uniqId": "50196be5-6489-47b1-8dce-a9359690219b",
+        "groupUniqId": "e0d3d49c-1818-4cad-8482-5568c7a88440",
+        "currentScene": "fail",
+        "proxyConfig": {},
+        "sceneGroupList": [
+          {
+            "groupName": "默认分组",
+            "groupUniqId": "2a986902-54db-4863-8113-d70d9e6278f5",
+            "sceneList": [
+              {
+                "sceneName": "success",
+                "data": {
+                  "success": true
+                },
+                "interfaceUniqId": "50196be5-6489-47b1-8dce-a9359690219b",
+                "contextConfig": {},
+                "uniqId": "bb958ec9-99fc-4952-9436-62659ebe7e79",
+                "format": "json",
+                "groupUniqId": "2a986902-54db-4863-8113-d70d9e6278f5",
+                "createdAt": "2022-01-14T08:04:56.081Z",
+                "updatedAt": "2022-01-14T08:05:47.641Z"
+              },
+              {
+                "sceneName": "fail",
+                "data": {
+                  "success": false
+                },
+                "interfaceUniqId": "50196be5-6489-47b1-8dce-a9359690219b",
+                "contextConfig": {},
+                "uniqId": "d54fb034-a25f-4f41-9065-0e84739b68c2",
+                "format": "json",
+                "groupUniqId": "2a986902-54db-4863-8113-d70d9e6278f5",
+                "createdAt": "2022-01-14T08:04:56.091Z",
+                "updatedAt": "2022-01-14T08:05:47.641Z"
+              }
+            ]
+          }
+        ],
+        "schemas": [
+          {
+            "type": "response",
+            "data": {
+              "schemaData": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "description": ""
+                  }
+                },
+                "required": []
+              }
+            },
+            "interfaceUniqId": "50196be5-6489-47b1-8dce-a9359690219b",
+            "uniqId": "de1cfefb-8a06-4aac-b060-dfbe2ca532f2",
+            "createdAt": "2022-01-14T08:04:56.100Z",
+            "updatedAt": "2022-01-14T08:04:56.100Z"
+          }
+        ]
+      },
+      {
+        "pathname": "delete",
+        "method": "ALL",
+        "description": "delete data",
+        "uniqId": "35ad0191-a4cc-41fb-aceb-3dbb36d7c9f7",
+        "groupUniqId": "e0d3d49c-1818-4cad-8482-5568c7a88440",
+        "currentScene": "fail",
+        "proxyConfig": {
+          "enabled": true,
+          "proxyList": [
+            {
+              "proxyUrl": "http://127.0.0.1:7001"
+            }
+          ]
+        },
+        "sceneGroupList": [
+          {
+            "groupName": "默认分组",
+            "groupUniqId": "d5fccb28-cf46-46e0-9b17-ce1dfbb3d16a",
+            "sceneList": [
+              {
+                "sceneName": "success",
+                "data": {
+                  "success": true
+                },
+                "interfaceUniqId": "35ad0191-a4cc-41fb-aceb-3dbb36d7c9f7",
+                "contextConfig": {},
+                "uniqId": "be9866de-6b5e-42f3-96c4-f78df56bcd1f",
+                "format": "json",
+                "groupUniqId": "d5fccb28-cf46-46e0-9b17-ce1dfbb3d16a",
+                "createdAt": "2022-01-14T08:04:56.127Z",
+                "updatedAt": "2022-01-14T08:05:51.386Z"
+              },
+              {
+                "sceneName": "fail",
+                "data": {
+                  "success": false
+                },
+                "interfaceUniqId": "35ad0191-a4cc-41fb-aceb-3dbb36d7c9f7",
+                "contextConfig": {},
+                "uniqId": "3d45cd07-3163-4a87-b6c9-db1a47e04855",
+                "format": "json",
+                "groupUniqId": "d5fccb28-cf46-46e0-9b17-ce1dfbb3d16a",
+                "createdAt": "2022-01-14T08:04:56.135Z",
+                "updatedAt": "2022-01-14T08:05:51.386Z"
+              }
+            ]
+          }
+        ],
+        "schemas": [
+          {
+            "type": "response",
+            "data": {
+              "schemaData": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "description": ""
+                  }
+                },
+                "required": []
+              }
+            },
+            "interfaceUniqId": "35ad0191-a4cc-41fb-aceb-3dbb36d7c9f7",
+            "uniqId": "6a8c7952-e767-418c-9e2e-5edee9aeb0d9",
+            "createdAt": "2022-01-14T08:04:56.145Z",
+            "updatedAt": "2022-01-14T08:04:56.145Z"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -2,7 +2,7 @@
 
 const { assert, app } = require('egg-mock/bootstrap');
 
-describe('test/app/service/project.js', () => {
+describe('test/app/service/project.test.js', () => {
   let ctx;
 
   beforeEach(async () => {

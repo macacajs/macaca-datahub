@@ -8,7 +8,7 @@ class SceneController extends Controller {
     const ctx = this.ctx;
     const { interfaceUniqId } = ctx.query;
     ctx.assertParam({ interfaceUniqId });
-    const res = await ctx.service.scene.querySceneByInterfaceUniqId({ interfaceUniqId });
+    const res = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({ interfaceUniqId });
     ctx.success(res);
   }
 
@@ -21,10 +21,10 @@ class SceneController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const { interfaceUniqId, sceneName, contextConfig, data, format } = ctx.request.body;
-    ctx.assertParam({ interfaceUniqId, sceneName, contextConfig, data });
+    const { interfaceUniqId, sceneName, groupUniqId, contextConfig, data, format } = ctx.request.body;
+    ctx.assertParam({ interfaceUniqId, sceneName, groupUniqId, contextConfig, data });
     const res = await ctx.service.scene.createScene({
-      interfaceUniqId, sceneName, contextConfig, data, format,
+      interfaceUniqId, sceneName, groupUniqId, contextConfig, data, format,
     });
     await ctx.service.interface.updateInterface({
       uniqId: interfaceUniqId,

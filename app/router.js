@@ -46,6 +46,11 @@ module.exports = app => {
   router.put('/api/scene/:uniqId', controller.api.scene.update);
   router.delete('/api/scene/:uniqId', controller.api.scene.delete);
 
+  router.get('/api/group', controller.api.group.showAll);
+  router.post('/api/group', controller.api.group.create);
+  router.put('/api/group/:uniqId', controller.api.group.update);
+  router.delete('/api/group/:uniqId', controller.api.group.delete);
+
   router.get('/api/preview/scene', controller.api.preview.scene);
 
   router.get('/api/schema', controller.api.schema.showAll);

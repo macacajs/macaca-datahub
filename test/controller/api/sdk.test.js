@@ -7,23 +7,56 @@ const {
 
 describe('test/app/controller/sdk.test.js', () => {
   let ctx;
+  let projectUniqId;
+  let interfaceGroupUniqId;
+  let interfaceUniqId;
+  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
+
+    const [{ uniqId: _projectUniqId }] = await ctx.model.Project.bulkCreate([
+      {
+        projectName: 'baz',
+        description: 'bazd',
+      },
+    ]);
+    projectUniqId = _projectUniqId;
+    const [{ uniqId: _interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'interfaceGroup1',
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      },
+    ]);
+    interfaceGroupUniqId = _interfaceGroupUniqId;
+    const [{ uniqId: _interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      {
+        projectUniqId,
+        pathname: 'api/path',
+        method: 'ALL',
+        description: 'description',
+        groupUniqId: interfaceGroupUniqId,
+      },
+    ]);
+    interfaceUniqId = _interfaceUniqId;
+    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'sceneGroup1',
+        groupType: 'Scene',
+        belongedUniqId: interfaceUniqId,
+      },
+    ]);
+    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('GET /api/sdk/scene_data get scene data', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -38,17 +71,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('GET /api/sdk/scene_data get scene data, interface fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -65,17 +93,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('GET /api/sdk/scene_data get scene data, project fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -91,18 +114,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_scene switch scene data', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -112,6 +129,8 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
+        groupUniqId: sceneGroupUniqId,
+        contextConfig: {},
         data: { success: false },
       });
 
@@ -148,17 +167,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_scene switch scene data, interface fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -184,17 +198,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_scene switch scene data, project fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -218,18 +227,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_multi_scenes switch multi scene data', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -239,6 +242,8 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
+        groupUniqId: sceneGroupUniqId,
+        contextConfig: {},
         data: { success: false },
       });
 
@@ -257,18 +262,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_all_scenes switch all scene data', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -278,6 +277,7 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: false },
       });
@@ -310,17 +310,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_all_scenes switch all scene data, project fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -342,17 +337,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_all_scenes switch all scene data, scene fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -377,18 +367,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/switch_all_proxy switch all proxy', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -406,18 +390,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/add_global_proxy add global proxy', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -443,18 +421,12 @@ describe('test/app/controller/sdk.test.js', () => {
   });
 
   it('POST /api/sdk/export_data export data', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
-
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'default',
+        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });

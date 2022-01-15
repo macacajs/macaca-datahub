@@ -98,7 +98,7 @@ class ProjectController extends Controller {
     const { uniqId } = ctx.params;
     const res = await ctx.service.transfer.downloadProject({ uniqId });
 
-    ctx.body = JSON.stringify(res.data, null, 2);
+    ctx.body = JSON.stringify(res.dataGroupList, null, 2);
     ctx.attachment(res.fileName);
   }
 

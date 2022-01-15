@@ -42,15 +42,24 @@ describe('test/app/controller/api/project.test.js', () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd', globaProxy: 'http://127.0.0.1' },
     ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
+    const [{ uniqId: interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: projectUniqId, groupName: 'interfaceGroup1', groupType: 'Interface' }
     ]);
+    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
+    ]);
+    const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: projectUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
+    ])
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
+        groupUniqId: sceneGroupUniqId,
+        contextConfig: {},
         data: { success: true },
+        format: 'json',
       });
     const { body: createBody } = await app.httpRequest()
       .get('/api/project');
@@ -85,8 +94,11 @@ describe('test/app/controller/api/project.test.js', () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd' },
     ]);
+    const [{ uniqId: interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: projectUniqId, groupName: 'interfaceGroup1', groupType: 'Interface' }
+    ]);
     await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
+      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
     ]);
     const { body: createBody } = await app.httpRequest()
       .delete(`/api/project/${projectUniqId}`);
@@ -100,11 +112,14 @@ describe('test/app/controller/api/project.test.js', () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'baz', description: 'bazd' },
     ]);
+    const [{ uniqId: interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: projectUniqId, groupName: 'interfaceGroup1', groupType: 'Interface' }
+    ]);
     await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
+      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
     ]);
     const { body: createBody } = await app.httpRequest()
       .get(`/api/project/download/${projectUniqId}`);
-    assert(createBody[0].pathname, 'api/path');
+    assert(createBody[0].interfaceList[0].pathname, 'api/path');
   });
 });

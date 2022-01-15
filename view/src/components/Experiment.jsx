@@ -66,7 +66,7 @@ class Experiment extends Component {
     });
   };
 
-  render() {
+  render () {
     return (
       <div className={styles.wrapper}>
         <Drawer
