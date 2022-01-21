@@ -68,26 +68,6 @@ class Document extends React.Component {
     groupList: [],
   }
 
-  // Initialize data based on hash value
-  getIndexByHash (res) {
-    const params = queryParse(location.hash);
-
-    if (!res.success || !res.data) {
-      return 0;
-    }
-
-    for (let i = 0; i < res.data.length; i++) {
-      const item = res.data[i];
-
-      if (item.method === params.method &&
-        item.pathname === decodeURI(params.pathname)) {
-        return i;
-      }
-    }
-
-    return 0;
-  }
-
   getDefaultSelectedInterface (interfaceGroupList) {
     if (!interfaceGroupList.length) return {};
 
@@ -99,7 +79,6 @@ class Document extends React.Component {
   async componentDidMount () {
     await this.fetchGroupList();
     const interfaceRes = await this.initInterfaceList();
-    // const index = this.getIndexByHash(interfaceRes);
     const selectedInterface = this.getDefaultSelectedInterface(interfaceRes.data.interfaceGroupList) || {};
     let schemaRes = {};
     let sceneRes = {};

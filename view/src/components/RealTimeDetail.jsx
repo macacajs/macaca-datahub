@@ -103,20 +103,6 @@ function SaveSceneFormComponent (props) {
         </Select>
       </FormItem>
       <FormItem
-        name="sceneName"
-        label={formatMessage('sceneList.sceneName')}
-        rules={[
-          {
-            required: true,
-            message: formatMessage('sceneList.invalidSceneName'),
-            pattern: /^[a-z0-9_-]+$/,
-          },
-          { max: 32 },
-        ]}
-      >
-        <Input />
-      </FormItem>
-      <FormItem
         name="sceneGroupUniqId"
         label={formatMessage('group.selectGroup')}
       >
@@ -130,6 +116,20 @@ function SaveSceneFormComponent (props) {
             })
           }
         </Select>
+      </FormItem>
+      <FormItem
+        name="sceneName"
+        label={formatMessage('sceneList.sceneName')}
+        rules={[
+          {
+            required: true,
+            message: formatMessage('sceneList.invalidSceneName'),
+            pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
+          },
+          { max: 128 },
+        ]}
+      >
+        <Input />
       </FormItem>
     </Form>
   </Modal>;

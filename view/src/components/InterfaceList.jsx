@@ -266,7 +266,7 @@ class InterfaceList extends Component {
                 collapsible="header"
                 key={index}
                 extra={
-                  <span className="interface-group-control">
+                  !unControlled ? (<span className="interface-group-control">
                     <EditOutlined
                       className="interface-group-control-edit"
                       onClick={() => {
@@ -282,7 +282,9 @@ class InterfaceList extends Component {
                     >
                       <DeleteOutlined style={{ color: '#f5222d' }} />
                     </Popconfirm>
-                  </span>
+                  </span>) : (
+                    <span />
+                  )
                 }
               >
                 <ul>
@@ -376,7 +378,7 @@ class InterfaceList extends Component {
 
         { this.renderInterfaceList() }
 
-        <div style={{ margin: 16 }}>
+        {!unControlled && <div style={{ margin: 16 }}>
           {this.state.addInterfaceInputIsVisible ? (
             <Input
               ref={(input) => { this.input = input; }}
@@ -411,7 +413,7 @@ class InterfaceList extends Component {
               <FormattedMessage id="group.create" />
             </Button>
           )}
-        </div>
+        </div>}
 
         <InterfaceForm
           visible={this.state.interfaceFormVisible}

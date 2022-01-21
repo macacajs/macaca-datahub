@@ -21,7 +21,7 @@ class SceneService extends Service {
     });
   }
 
-  async querySceneGroupListByInterfaceUniqId({
+  async querySceneDataByInterfaceUniqId({
     interfaceUniqId,
   }, options = {}) {
     const { ctx } = this;
@@ -39,7 +39,7 @@ class SceneService extends Service {
       ],
     });
 
-    // 初始化默认分组
+    // Inventory data initialization default grouping
     if (!groups.length) {
       const group = await ctx.model.Group.create({
         groupName: ctx.gettext('defaultGroupName'),

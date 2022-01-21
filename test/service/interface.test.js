@@ -147,7 +147,7 @@ describe('test/app/service/interface.test.js', () => {
     assert.deepEqual(res[1].proxyConfig, {});
   });
 
-  it('queryInterfaceGroupListByProjectUniqId', async () => {
+  it('queryInterfaceDataByProjectUniqId', async () => {
     await ctx.model.Interface.bulkCreate([
       { pathname: 'api/group1/one', projectUniqId, description: 'api one in group1', groupUniqId: interfaceGroupUniqId1 },
       { pathname: 'api/group1/two', projectUniqId, description: 'api two in group1', groupUniqId: interfaceGroupUniqId1 },
@@ -155,7 +155,7 @@ describe('test/app/service/interface.test.js', () => {
     await ctx.model.Interface.bulkCreate([
       { pathname: 'api/group2/one', projectUniqId, description: 'api one in group2', groupUniqId: interfaceGroupUniqId2 },
     ]);
-    const res = await ctx.service.interface.queryInterfaceGroupListByProjectUniqId({ projectUniqId });
+    const res = await ctx.service.interface.queryInterfaceDataByProjectUniqId({ projectUniqId });
 
     assert(res.interfaceGroupList.length === 2);
     assert(res.interfaceGroupList[0].groupName === 'group1');

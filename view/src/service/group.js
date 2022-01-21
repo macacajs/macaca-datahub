@@ -4,7 +4,7 @@ export async function getGroupList ({ belongedUniqId, groupType }) {
   return request(`/api/group?belongedUniqId=${belongedUniqId}&groupType=${groupType}`, 'GET');
 };
 
-export async function createGroup ({ belongedUniqId, groupName, groupType, method = 'GET' }) {
+export async function createGroup ({ belongedUniqId, groupName, groupType }) {
   return request('/api/group', 'POST', {
     belongedUniqId,
     groupName,

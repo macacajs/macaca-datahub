@@ -80,8 +80,8 @@ describe('test/app/service/scene.test.js', () => {
       assert.deepEqual(res[1].contextConfig, {});
     });
 
-    it('querySceneGroupListByInterfaceUniqId', async () => {
-      const res = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({
+    it('querySceneDataByInterfaceUniqId', async () => {
+      const res = await ctx.service.scene.querySceneDataByInterfaceUniqId({
         interfaceUniqId,
       });
       

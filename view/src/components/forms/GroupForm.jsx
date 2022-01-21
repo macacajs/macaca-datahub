@@ -19,7 +19,6 @@ function GroupFormComponent (props) {
     onCancel,
     onOk,
     confirmLoading,
-    stageData,
   } = props;
   const [form] = Form.useForm();
   const formatMessage = id => props.intl.formatMessage({ id });
@@ -43,9 +42,6 @@ function GroupFormComponent (props) {
     <Form
       layout="vertical"
       form={form}
-      initialValues={{
-        groupName: stageData && stageData.groupName,
-      }}
     >
       <Form.Item
         name="groupName"
