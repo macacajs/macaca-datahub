@@ -232,7 +232,7 @@ class Project extends React.Component {
                 <div className="interface-detail">
                   <Empty
                     className="add-api-hint"
-                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                    image="//macacajs.github.io/macaca-datahub/logo/empty.svg"
                     imageStyle={{
                       height: 120,
                     }}

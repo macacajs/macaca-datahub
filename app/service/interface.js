@@ -110,7 +110,7 @@ class InterfaceService extends Service {
     });
   }
 
-  async queryInterfaceGroupListByProjectUniqId({
+  async queryInterfaceDataByProjectUniqId({
     projectUniqId,
   }, options = {}) {
 
@@ -130,7 +130,7 @@ class InterfaceService extends Service {
       ],
     });
 
-    // 初始化默认分组
+    // Inventory data initialization default grouping
     if (!groups.length) {
       const group = await ctx.model.Group.create({
         groupName: ctx.gettext('defaultGroupName'),

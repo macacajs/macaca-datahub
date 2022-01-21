@@ -8,7 +8,7 @@ class SceneController extends Controller {
     const ctx = this.ctx;
     const { interfaceUniqId } = ctx.query;
     ctx.assertParam({ interfaceUniqId });
-    const res = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({ interfaceUniqId });
+    const res = await ctx.service.scene.querySceneDataByInterfaceUniqId({ interfaceUniqId });
     ctx.success(res);
   }
 

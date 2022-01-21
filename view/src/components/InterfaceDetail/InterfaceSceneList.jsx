@@ -59,8 +59,6 @@ class InterfaceSceneList extends Component {
 
   showGroupForm = () => {
     this.setState({
-      formType: 'create',
-      stageData: {},
       groupFormVisible: true,
     });
   }
@@ -119,17 +117,13 @@ class InterfaceSceneList extends Component {
     this.setState({
       groupFormLoading: true,
     });
-    const apiName = this.state.stageData.uniqId
-      ? 'updateGroup'
-      : 'createGroup';
 
     const params = {
-      uniqId: this.state.stageData.uniqId,
       belongedUniqId: interfaceUniqId,
       groupName,
       groupType: 'Scene',
     };
-    const res = await groupService[apiName](params);
+    const res = await groupService.createGroup(params);
     this.setState({
       groupFormLoading: false,
     });
@@ -192,7 +186,7 @@ class InterfaceSceneList extends Component {
     const disabled = this.props.disabled;
     return (
       <Collapse
-        defaultActiveKey={['0']}
+        defaultActiveKey={['0', '1']}
         className="scene-group-collapse"
         ghost
         expandIconPosition="left"
@@ -403,7 +397,6 @@ class InterfaceSceneList extends Component {
           onCancel={this.hideGroupForm}
           onOk={this.confirmGroupForm}
           confirmLoading={this.state.groupFormLoading}
-          stageData={this.state.stageData}
         />
       </section>
     );

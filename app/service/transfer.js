@@ -11,7 +11,7 @@ class TransferService extends Service {
   }) {
     const { ctx } = this;
 
-    const interfaceGroups = await ctx.service.interface.queryInterfaceGroupListByProjectUniqId({
+    const interfaceGroups = await ctx.service.interface.queryInterfaceDataByProjectUniqId({
       projectUniqId: uniqId,
     });
 
@@ -20,7 +20,7 @@ class TransferService extends Service {
     for (const interfaceGroup of interfaceGroups.interfaceGroupList) {
       const data = [];
       for (const interfaceData of interfaceGroup.interfaceList) {
-        const sceneGroups = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({
+        const sceneGroups = await ctx.service.scene.querySceneDataByInterfaceUniqId({
           interfaceUniqId: interfaceData.uniqId,
         });
 
@@ -128,7 +128,7 @@ class TransferService extends Service {
   }) {
     const { ctx } = this;
 
-    const sceneGroups = await ctx.service.scene.querySceneGroupListByInterfaceUniqId({
+    const sceneGroups = await ctx.service.scene.querySceneDataByInterfaceUniqId({
       interfaceUniqId,
     });
 

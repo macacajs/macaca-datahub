@@ -11,7 +11,7 @@ class InterfaceController extends Controller {
     const ctx = this.ctx;
     const { projectUniqId } = ctx.query;
     ctx.assertParam({ projectUniqId });
-    const res = await ctx.service.interface.queryInterfaceGroupListByProjectUniqId({ projectUniqId });
+    const res = await ctx.service.interface.queryInterfaceDataByProjectUniqId({ projectUniqId });
     ctx.success(res);
   }
 
