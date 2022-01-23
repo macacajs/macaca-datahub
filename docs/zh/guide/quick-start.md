@@ -5,7 +5,7 @@
 创建名字为 sample 项目。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220122173341.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220123234308.png" width="90%" />
 </div>
 
 ## 创建接口分组
@@ -21,7 +21,7 @@
 添加 `test1` 接口, 则对 `http://localhost:8080/api/test1` 请求 mock 数据，可在添加时选择接口分组，便于管理。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220122173744.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220123235130.png" width="90%" />
 </div>
 
 ## 创建场景分组
@@ -37,7 +37,7 @@
 场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。同时，可以对接口响应状态及 header 进行设置, 如不进行特殊配置则返回 `200` 状态码。可在添加场景时选择场景分组，便于管理。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220122175342.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220124000424.png" width="90%" />
 </div>
 
 代理模式, 如有代理场景需求, 配置代理模式。
