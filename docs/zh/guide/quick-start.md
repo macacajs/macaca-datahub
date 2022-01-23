@@ -5,24 +5,39 @@
 创建名字为 sample 项目。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556087099347-92adea0d-cfd1-4319-a825-55db0b39c01a.png" width="75%" />
+  <img src="/macaca-datahub/assets/20220122173341.png" width="90%" />
+</div>
+
+## 创建接口分组
+
+在新建项目时会创建一个默认接口分组, 后续可根据需求新增和修改接口分组。
+
+<div align="center">
+  <img src="/macaca-datahub/assets/add-interface-group.gif" width="90%" />
 </div>
 
 ## 添加接口
 
-添加 `test1` 接口, 则对 `http://localhost:8080/api/test1` 请求 mock 数据。
+添加 `test1` 接口, 则对 `http://localhost:8080/api/test1` 请求 mock 数据，可在添加时选择接口分组，便于管理。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556087110649-c5fb6a9d-0fe6-4e62-8b38-2d16bb0a2947.png" width="75%" />
+  <img src="/macaca-datahub/assets/20220122173744.png" width="90%" />
 </div>
 
+## 创建场景分组
+
+在新建接口时会为接口创建一个默认场景分组, 后续可根据需求新增和修改场景分组。
+
+<div align="center">
+  <img src="/macaca-datahub/assets/add-scene-group.gif" width="90%" />
+</div>
 
 ## 接口构建
 
-场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。同时，可以对接口响应状态及 header 进行设置, 如不进行特殊配置则返回 `200` 状态码。
+场景管理 - 新增场景即接口返回数据 Response， 可添加多个场景方便开发时进行快速切换。同时，可以对接口响应状态及 header 进行设置, 如不进行特殊配置则返回 `200` 状态码。可在添加场景时选择场景分组，便于管理。
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556087121904-1ad45f70-6971-4f3c-bbd9-437094078bd5.png" width="75%" />
+  <img src="/macaca-datahub/assets/20220122175342.png" width="90%" />
 </div>
 
 代理模式, 如有代理场景需求, 配置代理模式。
