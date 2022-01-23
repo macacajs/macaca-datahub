@@ -5,7 +5,7 @@
 Create a new item named sample.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220123234308.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220123234308.png" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 ## Create An Interface Group
@@ -13,7 +13,7 @@ Create a new item named sample.
 A default interface group will be created when a new project is created, and interface groups can be added and modified later as required.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/add-interface-group.gif" width="90%" />
+  <img src="/macaca-datahub/assets/add-interface-group.gif" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 ## Add An Interface
@@ -21,7 +21,7 @@ A default interface group will be created when a new project is created, and int
 Add the interface named `test1`, request the interface `http://localhost:8080/api/test1` and get the corresponding mock data, Interface grouping can be selected when adding, which is convenient for management.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220123235130.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220123235130.png" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 ## Create An Scene Group
@@ -29,7 +29,7 @@ Add the interface named `test1`, request the interface `http://localhost:8080/ap
 When creating a new interface, a default scene group will be created for the interface, and you can add and modify scene groups later as required.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/add-scene-group.gif" width="90%" />
+  <img src="/macaca-datahub/assets/add-scene-group.gif" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 ## Build Interface
@@ -37,7 +37,7 @@ When creating a new interface, a default scene group will be created for the int
 The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching. You can set the interface response information, and return status code `200` if not set. You can select scene groups when adding scenes for easy management.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/20220124000424.png" width="90%" />
+  <img src="/macaca-datahub/assets/20220124000424.png" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 The proxy pattern, it can be configured if required.
