@@ -49,7 +49,7 @@ describe('test/app/controller/api/project.test.js', () => {
       { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
     ]);
     const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      { belongedUniqId: projectUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
+      { belongedUniqId: interfaceUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
     ])
     await app.httpRequest()
       .post('/api/scene/')

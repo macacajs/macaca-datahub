@@ -295,6 +295,7 @@ class InterfaceService extends Service {
     uniqId,
   }) {
     const { ctx } = this;
+
     await ctx.model.Group.destroy({
       where: {
         belongedUniqId: uniqId,
@@ -303,6 +304,12 @@ class InterfaceService extends Service {
     });
 
     await ctx.model.Scene.destroy({
+      where: {
+        interfaceUniqId: uniqId,
+      }
+    });
+
+    await ctx.model.Schema.destroy({
       where: {
         interfaceUniqId: uniqId,
       }

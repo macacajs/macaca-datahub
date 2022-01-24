@@ -222,6 +222,15 @@ describe('test/app/service/interface.test.js', () => {
       description: 'api one',
     });
     const res = await ctx.model.Interface.findAll();
+    const defaultSceneGroup = await ctx.model.Group.findOne({
+      where: {
+        belongedUniqId: res[0].uniqId,
+        groupType: 'Scene',
+      }
+    });
+    assert(defaultSceneGroup.groupName === ctx.gettext('defaultGroupName'));
+    assert(defaultSceneGroup.groupType === 'Scene');
+    assert(defaultSceneGroup instanceof ctx.model.Group);
     assert(res.length === 1);
     assert(res[0] instanceof ctx.model.Interface);
     assert(res[0].protocol === 'http');
@@ -322,20 +331,43 @@ describe('test/app/service/interface.test.js', () => {
   });
 
   it('deleteInterfaceByUniqId', async () => {
-    const { uniqId } = await ctx.model.Interface.create({
-      projectUniqId,
-      pathname: 'api/one',
-      method: 'ALL',
-      description: 'api one',
+    const [{ uniqId: interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: projectUniqId, groupName: 'interfaceGroup1', groupType: 'Interface' }
+    ]);
+    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      { projectUniqId, pathname: 'api/one', method: 'ALL', description: 'api one', groupUniqId: interfaceGroupUniqId },
+    ]);
+    const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      { belongedUniqId: interfaceUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
+    ]);
+    await ctx.service.scene.createScene({
+      interfaceUniqId,
+      sceneName: 'default',
+      groupUniqId: sceneGroupUniqId,
+      data: { id: 'default' },
     });
+
     const deleteCount = await ctx.service.interface.deleteInterfaceByUniqId({
-      uniqId,
+      uniqId: interfaceUniqId,
     });
     const res = await ctx.model.Interface.findAll({
       where: {
         projectUniqId,
       },
     });
+    const sceneGroups = await ctx.model.Group.findAll({
+      where: {
+        belongedUniqId: interfaceUniqId,
+        groupType: 'Scene',
+      },
+    });
+    const scenes = await ctx.model.Scene.findAll({
+      where: {
+        interfaceUniqId,
+      },
+    });
+    assert(sceneGroups.length === 0);
+    assert(scenes.length === 0);
     assert(deleteCount === 1);
     assert(res.length === 0);
   });
