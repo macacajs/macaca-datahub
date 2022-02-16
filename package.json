@@ -18,7 +18,9 @@
     "view/dist/**/*.css",
     "agent.js",
     "app.js",
-    "index.js"
+    "index.js",
+    "macaca-datahub.config.js",
+    ".sequelizerc"
   ],
   "scripts": {
     "start": "npm run db:migrate && eggctl start --port=9200 --title=egg-server-datahub --workers=1",
