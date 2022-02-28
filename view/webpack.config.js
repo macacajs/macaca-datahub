@@ -117,6 +117,23 @@ module.exports = (env, argv) => {
             },
           ],
         },
+        {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: {
+                symbolId: '[name]',
+              },
+            },
+            {
+              loader: 'svgo-loader',
+            },
+          ],
+          include: [
+            path.resolve(__dirname, 'src', 'assets', 'icons'),
+          ],
+        },
       ],
     },
     plugins: [

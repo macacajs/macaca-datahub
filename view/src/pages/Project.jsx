@@ -22,6 +22,7 @@ import InterfaceDetail from '../components/InterfaceDetail/index';
 
 import RealTime from '../components/RealTime';
 import RealTimeDetail from '../components/RealTimeDetail';
+import Icon from '../components/Icon';
 
 import {
   interfaceService,
@@ -232,10 +233,7 @@ class Project extends React.Component {
                 <div className="interface-detail">
                   <Empty
                     className="add-api-hint"
-                    image="../../icon/empty.svg"
-                    imageStyle={{
-                      height: 120,
-                    }}
+                    image={<Icon type="empty" height={120} />}
                     description={this.props.intl.formatMessage({ id: 'project.createApi' })}
                   />
                 </div>
