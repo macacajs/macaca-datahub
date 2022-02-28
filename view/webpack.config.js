@@ -7,9 +7,10 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const pkg = require('./package');
+const { NODE_ENV } = process.env;
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production';
+  const isProduction = NODE_ENV === 'production';
 
   const webpackConfig = {
     stats: {
@@ -148,8 +149,6 @@ module.exports = (env, argv) => {
     ],
     devServer: {
       hot: true,
-      host: '0.0.0.0',
-      stats: 'errors-only',
     },
   };
 
