@@ -15,6 +15,9 @@ import {
   IntlProvider,
 } from 'react-intl';
 
+const importAll = r => r.keys().forEach(r);
+importAll(require.context('./assets/icons', false, /\.svg$/));
+
 import zhCN from './locale/zh_CN';
 import enUS from './locale/en_US';
 import zh from 'react-intl/locale-data/zh';

@@ -11,6 +11,7 @@ import {
 } from 'react-intl';
 
 import SelectHub from '../SelectHub';
+import Icon from '../../components/Icon';
 
 import './header.less';
 
@@ -20,7 +21,14 @@ export default ({ links, pageConfig, context }) => {
   return (
     <Header className="header">
       <a href="/" className="title-con">
-        <img src="//macacajs.github.io/macaca-datahub/logo/logo-color.svg" />
+        <Icon
+          width={30}
+          type="logo-color"
+          style={{
+            position: 'relative',
+            top: 8,
+          }}
+        />
         <span className="title">DataHub</span>
       </a>
       {
