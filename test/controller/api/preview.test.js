@@ -10,7 +10,6 @@ describe('test/controller/api/preview.test.js', () => {
   let projectUniqId;
   let interfaceGroupUniqId;
   let interfaceUniqId;
-  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -40,14 +39,6 @@ describe('test/controller/api/preview.test.js', () => {
       },
     ]);
     interfaceUniqId = _interfaceUniqId;
-    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      {
-        groupName: 'sceneGroup1',
-        groupType: 'Scene',
-        belongedUniqId: interfaceUniqId,
-      },
-    ]);
-    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('GET /api/preview/scene preview scene data', async () => {
@@ -56,7 +47,6 @@ describe('test/controller/api/preview.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -74,7 +64,6 @@ describe('test/controller/api/preview.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });

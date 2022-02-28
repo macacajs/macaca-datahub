@@ -10,7 +10,6 @@ describe('test/app/controller/sdk.test.js', () => {
   let projectUniqId;
   let interfaceGroupUniqId;
   let interfaceUniqId;
-  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -40,14 +39,6 @@ describe('test/app/controller/sdk.test.js', () => {
       },
     ]);
     interfaceUniqId = _interfaceUniqId;
-    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      {
-        groupName: 'sceneGroup1',
-        groupType: 'Scene',
-        belongedUniqId: interfaceUniqId,
-      },
-    ]);
-    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('GET /api/sdk/scene_data get scene data', async () => {
@@ -56,7 +47,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -76,7 +66,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -98,7 +87,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -119,7 +107,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -129,7 +116,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: false },
       });
@@ -172,7 +158,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -203,7 +188,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -232,7 +216,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -242,7 +225,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: false },
       });
@@ -267,7 +249,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -277,7 +258,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: false },
       });
@@ -315,7 +295,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -342,7 +321,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -372,7 +350,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -395,7 +372,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -426,7 +402,6 @@ describe('test/app/controller/sdk.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'default',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });

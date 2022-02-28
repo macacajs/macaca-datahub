@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import {
   Form,
@@ -22,10 +22,7 @@ const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 const Option = Select.Option;
 
-import {
-  sceneService,
-  groupService,
-} from '../service';
+import { sceneService } from '../service';
 import './RealTimeDetail.less';
 
 function SaveSceneFormComponent (props) {
@@ -36,7 +33,6 @@ function SaveSceneFormComponent (props) {
     loading,
   } = props;
   const [form] = Form.useForm();
-  const [groupList, setGroupList] = useState([]);
   const formatMessage = id => props.intl.formatMessage({ id });
   let defaultInterface = '';
   const projectName = window.context && window.context.projectName;
@@ -48,18 +44,6 @@ function SaveSceneFormComponent (props) {
       break;
     }
   }
-
-  const fetchGroupList = async (selectedInterfaceUniqId) => {
-    const res = await groupService.getGroupList({
-      belongedUniqId: selectedInterfaceUniqId,
-      groupType: 'Scene',
-    });
-    setGroupList(res.data || []);
-  };
-
-  useEffect(() => {
-    fetchGroupList(defaultInterface);
-  }, []);
 
   return <Modal
     visible={visible}
@@ -89,30 +73,13 @@ function SaveSceneFormComponent (props) {
         name="interfaceUniqId"
         label={formatMessage('interfaceDetail.selectInterface')}
       >
-        <Select
-          onChange={fetchGroupList}
-        >
+        <Select>
           {
             props.interfaceList.map((interfaceData, index) => {
               return <Option
                 key={index}
                 value={interfaceData.uniqId}
               >{`${interfaceData.pathname} (${interfaceData.method})`}</Option>;
-            })
-          }
-        </Select>
-      </FormItem>
-      <FormItem
-        name="sceneGroupUniqId"
-        label={formatMessage('group.selectGroup')}
-      >
-        <Select>
-          {
-            groupList.map((group, index) => {
-              return <Option
-                key={index}
-                value={group.uniqId}
-              >{group.groupName}</Option>;
             })
           }
         </Select>
@@ -177,14 +144,13 @@ class RealTimeDetail extends React.Component {
     });
   }
 
-  confirmSceneForm = async ({ sceneName, interfaceUniqId, sceneGroupUniqId }) => {
+  confirmSceneForm = async ({ sceneName, interfaceUniqId }) => {
     this.setState({
       sceneFormLoading: true,
     });
     const res = await sceneService.createScene({
       interfaceUniqId,
       sceneName,
-      groupUniqId: sceneGroupUniqId,
       contextConfig: {
         responseDelay: 0,
         responseStatus: 200,

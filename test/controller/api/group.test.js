@@ -81,32 +81,6 @@ describe('test/app/controller/api/group.test.js', () => {
     assert(res.data.groupName === 'group1');
   });
 
-  it('POST /api/group add scene group', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{uniqId: groupUniqId }] = await ctx.model.Group.bulkCreate([
-      { groupName: 'group1', groupType: 'Interface', belongedUniqId: projectUniqId },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId },
-    ]);
-    const body = await app.httpRequest()
-      .post('/api/group')
-      .send({
-        belongedUniqId: interfaceUniqId,
-        groupName: 'group2',
-        groupType: 'Scene',
-      });
-    assert(body.status === 200);
-    assert(body.req.method === 'POST');
-
-    const res = JSON.parse(body.text);
-
-    assert(res.success === true);
-    assert(res.data.groupName === 'group2');
-  });
-
   it('DELETE /api/group/:uniqId delete group', async () => {
     const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
       { projectName: 'snapre', description: 'test' },

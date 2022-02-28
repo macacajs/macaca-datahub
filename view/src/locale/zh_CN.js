@@ -49,14 +49,13 @@ const zhCN = {
   'project.globalProxy': '全局项目代理',
   'project.globalProxy.invalid': '请输入 URL',
 
-  'group.create': '新增分组',
+  'group.create': '添加分组',
   'group.updateName': '更新分组',
   'group.delete': '删除分组',
   'group.newGroupInputPlaceholder': '请输入分组名',
   'group.selectGroup': '请选择分组',
   'group.deleteGroupSuccess': '分组删除成功',
   'group.deleteInterfaceGroupWarning': '分组中有接口未移出，请先删除或转移接口',
-  'group.deleteSceneGroupWarning': '分组中有场景未移出，请先删除或转移接口',
 
   'interfaceList.addInterface': '添加接口',
   'interfaceList.updateInterface': '修改接口',
@@ -80,7 +79,6 @@ const zhCN = {
   'sceneList.switchSceneDisabledHint': '如需使用场景数据，请关闭代理模式',
   'sceneList.searchScene': '搜索场景',
   'sceneList.createScene': '新增场景',
-  'sceneList.createSceneGroup': '新增分组',
   'sceneList.deleteScene': '删除场景',
   'sceneList.updateScene': '更新场景',
   'sceneList.sceneName': '场景名称',

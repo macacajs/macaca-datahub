@@ -72,7 +72,6 @@ describe('test/app/model.define.test.js', () => {
       format: 'STRING',
       createdAt: 'DATE',
       updatedAt: 'DATE',
-      groupUniqId: 'STRING',
     };
     for (const k in map) {
       assert(map[k] === attributes[k].type.constructor.key);

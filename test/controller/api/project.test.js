@@ -48,15 +48,11 @@ describe('test/app/controller/api/project.test.js', () => {
     const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
       { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
     ]);
-    const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      { belongedUniqId: interfaceUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
-    ])
     await app.httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
         format: 'json',

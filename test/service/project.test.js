@@ -94,13 +94,9 @@ describe('test/app/service/project.test.js', () => {
     const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
       { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description', groupUniqId: interfaceGroupUniqId },
     ]);
-    const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      { belongedUniqId: interfaceUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
-    ]);
     await ctx.service.scene.createScene({
       interfaceUniqId,
       sceneName: 'default',
-      groupUniqId: sceneGroupUniqId,
       data: { id: 'default' },
     });
     let res = await ctx.service.project.queryAllProject();
@@ -118,12 +114,6 @@ describe('test/app/service/project.test.js', () => {
         projectUniqId: uniqId,
       },
     });
-    const sceneGroups = await ctx.model.Group.findAll({
-      where: {
-        belongedUniqId: interfaceUniqId,
-        groupType: 'Scene',
-      },
-    });
     const scenes = await ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
@@ -131,7 +121,6 @@ describe('test/app/service/project.test.js', () => {
     });
     assert(interfaceGroups.length === 0);
     assert(interfaces.length === 0);
-    assert(sceneGroups.length === 0);
     assert(scenes.length === 0);
     assert(res.length === 2);
     assert(res[0].projectName === 'baz');

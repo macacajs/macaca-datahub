@@ -205,7 +205,7 @@ class InterfaceService extends Service {
   }) {
     const { ctx } = this;
 
-    const interfaceData = await ctx.model.Interface.create({
+    return await ctx.model.Interface.create({
       projectUniqId,
       pathname,
       method,
@@ -213,14 +213,6 @@ class InterfaceService extends Service {
       groupUniqId,
       proxyConfig,
     });
-
-    await ctx.model.Group.create({
-      groupName: ctx.gettext('defaultGroupName'),
-      groupType: 'Scene',
-      belongedUniqId: interfaceData.uniqId,
-    });
-
-    return interfaceData;
   }
 
   async updateInterface({
@@ -296,13 +288,6 @@ class InterfaceService extends Service {
   }) {
     const { ctx } = this;
 
-    await ctx.model.Group.destroy({
-      where: {
-        belongedUniqId: uniqId,
-        groupType: 'Scene',
-      }
-    });
-
     await ctx.model.Scene.destroy({
       where: {
         interfaceUniqId: uniqId,
@@ -324,31 +309,17 @@ class InterfaceService extends Service {
 
   async duplicateScenes({
     uniqId,
-    sceneGroupList
+    scenes
   }) {
     const { ctx } = this;
 
-    await ctx.model.Group.destroy({
-      where: {
-        belongedUniqId: uniqId,
-      },
-    });
-
-    for (const sceneGroup of sceneGroupList) {
-      const group = await ctx.service.group.createGroup({
-        belongedUniqId: uniqId,
-        groupName: sceneGroup.groupName,
-        groupType: 'Scene',
+    for (const scene of scenes) {
+      await ctx.model.Scene.create({
+        interfaceUniqId: uniqId,
+        sceneName: scene.sceneName,
+        contextConfig: scene.contextConfig,
+        data: scene.data,
       });
-      for (const scene of sceneGroup.sceneList) {
-        await ctx.model.Scene.create({
-          interfaceUniqId: uniqId,
-          sceneName: scene.sceneName,
-          contextConfig: scene.contextConfig,
-          data: scene.data,
-          groupUniqId: group.uniqId,
-        });
-      }
     }
     return null;
   }

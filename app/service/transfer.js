@@ -20,7 +20,7 @@ class TransferService extends Service {
     for (const interfaceGroup of interfaceGroups.interfaceGroupList) {
       const data = [];
       for (const interfaceData of interfaceGroup.interfaceList) {
-        const sceneGroups = await ctx.service.scene.querySceneDataByInterfaceUniqId({
+        const scenes = await ctx.service.scene.querySceneByInterfaceUniqId({
           interfaceUniqId: interfaceData.uniqId,
         });
 
@@ -37,7 +37,7 @@ class TransferService extends Service {
           contextConfig: interfaceData.contextConfig,
           currentScene: interfaceData.currentScene,
           proxyConfig: interfaceData.proxyConfig,
-          sceneGroupList: sceneGroups.sceneGroupList,
+          scenes,
           schemas,
         });
       }
@@ -100,15 +100,9 @@ class TransferService extends Service {
           proxyConfig: interfaceData.proxyConfig,
         });
 
-        // compatible with old interface data
-        const sceneGroupList = interfaceData.sceneGroupList ? interfaceData.sceneGroupList : [{
-          groupName: ctx.gettext('defaultGroupName'),
-          sceneList: interfaceData.scenes,
-        }];
-
         await ctx.service.interface.duplicateScenes({
           uniqId: interfaceStatus.uniqId,
-          sceneGroupList,
+          scenes: interfaceData.scenes,
         });
     
         await ctx.service.interface.duplicateSchemas({
@@ -128,8 +122,10 @@ class TransferService extends Service {
   }) {
     const { ctx } = this;
 
-    const sceneGroups = await ctx.service.scene.querySceneDataByInterfaceUniqId({
-      interfaceUniqId,
+    const scenes = await ctx.model.Scene.findAll({
+      where: {
+        interfaceUniqId,
+      },
     });
 
     const schemas = await ctx.service.schema.querySchemaByInterfaceUniqId({
@@ -152,7 +148,7 @@ class TransferService extends Service {
         contextConfig: interfaceData.contextConfig,
         currentScene: interfaceData.currentScene,
         proxyConfig: interfaceData.proxyConfig,
-        sceneGroupList: sceneGroups.sceneGroupList,
+        scenes,
         schemas,
       },
     };
@@ -183,15 +179,9 @@ class TransferService extends Service {
       proxyConfig: interfaceData.proxyConfig,
     });
 
-    // compatible with old interface data
-    const sceneGroupList = interfaceData.sceneGroupList ? interfaceData.sceneGroupList : [{
-      groupName: ctx.gettext('defaultGroupName'),
-      sceneList: interfaceData.scenes,
-    }];
-
     await ctx.service.interface.duplicateScenes({
       uniqId: interfaceStatus.uniqId,
-      sceneGroupList,
+      scenes: interfaceData.scenes,
     });
 
     await ctx.service.interface.duplicateSchemas({

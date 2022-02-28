@@ -10,7 +10,6 @@ describe('test/app/controller/data.test.js', () => {
   let projectUniqId;
   let interfaceGroupUniqId;
   let interfaceUniqId;
-  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -40,14 +39,6 @@ describe('test/app/controller/data.test.js', () => {
       },
     ]);
     interfaceUniqId = _interfaceUniqId;
-    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      {
-        groupName: 'sceneGroup1',
-        groupType: 'Scene',
-        belongedUniqId: interfaceUniqId,
-      },
-    ]);
-    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('GET /data/baz/api/path', async () => {
@@ -56,7 +47,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -73,7 +63,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'id_1',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { id: 1 },
       });
@@ -82,7 +71,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'success',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -107,7 +95,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {
           responseDelay: '2',
           responseStatus: '204',
@@ -130,7 +117,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -170,7 +156,6 @@ describe('test/app/controller/data.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });

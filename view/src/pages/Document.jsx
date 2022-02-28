@@ -63,8 +63,7 @@ class Document extends React.Component {
     selectedInterface: {},
     schemaData: [],
     sceneList: [],
-    sceneGroupList: [],
-    currentScene: {},
+    currentScene: '',
     groupList: [],
   }
 
@@ -91,8 +90,7 @@ class Document extends React.Component {
       interfaceGroupList: interfaceRes.data.interfaceGroupList || [],
       selectedInterface,
       schemaData: schemaRes.data || [],
-      sceneList: sceneRes.data.sceneList || [],
-      sceneGroupList: sceneRes.data.sceneGroupList || [],
+      sceneList: sceneRes.data || [],
     });
   }
 
@@ -106,8 +104,7 @@ class Document extends React.Component {
       const sceneRes = await sceneService.getSceneList({ interfaceUniqId });
       this.setState({
         schemaData: schemaRes.data || [],
-        sceneList: sceneRes.data.sceneList || [],
-        sceneGroupList: sceneRes.data.sceneGroupList || [],
+        sceneList: sceneRes.data || [],
       });
     }
   }
@@ -144,52 +141,25 @@ class Document extends React.Component {
   }
 
   changeSceneDoc = value => {
-    const scene = this.state.sceneList.find(item => item.uniqId === value);
     const params = queryParse(location.hash);
-    params.scene = scene.sceneName;
+    params.scene = value;
     location.hash = `#/?${serialize(params)}`;
 
     this.setState({
-      currentScene: scene,
+      currentScene: value,
     });
-  }
-
-  changeSceneGroup = value => {
-    const sceneGroup = this.state.sceneGroupList.find(item => item.groupUniqId === value);
-    const params = queryParse(location.hash);
-    params.scene_group = sceneGroup.groupName;
-    params.scene = null;
-    if (sceneGroup.sceneList.length) {
-      params.scene = sceneGroup.sceneList[0].sceneName;
-      this.setState({
-        currentScene: sceneGroup.sceneList[0],
-      });
-    } else {
-      this.setState({
-        currentScene: {},
-      });
-    }
-    location.hash = `#/?${serialize(params)}`;
   }
 
   render () {
     const params = queryParse(location.hash);
     const sceneList = this.state.sceneList;
-    const sceneGroupList = this.state.sceneGroupList;
     const sceneData = sceneList.find(item => item.sceneName === params.scene);
-    const sceneGroupData = sceneGroupList.find(item => item.groupName === params.scene_group);
     let currentScene = this.state.currentScene;
 
-    if (sceneData) {
-      currentScene = sceneData;
+    if (sceneData && sceneData.sceneName) {
+      currentScene = sceneData.sceneName;
     } else {
-      if (sceneGroupData) {
-        currentScene = {
-          groupUniqId: sceneGroupData && sceneGroupData.groupUniqId,
-        };
-      } else {
-        currentScene = (sceneGroupList[0] && sceneGroupList[0].sceneList[0] && sceneGroupList[0].sceneList[0]) || {};
-      }
+      currentScene = sceneList[0] && sceneList[0].sceneName;
     }
 
     return (
@@ -229,37 +199,21 @@ class Document extends React.Component {
           <section>
             <h1 style={{marginTop: '20px'}}><FormattedMessage id="sceneList.sceneData"/></h1>
             <Tabs
-              onChange={this.changeSceneGroup}
+              onChange={this.changeSceneDoc}
               animated={false}
-              activeKey={currentScene.groupUniqId}
+              activeKey={currentScene}
             >
               {
-                this.state.sceneGroupList.map((sceneGroupData, index) =>
+                sceneList.map((sceneData, index) =>
                   <TabPane
-                    size="large"
-                    tab={sceneGroupData.groupName}
-                    key={sceneGroupData.groupUniqId}
+                    size="small"
+                    tab={sceneData.sceneName}
+                    key={sceneData.sceneName}
                   >
-                    <Tabs
-                      onChange={this.changeSceneDoc}
-                      animated={false}
-                      activeKey={currentScene.uniqId}
-                    >
-                      {
-                        sceneGroupData.sceneList.map((sceneData, index) =>
-                          <TabPane
-                            size="small"
-                            tab={sceneData.sceneName}
-                            key={sceneData.uniqId}
-                          >
-                            <CodeMirror
-                              value={JSON.stringify(sceneData.data, null, 2)}
-                              options={codeMirrorOptions}
-                            />
-                          </TabPane>
-                        )
-                      }
-                    </Tabs>
+                    <CodeMirror
+                      value={JSON.stringify(sceneData.data, null, 2)}
+                      options={codeMirrorOptions}
+                    />
                   </TabPane>
                 )
               }

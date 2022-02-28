@@ -10,7 +10,6 @@ describe('test/app/controller/scene.test.js', () => {
   let projectUniqId;
   let interfaceGroupUniqId;
   let interfaceUniqId;
-  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -40,14 +39,6 @@ describe('test/app/controller/scene.test.js', () => {
       },
     ]);
     interfaceUniqId = _interfaceUniqId;
-    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      {
-        groupName: 'sceneGroup1',
-        groupType: 'Scene',
-        belongedUniqId: interfaceUniqId,
-      },
-    ]);
-    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('GET /api/scene show scene', async () => {
@@ -56,16 +47,15 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
     const { body: createBody } = await app.httpRequest()
       .get(`/api/scene?interfaceUniqId=${interfaceUniqId}`);
-    assert.deepStrictEqual(createBody.data.sceneList[0].data, {
+    assert.deepStrictEqual(createBody.data[0].data, {
       success: true,
     });
-    assert(createBody.data.sceneList[0].sceneName, 'waldo');
+    assert(createBody.data[0].sceneName, 'waldo');
 
     const { body: createBody2 } = await app.httpRequest()
       .get(`/api/scene/${sceneUniqId}`);
@@ -81,7 +71,6 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -106,7 +95,6 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });
@@ -139,7 +127,6 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'fail',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: false },
       });
@@ -148,7 +135,6 @@ describe('test/app/controller/scene.test.js', () => {
       .send({
         interfaceUniqId,
         sceneName: 'waldo',
-        groupUniqId: sceneGroupUniqId,
         contextConfig: {},
         data: { success: true },
       });

@@ -14,8 +14,17 @@
     width: 100%;
   }
 
+  .add-button {
+    .add-btn {
+      font-size: 24px;
+      color: #1890ff;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+  }
+
   .interface-group-collapse {
-    height: calc(100vh - 240px);
+    height: calc(100vh - 170px);
     overflow-y: auto;
 
     .interface-group-collapse-panel {
@@ -146,10 +155,6 @@
     padding: 0;
   }
 
-  :global(.ant-collapse-header-text) {
-    width: 70%;
-  }
-
   :global(.ant-input) {
     border-radius: 4px;
   }
@@ -158,5 +163,26 @@
     border-radius: 0 4px 4px 0;
     border-left-style: none;
     width: 30px;
+  }
+}
+
+.popover-content {
+  :global(.ant-popover-inner-content) {
+    padding: 0;
+  }
+}
+
+
+.add-item {
+  list-style-type: none;
+  padding: 8px 0;
+
+  li {
+    padding: 4px 24px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
   }
 }

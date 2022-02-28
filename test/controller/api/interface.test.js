@@ -10,7 +10,6 @@ describe('test/app/controller/api/interface.test.js', () => {
   let projectUniqId;
   let interfaceGroupUniqId;
   let interfaceUniqId;
-  let sceneGroupUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -40,14 +39,6 @@ describe('test/app/controller/api/interface.test.js', () => {
       },
     ]);
     interfaceUniqId = _interfaceUniqId;
-    const [{ uniqId: _sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      {
-        groupName: 'sceneGroup1',
-        groupType: 'Scene',
-        belongedUniqId: interfaceUniqId,
-      },
-    ]);
-    sceneGroupUniqId = _sceneGroupUniqId;
   });
 
   it('PUT /api/interface/:uniqId delete proxy', async () => {
@@ -157,11 +148,7 @@ describe('test/app/controller/api/interface.test.js', () => {
       groupUniqId: interfaceGroupUniqId,
       currentScene: '',
       proxyConfig: {},
-      sceneGroupList: [{
-        groupName: 'sceneGroup1',
-        groupUniqId: sceneGroupUniqId,
-        sceneList: [],
-      }],
+      scenes: [],
       schemas: [],
     });
   });

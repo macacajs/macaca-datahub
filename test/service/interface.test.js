@@ -7,7 +7,6 @@ describe('test/app/service/interface.test.js', () => {
   let ctx;
   let projectUniqId;
   let interfaceGroupUniqId1;
-  let interfaceGroupUniqId2;
 
   beforeEach(async () => {
     ctx = app.mockContext();
@@ -20,7 +19,7 @@ describe('test/app/service/interface.test.js', () => {
     ]);
     projectUniqId = _projectUniqId;
 
-    const [{ uniqId: _interfaceGroupUniqId1 }, { uniqId: _interfaceGroupUniqId2 }] = await ctx.model.Group.bulkCreate([
+    const [{ uniqId: _interfaceGroupUniqId1 }] = await ctx.model.Group.bulkCreate([
       {
         groupName: 'group1',
         groupType: 'Interface',
@@ -33,7 +32,6 @@ describe('test/app/service/interface.test.js', () => {
       },
     ]);
     interfaceGroupUniqId1 = _interfaceGroupUniqId1;
-    interfaceGroupUniqId2 = _interfaceGroupUniqId2;
   });
 
   it('queryInterfaceByHTTPContext', async () => {
@@ -147,55 +145,6 @@ describe('test/app/service/interface.test.js', () => {
     assert.deepEqual(res[1].proxyConfig, {});
   });
 
-  it('queryInterfaceDataByProjectUniqId', async () => {
-    await ctx.model.Interface.bulkCreate([
-      { pathname: 'api/group1/one', projectUniqId, description: 'api one in group1', groupUniqId: interfaceGroupUniqId1 },
-      { pathname: 'api/group1/two', projectUniqId, description: 'api two in group1', groupUniqId: interfaceGroupUniqId1 },
-    ]);
-    await ctx.model.Interface.bulkCreate([
-      { pathname: 'api/group2/one', projectUniqId, description: 'api one in group2', groupUniqId: interfaceGroupUniqId2 },
-    ]);
-    const res = await ctx.service.interface.queryInterfaceDataByProjectUniqId({ projectUniqId });
-
-    assert(res.interfaceGroupList.length === 2);
-    assert(res.interfaceGroupList[0].groupName === 'group1');
-    assert(res.interfaceGroupList[0].groupUniqId === interfaceGroupUniqId1);
-    assert(res.interfaceGroupList[0].interfaceList.length === 2);
-    assert(res.interfaceGroupList[0].interfaceList[0].protocol === 'http');
-    assert(res.interfaceGroupList[0].interfaceList[0].pathname === 'api/group1/one');
-    assert(res.interfaceGroupList[0].interfaceList[0].method === 'GET');
-    assert(res.interfaceGroupList[0].interfaceList[0].projectUniqId === projectUniqId);
-    assert(res.interfaceGroupList[0].interfaceList[0].groupUniqId === interfaceGroupUniqId1);
-    assert(res.interfaceGroupList[0].interfaceList[0].description === 'api one in group1');
-    assert(res.interfaceGroupList[0].interfaceList[0].currentScene === '');
-    assert.deepEqual(res.interfaceGroupList[0].interfaceList[0].proxyConfig, {});
-    assert(res.interfaceGroupList[0].interfaceList[1].protocol === 'http');
-    assert(res.interfaceGroupList[0].interfaceList[1].pathname === 'api/group1/two');
-    assert(res.interfaceGroupList[0].interfaceList[1].method === 'GET');
-    assert(res.interfaceGroupList[0].interfaceList[1].projectUniqId === projectUniqId);
-    assert(res.interfaceGroupList[0].interfaceList[1].groupUniqId === interfaceGroupUniqId1);
-    assert(res.interfaceGroupList[0].interfaceList[1].description === 'api two in group1');
-    assert(res.interfaceGroupList[0].interfaceList[1].currentScene === '');
-    assert.deepEqual(res.interfaceGroupList[0].interfaceList[1].proxyConfig, {});
-
-    assert(res.interfaceGroupList[1].groupName === 'group2');
-    assert(res.interfaceGroupList[1].groupUniqId === interfaceGroupUniqId2);
-    assert(res.interfaceGroupList[1].interfaceList.length === 1);
-    assert(res.interfaceGroupList[1].interfaceList[0].protocol === 'http');
-    assert(res.interfaceGroupList[1].interfaceList[0].pathname === 'api/group2/one');
-    assert(res.interfaceGroupList[1].interfaceList[0].method === 'GET');
-    assert(res.interfaceGroupList[1].interfaceList[0].projectUniqId === projectUniqId);
-    assert(res.interfaceGroupList[1].interfaceList[0].groupUniqId === interfaceGroupUniqId2);
-    assert(res.interfaceGroupList[1].interfaceList[0].description === 'api one in group2');
-    assert(res.interfaceGroupList[1].interfaceList[0].currentScene === '');
-    assert.deepEqual(res.interfaceGroupList[1].interfaceList[0].proxyConfig, {});
-
-    assert(res.interfaceList.length === 3);
-    assert(res.interfaceList[0] instanceof ctx.model.Interface);
-    assert(res.interfaceList[1] instanceof ctx.model.Interface);
-    assert(res.interfaceList[2] instanceof ctx.model.Interface);
-  });
-
   it('queryInterfaceByUniqId', async () => {
     const [{
       uniqId: uniqIdOne,
@@ -222,15 +171,6 @@ describe('test/app/service/interface.test.js', () => {
       description: 'api one',
     });
     const res = await ctx.model.Interface.findAll();
-    const defaultSceneGroup = await ctx.model.Group.findOne({
-      where: {
-        belongedUniqId: res[0].uniqId,
-        groupType: 'Scene',
-      }
-    });
-    assert(defaultSceneGroup.groupName === ctx.gettext('defaultGroupName'));
-    assert(defaultSceneGroup.groupType === 'Scene');
-    assert(defaultSceneGroup instanceof ctx.model.Group);
     assert(res.length === 1);
     assert(res[0] instanceof ctx.model.Interface);
     assert(res[0].protocol === 'http');
@@ -337,13 +277,9 @@ describe('test/app/service/interface.test.js', () => {
     const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
       { projectUniqId, pathname: 'api/one', method: 'ALL', description: 'api one', groupUniqId: interfaceGroupUniqId },
     ]);
-    const [{ uniqId: sceneGroupUniqId }] = await ctx.model.Group.bulkCreate([
-      { belongedUniqId: interfaceUniqId, groupName: 'sceneGroup1', groupType: 'Scene' }
-    ]);
     await ctx.service.scene.createScene({
       interfaceUniqId,
       sceneName: 'default',
-      groupUniqId: sceneGroupUniqId,
       data: { id: 'default' },
     });
 
@@ -355,18 +291,11 @@ describe('test/app/service/interface.test.js', () => {
         projectUniqId,
       },
     });
-    const sceneGroups = await ctx.model.Group.findAll({
-      where: {
-        belongedUniqId: interfaceUniqId,
-        groupType: 'Scene',
-      },
-    });
     const scenes = await ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
       },
     });
-    assert(sceneGroups.length === 0);
     assert(scenes.length === 0);
     assert(deleteCount === 1);
     assert(res.length === 0);

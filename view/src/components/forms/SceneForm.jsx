@@ -6,9 +6,6 @@ import {
   message,
   Collapse,
   Radio,
-  Select,
-  Row,
-  Col,
 } from 'antd';
 import { injectIntl } from 'react-intl';
 import { UnControlled as CodeMirror, jsonCodeMirrorOptions, jsCodeMirrorOptions } from '../../common/codemirror';
@@ -16,7 +13,6 @@ import { UnControlled as CodeMirror, jsonCodeMirrorOptions, jsCodeMirrorOptions 
 import './SceneForm.less';
 
 const { Panel } = Collapse;
-const { Option } = Select;
 
 const getCode = (stageData) => {
   if (stageData.format === 'javascript') {
@@ -34,15 +30,8 @@ function SceneFormComponent (props) {
     confirmLoading,
     stageData,
     experimentConfig,
-    groupList,
   } = props;
   const [form] = Form.useForm();
-  form.setFieldsValue({
-    sceneName: stageData.sceneName,
-    responseDelay: (stageData.contextConfig && stageData.contextConfig.responseDelay) || 0,
-    responseStatus: (stageData.contextConfig && stageData.contextConfig.responseStatus) || 200,
-    groupUniqId: (stageData && stageData.groupUniqId) || (groupList[0] && groupList[0].uniqId),
-  });
   let showResInfo = false;
   if (stageData.contextConfig) {
     const { responseDelay, responseStatus, responseHeaders } = stageData.contextConfig;
@@ -120,40 +109,26 @@ function SceneFormComponent (props) {
       <Form
         layout="vertical"
         form={form}
+        initialValues={{
+          sceneName: stageData.sceneName,
+          responseDelay: (stageData.contextConfig && stageData.contextConfig.responseDelay) || 0,
+          responseStatus: (stageData.contextConfig && stageData.contextConfig.responseStatus) || 200,
+        }}
       >
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="sceneName"
-              label={formatMessage('sceneList.sceneName')}
-              rules={[
-                {
-                  required: true,
-                  message: formatMessage('sceneList.invalidSceneName'),
-                  pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
-                },
-                { max: 128 },
-              ]}
-            >
-              <Input style={{ display: 'inline' }} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="groupUniqId"
-              label={formatMessage('group.selectGroup')}>
-              <Select>
-                {
-                  groupList.map(group => {
-                    return (
-                      <Option value={group.uniqId} key={group.uniqId} >{group.groupName}</Option>
-                    );
-                  })
-                }
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          name="sceneName"
+          label={formatMessage('sceneList.sceneName')}
+          rules={[
+            {
+              required: true,
+              message: formatMessage('sceneList.invalidSceneName'),
+              pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
+            },
+            { max: 128 },
+          ]}
+        >
+          <Input style={{ display: 'inline' }} />
+        </Form.Item>
         {isOpenRunJsMode && (
           <Form.Item name="sceneFormat" className="res-format" label={formatMessage('sceneList.sceneFormat')}>
             <span>

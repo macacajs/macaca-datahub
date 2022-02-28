@@ -9,10 +9,10 @@ import {
   Col,
   Input,
   Upload,
-  Button,
   message,
   Tooltip,
   Popconfirm,
+  Popover,
   Collapse,
 } from 'antd';
 
@@ -23,9 +23,9 @@ import {
   SettingOutlined,
   UploadOutlined,
   DownloadOutlined,
-  PlusOutlined,
   CaretRightOutlined,
   EditOutlined,
+  PlusCircleFilled,
 } from '@ant-design/icons';
 
 import {
@@ -34,6 +34,7 @@ import {
 } from 'react-intl';
 
 import InterfaceForm from './forms/InterfaceForm';
+import GroupForm from './forms/GroupForm';
 
 import { interfaceService, groupService } from '../service';
 
@@ -49,6 +50,8 @@ class InterfaceList extends Component {
   state = {
     interfaceFormVisible: false,
     interfaceFormLoading: false,
+    groupFormVisible: false,
+    groupFormLoading: false,
     filterString: '',
     stageData: null,
     addInterfaceInputIsVisible: false,
@@ -70,6 +73,18 @@ class InterfaceList extends Component {
 
   formatMessage = id => this.props.intl.formatMessage({ id });
 
+  showGroupForm = () => {
+    this.setState({
+      groupFormVisible: true,
+    });
+  }
+
+  hideGroupForm = () => {
+    this.setState({
+      groupFormVisible: false,
+    });
+  }
+
   showCreateForm = () => {
     this.setState({
       stageData: null,
@@ -90,15 +105,25 @@ class InterfaceList extends Component {
     });
   }
 
-  createGroup = async (groupName) => {
+  confirmGroupForm = async ({ groupName }) => {
+    this.setState({
+      groupFormLoading: true,
+    });
+
     const res = await groupService.createGroup({
       belongedUniqId: projectUniqId,
       groupName,
       groupType: 'Interface',
     });
 
+    this.setState({
+      groupFormLoading: false,
+    });
+
     if (res.success) {
-      this.props.updateInterfaceList();
+      this.setState({
+        groupFormVisible: false,
+      }, this.props.updateInterfaceList);
     }
   }
 
@@ -244,6 +269,7 @@ class InterfaceList extends Component {
                 header={
                   this.state.editGroupNameIndex === index ? (
                     <Input
+                      style={{ width: '70%' }}
                       defaultValue={interfaceGroup.groupName}
                       ref={(groupInputRef) => { this.groupInputRefs[index] = groupInputRef; }}
                       onBlur={(e) => {
@@ -263,26 +289,29 @@ class InterfaceList extends Component {
                     <span>{interfaceGroup.groupName}</span>
                   )
                 }
-                collapsible="header"
                 key={index}
                 extra={
-                  !unControlled ? (<span className="interface-group-control">
-                    <EditOutlined
-                      className="interface-group-control-edit"
-                      onClick={() => {
-                        this.setState({ editGroupNameIndex: index });
-                      }}
-                    />
-                    <Popconfirm
-                      placement="right"
-                      title={formatMessage('common.deleteTip')}
-                      onConfirm={() => this.deleteInterfaceGroup(interfaceGroup)}
-                      okText={formatMessage('common.confirm')}
-                      cancelText={formatMessage('common.cancel')}
+                  !unControlled ? (
+                    <span
+                      className="interface-group-control"
+                      onClick={e => e.stopPropagation()}
                     >
-                      <DeleteOutlined style={{ color: '#f5222d' }} />
-                    </Popconfirm>
-                  </span>) : (
+                      <EditOutlined
+                        className="interface-group-control-edit"
+                        onClick={() => {
+                          this.setState({ editGroupNameIndex: index });
+                        }}
+                      />
+                      <Popconfirm
+                        placement="right"
+                        title={formatMessage('common.deleteTip')}
+                        onConfirm={() => this.deleteInterfaceGroup(interfaceGroup)}
+                        okText={formatMessage('common.confirm')}
+                        cancelText={formatMessage('common.cancel')}
+                      >
+                        <DeleteOutlined style={{ color: '#f5222d' }} />
+                      </Popconfirm>
+                    </span>) : (
                     <span />
                   )
                 }
@@ -357,63 +386,37 @@ class InterfaceList extends Component {
     return (
       <div className={`${interfaceListClassNames.join(' ')}`}>
         {!unControlled && <Row className="interface-filter-row">
-          <Col span={15}>
+          <Col span={20}>
             <Search
               data-accessbilityid="project-search-api"
               placeholder={formatMessage('interfaceList.searchInterface')}
               onChange={this.filterInterface}
             />
           </Col>
-          <Col span={8} offset={1}>
-            <Button
-              type="primary"
-              data-accessbilityid="project-add-api-list-btn"
-              onClick={this.showCreateForm}
+          <Col span={3} offset={1} className="add-button">
+            <Popover
+              overlayClassName="popover-content"
+              content={
+                <ul className="add-item">
+                  <li onClick={this.showCreateForm}>
+                    <FormattedMessage id="interfaceList.addInterface" />
+                  </li>
+                  <li onClick={this.showGroupForm}>
+                    <FormattedMessage id="group.create" />
+                  </li>
+                </ul>
+              }
+              placement="bottom"
             >
-              <FormattedMessage id="interfaceList.addInterface" />
-            </Button>
+              <PlusCircleFilled
+                className="add-btn"
+                data-accessbilityid="project-add-api-list-btn"
+              />
+            </Popover>
           </Col>
         </Row>}
 
-
         { this.renderInterfaceList() }
-
-        {!unControlled && <div style={{ margin: 16 }}>
-          {this.state.addInterfaceInputIsVisible ? (
-            <Input
-              ref={(input) => { this.input = input; }}
-              placeholder={formatMessage('group.newGroupInputPlaceholder')}
-              onBlur={(e) => {
-                if (!e.target.value) {
-                  this.setState({
-                    addInterfaceInputIsVisible: false,
-                  });
-                  return;
-                };
-                this.createGroup(e.target.value);
-                this.setState({
-                  addInterfaceInputIsVisible: false,
-                });
-                e.target.value = null;
-              }}
-              onPressEnter={(e) => {
-                this.createGroup(e.target.value);
-                this.setState({
-                  addInterfaceInputIsVisible: false,
-                });
-                e.target.value = null;
-              }}
-            />
-          ) : (
-            <Button type="dashed" onClick={() => {
-              this.setState({
-                addInterfaceInputIsVisible: true,
-              });
-            }} block icon={<PlusOutlined />}>
-              <FormattedMessage id="group.create" />
-            </Button>
-          )}
-        </div>}
 
         <InterfaceForm
           visible={this.state.interfaceFormVisible}
@@ -422,6 +425,13 @@ class InterfaceList extends Component {
           confirmLoading={this.state.interfaceFormLoading}
           stageData={this.state.stageData}
           groupList={this.props.groupList}
+        />
+
+        <GroupForm
+          visible={this.state.groupFormVisible}
+          onCancel={this.hideGroupForm}
+          onOk={this.confirmGroupForm}
+          confirmLoading={this.state.groupFormLoading}
         />
       </div>
     );
