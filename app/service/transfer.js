@@ -9,39 +9,50 @@ class TransferService extends Service {
   async downloadProject({
     uniqId,
   }) {
-    const interfaces = await this.ctx.service.interface.queryInterfaceByProjectUniqId({
+    const { ctx } = this;
+
+    const interfaceGroups = await ctx.service.interface.queryInterfaceDataByProjectUniqId({
       projectUniqId: uniqId,
     });
 
-    const data = [];
+    const dataGroupList = [];
 
-    for (const interfaceData of interfaces) {
-      const scenes = await this.ctx.service.scene.querySceneByInterfaceUniqId({
-        interfaceUniqId: interfaceData.uniqId,
-      });
+    for (const interfaceGroup of interfaceGroups.interfaceGroupList) {
+      const data = [];
+      for (const interfaceData of interfaceGroup.interfaceList) {
+        const scenes = await ctx.service.scene.querySceneByInterfaceUniqId({
+          interfaceUniqId: interfaceData.uniqId,
+        });
 
-      const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
-        interfaceUniqId: interfaceData.uniqId,
-      });
+        const schemas = await ctx.service.schema.querySchemaByInterfaceUniqId({
+          interfaceUniqId: interfaceData.uniqId,
+        });
 
-      data.push({
-        pathname: interfaceData.pathname,
-        method: interfaceData.method,
-        description: interfaceData.description,
-        uniqId: interfaceData.uniqId,
-        contextConfig: interfaceData.contextConfig,
-        currentScene: interfaceData.currentScene,
-        proxyConfig: interfaceData.proxyConfig,
-        scenes,
-        schemas,
-      });
+        data.push({
+          pathname: interfaceData.pathname,
+          method: interfaceData.method,
+          description: interfaceData.description,
+          uniqId: interfaceData.uniqId,
+          groupUniqId: interfaceData.groupUniqId,
+          contextConfig: interfaceData.contextConfig,
+          currentScene: interfaceData.currentScene,
+          proxyConfig: interfaceData.proxyConfig,
+          scenes,
+          schemas,
+        });
+      }
+      dataGroupList.push({
+        groupName: interfaceGroup.groupName,
+        groupUniqId: interfaceGroup.groupUniqId,
+        interfaceList: data,
+      })
     }
 
-    const info = await this.ctx.service.project.queryProjectByUniqId({ uniqId });
+    const info = await ctx.service.project.queryProjectByUniqId({ uniqId });
     const fileName = `project_${info.projectName}.json`;
 
     return {
-      data,
+      dataGroupList,
       fileName,
     };
   }
@@ -50,33 +61,55 @@ class TransferService extends Service {
     projectData,
     projectUniqId,
   }) {
-    await this.ctx.model.Interface.destroy({
+    const { ctx } = this;
+
+    await ctx.model.Interface.destroy({
       where: {
         projectUniqId,
       },
     });
 
-    for (const interfaceData of projectData) {
-      const interfaceStatus = await this.ctx.model.Interface.create({
-        projectUniqId,
-        pathname: interfaceData.pathname,
-        method: interfaceData.method,
-        description: interfaceData.description,
-        contextConfig: interfaceData.contextConfig,
-        currentScene: interfaceData.currentScene,
-        proxyConfig: interfaceData.proxyConfig,
+    await ctx.model.Group.destroy({
+      where: {
+        belongedUniqId: projectUniqId,
+      },
+    });
+
+    // compatible with old project data
+    const interfaceGroupList = (projectData[0] && projectData[0].interfaceList) ? projectData : [{
+      groupName: ctx.gettext('defaultGroupName'),
+      interfaceList: projectData,
+    }];
+
+    for (const interfaceGroup of interfaceGroupList) {
+      const group = await ctx.service.group.createGroup({
+        belongedUniqId: projectUniqId,
+        groupName: interfaceGroup.groupName,
+        groupType: 'Interface',
       });
 
-      await this.ctx.service.interface.duplicateScenes({
-        uniqId: interfaceStatus.uniqId,
-        scenes: interfaceData.scenes,
-      });
-  
-      await this.ctx.service.interface.duplicateSchemas({
-        uniqId: interfaceStatus.uniqId,
-        schemas: interfaceData.schemas,
-      });
+      for (const interfaceData of interfaceGroup.interfaceList) {
+        const interfaceStatus = await ctx.model.Interface.create({
+          projectUniqId,
+          pathname: interfaceData.pathname,
+          method: interfaceData.method,
+          description: interfaceData.description,
+          groupUniqId: group.uniqId,
+          contextConfig: interfaceData.contextConfig,
+          currentScene: interfaceData.currentScene,
+          proxyConfig: interfaceData.proxyConfig,
+        });
 
+        await ctx.service.interface.duplicateScenes({
+          uniqId: interfaceStatus.uniqId,
+          scenes: interfaceData.scenes,
+        });
+    
+        await ctx.service.interface.duplicateSchemas({
+          uniqId: interfaceStatus.uniqId,
+          schemas: interfaceData.schemas,
+        });
+      }
     }
 
     return {
@@ -87,17 +120,19 @@ class TransferService extends Service {
   async downloadInterface({
     interfaceUniqId,
   }) {
-    const scenes = await this.ctx.model.Scene.findAll({
+    const { ctx } = this;
+
+    const scenes = await ctx.model.Scene.findAll({
       where: {
         interfaceUniqId,
       },
     });
 
-    const schemas = await this.ctx.service.schema.querySchemaByInterfaceUniqId({
+    const schemas = await ctx.service.schema.querySchemaByInterfaceUniqId({
       interfaceUniqId,
     });
 
-    const interfaceData = await this.ctx.service.interface.queryInterfaceByUniqId({
+    const interfaceData = await ctx.service.interface.queryInterfaceByUniqId({
       uniqId: interfaceUniqId,
     });
     const fileName = `interface_${interfaceData.pathname}_${interfaceData.method}.json`;
@@ -109,6 +144,7 @@ class TransferService extends Service {
         method: interfaceData.method,
         projectUniqId: interfaceData.uniqId,
         description: interfaceData.description,
+        groupUniqId: interfaceData.groupUniqId,
         contextConfig: interfaceData.contextConfig,
         currentScene: interfaceData.currentScene,
         proxyConfig: interfaceData.proxyConfig,
@@ -122,36 +158,40 @@ class TransferService extends Service {
     interfaceData,
     interfaceUniqId,
   }) {
-    const interfaceOldData = await this.ctx.service.interface.queryInterfaceByUniqId({
+    const { ctx } = this;
+
+    const interfaceOldData = await ctx.service.interface.queryInterfaceByUniqId({
       uniqId: interfaceUniqId,
     });
 
-    await this.ctx.service.interface.deleteInterfaceByUniqId({
+    await ctx.service.interface.deleteInterfaceByUniqId({
       uniqId: interfaceUniqId,
     });
 
-    const interfaceStatus = await this.ctx.model.Interface.create({
+    const interfaceStatus = await ctx.model.Interface.create({
       pathname: interfaceOldData.pathname,
       method: interfaceOldData.method,
       projectUniqId: interfaceOldData.projectUniqId,
       description: interfaceOldData.description,
+      groupUniqId: interfaceOldData.groupUniqId,
       contextConfig: interfaceData.contextConfig,
       currentScene: interfaceData.currentScene,
       proxyConfig: interfaceData.proxyConfig,
     });
 
-    await this.ctx.service.interface.duplicateScenes({
+    await ctx.service.interface.duplicateScenes({
       uniqId: interfaceStatus.uniqId,
       scenes: interfaceData.scenes,
     });
 
-    await this.ctx.service.interface.duplicateSchemas({
+    await ctx.service.interface.duplicateSchemas({
       uniqId: interfaceStatus.uniqId,
       schemas: interfaceData.schemas,
     });
 
     return {
       success: true,
+      newInterfaceUniqId: interfaceStatus.uniqId,
     };
   }
 }

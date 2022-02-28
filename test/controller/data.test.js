@@ -7,18 +7,41 @@ const {
 
 describe('test/app/controller/data.test.js', () => {
   let ctx;
+  let projectUniqId;
+  let interfaceGroupUniqId;
+  let interfaceUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
+
+    const [{ uniqId: _projectUniqId }] = await ctx.model.Project.bulkCreate([
+      {
+        projectName: 'baz',
+        description: 'bazd',
+      },
+    ]);
+    projectUniqId = _projectUniqId;
+    const [{ uniqId: _interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'interfaceGroup1',
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      },
+    ]);
+    interfaceGroupUniqId = _interfaceGroupUniqId;
+    const [{ uniqId: _interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      {
+        projectUniqId,
+        pathname: 'api/path',
+        method: 'ALL',
+        description: 'description',
+        groupUniqId: interfaceGroupUniqId,
+      },
+    ]);
+    interfaceUniqId = _interfaceUniqId;
   });
 
   it('GET /data/baz/api/path', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -35,12 +58,6 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path support query.__datahub_scene', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -65,12 +82,6 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path project with empty', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     const body = await app.httpRequest()
       .get('/data/baz/api/path111');
     assert(body.status === 400);
@@ -79,12 +90,6 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path project modify contextConfig', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -107,12 +112,6 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path project modify proxy', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -152,12 +151,6 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path get data with search', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({

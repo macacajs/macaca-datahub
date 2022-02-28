@@ -10,12 +10,13 @@ export async function getOneInterface ({ uniqId }) {
   return request(`/api/interface/${uniqId}`, 'GET');
 };
 
-export async function createInterface ({ pathname, description, method = 'GET' }) {
+export async function createInterface ({ pathname, description, method = 'GET', groupUniqId }) {
   return request('/api/interface', 'POST', {
     projectUniqId,
     pathname,
     description,
     method,
+    groupUniqId,
   });
 };
 
@@ -28,7 +29,7 @@ export async function updateAllProxy ({ projectUniqId, enabled, method = 'POST' 
 
 export async function updateInterface ({ uniqId, ...payload }) {
   const fileds = [
-    'pathname', 'description', 'method',
+    'pathname', 'description', 'method', 'groupUniqId',
     'currentScene', 'proxyConfig',
   ];
   const postData = {};

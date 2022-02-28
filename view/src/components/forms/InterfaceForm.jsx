@@ -23,9 +23,17 @@ function InterfaceFormComponent (props) {
     onOk,
     confirmLoading,
     stageData,
+    groupList,
   } = props;
   const [form] = Form.useForm();
+  form.setFieldsValue({
+    pathname: stageData && stageData.pathname,
+    description: stageData && stageData.description,
+    method: stageData && stageData.method || 'ALL',
+    groupUniqId: (stageData && stageData.groupUniqId) || (groupList[0] && groupList[0].uniqId),
+  });
   const formatMessage = id => props.intl.formatMessage({ id });
+
   return <Modal
     visible={visible}
     destroyOnClose={true}
@@ -46,11 +54,6 @@ function InterfaceFormComponent (props) {
     <Form
       layout="vertical"
       form={form}
-      initialValues={{
-        pathname: stageData && stageData.pathname,
-        description: stageData && stageData.description,
-        method: stageData && stageData.method || 'ALL',
-      }}
     >
       <Form.Item
         name="pathname"
@@ -91,6 +94,19 @@ function InterfaceFormComponent (props) {
           <Option value="POST">POST</Option>
           <Option value="PUT">PUT</Option>
           <Option value="DELETE">DELETE</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="groupUniqId"
+        label={formatMessage('group.selectGroup')}>
+        <Select>
+          {
+            groupList.map(group => {
+              return (
+                <Option value={group.uniqId} key={group.uniqId}>{group.groupName}</Option>
+              );
+            })
+          }
         </Select>
       </Form.Item>
     </Form>

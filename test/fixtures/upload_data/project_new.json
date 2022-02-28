@@ -1,0 +1,127 @@
+[
+  {
+    "groupName": "默认分组",
+    "groupUniqId": "386248cb-b72c-46e0-a659-888a3b0bf804",
+    "interfaceList": [
+      {
+        "pathname": "add",
+        "method": "ALL",
+        "description": "add data",
+        "uniqId": "7c0fb575-da52-4ff9-839c-6ca4123299ee",
+        "groupUniqId": "386248cb-b72c-46e0-a659-888a3b0bf804",
+        "currentScene": "fail",
+        "proxyConfig": {},
+        "scenes": [
+          {
+            "sceneName": "success",
+            "data": {
+              "success": true
+            },
+            "interfaceUniqId": "7c0fb575-da52-4ff9-839c-6ca4123299ee",
+            "contextConfig": {},
+            "uniqId": "eaeaf02d-57c6-4a21-ac4e-55fce49f72c8",
+            "format": "json",
+            "createdAt": "2022-02-27T03:39:47.492Z",
+            "updatedAt": "2022-02-27T03:39:47.492Z"
+          },
+          {
+            "sceneName": "fail",
+            "data": {
+              "success": false
+            },
+            "interfaceUniqId": "7c0fb575-da52-4ff9-839c-6ca4123299ee",
+            "contextConfig": {},
+            "uniqId": "d2f35cf9-c15a-4a3c-b1c6-85f3a5d17e52",
+            "format": "json",
+            "createdAt": "2022-02-27T03:39:47.504Z",
+            "updatedAt": "2022-02-27T03:39:47.504Z"
+          }
+        ],
+        "schemas": [
+          {
+            "type": "response",
+            "data": {
+              "schemaData": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "description": ""
+                  }
+                },
+                "required": []
+              }
+            },
+            "interfaceUniqId": "7c0fb575-da52-4ff9-839c-6ca4123299ee",
+            "uniqId": "7900b0e2-68fd-43ed-bf3e-25f493f96e33",
+            "createdAt": "2022-02-27T03:39:47.520Z",
+            "updatedAt": "2022-02-27T03:39:47.520Z"
+          }
+        ]
+      },
+      {
+        "pathname": "delete",
+        "method": "ALL",
+        "description": "delete data",
+        "uniqId": "34d5b818-a288-4d1c-9098-f82b4b88f04d",
+        "groupUniqId": "386248cb-b72c-46e0-a659-888a3b0bf804",
+        "currentScene": "fail",
+        "proxyConfig": {
+          "enabled": true,
+          "proxyList": [
+            {
+              "proxyUrl": "http://127.0.0.1:7001"
+            }
+          ]
+        },
+        "scenes": [
+          {
+            "sceneName": "success",
+            "data": {
+              "success": true
+            },
+            "interfaceUniqId": "34d5b818-a288-4d1c-9098-f82b4b88f04d",
+            "contextConfig": {},
+            "uniqId": "0d47dc65-8da1-4759-847c-f21fb9a3e022",
+            "format": "json",
+            "createdAt": "2022-02-27T03:39:47.561Z",
+            "updatedAt": "2022-02-27T03:39:47.561Z"
+          },
+          {
+            "sceneName": "fail",
+            "data": {
+              "success": false
+            },
+            "interfaceUniqId": "34d5b818-a288-4d1c-9098-f82b4b88f04d",
+            "contextConfig": {},
+            "uniqId": "66ac07e4-2aa7-4520-b0d7-b5a28155b2e7",
+            "format": "json",
+            "createdAt": "2022-02-27T03:39:47.569Z",
+            "updatedAt": "2022-02-27T03:39:47.569Z"
+          }
+        ],
+        "schemas": [
+          {
+            "type": "response",
+            "data": {
+              "schemaData": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "description": ""
+                  }
+                },
+                "required": []
+              }
+            },
+            "interfaceUniqId": "34d5b818-a288-4d1c-9098-f82b4b88f04d",
+            "uniqId": "b423defb-77bd-4960-8a97-ef07b8b04099",
+            "createdAt": "2022-02-27T03:39:47.579Z",
+            "updatedAt": "2022-02-27T03:39:47.579Z"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -38,7 +38,7 @@ const enUS = {
 
   'project.interfaceList': 'API list',
   'project.realtimeList': 'Realtime snapshot',
-  'project.createApi': 'Please add API',
+  'project.createApi': 'No data, please add API',
   'project.create': 'Create a hub',
   'project.update': 'Update hub',
   'project.name': 'Hub name',
@@ -48,6 +48,14 @@ const enUS = {
   'project.add': 'Add hub',
   'project.globalProxy': 'Global proxy',
   'project.globalProxy.invalid': 'Please input URL',
+
+  'group.create': 'Add group',
+  'group.updateName': 'Modify group',
+  'group.delete': 'Delete group',
+  'group.newGroupInputPlaceholder': 'Please input group name',
+  'group.selectGroup': 'Please select group',
+  'group.deleteGroupSuccess': 'Group deleted successfully.',
+  'group.deleteInterfaceGroupWarning': 'There are interfaces in the group that have not been removed. Please delete or transfer the interfaces first.',
 
   'interfaceList.addInterface': 'Add API',
   'interfaceList.updateInterface': 'Update API',

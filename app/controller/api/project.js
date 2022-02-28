@@ -26,22 +26,22 @@ class ProjectController extends Controller {
     const _res = await ctx.service.project.queryAllProject();
     for (const _item of _res) {
       const item = _item.get({ plain: true });
-      const iterfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({
+      const interfaceList = await ctx.service.interface.queryInterfaceByProjectUniqId({
         projectUniqId: item.uniqId,
       });
-      const allSceneList = await Promise.all(iterfaceList.map(({ uniqId: interfaceUniqId }) => {
+      const allSceneList = await Promise.all(interfaceList.map(({ uniqId: interfaceUniqId }) => {
         return ctx.service.scene.querySceneByInterfaceUniqId({ interfaceUniqId });
       }));
       let bufSize = 0;
       for (const sceneList of allSceneList) {
         for (const scene of sceneList) {
-          const buf = new Buffer(JSON.stringify(scene.data));
+          const buf = new Buffer.from(JSON.stringify(scene.data));
           bufSize += buf.length;
         }
       }
 
       item.capacity = {
-        count: iterfaceList.length,
+        count: interfaceList.length,
         size: filesize(bufSize),
       };
       res.push(item);
@@ -98,7 +98,7 @@ class ProjectController extends Controller {
     const { uniqId } = ctx.params;
     const res = await ctx.service.transfer.downloadProject({ uniqId });
 
-    ctx.body = JSON.stringify(res.data, null, 2);
+    ctx.body = JSON.stringify(res.dataGroupList, null, 2);
     ctx.attachment(res.fileName);
   }
 

@@ -50,8 +50,7 @@
 
 .interface-detail-content {
   margin-top: 10px;
-  padding-left: 20px;
-  padding-top: 20px;
+  padding: 20px;
   border-top: 1px solid #f0f2f5;
   > section:not(:first-of-type) {
     margin-top: 20px;
@@ -90,7 +89,7 @@
 
   .common-list-item-name {
     width: 100%;
-    .ellipsis()
+    .ellipsis();
   }
   .common-list-item-operation {
     transition: all .3s;
@@ -137,4 +136,31 @@
   span:last-child {
     color: #595959;
   }
+}
+
+.res-info {
+  padding: 16px;
+  background: #f7f7f7;
+  border-radius: 8px;
+}
+
+:global(.ant-input) {
+  border-radius: 4px;
+}
+
+:global(.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button) {
+  border-radius: 0 4px 4px 0;
+  border-left-style: none;
+}
+
+:global(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
+  border-radius: 4px;
+}
+
+:global(.ant-collapse) {
+  border-radius: 4px;
+}
+
+:global(.ant-alert) {
+  border-radius: 4px;
 }

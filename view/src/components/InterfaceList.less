@@ -14,11 +14,43 @@
     width: 100%;
   }
 
+  .add-button {
+    .add-btn {
+      font-size: 24px;
+      color: #1890ff;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+  }
+
+  .interface-group-collapse {
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+
+    .interface-group-collapse-panel {
+      &:hover {
+        .interface-group-control {
+          opacity: 1;
+        }
+      }
+
+      .interface-group-control {
+        transition: opacity .5s linear;
+        opacity: 0;
+        margin-right: 4px;
+        font-size: 16px;
+        cursor: pointer;
+
+        .interface-group-control-edit {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+
   ul {
     padding: 0;
-    height: calc(100vh - 100px);
     overflow-y: auto;
-    padding-bottom: 110px;
 
     .is-compact-view {
       min-height: 45px;
@@ -58,14 +90,9 @@
     li {
       cursor: pointer;
       position: relative;
-      padding: 12px 20px 12px 16px;
-      border-top: 1px solid rgba(0, 0, 0, .05);
+      padding: 12px 12px 12px 16px;
       min-height: 100px;
       overflow: hidden;
-
-      &:last-child {
-        border-bottom: 1px solid rgba(0, 0, 0, .05);
-      }
 
       &:hover {
         .interface-control {
@@ -83,7 +110,7 @@
         right: 14px;
         transition: opacity .5s linear;
         opacity: 0;
-        margin-right: 5px;
+        margin-right: 4px;
       }
     }
 
@@ -92,7 +119,7 @@
         opacity: 1;
       }
       background: linear-gradient(
-        to right, #1890ff 0, #1890ff 6px, #fff 4px, #fff 100%
+        to right, #1890ff 0, #1890ff 6px, #f7f7f7 4px, #f7f7f7 100%
       ) no-repeat;
     }
 
@@ -122,5 +149,40 @@
     margin-right: 4px;
     font-size: 16px;
     cursor: pointer;
+  }
+
+  :global(.ant-collapse-ghost > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box) {
+    padding: 0;
+  }
+
+  :global(.ant-input) {
+    border-radius: 4px;
+  }
+
+  :global(.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button) {
+    border-radius: 0 4px 4px 0;
+    border-left-style: none;
+    width: 30px;
+  }
+}
+
+.popover-content {
+  :global(.ant-popover-inner-content) {
+    padding: 0;
+  }
+}
+
+
+.add-item {
+  list-style-type: none;
+  padding: 8px 0;
+
+  li {
+    padding: 4px 24px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
   }
 }

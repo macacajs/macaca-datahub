@@ -1,5 +1,12 @@
 import React, { useRef } from 'react';
-import { Form, Input, Modal, message, Collapse, Radio } from 'antd';
+import {
+  Form,
+  Input,
+  Modal,
+  message,
+  Collapse,
+  Radio,
+} from 'antd';
 import { injectIntl } from 'react-intl';
 import { UnControlled as CodeMirror, jsonCodeMirrorOptions, jsCodeMirrorOptions } from '../../common/codemirror';
 
@@ -15,7 +22,15 @@ const getCode = (stageData) => {
 };
 
 function SceneFormComponent (props) {
-  const { visible, onCancel, onOk, onChangeMode, confirmLoading, stageData, experimentConfig } = props;
+  const {
+    visible,
+    onCancel,
+    onOk,
+    onChangeMode,
+    confirmLoading,
+    stageData,
+    experimentConfig,
+  } = props;
   const [form] = Form.useForm();
   let showResInfo = false;
   if (stageData.contextConfig) {

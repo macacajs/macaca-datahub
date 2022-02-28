@@ -7,18 +7,41 @@ const {
 
 describe('test/app/controller/scene.test.js', () => {
   let ctx;
+  let projectUniqId;
+  let interfaceGroupUniqId;
+  let interfaceUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
+
+    const [{ uniqId: _projectUniqId }] = await ctx.model.Project.bulkCreate([
+      {
+        projectName: 'baz',
+        description: 'bazd',
+      },
+    ]);
+    projectUniqId = _projectUniqId;
+    const [{ uniqId: _interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'interfaceGroup1',
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      },
+    ]);
+    interfaceGroupUniqId = _interfaceGroupUniqId;
+    const [{ uniqId: _interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      {
+        projectUniqId,
+        pathname: 'api/path',
+        method: 'ALL',
+        description: 'description',
+        groupUniqId: interfaceGroupUniqId,
+      },
+    ]);
+    interfaceUniqId = _interfaceUniqId;
   });
 
   it('GET /api/scene show scene', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     const { body: { data: { uniqId: sceneUniqId } } } = await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -42,13 +65,31 @@ describe('test/app/controller/scene.test.js', () => {
     assert(createBody2.data.sceneName, 'waldo');
   });
 
+  it('POST /api/scene create scene', async () => {
+    const { body: { data: { uniqId: sceneUniqId } } } = await app.httpRequest()
+      .post('/api/scene/')
+      .send({
+        interfaceUniqId,
+        sceneName: 'waldo',
+        contextConfig: {},
+        data: { success: true },
+      });
+    const interfaceData = await ctx.model.Interface.findOne({
+      where: {
+        uniqId: interfaceUniqId,
+      },
+    });
+    const sceneData = await ctx.model.Scene.findOne({
+      where: {
+        uniqId: sceneUniqId,
+      },
+    });
+    assert(interfaceData.currentScene === 'waldo');
+    assert(sceneData.sceneName === 'waldo');
+    assert(sceneData.interfaceUniqId=== interfaceUniqId);
+  });
+
   it('PUT /api/scene/:uniqId update sceneName', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     const { body: { data: { uniqId: sceneUniqId } } } = await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -81,12 +122,6 @@ describe('test/app/controller/scene.test.js', () => {
   });
 
   it('DELETE /api/scene/:uniqId delete scene', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    const [{ uniqId: interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     await app.httpRequest()
       .post('/api/scene/')
       .send({
@@ -112,12 +147,6 @@ describe('test/app/controller/scene.test.js', () => {
   });
 
   it('DELETE /api/scene/:uniqId delete scene fail', async () => {
-    const [{ uniqId: projectUniqId }] = await ctx.model.Project.bulkCreate([
-      { projectName: 'baz', description: 'bazd' },
-    ]);
-    await ctx.model.Interface.bulkCreate([
-      { projectUniqId, pathname: 'api/path', method: 'ALL', description: 'description' },
-    ]);
     const { body: createBody } = await app.httpRequest()
       .delete('/api/scene/unkown');
     assert.deepStrictEqual(createBody, {

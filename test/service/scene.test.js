@@ -3,25 +3,45 @@
 const path = require('path');
 const { assert, app } = require('egg-mock/bootstrap');
 
-describe('test/app/service/scene.js', () => {
+describe('test/app/service/scene.test.js', () => {
   let ctx;
   let projectUniqId;
+  let interfaceGroupUniqId;
   let interfaceUniqId;
 
   beforeEach(async () => {
     ctx = app.mockContext();
-    const { uniqId: pid } = await ctx.model.Project.create(
-      { projectName: 'baz', description: 'bazd' }
-    );
-    projectUniqId = pid;
-    const { uniqId: iid } = await ctx.model.Interface.create(
-      { projectUniqId, pathname: 'api/one', method: 'ALL', description: '' }
-    );
-    interfaceUniqId = iid;
+
+    const [{ uniqId: _projectUniqId }] = await ctx.model.Project.bulkCreate([
+      {
+        projectName: 'baz',
+        description: 'bazd',
+      },
+    ]);
+    projectUniqId = _projectUniqId;
+    const [{ uniqId: _interfaceGroupUniqId }] = await ctx.model.Group.bulkCreate([
+      {
+        groupName: 'interfaceGroup1',
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      },
+    ]);
+    interfaceGroupUniqId = _interfaceGroupUniqId;
+    const [{ uniqId: _interfaceUniqId }] = await ctx.model.Interface.bulkCreate([
+      {
+        projectUniqId,
+        pathname: 'api/one',
+        method: 'ALL',
+        description: 'description',
+        groupUniqId: interfaceGroupUniqId,
+      },
+    ]);
+    interfaceUniqId = _interfaceUniqId;
   });
 
   describe('query scene', () => {
     let sceneUniqIdOne;
+
     beforeEach(async () => {
       const res = await ctx.model.Scene.bulkCreate([
         { interfaceUniqId, sceneName: 'success', contextConfig: {}, data: { id: 'success' } },
@@ -29,6 +49,7 @@ describe('test/app/service/scene.js', () => {
       ]);
       sceneUniqIdOne = res[0].uniqId;
     });
+
     it('querySceneByInterfaceUniqId', async () => {
       const res = await ctx.service.scene.querySceneByInterfaceUniqId({
         interfaceUniqId,
@@ -76,7 +97,7 @@ describe('test/app/service/scene.js', () => {
     });
   });
 
-  describe('opetation', () => {
+  describe('operation', () => {
     let sceneUniqIdOne;
     beforeEach(async () => {
       const res = await ctx.model.Scene.bulkCreate([
@@ -154,7 +175,7 @@ describe('test/app/service/scene.js', () => {
 
       const scenes = await ctx.model.Scene.findAll({
         where: {
-          interfaceUniqId,
+          interfaceUniqId: res.body.newInterfaceUniqId,
         },
       });
 

@@ -47,6 +47,10 @@ module.exports = app => {
       primaryKey: true,
       allowNull: false,
     },
+    groupUniqId: {
+      type: STRING,
+      allowNull: true,
+    },
   }, {
     ...app.config.modelCommonOption,
     indexes: [

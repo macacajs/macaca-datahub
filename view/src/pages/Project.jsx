@@ -12,9 +12,9 @@ import {
 
 import {
   Affix,
-  Alert,
   Layout,
   Tabs,
+  Empty,
 } from 'antd';
 
 import InterfaceList from '../components/InterfaceList';
@@ -25,11 +25,8 @@ import RealTimeDetail from '../components/RealTimeDetail';
 
 import {
   interfaceService,
+  groupService,
 } from '../service';
-
-import {
-  queryParse,
-} from '../common/helper';
 
 import './Project.less';
 
@@ -40,44 +37,41 @@ const Content = Layout.Content;
 const realTimeTabSymbol = 'REALTIME_TAB_KEY';
 const interfaceTabSymbol = 'INTERFACE_TAB_KEY';
 
+const { uniqId: projectUniqId } = window.context || {};
+
 class Project extends React.Component {
   state = {
     interfaceList: [],
+    interfaceGroupList: [], // 接口分组数据
     selectedInterface: {},
-
+    groupList: [],
     subRouter: interfaceTabSymbol,
-    REALTIME_MAXLINE: 100,
+    REALTIME_MAX_LINE: 100,
     realTimeDataList: [],
     realTimeIndex: 0,
     showRightSide: false,
   }
 
-  getIndexByHash (res) {
-    const params = queryParse(location.hash);
+  getDefaultSelectedInterface (interfaceGroupList) {
+    if (!interfaceGroupList.length) return {};
 
-    if (!res.success) return 0;
+    const interfaceGroup = interfaceGroupList.find(item => !!item.interfaceList.length);
 
-    for (let i = 0; i < res.data.length; i++) {
-      const item = res.data[i];
-
-      if (item.method === params.method &&
-        item.pathname === decodeURI(params.pathname)) {
-        return i;
-      }
-    }
-
-    return 0;
+    return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
   }
 
   async componentDidMount () {
     this.initRealTimeDataList();
 
+    const groupListData = await this.fetchGroupList();
     const res = await this.fetchInterfaceList();
-    const index = this.getIndexByHash(res);
+    const defaultSelectedInterface = this.getDefaultSelectedInterface(res.data.interfaceGroupList);
 
     this.setState({
-      interfaceList: res.data || [],
-      selectedInterface: (res.data && res.data[index]) || {},
+      interfaceList: res.data.interfaceList || [],
+      interfaceGroupList: res.data.interfaceGroupList || [],
+      selectedInterface: defaultSelectedInterface || {},
+      groupList: groupListData.data || [],
     });
   }
 
@@ -85,25 +79,40 @@ class Project extends React.Component {
     return await interfaceService.getInterfaceList();
   }
 
+  fetchGroupList = async () => {
+    return await groupService.getGroupList({
+      belongedUniqId: projectUniqId,
+      groupType: 'Interface',
+    });
+  }
+
   updateInterfaceList = async () => {
+    const groupListData = await this.fetchGroupList();
     const res = await this.fetchInterfaceList();
     this.setState({
-      interfaceList: res.data || [],
+      interfaceList: res.data.interfaceList || [],
+      interfaceGroupList: res.data.interfaceGroupList || [],
       selectedInterface: this.getSelectedInterface(res.data),
+      groupList: groupListData.data || [],
     });
   }
 
   getSelectedInterface = data => {
-    if (!Array.isArray(data)) return {};
+    if (!Array.isArray(data.interfaceList)) return {};
 
     let result = null;
 
     if (this.state.selectedInterface && this.state.selectedInterface.uniqId) {
-      result = data.find(value => {
+      result = data.interfaceList.find(value => {
         return value.uniqId === this.state.selectedInterface.uniqId;
       });
     }
-    return result || data[0];
+
+    if (!result) {
+      result = this.getDefaultSelectedInterface(data.interfaceGroupList);
+    }
+
+    return result;
   }
 
   setSelectedInterface = async (uniqId) => {
@@ -125,7 +134,7 @@ class Project extends React.Component {
       logger(data);
       const newData = [
         ...this.state.realTimeDataList,
-      ].slice(0, this.state.REALTIME_MAXLINE - 1);
+      ].slice(0, this.state.REALTIME_MAX_LINE - 1);
       newData.unshift(data);
       this.setState({
         realTimeDataList: newData,
@@ -188,8 +197,9 @@ class Project extends React.Component {
                   selectedInterface={this.state.selectedInterface}
                   setSelectedInterface={this.setSelectedInterface}
                   experimentConfig={this.props.experimentConfig}
-                  interfaceList={this.state.interfaceList}
+                  interfaceGroupList={this.state.interfaceGroupList}
                   updateInterfaceList={this.updateInterfaceList}
+                  groupList={this.state.groupList}
                 />
               </TabPane>
               <TabPane
@@ -220,13 +230,13 @@ class Project extends React.Component {
                 />
               : (
                 <div className="interface-detail">
-                  <Alert
+                  <Empty
                     className="add-api-hint"
-                    message={this.props.intl.formatMessage({
-                      id: 'project.createApi',
-                    })}
-                    type="info"
-                    showIcon
+                    image="../../icon/empty.svg"
+                    imageStyle={{
+                      height: 120,
+                    }}
+                    description={this.props.intl.formatMessage({ id: 'project.createApi' })}
                   />
                 </div>
               )

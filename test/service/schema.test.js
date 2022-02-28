@@ -2,7 +2,7 @@
 
 const { assert, app } = require('egg-mock/bootstrap');
 
-describe('test/app/service/schema.js', () => {
+describe('test/app/service/schema.test.js', () => {
   let ctx;
   let projectUniqId;
   let interfaceUniqId;

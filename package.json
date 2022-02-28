@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "3.6.2",
+  "version": "4.0.0",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -58,6 +58,7 @@
     "filesize": "^4.2.0",
     "get-stream": "^4.1.0",
     "koa-compose": "^4.0.0",
+    "lodash": "^4.17.21",
     "macaca-circular-json": "^0.5.10",
     "macaca-logo": "1",
     "mockjs": "^1.1.0",

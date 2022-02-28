@@ -33,11 +33,21 @@ class ProjectService extends Service {
   }
 
   async createProject({ projectName, description, globalProxy }) {
-    return await this.ctx.model.Project.create({
+    const { ctx } = this;
+
+    const project = await ctx.model.Project.create({
       projectName,
       description,
       globalProxy,
     });
+
+    await ctx.model.Group.create({
+      groupName: ctx.gettext('defaultGroupName'),
+      groupType: 'Interface',
+      belongedUniqId: project.uniqId,
+    });
+
+    return project;
   }
 
   async updateProject({ uniqId, payload }) {
@@ -52,7 +62,26 @@ class ProjectService extends Service {
   }
 
   async deleteProjectByUniqId({ uniqId }) {
-    return await this.ctx.model.Project.destroy({
+    const { ctx } = this;
+
+    await ctx.model.Group.destroy({
+      where: {
+        belongedUniqId: uniqId,
+        groupType: 'Interface',
+      }
+    });
+
+    const interfaces = await ctx.service.interface.queryInterfaceByProjectUniqId({ 
+      projectUniqId: uniqId,
+     });
+
+    for (const interfaceData of interfaces) {
+      await ctx.service.interface.deleteInterfaceByUniqId({
+        uniqId: interfaceData.uniqId,
+      });
+    }
+
+    return await ctx.model.Project.destroy({
       where: {
         uniqId,
       },

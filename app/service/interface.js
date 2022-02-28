@@ -4,6 +4,7 @@ const {
   Service,
 } = require('egg');
 const pathToRegexp = require('path-to-regexp');
+const _ = require('lodash');
 
 class InterfaceService extends Service {
 
@@ -109,6 +110,81 @@ class InterfaceService extends Service {
     });
   }
 
+  async queryInterfaceDataByProjectUniqId({
+    projectUniqId,
+  }, options = {}) {
+
+    const { ctx } = this;
+
+    const groups = await ctx.model.Group.findAll({
+      ...options,
+      where: {
+        belongedUniqId: projectUniqId,
+        groupType: 'Interface',
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
+
+    // Inventory data initialization default grouping
+    if (!groups.length) {
+      const group = await ctx.model.Group.create({
+        groupName: ctx.gettext('defaultGroupName'),
+        groupType: 'Interface',
+        belongedUniqId: projectUniqId,
+      });
+
+      groups.push(group);
+
+      await ctx.model.Interface.update({ groupUniqId: group.uniqId }, {
+        where: {
+          projectUniqId,
+        }
+      });
+    }
+
+    const interfaces = await ctx.model.Interface.findAll({
+      ...options,
+      where: {
+        projectUniqId,
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
+
+    const interfaceGroupList = _.chain(interfaces)
+    .groupBy("groupUniqId")
+    .toPairs()
+    .map(currentItem => {
+      return _.zipObject(["groupUniqId", "interfaceList"], currentItem);
+    })
+    .value();
+
+    const interfaceGroupListNew = [];
+
+    groups.forEach(element => {
+      const interfaceGroup = interfaceGroupList.find(item => item.groupUniqId === element.uniqId);
+      interfaceGroupListNew.push({
+        groupName: element.groupName,
+        groupUniqId: element.uniqId,
+        interfaceList: interfaceGroup ? interfaceGroup.interfaceList : [],
+      })
+    });
+
+    return {
+      interfaceGroupList: interfaceGroupListNew,
+      interfaceList: interfaces,
+    };
+  }
+
   async queryInterfaceByUniqId({
     uniqId,
   }) {
@@ -124,13 +200,17 @@ class InterfaceService extends Service {
     pathname,
     method,
     description,
+    groupUniqId,
     proxyConfig,
   }) {
-    return await this.ctx.model.Interface.create({
+    const { ctx } = this;
+
+    return await ctx.model.Interface.create({
       projectUniqId,
       pathname,
       method,
       description,
+      groupUniqId,
       proxyConfig,
     });
   }
@@ -206,6 +286,20 @@ class InterfaceService extends Service {
   async deleteInterfaceByUniqId({
     uniqId,
   }) {
+    const { ctx } = this;
+
+    await ctx.model.Scene.destroy({
+      where: {
+        interfaceUniqId: uniqId,
+      }
+    });
+
+    await ctx.model.Schema.destroy({
+      where: {
+        interfaceUniqId: uniqId,
+      }
+    });
+
     return await this.ctx.model.Interface.destroy({
       where: {
         uniqId,
@@ -217,15 +311,17 @@ class InterfaceService extends Service {
     uniqId,
     scenes
   }) {
+    const { ctx } = this;
+
     for (const scene of scenes) {
-      await this.ctx.model.Scene.create({
+      await ctx.model.Scene.create({
         interfaceUniqId: uniqId,
         sceneName: scene.sceneName,
         contextConfig: scene.contextConfig,
         data: scene.data,
       });
     }
-    return null
+    return null;
   }
 
   async duplicateSchemas({
@@ -239,7 +335,7 @@ class InterfaceService extends Service {
         data: schema.data,
       });
     }
-    return null
+    return null;
   }
 }
 

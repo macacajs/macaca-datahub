@@ -11,7 +11,7 @@ class InterfaceController extends Controller {
     const ctx = this.ctx;
     const { projectUniqId } = ctx.query;
     ctx.assertParam({ projectUniqId });
-    const res = await ctx.service.interface.queryInterfaceByProjectUniqId({ projectUniqId });
+    const res = await ctx.service.interface.queryInterfaceDataByProjectUniqId({ projectUniqId });
     ctx.success(res);
   }
 
@@ -24,10 +24,14 @@ class InterfaceController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const { projectUniqId, pathname, method, description } = ctx.request.body;
-    ctx.assertParam({ projectUniqId, pathname, method, description });
+    const { projectUniqId, pathname, method, description, groupUniqId } = ctx.request.body;
+    ctx.assertParam({ projectUniqId, pathname, method, description, groupUniqId });
     const res = await ctx.service.interface.createInterface({
-      projectUniqId, pathname, method: method.toUpperCase(), description,
+      projectUniqId,
+      pathname,
+      method: method.toUpperCase(),
+      description,
+      groupUniqId,
     });
     ctx.success(res);
   }
@@ -40,6 +44,7 @@ class InterfaceController extends Controller {
       'pathname',
       'method',
       'description',
+      'groupUniqId',
       'currentScene',
       'proxyConfig',
     ].forEach(i => {

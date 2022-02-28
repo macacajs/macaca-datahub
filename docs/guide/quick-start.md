@@ -5,24 +5,31 @@
 Create a new item named sample.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556086707452-14442728-b9b7-4ce5-aefa-ed3d047935f0.png" width="75%" />
+  <img src="/macaca-datahub/assets/20220123234308.png" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
+</div>
+
+## Create An Interface Group
+
+A default interface group will be created when a new project is created, and interface groups can be added and modified later as required.
+
+<div align="center">
+  <img src="/macaca-datahub/assets/add-interface-group.gif" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 ## Add An Interface
 
-Add the interface named `test1`, request the interface `http://localhost:8080/api/test1` and get the corresponding mock data.
+Add the interface named `test1`, request the interface `http://localhost:8080/api/test1` and get the corresponding mock data, Interface grouping can be selected when adding, which is convenient for management.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556086720681-5ee0992d-60e8-4b8c-9979-a315b281daf1.png" width="75%" />
+  <img src="/macaca-datahub/assets/add-interface.gif" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
-
 
 ## Build Interface
 
-The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching. You cna set the interface response information, and return status code `200` if not set.
+The scene management, add scenario content corresponding to Response, and the development environment adds multiple scenarios which is conducive to rapid switching. You can set the interface response information, and return status code `200` if not set.
 
 <div align="center">
-  <img src="/macaca-datahub/assets/1556086736616-3fd09d60-4c20-4cea-b228-93dba96ab8a2.png" width="75%" />
+  <img src="/macaca-datahub/assets/20220228155204.png" width="90%" style="box-shadow:0 5px 20px rgba(0,0,0,0.5); border-radius: 5px;" />
 </div>
 
 The proxy pattern, it can be configured if required.

@@ -46,6 +46,7 @@ import {
   sceneService,
   schemaService,
   interfaceService,
+  groupService,
 } from '../service';
 
 import './Document.less';
@@ -53,39 +54,31 @@ import './Document.less';
 const Sider = Layout.Sider;
 const Content = Layout.Content;
 
+const { uniqId: projectUniqId } = window.context || {};
+
 class Document extends React.Component {
   state = {
     interfaceList: [],
+    interfaceGroupList: [],
     selectedInterface: {},
     schemaData: [],
     sceneList: [],
     currentScene: '',
+    groupList: [],
   }
 
-  // Initialize data based on hash value
-  getIndexByHash (res) {
-    const params = queryParse(location.hash);
+  getDefaultSelectedInterface (interfaceGroupList) {
+    if (!interfaceGroupList.length) return {};
 
-    if (!res.success || !res.data) {
-      return 0;
-    }
+    const interfaceGroup = interfaceGroupList.find(item => !!item.interfaceList.length);
 
-    for (let i = 0; i < res.data.length; i++) {
-      const item = res.data[i];
-
-      if (item.method === params.method &&
-        item.pathname === decodeURI(params.pathname)) {
-        return i;
-      }
-    }
-
-    return 0;
+    return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
   }
 
   async componentDidMount () {
+    await this.fetchGroupList();
     const interfaceRes = await this.initInterfaceList();
-    const index = this.getIndexByHash(interfaceRes);
-    const selectedInterface = (interfaceRes.data && interfaceRes.data[index]) || {};
+    const selectedInterface = this.getDefaultSelectedInterface(interfaceRes.data.interfaceGroupList) || {};
     let schemaRes = {};
     let sceneRes = {};
     if (selectedInterface.uniqId) {
@@ -93,7 +86,8 @@ class Document extends React.Component {
       sceneRes = await sceneService.getSceneList({ interfaceUniqId: selectedInterface.uniqId });
     }
     this.setState({
-      interfaceList: interfaceRes.data || [],
+      interfaceList: interfaceRes.data.interfaceList || [],
+      interfaceGroupList: interfaceRes.data.interfaceGroupList || [],
       selectedInterface,
       schemaData: schemaRes.data || [],
       sceneList: sceneRes.data || [],
@@ -113,6 +107,16 @@ class Document extends React.Component {
         sceneList: sceneRes.data || [],
       });
     }
+  }
+
+  fetchGroupList = async () => {
+    const res = await groupService.getGroupList({
+      belongedUniqId: projectUniqId,
+      groupType: 'Interface',
+    });
+    this.setState({
+      groupList: res.data || [],
+    });
   }
 
   setSelectedInterface = async (uniqId) => {
@@ -170,7 +174,8 @@ class Document extends React.Component {
             selectedInterface={this.state.selectedInterface}
             setSelectedInterface={this.setSelectedInterface}
             experimentConfig={this.props.experimentConfig}
-            interfaceList={this.state.interfaceList}
+            interfaceGroupList={this.state.interfaceGroupList}
+            groupList={this.state.groupList}
           />
         </Sider>
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>

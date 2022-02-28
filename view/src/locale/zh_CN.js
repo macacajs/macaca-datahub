@@ -38,7 +38,7 @@ const zhCN = {
 
   'project.interfaceList': '接口列表',
   'project.realtimeList': '实时快照',
-  'project.createApi': '请添加接口',
+  'project.createApi': '暂无数据，请先添加接口',
   'project.create': '创建新项目',
   'project.update': '更新项目',
   'project.name': '项目名称',
@@ -48,6 +48,14 @@ const zhCN = {
   'project.add': '添加项目',
   'project.globalProxy': '全局项目代理',
   'project.globalProxy.invalid': '请输入 URL',
+
+  'group.create': '添加分组',
+  'group.updateName': '更新分组',
+  'group.delete': '删除分组',
+  'group.newGroupInputPlaceholder': '请输入分组名',
+  'group.selectGroup': '请选择分组',
+  'group.deleteGroupSuccess': '分组删除成功',
+  'group.deleteInterfaceGroupWarning': '分组中有接口未移出，请先删除或转移接口',
 
   'interfaceList.addInterface': '添加接口',
   'interfaceList.updateInterface': '修改接口',

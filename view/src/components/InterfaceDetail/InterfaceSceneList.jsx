@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Input, Button,
-  Tooltip, Popconfirm,
+  Input,
+  Button,
+  Tooltip,
+  Popconfirm,
 } from 'antd';
 import {
   EditOutlined,
@@ -196,7 +198,7 @@ class InterfaceSceneList extends Component {
           )
         }
         {contextConfig && showResInfo
-          ? <div>
+          ? <div className="res-info">
             <div className="res-header-info">
               <span>{formatMessage('sceneList.responseDelayShowInfo')}：</span>
               <span>{contextConfig.responseDelay}s</span>
@@ -238,7 +240,9 @@ class InterfaceSceneList extends Component {
             ? <FormattedMessage id='sceneList.switchSceneDisabledHint'/>
             : <FormattedMessage id='sceneList.switchSceneHint'/> }
         </div>
+
         { this.renderSceneList() }
+
         <SceneForm
           experimentConfig={this.props.experimentConfig}
           visible={this.state.sceneFormVisible}

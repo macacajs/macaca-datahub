@@ -1,8 +1,6 @@
 'use strict';
 
-const {
-  Service,
-} = require('egg');
+const { Service } = require('egg');
 
 class SceneService extends Service {
   async querySceneByInterfaceUniqId({

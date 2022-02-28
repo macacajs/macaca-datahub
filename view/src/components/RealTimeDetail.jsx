@@ -30,9 +30,9 @@ function SaveSceneFormComponent (props) {
     visible,
     onCancel,
     onOk,
-    form,
     loading,
   } = props;
+  const [form] = Form.useForm();
   const formatMessage = id => props.intl.formatMessage({ id });
   let defaultInterface = '';
   const projectName = window.context && window.context.projectName;
@@ -53,18 +53,18 @@ function SaveSceneFormComponent (props) {
     cancelText={formatMessage('common.cancel')}
     onCancel={onCancel}
     onOk={() => {
-      form.validateFields((err, values) => {
-        if (err) {
-          message.warn(formatMessage('common.input.invalid'));
-          return;
-        }
+      form.validateFields().then(values => {
         onOk(values);
+      }).catch(errorInfo => {
+        message.warn(formatMessage('common.input.invalid'));
+        return;
       });
     }}
     confirmLoading={loading}
   >
     <Form
       layout="vertical"
+      form={form}
       initialValues={{
         interfaceUniqId: defaultInterface,
       }}
@@ -91,9 +91,9 @@ function SaveSceneFormComponent (props) {
           {
             required: true,
             message: formatMessage('sceneList.invalidSceneName'),
-            pattern: /^[a-z0-9_-]+$/,
+            pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
           },
-          { max: 32 },
+          { max: 128 },
         ]}
       >
         <Input />
