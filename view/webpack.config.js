@@ -149,6 +149,9 @@ module.exports = (env, argv) => {
     ],
     devServer: {
       hot: true,
+      static: {
+        directory: __dirname,
+      },
     },
   };
 
