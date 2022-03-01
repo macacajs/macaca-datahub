@@ -26,9 +26,8 @@ export {
   Controlled,
 } from 'react-codemirror2';
 
-export const jsonCodeMirrorOptions = {
+export const defaultCodeMirrorOptions = {
   theme: 'default',
-  mode: 'application/json',
   lint: true,
   autofocus: true,
   foldGutter: true,
@@ -37,7 +36,6 @@ export const jsonCodeMirrorOptions = {
   styleActiveLine: true,
   autoCloseBrackets: true,
   showTrailingSpace: true,
-  placeholder: '{\n  ... Input JSON data here\n}',
   scrollbarStyle: 'overlay',
   gutters: [
     'CodeMirror-lint-markers',
@@ -45,21 +43,14 @@ export const jsonCodeMirrorOptions = {
   ],
 };
 
+export const jsonCodeMirrorOptions = {
+  ...defaultCodeMirrorOptions,
+  mode: 'application/json',
+  placeholder: '{\n  ... Input JSON data here\n}',
+};
+
 export const jsCodeMirrorOptions = {
-  theme: 'default',
+  ...defaultCodeMirrorOptions,
   mode: 'text/javascript',
-  lint: true,
-  autofocus: true,
-  foldGutter: true,
-  lineNumbers: true,
-  matchBrackets: true,
-  styleActiveLine: true,
-  autoCloseBrackets: true,
-  showTrailingSpace: true,
   placeholder: '// Input Javascript code here\nctx.body = { time: Date.now() };\n',
-  scrollbarStyle: 'overlay',
-  gutters: [
-    'CodeMirror-lint-markers',
-    'CodeMirror-foldgutter',
-  ],
 };
