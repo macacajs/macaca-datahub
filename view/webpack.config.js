@@ -36,10 +36,7 @@ module.exports = (env, argv) => {
     },
 
     resolve: {
-      extensions: [
-        '.js',
-        '.jsx',
-      ],
+      extensions: ['.js', '.jsx'],
     },
 
     module: {
@@ -48,14 +45,16 @@ module.exports = (env, argv) => {
           test: /\.js[x]?$/,
           exclude: /node_modules/,
           use: 'babel-loader',
-        }, {
+        },
+        {
           test: /\.json$/,
           type: 'javascript/auto',
           use: 'json-loader',
           exclude: /node_modules/,
-        }, {
+        },
+        {
           test: /\.less$/,
-          exclude (filePath) {
+          exclude(filePath) {
             return filePath.endsWith('.module.less');
           },
           use: [
@@ -70,11 +69,13 @@ module.exports = (env, argv) => {
               options: {
                 lessOptions: {
                   javascriptEnabled: true,
+                  math: 'always',
                 },
               },
             },
           ],
-        }, {
+        },
+        {
           test: /\.module\.less$/,
           use: [
             {
@@ -83,8 +84,9 @@ module.exports = (env, argv) => {
             {
               loader: 'css-loader',
               options: {
-                modules: true,
-                localIdentName: '[name]_[local]_[hash:base64:5]',
+                modules: {
+                  localIdentName: '[name]_[local]_[hash:base64:5]',
+                },
               },
             },
             {
@@ -92,11 +94,13 @@ module.exports = (env, argv) => {
               options: {
                 lessOptions: {
                   javascriptEnabled: true,
+                  math: 'always',
                 },
               },
             },
           ],
-        }, {
+        },
+        {
           test: /.css$/,
           use: [
             {
@@ -131,9 +135,7 @@ module.exports = (env, argv) => {
               loader: 'svgo-loader',
             },
           ],
-          include: [
-            path.resolve(__dirname, 'src', 'assets', 'icons'),
-          ],
+          include: [path.resolve(__dirname, 'src', 'assets', 'icons')],
         },
       ],
     },
@@ -151,6 +153,9 @@ module.exports = (env, argv) => {
       hot: true,
       static: {
         directory: __dirname,
+      },
+      devMiddleware: {
+        publicPath: '/dist/',
       },
     },
   };
