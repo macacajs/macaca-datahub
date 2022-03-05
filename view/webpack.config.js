@@ -69,6 +69,7 @@ module.exports = (env, argv) => {
               options: {
                 lessOptions: {
                   javascriptEnabled: true,
+                  math: 'always',
                 },
               },
             },
@@ -83,8 +84,9 @@ module.exports = (env, argv) => {
             {
               loader: 'css-loader',
               options: {
-                modules: true,
-                localIdentName: '[name]_[local]_[hash:base64:5]',
+                modules: {
+                  localIdentName: '[name]_[local]_[hash:base64:5]',
+                },
               },
             },
             {
@@ -92,6 +94,7 @@ module.exports = (env, argv) => {
               options: {
                 lessOptions: {
                   javascriptEnabled: true,
+                  math: 'always',
                 },
               },
             },
