@@ -4,13 +4,15 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const pkg = require('./package');
 const { NODE_ENV } = process.env;
+const distDirName = 'dist';
 
-module.exports = (env, argv) => {
-  const isProduction = NODE_ENV === 'production';
+module.exports = () => {
+  const isProd = NODE_ENV === 'production';
 
   const webpackConfig = {
     stats: {
@@ -22,17 +24,16 @@ module.exports = (env, argv) => {
       chunkModules: false,
     },
 
-    devtool: isProduction ? false : 'source-map',
+    devtool: isProd ? false : 'source-map',
 
     entry: {
       [pkg.name]: path.join(__dirname, 'src', 'app'),
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      publicPath: 'dist',
+      path: path.resolve(__dirname, distDirName),
+      publicPath: isProd ? `/${distDirName}/` : `http://localhost:8080/${distDirName}/`,
       filename: '[name].js',
-      chunkFilename: '[name].js',
     },
 
     resolve: {
@@ -137,9 +138,18 @@ module.exports = (env, argv) => {
           ],
           include: [path.resolve(__dirname, 'src', 'assets', 'icons')],
         },
+        {
+          test: /\.ttf$/,
+          use: [
+            'file-loader',
+          ]
+        },
       ],
     },
     plugins: [
+      new MonacoWebpackPlugin({
+        languages: ['javascript', 'json'],
+      }),
       new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[name].css',
@@ -155,16 +165,12 @@ module.exports = (env, argv) => {
         directory: __dirname,
       },
       devMiddleware: {
-        publicPath: '/dist/',
+        publicPath: `/${distDirName}/`,
       },
     },
   };
 
-  if (!isProduction) {
-    webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-  }
-
-  if (isProduction) {
+  if (!isProd) {
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
