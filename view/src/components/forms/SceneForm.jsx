@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { injectIntl } from 'react-intl';
 import { UnControlled as CodeMirror, jsonCodeMirrorOptions, jsCodeMirrorOptions } from '../../common/codemirror';
-
+import { monacoEditor, monacoEditorDefaultConfig } from '../../common/monaco-editor';
 import './SceneForm.less';
 
 const { Panel } = Collapse;
@@ -20,6 +20,15 @@ const getCode = (stageData) => {
   }
   return JSON.stringify(stageData.data, null, 2);
 };
+
+function initMonacoDemo() {
+  monacoEditor.create(document.body, {
+    value: JSON.stringify(monacoEditorDefaultConfig, null, 2),
+    ...monacoEditorDefaultConfig,
+  });
+}
+
+window._initMonacoDemo = initMonacoDemo; // TODO remove
 
 function SceneFormComponent (props) {
   const {
