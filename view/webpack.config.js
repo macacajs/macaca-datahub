@@ -9,6 +9,7 @@ const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const pkg = require('./package');
 const { NODE_ENV } = process.env;
+const distDirName = 'dist';
 
 module.exports = () => {
   const isProd = NODE_ENV === 'production';
@@ -30,8 +31,8 @@ module.exports = () => {
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      publicPath: isProd ? 'dist' : 'http://localhost:8080/dist/',
+      path: path.resolve(__dirname, distDirName),
+      publicPath: isProd ? `/${distDirName}/` : `http://localhost:8080/${distDirName}/`,
       filename: '[name].js',
     },
 
@@ -164,7 +165,7 @@ module.exports = () => {
         directory: __dirname,
       },
       devMiddleware: {
-        publicPath: '/dist/',
+        publicPath: `/${distDirName}/`,
       },
     },
   };
