@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -16,6 +16,7 @@
     "view/lib/**/*.js",
     "view/dist/**/*.js",
     "view/dist/**/*.css",
+    "view/dist/**/*.ttf",
     "agent.js",
     "app.js",
     "index.js",
