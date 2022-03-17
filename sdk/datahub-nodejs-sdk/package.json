@@ -1,0 +1,46 @@
+{
+  "name": "datahub-nodejs-sdk",
+  "version": "2.2.1",
+  "description": "DataHub Node.js SDK",
+  "keywords": [
+    "datahub",
+    "client"
+  ],
+  "bin": {
+    "datahub-nodejs-sdk": "./bin/datahub-nodejs-sdk"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/macacajs/macaca-datahub.git"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "2"
+  },
+  "devDependencies": {
+    "eslint": "4",
+    "eslint-config-antife": "^1.0.0",
+    "eslint-plugin-mocha": "4",
+    "git-contributor": "1",
+    "husky": "^1.3.1",
+    "mocha": "4",
+    "nyc": "^11.4.1",
+    "sinon": "4"
+  },
+  "scripts": {
+    "ci": "npm run lint && npm run test",
+    "test": "npm run lint && nyc --reporter=lcov --reporter=text mocha",
+    "lint": "eslint index.js lib bin test --fix",
+    "clean:test": "rm -rf ./coverage",
+    "contributor": "git-contributor"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "license": "MIT"
+}
