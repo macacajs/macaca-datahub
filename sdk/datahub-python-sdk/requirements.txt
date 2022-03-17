@@ -6,7 +6,7 @@ flake8==3.0.2
 mccabe==0.5.1
 pep8==1.7.0
 pluggy==0.3.1
-py==1.4.31
+py==1.10.0
 pycodestyle==2.0.0
 pyflakes==1.2.3
 pytest==2.9.2
