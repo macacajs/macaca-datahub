@@ -1,0 +1,15 @@
+*.dex
+*.class
+bin/
+gen/
+local.properties
+.classpath
+.project
+.DS_Store
+target
+.settings
+.checkstyle
+*.iml
+*.sw*
+*.un~
+*.idea/
