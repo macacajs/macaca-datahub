@@ -84,11 +84,6 @@ module.exports = () => {
             },
             {
               loader: 'css-loader',
-              options: {
-                modules: {
-                  localIdentName: '[name]_[local]_[hash:base64:5]',
-                },
-              },
             },
             {
               loader: 'less-loader',
