@@ -11,6 +11,7 @@
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
     "@babel/core": "^7.0.0",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -30,6 +31,7 @@
     "debug": "^3.1.0",
     "deepmerge": "^4.0.0",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-antife": "^1.0.0",
     "eslint-plugin-react": "^7.2.1",
     "git-contributor": "1",

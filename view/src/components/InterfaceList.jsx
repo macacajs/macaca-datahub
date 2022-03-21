@@ -39,6 +39,7 @@ import GroupForm from './forms/GroupForm';
 import { interfaceService, groupService } from '../service';
 
 import './InterfaceList.less';
+import './InterfaceList.module.less';
 
 const Search = Input.Search;
 

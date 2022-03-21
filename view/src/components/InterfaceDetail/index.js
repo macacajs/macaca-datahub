@@ -19,6 +19,7 @@ import InterfaceSchema from './InterfaceSchema';
 import deepMerge from 'deepmerge';
 
 import './index.less';
+import './index.module.less';
 
 const projectName = window.context.projectName;
 

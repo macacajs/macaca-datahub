@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,6 +6,7 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const pkg = require('./package');
+
 const { NODE_ENV } = process.env;
 const distDirName = 'dist';
 
@@ -84,6 +83,12 @@ module.exports = () => {
             },
             {
               loader: 'css-loader',
+              options: {
+                modules: {
+                  auto: true,
+                  localIdentName: '[name]_[local]_[hash:base64:5]',
+                },
+              },
             },
             {
               loader: 'less-loader',
@@ -137,7 +142,7 @@ module.exports = () => {
           test: /\.ttf$/,
           use: [
             'file-loader',
-          ]
+          ],
         },
       ],
     },
