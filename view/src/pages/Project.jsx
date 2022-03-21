@@ -30,6 +30,7 @@ import {
 } from '../service';
 
 import './Project.less';
+import './Project.module.less';
 
 const TabPane = Tabs.TabPane;
 const Sider = Layout.Sider;

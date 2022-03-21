@@ -35,6 +35,7 @@ import { getExperimentConfig, compareServerVersion } from './common/helper';
 import 'react-github-button/assets/style.css';
 
 import './app.less';
+import './app.module.less';
 
 addLocaleData([
   ...en,
