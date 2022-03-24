@@ -33,7 +33,7 @@ module.exports = () => {
 
     output: {
       path: path.resolve(__dirname, distDirName),
-      publicPath: isProd ? `/${distDirName}/` : `http://localhost:8080/${distDirName}/`,
+      publicPath: isProd ? `/${distDirName}/` : `http://127.0.0.1:8080/${distDirName}/`,
       filename: '[name].js',
     },
 
@@ -142,15 +142,13 @@ module.exports = () => {
         },
         {
           test: /\.ttf$/,
-          use: [
-            'file-loader',
-          ],
+          use: ['file-loader'],
         },
       ],
     },
     plugins: [
       new MonacoWebpackPlugin({
-        languages: ['javascript', 'json'],
+        languages: ['json', 'javascript', 'typescript'],
       }),
       new MiniCssExtractPlugin({
         filename: '[name].css',

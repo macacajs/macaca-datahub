@@ -1,15 +1,8 @@
 import React, { useRef } from 'react';
-import {
-  Form,
-  Input,
-  Modal,
-  message,
-  Collapse,
-  Radio,
-} from 'antd';
+import { Form, Input, Modal, message, Collapse, Radio, Button } from 'antd';
+import { SwapOutlined } from '@ant-design/icons';
 import { injectIntl } from 'react-intl';
-import { UnControlled as CodeMirror, jsonCodeMirrorOptions, jsCodeMirrorOptions } from '../../common/codemirror';
-import { monacoEditor, monacoEditorDefaultConfig } from '../../common/monaco-editor';
+import { MonacoEditor, monacoEditorJsonConfig, monacoEditorJsConfig } from '../MonacoEditor';
 import './SceneForm.less';
 
 const { Panel } = Collapse;
@@ -21,25 +14,8 @@ const getCode = (stageData) => {
   return JSON.stringify(stageData.data, null, 2);
 };
 
-function initMonacoDemo() {
-  monacoEditor.create(document.body, {
-    value: JSON.stringify(monacoEditorDefaultConfig, null, 2),
-    ...monacoEditorDefaultConfig,
-  });
-}
-
-window._initMonacoDemo = initMonacoDemo; // TODO remove
-
-function SceneFormComponent (props) {
-  const {
-    visible,
-    onCancel,
-    onOk,
-    onChangeMode,
-    confirmLoading,
-    stageData,
-    experimentConfig,
-  } = props;
+function SceneFormComponent(props) {
+  const { visible, onCancel, onOk, onChangeMode, confirmLoading, stageData, experimentConfig } = props;
   const [form] = Form.useForm();
   let showResInfo = false;
   if (stageData.contextConfig) {
@@ -51,26 +27,26 @@ function SceneFormComponent (props) {
   }
   const isOpenRunJsMode = experimentConfig && experimentConfig.isOpenRunJsMode;
 
-  const codeMirrorRef = useRef(null);
-  const codeMirrorResHeaderRef = useRef(null);
+  const monacoEditorRef = useRef(null);
+  const monacoEditorResHeaderRef = useRef(null);
 
   const formatMessage = (id) => props.intl.formatMessage({ id });
 
   const validateCode = (format) => {
-    const codeMirrorInstance = codeMirrorRef.current;
-    const codeMirrorResHeaderInstance = codeMirrorResHeaderRef.current;
+    const monacoEditorInstance = monacoEditorRef.current;
+    const monacoEditorResHeaderInstance = monacoEditorResHeaderRef.current;
     let [data, responseHeaders, error] = [{}, {}, null];
     if (format === 'javascript') {
       try {
-        data = encodeURIComponent(codeMirrorInstance.doc.getValue());
-        responseHeaders = JSON.parse(codeMirrorResHeaderInstance ? codeMirrorResHeaderInstance.doc.getValue() : '{}');
+        data = encodeURIComponent(monacoEditorInstance.getValue());
+        responseHeaders = JSON.parse(monacoEditorResHeaderInstance ? monacoEditorResHeaderInstance.getValue() : '{}');
       } catch (err) {
         error = err;
       }
     } else {
       try {
-        data = JSON.parse(codeMirrorInstance.doc.getValue());
-        responseHeaders = JSON.parse(codeMirrorResHeaderInstance ? codeMirrorResHeaderInstance.doc.getValue() : '{}');
+        data = JSON.parse(monacoEditorInstance.getValue());
+        responseHeaders = JSON.parse(monacoEditorResHeaderInstance ? monacoEditorResHeaderInstance.getValue() : '{}');
       } catch (err) {
         error = err;
       }
@@ -78,17 +54,22 @@ function SceneFormComponent (props) {
     return { data, responseHeaders, error };
   };
 
+  const jsObjectCodeToJsonCode = () => {
+    const monacoEditorInstance = monacoEditorRef.current;
+    const formatCode = JSON.stringify(eval(`(${monacoEditorInstance.getValue()})`), null, 2);
+    monacoEditorInstance.setValue(formatCode);
+  };
+
   return (
     <Modal
       style={{ top: '20px' }}
-      width="80%"
+      width="84%"
       wrapClassName="code-modal scene-form-modal"
       visible={visible}
       destroyOnClose={true}
       title={formatMessage(stageData.uniqId ? 'sceneList.updateScene' : 'sceneList.createScene')}
       okText={formatMessage('common.confirm')}
       cancelText={formatMessage('common.cancel')}
-      destroyOnClose={true}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -180,15 +161,17 @@ function SceneFormComponent (props) {
                 <Input maxLength={3} />
               </Form.Item>
               <Form.Item className="context-config" label={formatMessage('sceneList.rewriteResponseHeader')}>
-                <CodeMirror
+                <MonacoEditor
+                  height="120"
+                  options={monacoEditorJsonConfig}
                   value={
                     stageData.contextConfig && stageData.contextConfig.responseHeaders
                       ? JSON.stringify(stageData.contextConfig.responseHeaders, null, 2)
                       : '{}'
                   }
-                  options={jsonCodeMirrorOptions}
-                  editorDidMount={(instance) => {
-                    codeMirrorResHeaderRef.current = instance;
+                  theme="vs-light"
+                  editorDidMount={(editor) => {
+                    monacoEditorResHeaderRef.current = editor;
                   }}
                 />
               </Form.Item>
@@ -196,12 +179,23 @@ function SceneFormComponent (props) {
           </Collapse>
         )}
         <Form.Item className="res-data" label={formatMessage('sceneList.responseData')}>
-          <CodeMirror
+          <div className="monaco-editor-menu">
+            <span>
+              <Button onClick={jsObjectCodeToJsonCode}>
+                Object
+                <SwapOutlined />
+                Json
+              </Button>
+            </span>
+          </div>
+          <MonacoEditor
+            height="400"
+            options={stageData.format === 'javascript' ? monacoEditorJsConfig : monacoEditorJsonConfig}
             value={getCode(stageData)}
-            options={stageData.format === 'javascript' ? jsCodeMirrorOptions : jsonCodeMirrorOptions}
-            editorDidMount={(instance) => {
-              codeMirrorRef.current = instance;
-              instance.focus();
+            theme="vs-light"
+            editorDidMount={(editor) => {
+              monacoEditorRef.current = editor;
+              editor.focus();
             }}
           />
         </Form.Item>

@@ -92,6 +92,11 @@ class SceneController extends Controller {
       });
     }
 
+    if (!res) {
+      ctx.body = 'Please select a scene or create a scene !';
+      return;
+    }
+
     const { contextConfig, data, format } = res;
 
     if (contextConfig.responseDelay) {

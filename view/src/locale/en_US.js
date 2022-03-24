@@ -44,7 +44,7 @@ const enUS = {
   'project.name': 'Hub name',
   'project.name.invalid': 'Please input lowercase letters and numbers',
   'project.description': 'Hub description',
-  'project.description.invalid': 'Description can\'t be empty',
+  'project.description.invalid': "Description can't be empty",
   'project.add': 'Add hub',
   'project.globalProxy': 'Global proxy',
   'project.globalProxy.invalid': 'Please input URL',
@@ -55,7 +55,8 @@ const enUS = {
   'group.newGroupInputPlaceholder': 'Please input group name',
   'group.selectGroup': 'Please select group',
   'group.deleteGroupSuccess': 'Group deleted successfully.',
-  'group.deleteInterfaceGroupWarning': 'There are interfaces in the group that have not been removed. Please delete or transfer the interfaces first.',
+  'group.deleteInterfaceGroupWarning':
+    'There are interfaces in the group that have not been removed. Please delete or transfer the interfaces first.',
 
   'interfaceList.addInterface': 'Add API',
   'interfaceList.updateInterface': 'Update API',
@@ -91,7 +92,7 @@ const enUS = {
   'sceneList.responseData': 'Response data',
   'sceneList.responseDelayShowInfo': 'Response delay time',
   'sceneList.responseStatusShowInfo': 'Response status',
-  'sceneList.responseDataShowInfo': 'Response data',
+  'sceneList.responseDataShowInfo': 'Response headers data',
 
   'proxyConfig.enable.true': 'Proxy mode enabled',
   'proxyConfig.enable.false': 'Proxy mode disabled',

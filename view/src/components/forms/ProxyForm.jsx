@@ -1,24 +1,12 @@
 import React from 'react';
 
-import {
-  Form,
-  Input,
-  Modal,
-  message,
-} from 'antd';
+import { Form, Input, Modal, message } from 'antd';
 
-import {
-  injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-function ProxyFormComponent (props) {
-  const {
-    visible,
-    onCancel,
-    onOk,
-    confirmLoading,
-  } = props;
-  const formatMessage = id => props.intl.formatMessage({ id });
+function ProxyFormComponent(props) {
+  const { visible, onCancel, onOk, confirmLoading } = props;
+  const formatMessage = (id) => props.intl.formatMessage({ id });
   const [form] = Form.useForm();
 
   return (
@@ -28,27 +16,26 @@ function ProxyFormComponent (props) {
       title={formatMessage('proxyConfig.addProxyUrl')}
       okText={formatMessage('common.confirm')}
       cancelText={formatMessage('common.cancel')}
-      destroyOnClose={true}
       onCancel={onCancel}
       onOk={() => {
-        form.validateFields().then(values => {
-          const { proxyUrl } = values;
-          if (!/^https?:\/\/.+$/.test(proxyUrl)) {
-            message.warn(formatMessage('proxyConfig.invalidProxyUrl'));
+        form
+          .validateFields()
+          .then((values) => {
+            const { proxyUrl } = values;
+            if (!/^https?:\/\/.+$/.test(proxyUrl)) {
+              message.warn(formatMessage('proxyConfig.invalidProxyUrl'));
+              return;
+            }
+            onOk(values);
+          })
+          .catch((errorInfo) => {
+            message.warn(formatMessage('common.input.invalid'));
             return;
-          }
-          onOk(values);
-        }).catch(errorInfo => {
-          message.warn(formatMessage('common.input.invalid'));
-          return;
-        });
+          });
       }}
       confirmLoading={confirmLoading}
     >
-      <Form
-        form={form}
-        layout="vertical"
-      >
+      <Form form={form} layout="vertical">
         <Form.Item
           name="proxyUrl"
           label="Url"
@@ -59,9 +46,7 @@ function ProxyFormComponent (props) {
             },
           ]}
         >
-          <Input
-            placeholder="http://example.com/api/user"
-          />
+          <Input placeholder="http://example.com/api/user" />
         </Form.Item>
       </Form>
     </Modal>
