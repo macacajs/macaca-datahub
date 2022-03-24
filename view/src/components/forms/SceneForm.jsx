@@ -179,14 +179,8 @@ function SceneFormComponent(props) {
           </Collapse>
         )}
         <Form.Item className="res-data" label={formatMessage('sceneList.responseData')}>
-          <div className="monaco-editor-menu">
-            <span>
-              <Button onClick={jsObjectCodeToJsonCode}>
-                Object
-                <SwapOutlined />
-                Json
-              </Button>
-            </span>
+          <div className="json-format-btn" onClick={jsObjectCodeToJsonCode}>
+            {formatMessage('sceneList.jsonFormat')}
           </div>
           <MonacoEditor
             height="400"

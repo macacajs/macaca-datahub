@@ -89,6 +89,7 @@ const enUS = {
   'sceneList.invalidSceneData': 'Scene data is invalid, please input JSON data',
   'sceneList.rewriteResponse': 'Rewrite response',
   'sceneList.rewriteResponseHeader': 'Rewrite response headers in JSON format',
+  'sceneList.jsonFormat': 'to JSON',
   'sceneList.responseData': 'Response data',
   'sceneList.responseDelayShowInfo': 'Response delay time',
   'sceneList.responseStatusShowInfo': 'Response status',
