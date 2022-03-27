@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Button, Tooltip, Popconfirm } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 
@@ -182,6 +182,10 @@ class InterfaceSceneList extends Component {
           <span>
             {formatMessage('interfaceDetail.previewData')}
             {`/${window.context.projectName}/${this.props.interfaceData.pathname}`}
+            &nbsp;&nbsp;
+            <Tooltip title={formatMessage('interfaceDetail.previewDataTip')}>
+              <QuestionCircleOutlined />
+            </Tooltip>
           </span>
         )}
         {contextConfig && showResInfo ? (
