@@ -69,6 +69,7 @@ const enUS = {
 
   'interfaceDetail.contextConfig': 'Rewrite response',
   'interfaceDetail.previewData': 'Preview scene data: ',
+  'interfaceDetail.previewDataTip': 'Only supports ALL and GET method preview',
   'interfaceDetail.proxyConfig': 'Proxy mode',
   'interfaceDetail.saveToScene': 'Save as scene data',
   'interfaceDetail.selectInterface': 'Select interface',

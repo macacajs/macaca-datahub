@@ -1,12 +1,8 @@
 'use strict';
 
-import {
-  webpackHelper,
-} from 'macaca-wd';
+import { webpackHelper } from 'macaca-wd';
 
-const {
-  driver,
-} = webpackHelper;
+const { driver } = webpackHelper;
 
 const BASE_URL = 'http://localhost:5678';
 
@@ -19,14 +15,14 @@ driver.configureHttp({
 exports.driver = driver;
 exports.BASE_URL = BASE_URL;
 
-exports.setCodeMirror = d => {
+exports.setMonacoEditor = (d) => {
   /* eslint-disable */
-  return `document.querySelector('.CodeMirror').CodeMirror.setValue(\'${JSON.stringify(d)}\')`
+  return `document.querySelector('.MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
   /* eslint-enable */
 };
 
-exports.setSceneCodeMirror = d => {
+exports.setSceneMonacoEditor = (d) => {
   /* eslint-disable */
-  return `document.querySelector('.res-data .CodeMirror').CodeMirror.setValue(\'${JSON.stringify(d)}\')`
+  return `document.querySelector('.res-data .MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
   /* eslint-enable */
 };

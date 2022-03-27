@@ -68,6 +68,7 @@ const zhCN = {
 
   'interfaceDetail.contextConfig': 'Rewrite response',
   'interfaceDetail.previewData': '预览场景数据：',
+  'interfaceDetail.previewDataTip': '仅支持 ALL 和 GET 方法预览',
   'interfaceDetail.proxyConfig': '代理模式',
   'interfaceDetail.saveToScene': '保存为新场景',
   'interfaceDetail.selectInterface': '选择接口',
