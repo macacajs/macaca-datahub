@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 
 import { FormattedMessage } from 'react-intl';
@@ -7,13 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { Tabs, Button, Layout } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
-import { MonacoEditor, monacoEditorJsonConfig, monacoEditorJsConfig } from '../components/MonacoEditor';
+import MonacoEditor from '../components/MonacoEditor';
 
 import { queryParse, serialize } from '../common/helper';
-
-const TabPane = Tabs.TabPane;
-
-const projectName = window.context.projectName;
 
 import InterfaceList from '../components/InterfaceList';
 import InterfaceSchema from '../components/InterfaceDetail/InterfaceSchema';
@@ -22,8 +16,12 @@ import { sceneService, schemaService, interfaceService, groupService } from '../
 
 import './Document.less';
 
-const Sider = Layout.Sider;
-const Content = Layout.Content;
+const { TabPane } = Tabs;
+
+const { projectName } = window.context;
+
+const { Sider } = Layout;
+const { Content } = Layout;
 
 const { uniqId: projectUniqId } = window.context || {};
 
@@ -72,9 +70,7 @@ class Document extends React.Component {
     });
   }
 
-  initInterfaceList = async () => {
-    return await interfaceService.getInterfaceList();
-  };
+  initInterfaceList = async () => await interfaceService.getInterfaceList();
 
   fetchSchemaAndScene = async (interfaceUniqId) => {
     if (interfaceUniqId) {
@@ -130,9 +126,9 @@ class Document extends React.Component {
 
   render() {
     const params = queryParse(location.hash);
-    const sceneList = this.state.sceneList;
+    const { sceneList } = this.state;
     const sceneData = sceneList.find((item) => item.sceneName === params.scene);
-    let currentScene = this.state.currentScene;
+    let { currentScene } = this.state;
 
     if (sceneData && sceneData.sceneName) {
       currentScene = sceneData.sceneName;
@@ -141,7 +137,7 @@ class Document extends React.Component {
     }
 
     return (
-      <Layout>
+      <Layout className="page-document">
         <Sider
           width={300}
           style={{
@@ -151,7 +147,7 @@ class Document extends React.Component {
           }}
         >
           <InterfaceList
-            unControlled={true}
+            unControlled
             selectedInterface={this.state.selectedInterface}
             setSelectedInterface={this.setSelectedInterface}
             experimentConfig={this.props.experimentConfig}
@@ -170,7 +166,7 @@ class Document extends React.Component {
               : '-'}
           </h2>
           <h3 style={{ color: 'gray' }}>{this.state.selectedInterface.description || '-'}</h3>
-          <InterfaceSchema unControlled={true} schemaData={this.state.schemaData} />
+          <InterfaceSchema unControlled schemaData={this.state.schemaData} />
           <section>
             <h1 style={{ marginTop: '20px' }}>
               <FormattedMessage id="sceneList.sceneData" />
@@ -179,11 +175,11 @@ class Document extends React.Component {
               {sceneList.map((sceneData, index) => (
                 <TabPane size="small" tab={sceneData.sceneName} key={sceneData.sceneName}>
                   <MonacoEditor
-                    height="600"
-                    options={sceneData.format === 'javascript' ? monacoEditorJsConfig : monacoEditorJsonConfig}
+                    className="scene-doc-editor"
+                    language={sceneData.format === 'javascript' ? 'javascript' : 'json'}
                     value={getCode(sceneData)}
                     theme="vs-light"
-                    readOnly={true}
+                    readOnly
                   />
                 </TabPane>
               ))}

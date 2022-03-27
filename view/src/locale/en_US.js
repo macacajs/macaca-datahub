@@ -90,6 +90,7 @@ const enUS = {
   'sceneList.rewriteResponse': 'Rewrite response',
   'sceneList.rewriteResponseHeader': 'Rewrite response headers in JSON format',
   'sceneList.jsonFormat': 'to JSON',
+  'sceneList.jsonFormatTip': 'Enter a valid Object, click to convert to JSON',
   'sceneList.responseData': 'Response data',
   'sceneList.responseDelayShowInfo': 'Response delay time',
   'sceneList.responseStatusShowInfo': 'Response status',

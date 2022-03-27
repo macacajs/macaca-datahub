@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import { Form, Input, Modal, message, Collapse, Radio, Button } from 'antd';
-import { SwapOutlined } from '@ant-design/icons';
+import { Form, Input, Modal, message, Collapse, Radio, Tooltip } from 'antd';
 import { injectIntl } from 'react-intl';
-import { MonacoEditor, monacoEditorJsonConfig, monacoEditorJsConfig } from '../MonacoEditor';
+import MonacoEditor from '../MonacoEditor';
 import './SceneForm.less';
 
 const { Panel } = Collapse;
@@ -54,7 +53,7 @@ function SceneFormComponent(props) {
     return { data, responseHeaders, error };
   };
 
-  const jsObjectCodeToJsonCode = () => {
+  const objectCodeToJsonCode = () => {
     const monacoEditorInstance = monacoEditorRef.current;
     const formatCode = JSON.stringify(eval(`(${monacoEditorInstance.getValue()})`), null, 2);
     monacoEditorInstance.setValue(formatCode);
@@ -160,10 +159,10 @@ function SceneFormComponent(props) {
               >
                 <Input maxLength={3} />
               </Form.Item>
-              <Form.Item className="context-config" label={formatMessage('sceneList.rewriteResponseHeader')}>
+              <Form.Item label={formatMessage('sceneList.rewriteResponseHeader')}>
                 <MonacoEditor
-                  height="120"
-                  options={monacoEditorJsonConfig}
+                  height="120px"
+                  language="json"
                   value={
                     stageData.contextConfig && stageData.contextConfig.responseHeaders
                       ? JSON.stringify(stageData.contextConfig.responseHeaders, null, 2)
@@ -179,12 +178,16 @@ function SceneFormComponent(props) {
           </Collapse>
         )}
         <Form.Item className="res-data" label={formatMessage('sceneList.responseData')}>
-          <div className="json-format-btn" onClick={jsObjectCodeToJsonCode}>
-            {formatMessage('sceneList.jsonFormat')}
-          </div>
+          {stageData.format !== 'javascript' && (
+            <Tooltip title={formatMessage('sceneList.jsonFormatTip')}>
+              <div className="json-format-btn" onClick={objectCodeToJsonCode}>
+                {formatMessage('sceneList.jsonFormat')}
+              </div>
+            </Tooltip>
+          )}
           <MonacoEditor
-            height="400"
-            options={stageData.format === 'javascript' ? monacoEditorJsConfig : monacoEditorJsonConfig}
+            height="400px"
+            language={stageData.format === 'javascript' ? 'javascript' : 'json'}
             value={getCode(stageData)}
             theme="vs-light"
             editorDidMount={(editor) => {

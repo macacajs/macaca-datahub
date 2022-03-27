@@ -1,26 +1,28 @@
 .scene-form-modal {
-  .context-config .CodeMirror {
-    height: 72px !important;
-  }
-
   .ant-collapse {
-    margin-top: 3px;
+    margin-top: 12px;
   }
 
   .res-data {
     margin-top: 12px;
     position: relative;
 
-    .CodeMirror {
-      height: 350px !important;
-    }
-
     .json-format-btn {
       position: absolute;
+      background-color: rgba(0, 0, 1, 0.1);
+      padding: 4px;
+      border-radius: 4px;
       right: 20px;
       top: 6px;
       z-index: 9;
       cursor: pointer;
+      opacity: 0.3;
+      transition: opacity 0.5s linear;
+
+      &:hover {
+        opacity: 1;
+        transition: opacity 0.5s linear;
+      }
     }
   }
 

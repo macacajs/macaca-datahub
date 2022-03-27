@@ -1,35 +1,36 @@
-'use strict';
-
 import React from 'react';
-import {
-  Row,
-  Col,
-  Button,
-} from 'antd';
+import { Row, Col, Button } from 'antd';
 
 import {
-  RocketOutlined, GithubOutlined,
-  CloudOutlined, TeamOutlined,
-  CameraOutlined, SyncOutlined,
-  EyeOutlined, ClockCircleOutlined,
-  BookOutlined, ForkOutlined,
-  ToolOutlined, DatabaseOutlined,
-  SaveOutlined, DisconnectOutlined,
-  ApiOutlined, CodeOutlined,
-  GlobalOutlined, DownloadOutlined,
+  RocketOutlined,
+  GithubOutlined,
+  CloudOutlined,
+  TeamOutlined,
+  CameraOutlined,
+  SyncOutlined,
+  EyeOutlined,
+  ClockCircleOutlined,
+  BookOutlined,
+  ForkOutlined,
+  ToolOutlined,
+  DatabaseOutlined,
+  SaveOutlined,
+  DisconnectOutlined,
+  ApiOutlined,
+  CodeOutlined,
+  GlobalOutlined,
+  DownloadOutlined,
   ExperimentOutlined,
 } from '@ant-design/icons';
 
-import {
-  injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import './Home.less';
 
 const pkg = require('../../package.json');
 
-function Home (props) {
-  const formatMessage = props.intl.formatMessage;
+function Home(props) {
+  const { formatMessage } = props.intl;
   const features = [
     { text: 'home.icon.cloud', icon: <CloudOutlined /> },
     { text: 'home.icon.team', icon: <TeamOutlined /> },
@@ -61,7 +62,7 @@ function Home (props) {
               </Col>
               <Col span={12}>
                 <p className="slogan">
-                  <span>DataHub</span> - {formatMessage({id: 'common.slogan'})}
+                  <span>DataHub</span> - {formatMessage({ id: 'common.slogan' })}
                 </p>
                 <a className="go-btn" href="/dashboard">
                   <Button
@@ -70,25 +71,16 @@ function Home (props) {
                     icon={<RocketOutlined />}
                     size="large"
                     ghost
-                  >{formatMessage({id: 'home.go'})}
+                  >
+                    {formatMessage({ id: 'home.go' })}
                   </Button>
                 </a>
-                <a
-                  className="go-btn github"
-                  target="_blank"
-                  href={ pkg.links.homepage }
-                >
-                  <Button
-                    type="primary"
-                    icon={<GithubOutlined />}
-                    size="large"
-                    ghost
-                  >GITHUB
+                <a className="go-btn github" target="_blank" href={pkg.links.homepage}>
+                  <Button type="primary" icon={<GithubOutlined />} size="large" ghost>
+                    GITHUB
                   </Button>
                 </a>
-                <p className="versioning">
-                  v{ window.pageConfig.version }
-                </p>
+                <p className="versioning">v{window.pageConfig.version}</p>
               </Col>
             </Row>
           </Col>
@@ -96,27 +88,28 @@ function Home (props) {
         <Row type="flex" justify="center">
           <Col span={18}>
             <Row className="desc-icons">
-              {
-                features.map(({ text, icon, experiment = false }) => {
-                  return (
-                    <Col key={text} span={4}>
-                      {icon}
-                      <div className="text">{formatMessage({ id: text })}
-                        { experiment && <ExperimentOutlined style={{
+              {features.map(({ text, icon, experiment = false }) => (
+                <Col key={text} span={4}>
+                  {icon}
+                  <div className="text">
+                    {formatMessage({ id: text })}
+                    {experiment && (
+                      <ExperimentOutlined
+                        style={{
                           fontSize: '12px',
                           transform: 'scale(.6)',
-                        }}/> }
-                      </div>
-                    </Col>
-                  );
-                })
-              }
+                        }}
+                      />
+                    )}
+                  </div>
+                </Col>
+              ))}
             </Row>
           </Col>
         </Row>
       </Col>
     </Row>
   );
-};
+}
 
 export default injectIntl(Home);

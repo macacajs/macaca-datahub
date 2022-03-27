@@ -89,6 +89,7 @@ const zhCN = {
   'sceneList.rewriteResponse': '设置响应延迟时间、响应头、状态码',
   'sceneList.rewriteResponseHeader': '覆盖响应头（JSON 格式）',
   'sceneList.jsonFormat': '格式化JSON',
+  'sceneList.jsonFormatTip': '输入合法的Object, 点击转JSON',
   'sceneList.responseData': '响应数据',
   'sceneList.responseDelayShowInfo': '响应延迟时间',
   'sceneList.responseStatusShowInfo': '响应状态码',

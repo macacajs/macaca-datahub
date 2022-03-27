@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Tooltip, Popconfirm, Tag } from 'antd';
+import { Input, Button, Tooltip, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -126,11 +126,6 @@ class InterfaceSceneList extends Component {
                   >
                     {value.sceneName}
                   </div>
-                  {isOpenRunJsMode && (
-                    <span className="common-list-item-tag">
-                      {value.format === 'json' ? <Tag color="blue">Json</Tag> : <Tag color="green">Javascript</Tag>}
-                    </span>
-                  )}
                   {!disabled && (
                     <div className="common-list-item-operation">
                       <Tooltip title={formatMessage('sceneList.updateScene')}>

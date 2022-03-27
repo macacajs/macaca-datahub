@@ -1,6 +1,16 @@
 import React from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { noop, processSize } from './utils';
+
+const monacoEditorDefaultConfig = {
+  automaticLayout: true,
+  tabSize: 2,
+  formatOnPaste: true,
+  links: true,
+  showFoldingControls: 'always',
+  minimap: { enabled: false },
+};
+
+const noop = () => {};
 
 class MonacoEditor extends React.Component {
   constructor(props) {
@@ -13,9 +23,10 @@ class MonacoEditor extends React.Component {
 
   componentDidMount() {
     const value = this.props.value != null ? this.props.value : this.props.defaultValue;
-    const { theme, overrideServices, className, readOnly } = this.props;
+    const { language, theme, overrideServices, className, readOnly } = this.props;
     if (this.containerElement) {
       const options = {
+        language,
         value,
         readOnly,
         ...this.props.options,
@@ -98,11 +109,9 @@ class MonacoEditor extends React.Component {
 
   render() {
     const { width, height } = this.props;
-    const fixedWidth = processSize(width);
-    const fixedHeight = processSize(height);
     const style = {
-      width: fixedWidth,
-      height: fixedHeight,
+      width,
+      height,
       border: '1px solid rgba(0, 0, 0, 0.2)',
     };
 
@@ -124,36 +133,13 @@ MonacoEditor.defaultProps = {
   value: null,
   defaultValue: '',
   theme: null,
-  options: {},
+  options: monacoEditorDefaultConfig,
   overrideServices: {},
   editorDidMount: noop,
   editorWillMount: noop,
   onChange: noop,
   className: null,
   readOnly: false,
-  onDidBlurEditorWidget: noop,
 };
 
-const monacoEditorDefaultConfig = {
-  language: 'json',
-  automaticLayout: true,
-  tabSize: 2,
-  formatOnPaste: true,
-  links: true,
-  showFoldingControls: 'always',
-  minimap: { enabled: false },
-};
-
-const monacoEditorJsonConfig = {
-  ...monacoEditorDefaultConfig,
-  language: 'json',
-  placeholder: '{\n  ... Input JSON data here\n}',
-};
-
-const monacoEditorJsConfig = {
-  ...monacoEditorDefaultConfig,
-  language: 'javascript',
-  placeholder: '// Input Javascript code here\nctx.body = { time: Date.now() };\n',
-};
-
-export { MonacoEditor, monacoEditorDefaultConfig, monacoEditorJsonConfig, monacoEditorJsConfig };
+export default MonacoEditor;

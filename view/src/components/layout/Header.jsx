@@ -1,7 +1,7 @@
 import React from 'react';
 import GitHubButton from 'react-github-button';
 
-import { Layout, Tooltip } from 'antd';
+import { Layout } from 'antd';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -33,13 +33,6 @@ export default ({ links, pageConfig, context }) => {
         <li style={{ marginTop: '30px' }}>
           <GitHubButton type="stargazers" namespace="macacajs" repo="macaca-datahub" />
         </li>
-        <li className="portrait">
-          <Tooltip placement="bottom" title={'hi Macaca!'}>
-            <a className="mask" href="//github.com/macacajs" target="_blank">
-              <img src="//npmcdn.com/macaca-logo@latest/svg/monkey.svg" />
-            </a>
-          </Tooltip>
-        </li>
         <li>
           <a href={`${links.issue}?utf8=%E2%9C%93&q=`} target="_blank">
             <h3>
@@ -48,7 +41,10 @@ export default ({ links, pageConfig, context }) => {
           </a>
         </li>
         <li>
-          <a href={navigator.language === 'zh-CN' ? `${links.document}/zh` : links.document} target="_blank">
+          <a
+            href={window.localStorage.DATAHUB_LANGUAGE === 'zh-CN' ? `${links.document}/zh` : links.document}
+            target="_blank"
+          >
             <h3>
               <FormattedMessage id="common.guide" />
             </h3>

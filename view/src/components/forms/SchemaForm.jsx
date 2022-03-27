@@ -4,24 +4,19 @@ import { Form, Modal, Table, Alert, message } from 'antd';
 
 import { injectIntl } from 'react-intl';
 
-import '../../common/jsonlint';
 import { genSchemaList } from '../../common/helper';
 
-import { UnControlled as CodeMirror, defaultCodeMirrorOptions as codeMirrorOptions } from '../../common/codemirror';
-
-import { MonacoEditor, monacoEditorJsonConfig } from '../MonacoEditor';
+import MonacoEditor from '../MonacoEditor';
 
 import './SchemaForm.less';
 
 class SchemaFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.codeMirrorInstance = null;
     this.monacoEditorInstance = null;
 
     this.state = {
       stageData: null,
-      cursor: null,
       schemaFormType: '',
     };
   }
@@ -45,23 +40,14 @@ class SchemaFormComponent extends Component {
   validateSchema = () => {
     let [data, error] = [{}, null];
     try {
-      data = JSON.parse(this.monacoEditorInstance.getValue());
+      data = JSON.parse(this.monacoEditorInstance.getValue() || '{}');
+      this.setState({
+        stageData: data,
+      });
     } catch (err) {
       error = err;
     }
     return { data, error };
-  };
-
-  handleCodeMirrorBlur = (editor) => {
-    this.setState({
-      cursor: editor.getCursor(),
-    });
-    try {
-      const stageData = JSON.parse(editor.getValue());
-      this.setState({
-        stageData,
-      });
-    } catch (e) {}
   };
 
   handleClickTableRow = (e) => {
@@ -93,6 +79,7 @@ class SchemaFormComponent extends Component {
       if (!matches.length) return;
 
       const { endColumn, endLineNumber } = matches[0].range;
+      editor.revealLineInCenter(endLineNumber);
       editor.setPosition({
         column: endColumn,
         lineNumber: endLineNumber,
@@ -119,7 +106,14 @@ class SchemaFormComponent extends Component {
         title={
           <span>
             Schema&nbsp;&nbsp;
-            <a target="_blank" href="https://github.com/macacajs/macaca-datahub/blob/master/README.md#schema-syntax">
+            <a
+              target="_blank"
+              href={
+                window.localStorage.DATAHUB_LANGUAGE === 'zh-CN'
+                  ? 'https://macacajs.github.io/macaca-datahub/zh/guide/schema-syntax.html'
+                  : 'https://macacajs.github.io/macaca-datahub/guide/schema-syntax.html'
+              }
+            >
               syntax docs
             </a>
           </span>
@@ -143,20 +137,9 @@ class SchemaFormComponent extends Component {
       >
         <Form layout="vertical" className="schema-content-form">
           <div className="schema-left-content">
-            {/* <CodeMirror
-            style={{ height: `${window.document.body.clientHeight}px` }}
-            value={stageData && JSON.stringify(stageData, null, 2)}
-            options={codeMirrorOptions}
-            editorDidMount={instance => {
-              this.codeMirrorInstance = instance;
-              instance.focus();
-            }}
-            cursor={this.state.cursor}
-            onBlur={this.handleCodeMirrorBlur}
-          /> */}
             <MonacoEditor
-              height={window.document.body.clientHeight}
-              options={monacoEditorJsonConfig}
+              className="schema-monaco-editor"
+              language="json"
               value={stageData && JSON.stringify(stageData, null, 2)}
               theme="vs-light"
               editorDidMount={(editor) => {
@@ -166,11 +149,12 @@ class SchemaFormComponent extends Component {
             />
           </div>
           <div className="schema-right-content">
-            <Alert message={formatMessage('schemaData.tableJumpInfo')} type="info" style={{ marginBottom: '10px' }} />
+            <Alert message={formatMessage('schemaData.tableJumpInfo')} type="info" style={{ marginBottom: '12px' }} />
             <Table
               size="small"
               pagination={false}
-              defaultExpandedRowKeys={(schemaTableData && schemaTableData.expandedRowKeys) || []}
+              scroll={{ y: '62vh' }}
+              expandable={{ defaultExpandedRowKeys: (schemaTableData && schemaTableData.expandedRowKeys) || [] }}
               dataSource={schemaTableData && schemaTableData.schema}
               bordered
               columns={this.props.columns}
