@@ -9,21 +9,23 @@ const _ = lodash.merge({}, lodash);
 const compareServerVersion = () => {
   return new Promise((resolve, reject) => {
     const serverPkg = 'https://unpkg.com/macaca-datahub@latest/package.json';
-    fetch(serverPkg).then(res => res.json()).then(res => {
-      const latestVesion = res.version;
-      const currentVersion = window.pageConfig.version;
-      resolve({
-        shouldUpdate: semver.gt(latestVesion, currentVersion),
-        latestVesion,
+    fetch(serverPkg)
+      .then((res) => res.json())
+      .then((res) => {
+        const latestVesion = res.version;
+        const currentVersion = window.pageConfig.version;
+        resolve({
+          shouldUpdate: semver.gt(latestVesion, currentVersion),
+          latestVesion,
+        });
       });
-    });
   });
 };
 
 const guid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : r & 0x3 | 0x8;
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 };
@@ -33,7 +35,7 @@ const getSchemaChildren = (properties, requiredList = [], result) => {
 
   const res = [];
 
-  Object.keys(properties).forEach(item => {
+  Object.keys(properties).forEach((item) => {
     const itemData = properties[item];
     const isArray = itemData.type === 'array' && itemData.items;
     const isArrayObj = isArray && itemData.items.type === 'object';
@@ -66,29 +68,31 @@ const genSchemaList = (data) => {
     number: 0,
   };
 
-  if (data.type === 'object') { // Object
+  if (data.type === 'object') {
+    // Object
     result.schema = getSchemaChildren(data.properties, data.required, result);
-  } else if (data.type === 'array') { // Array
+  } else if (data.type === 'array') {
+    // Array
     const isArrayObj = data.items.type === 'object';
     const rootKey = guid();
 
     result.expandedRowKeys.push(rootKey);
 
-    result.schema = [{
-      key: rootKey,
-      field: 'root(virtual)',
-      type: `Array<{${data.items.type || 'String'}}>`,
-      description: 'Array',
-      required: false,
-      children: isArrayObj
-        ? getSchemaChildren(data.items.properties, data.items.required, result)
-        : null,
-    }];
+    result.schema = [
+      {
+        key: rootKey,
+        field: 'root(virtual)',
+        type: `Array<{${data.items.type || 'String'}}>`,
+        description: 'Array',
+        required: false,
+        children: isArrayObj ? getSchemaChildren(data.items.properties, data.items.required, result) : null,
+      },
+    ];
   }
   return result;
 };
 
-const queryParse = url => {
+const queryParse = (url) => {
   const qs = {};
   if (!url) {
     return qs;
@@ -102,7 +106,7 @@ const queryParse = url => {
   return qs;
 };
 
-const serialize = obj => {
+const serialize = (obj) => {
   const s = [];
 
   for (const item in obj) {
@@ -115,9 +119,9 @@ const serialize = obj => {
 };
 
 // 转换 JSON 为 Schema
-const jsonToSchema = jsonData => {
+const jsonToSchema = (jsonData) => {
   let contextSchema = {};
-  const itemType = typeof (jsonData);
+  const itemType = typeof jsonData;
   switch (itemType) {
     case 'string':
     case 'boolean':
@@ -162,7 +166,9 @@ const jsonToSchema = jsonData => {
 };
 
 const getExperimentConfig = () => {
-  let experimentConfig = {};
+  let experimentConfig = {
+    isOpenCompactView: true,
+  };
   const config = localStorage.getItem('DATAHUB_EXPERIMENT_CONFIG');
 
   if (!config) return experimentConfig;
@@ -175,7 +181,7 @@ const getExperimentConfig = () => {
   return experimentConfig;
 };
 
-const setExperimentConfig = option => {
+const setExperimentConfig = (option) => {
   const experimentConfig = getExperimentConfig();
   const result = Object.assign(experimentConfig, option);
   localStorage.setItem('DATAHUB_EXPERIMENT_CONFIG', JSON.stringify(result));

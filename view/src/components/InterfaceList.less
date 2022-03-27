@@ -24,7 +24,7 @@
   }
 
   .interface-group-collapse {
-    height: calc(100vh - 170px);
+    height: calc(100vh - 130px);
     overflow-y: auto;
 
     .interface-group-collapse-panel {
@@ -35,7 +35,7 @@
       }
 
       .interface-group-control {
-        transition: opacity .5s linear;
+        transition: opacity 0.5s linear;
         opacity: 0;
         margin-right: 4px;
         font-size: 16px;
@@ -98,6 +98,7 @@
         .interface-control {
           opacity: 1;
         }
+        background: linear-gradient(to right, #1890ff 0, #1890ff 6px, #f7f7f7 4px, #f7f7f7 100%) no-repeat;
       }
 
       .interface-item {
@@ -108,7 +109,7 @@
         position: absolute;
         bottom: 10px;
         right: 14px;
-        transition: opacity .5s linear;
+        transition: opacity 0.5s linear;
         opacity: 0;
         margin-right: 4px;
       }
@@ -118,9 +119,7 @@
       .interface-control {
         opacity: 1;
       }
-      background: linear-gradient(
-        to right, #1890ff 0, #1890ff 6px, #f7f7f7 4px, #f7f7f7 100%
-      ) no-repeat;
+      background: linear-gradient(to right, #1890ff 0, #1890ff 6px, #f7f7f7 4px, #f7f7f7 100%) no-repeat;
     }
 
     h3 {
@@ -151,7 +150,6 @@
     cursor: pointer;
   }
 }
-
 
 .add-item {
   list-style-type: none;

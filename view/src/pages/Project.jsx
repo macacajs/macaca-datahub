@@ -1,21 +1,10 @@
-'use strict';
-
 import React from 'react';
 import debug from 'debug';
 import io from 'socket.io-client';
 
-const logger = debug('datahub:socket.io');
+import { injectIntl } from 'react-intl';
 
-import {
-  injectIntl,
-} from 'react-intl';
-
-import {
-  Affix,
-  Layout,
-  Tabs,
-  Empty,
-} from 'antd';
+import { Affix, Layout, Tabs, Empty } from 'antd';
 
 import InterfaceList from '../components/InterfaceList';
 import InterfaceDetail from '../components/InterfaceDetail/index';
@@ -24,17 +13,16 @@ import RealTime from '../components/RealTime';
 import RealTimeDetail from '../components/RealTimeDetail';
 import Icon from '../components/Icon';
 
-import {
-  interfaceService,
-  groupService,
-} from '../service';
+import { interfaceService, groupService } from '../service';
 
 import './Project.less';
 import './Project.module.less';
 
-const TabPane = Tabs.TabPane;
-const Sider = Layout.Sider;
-const Content = Layout.Content;
+const logger = debug('datahub:socket.io');
+
+const { TabPane } = Tabs;
+const { Sider } = Layout;
+const { Content } = Layout;
 
 const realTimeTabSymbol = 'REALTIME_TAB_KEY';
 const interfaceTabSymbol = 'INTERFACE_TAB_KEY';
@@ -52,17 +40,17 @@ class Project extends React.Component {
     realTimeDataList: [],
     realTimeIndex: 0,
     showRightSide: false,
-  }
+  };
 
-  getDefaultSelectedInterface (interfaceGroupList) {
+  getDefaultSelectedInterface(interfaceGroupList) {
     if (!interfaceGroupList.length) return {};
 
-    const interfaceGroup = interfaceGroupList.find(item => !!item.interfaceList.length);
+    const interfaceGroup = interfaceGroupList.find((item) => !!item.interfaceList.length);
 
     return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     this.initRealTimeDataList();
 
     const groupListData = await this.fetchGroupList();
@@ -77,16 +65,13 @@ class Project extends React.Component {
     });
   }
 
-  fetchInterfaceList = async () => {
-    return await interfaceService.getInterfaceList();
-  }
+  fetchInterfaceList = async () => await interfaceService.getInterfaceList();
 
-  fetchGroupList = async () => {
-    return await groupService.getGroupList({
+  fetchGroupList = async () =>
+    await groupService.getGroupList({
       belongedUniqId: projectUniqId,
       groupType: 'Interface',
     });
-  }
 
   updateInterfaceList = async () => {
     const groupListData = await this.fetchGroupList();
@@ -97,17 +82,15 @@ class Project extends React.Component {
       selectedInterface: this.getSelectedInterface(res.data),
       groupList: groupListData.data || [],
     });
-  }
+  };
 
-  getSelectedInterface = data => {
+  getSelectedInterface = (data) => {
     if (!Array.isArray(data.interfaceList)) return {};
 
     let result = null;
 
     if (this.state.selectedInterface && this.state.selectedInterface.uniqId) {
-      result = data.interfaceList.find(value => {
-        return value.uniqId === this.state.selectedInterface.uniqId;
-      });
+      result = data.interfaceList.find((value) => value.uniqId === this.state.selectedInterface.uniqId);
     }
 
     if (!result) {
@@ -115,10 +98,10 @@ class Project extends React.Component {
     }
 
     return result;
-  }
+  };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface = this.state.interfaceList.find(i => i.uniqId === uniqId) || {};
+    const selectedInterface = this.state.interfaceList.find((i) => i.uniqId === uniqId) || {};
 
     this.setState({
       selectedInterface,
@@ -127,16 +110,14 @@ class Project extends React.Component {
     const hashInfo = `pathname=${encodeURI(selectedInterface.pathname)}&method=${selectedInterface.method}`;
 
     location.hash = `#/?${hashInfo}`;
-  }
+  };
 
-  initRealTimeDataList () {
+  initRealTimeDataList() {
     const host = `//${location.hostname}:${window.context.socket.port}`;
     const socket = io(host);
     socket.on('push data', (data) => {
       logger(data);
-      const newData = [
-        ...this.state.realTimeDataList,
-      ].slice(0, this.state.REALTIME_MAX_LINE - 1);
+      const newData = [...this.state.realTimeDataList].slice(0, this.state.REALTIME_MAX_LINE - 1);
       newData.unshift(data);
       this.setState({
         realTimeDataList: newData,
@@ -144,33 +125,33 @@ class Project extends React.Component {
     });
   }
 
-  tabOnChange = key => {
+  tabOnChange = (key) => {
     this.setState({
       subRouter: key,
     });
-  }
+  };
 
-  selectRealTimeItem = index => {
+  selectRealTimeItem = (index) => {
     this.setState({
       subRouter: realTimeTabSymbol,
       realTimeIndex: index,
     });
-  }
+  };
 
   onDrawerClose = () => {
     this.setState({
       showRightSide: false,
     });
-  }
+  };
 
   toggleRightSide = () => {
     this.setState({
       showRightSide: true,
     });
-  }
+  };
 
-  render () {
-    const globalProxyEnabled = this.state.interfaceList.every(item => item.proxyConfig.enabled);
+  render() {
+    const globalProxyEnabled = this.state.interfaceList.every((item) => item.proxyConfig.enabled);
 
     return (
       <Layout>
@@ -220,33 +201,31 @@ class Project extends React.Component {
           </Affix>
         </Sider>
         <Content>
-          {
-            this.state.interfaceList.length
-              ? this.state.subRouter === interfaceTabSymbol &&
-                <InterfaceDetail
-                  experimentConfig={this.props.experimentConfig}
-                  selectedInterface={this.state.selectedInterface}
-                  updateInterfaceList={this.updateInterfaceList}
-                  globalProxyEnabled={globalProxyEnabled}
-                  key={this.state.selectedInterface.uniqId}
-                />
-              : (
-                <div className="interface-detail">
-                  <Empty
-                    className="add-api-hint"
-                    image={<Icon type="empty" height={120} />}
-                    description={this.props.intl.formatMessage({ id: 'project.createApi' })}
-                  />
-                </div>
-              )
-          }
-          {
-            this.state.subRouter === realTimeTabSymbol &&
+          {this.state.interfaceList.length ? (
+            this.state.subRouter === interfaceTabSymbol && (
+              <InterfaceDetail
+                experimentConfig={this.props.experimentConfig}
+                selectedInterface={this.state.selectedInterface}
+                updateInterfaceList={this.updateInterfaceList}
+                globalProxyEnabled={globalProxyEnabled}
+                key={this.state.selectedInterface.uniqId}
+              />
+            )
+          ) : (
+            <div className="interface-detail">
+              <Empty
+                className="add-api-hint"
+                image={<Icon type="empty" height={120} />}
+                description={this.props.intl.formatMessage({ id: 'project.createApi' })}
+              />
+            </div>
+          )}
+          {this.state.subRouter === realTimeTabSymbol && (
             <RealTimeDetail
               interfaceList={this.state.interfaceList}
               realTimeData={this.state.realTimeDataList[this.state.realTimeIndex]}
             />
-          }
+          )}
         </Content>
       </Layout>
     );
