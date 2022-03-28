@@ -4,7 +4,8 @@
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
-    "macaca-datahub": "./bin/datahub.js"
+    "macaca-datahub": "./bin/datahub.js",
+    "macaca-server": "./bin/datahub-server.js"
   },
   "files": [
     "app/**/*.js",
