@@ -14,7 +14,7 @@ More about [datahub-proxy-middleware](//github.com/macacajs/datahub-proxy-middle
 
 ## Integration with Egg.js
 
-More about [egg-datahub](//github.com/macacajs/egg-datahub)
+More about [egg-datahub](//github.com/eggjs/egg-datahub)
 
 ## Integration with UmiJS
 

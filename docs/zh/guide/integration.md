@@ -16,7 +16,7 @@ Macaca DataHub 可通过中间件形式集成到 Webpack 项目中，请见中�
 
 ## Egg.js 集成
 
-更多关于 [egg-datahub](//github.com/macacajs/egg-datahub)
+更多关于 [egg-datahub](//github.com/eggjs/egg-datahub)
 
 ## UmiJS 集成
 
