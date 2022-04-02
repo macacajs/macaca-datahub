@@ -49,10 +49,10 @@ class SceneController extends Controller {
         ctx[Symbol.for('context#useProxy')] = true;
         const parsedUrl = url.parse(proxyList[activeIndex].proxyUrl);
         let proxyUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.pathname}`;
-        const parseOrigindUrl = url.parse(ctx.request.url);
-        if (parseOrigindUrl.search) {
-          proxyUrl += parseOrigindUrl.search;
-        }
+        const parseOriginUrl = url.parse(ctx.request.url);
+
+        proxyUrl += parseOriginUrl.path.replace(`/data/${projectName}/`, '');
+
         const _res = await ctx.curl(proxyUrl, {
           method: ctx.method,
           headers: Object.assign({}, ctx.headers, {
