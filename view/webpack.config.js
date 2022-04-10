@@ -49,12 +49,6 @@ module.exports = () => {
           use: 'babel-loader',
         },
         {
-          test: /\.json$/,
-          type: 'javascript/auto',
-          use: 'json-loader',
-          exclude: /node_modules/,
-        },
-        {
           test: /\.less$/,
           exclude(filePath) {
             return filePath.endsWith('.module.less');
@@ -139,10 +133,6 @@ module.exports = () => {
             },
           ],
           include: [path.resolve(__dirname, 'src', 'assets', 'icons')],
-        },
-        {
-          test: /\.ttf$/,
-          use: ['file-loader'],
         },
       ],
     },
