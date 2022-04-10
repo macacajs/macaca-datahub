@@ -25,13 +25,19 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dep
-        run: npm install
+      - name: Install deps
+        run: |
+          npm install vuepress -D
+          npm install macaca-ecosystem -D
 
       - name: Build docs
         run: npm run docs:build
 
-      - name: Push to gh-pages branch
-        run: $(npm bin)/macaca-ecosystem push --cwd ./docs_dist --branch gh-pages
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: docs_dist
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
