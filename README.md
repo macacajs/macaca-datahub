@@ -16,7 +16,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![Package quality][quality-image]][quality-url]
-[![build status][travis-image]][travis-url]
+![build status](https://github.com/macacajs/macaca-datahub/actions/workflows/ci.yml/badge.svg)
 [![Test coverage][codecov-image]][codecov-url]
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
@@ -28,8 +28,6 @@
 [npm-url]: https://npmjs.org/package/macaca-datahub
 [quality-image]: https://packagequality.com/shield/macaca-datahub.svg
 [quality-url]: https://packagequality.com/#?package=macaca-datahub
-[travis-image]: https://app.travis-ci.com/macacajs/macaca-datahub.svg?branch=master
-[travis-url]: https://app.travis-ci.com/macacajs/macaca-datahub
 [codecov-image]: https://img.shields.io/codecov/c/github/macacajs/macaca-datahub.svg?logo=javascript
 [codecov-url]: https://codecov.io/gh/macacajs/macaca-datahub
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?logo=node.js
@@ -47,10 +45,10 @@
 
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/1011681?v=4" width="100px;"/><br/><sub><b>xudafeng</b></sub>](https://github.com/xudafeng)<br/>|[<img src="https://avatars.githubusercontent.com/u/2139038?v=4" width="100px;"/><br/><sub><b>zhangyuheng</b></sub>](https://github.com/zhangyuheng)<br/>|[<img src="https://avatars.githubusercontent.com/u/11460601?v=4" width="100px;"/><br/><sub><b>zivyangll</b></sub>](https://github.com/zivyangll)<br/>|[<img src="https://avatars.githubusercontent.com/u/52845048?v=4" width="100px;"/><br/><sub><b>snapre</b></sub>](https://github.com/snapre)<br/>|[<img src="https://avatars.githubusercontent.com/u/8085088?v=4" width="100px;"/><br/><sub><b>brucejcw</b></sub>](https://github.com/brucejcw)<br/>|[<img src="https://avatars.githubusercontent.com/u/17233599?v=4" width="100px;"/><br/><sub><b>Chan-Chun</b></sub>](https://github.com/Chan-Chun)<br/>|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[<img src="https://avatars.githubusercontent.com/u/3807955?v=4" width="100px;"/><br/><sub><b>BernardTolosajr</b></sub>](https://github.com/BernardTolosajr)<br/>|[<img src="https://avatars.githubusercontent.com/u/15025212?v=4" width="100px;"/><br/><sub><b>zhuyali</b></sub>](https://github.com/zhuyali)<br/>|[<img src="https://avatars.githubusercontent.com/u/1209810?v=4" width="100px;"/><br/><sub><b>paradite</b></sub>](https://github.com/paradite)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|[<img src="https://avatars.githubusercontent.com/u/40885641?v=4" width="100px;"/><br/><sub><b>timeLorder</b></sub>](https://github.com/timeLorder)<br/>|[<img src="https://avatars.githubusercontent.com/u/15955374?v=4" width="100px;"/><br/><sub><b>gaius-qi</b></sub>](https://github.com/gaius-qi)<br/>|
-[<img src="https://avatars.githubusercontent.com/u/465125?v=4" width="100px;"/><br/><sub><b>yesmeck</b></sub>](https://github.com/yesmeck)<br/>|[<img src="https://avatars.githubusercontent.com/u/17687614?v=4" width="100px;"/><br/><sub><b>ed2nd</b></sub>](https://github.com/ed2nd)<br/>|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/2972143?v=4" width="100px;"/><br/><sub><b>nightink</b></sub>](https://github.com/nightink)<br/>|[<img src="https://avatars.githubusercontent.com/u/6828924?v=4" width="100px;"/><br/><sub><b>vagusX</b></sub>](https://github.com/vagusX)<br/>
+|        [<img src="https://avatars.githubusercontent.com/u/1011681?v=4" width="100px;"/><br/><sub><b>xudafeng</b></sub>](https://github.com/xudafeng)<br/>        | [<img src="https://avatars.githubusercontent.com/u/2139038?v=4" width="100px;"/><br/><sub><b>zhangyuheng</b></sub>](https://github.com/zhangyuheng)<br/> | [<img src="https://avatars.githubusercontent.com/u/11460601?v=4" width="100px;"/><br/><sub><b>zivyangll</b></sub>](https://github.com/zivyangll)<br/> |  [<img src="https://avatars.githubusercontent.com/u/52845048?v=4" width="100px;"/><br/><sub><b>snapre</b></sub>](https://github.com/snapre)<br/>   |   [<img src="https://avatars.githubusercontent.com/u/8085088?v=4" width="100px;"/><br/><sub><b>brucejcw</b></sub>](https://github.com/brucejcw)<br/>    | [<img src="https://avatars.githubusercontent.com/u/17233599?v=4" width="100px;"/><br/><sub><b>Chan-Chun</b></sub>](https://github.com/Chan-Chun)<br/> |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/3807955?v=4" width="100px;"/><br/><sub><b>BernardTolosajr</b></sub>](https://github.com/BernardTolosajr)<br/> |    [<img src="https://avatars.githubusercontent.com/u/15025212?v=4" width="100px;"/><br/><sub><b>zhuyali</b></sub>](https://github.com/zhuyali)<br/>     |  [<img src="https://avatars.githubusercontent.com/u/1209810?v=4" width="100px;"/><br/><sub><b>paradite</b></sub>](https://github.com/paradite)<br/>   |  [<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>   | [<img src="https://avatars.githubusercontent.com/u/40885641?v=4" width="100px;"/><br/><sub><b>timeLorder</b></sub>](https://github.com/timeLorder)<br/> |  [<img src="https://avatars.githubusercontent.com/u/15955374?v=4" width="100px;"/><br/><sub><b>gaius-qi</b></sub>](https://github.com/gaius-qi)<br/>  |
+|         [<img src="https://avatars.githubusercontent.com/u/465125?v=4" width="100px;"/><br/><sub><b>yesmeck</b></sub>](https://github.com/yesmeck)<br/>          |      [<img src="https://avatars.githubusercontent.com/u/17687614?v=4" width="100px;"/><br/><sub><b>ed2nd</b></sub>](https://github.com/ed2nd)<br/>       |    [<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>    | [<img src="https://avatars.githubusercontent.com/u/2972143?v=4" width="100px;"/><br/><sub><b>nightink</b></sub>](https://github.com/nightink)<br/> |     [<img src="https://avatars.githubusercontent.com/u/6828924?v=4" width="100px;"/><br/><sub><b>vagusX</b></sub>](https://github.com/vagusX)<br/>      |
 
 This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Mon Mar 28 2022 13:01:23 GMT+0800`.
 
@@ -107,7 +105,7 @@ Datahub use [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for dyn
 API name example:
 
 | DataHub API name | matched request path |
-| ----             | ----                 |
+| ---------------- | -------------------- |
 | api1/books       | api1/books           |
 | api2/:foo/:bar   | api2/group/project   |
 | api3/:id         | api3/fred            |
