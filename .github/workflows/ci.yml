@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  # allows to manually run the job at any time
+  workflow_dispatch:
+  
+  push:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    name: 'Run Unit Test: node-16, ubuntu-latest'
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set node version to 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install deps
+        run: |
+          npm install
+          cd view
+          npm install
+          cd ../
+
+      - name: Run lint
+        run: npm run lint
+      
+      - name: Run cov
+        run: npm run cov
+
+      - name: Codecov
+        uses: codecov/codecov-action@v3.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
