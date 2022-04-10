@@ -4,9 +4,6 @@ DataHub Python Client
 .. image:: https://img.shields.io/coveralls/macacajs/datahub-python-sdk/master.svg
     :target: https://coveralls.io/github/macacajs/datahub-python-sdk
 
-.. image:: https://img.shields.io/travis/macacajs/datahub-python-sdk/master.svg
-    :target: https://travis-ci.org/macacajs/datahub-python-sdk
-
 .. image:: https://img.shields.io/pypi/v/datahub-python-sdk.svg
     :target: https://pypi.python.org/pypi/datahub-python-sdk
 

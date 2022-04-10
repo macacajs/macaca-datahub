@@ -1,14 +1,11 @@
 # datahub-proxy-middleware
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/datahub-proxy-middleware.svg
 [npm-url]: https://npmjs.org/package/datahub-proxy-middleware
-[travis-image]: https://img.shields.io/travis/macacajs/datahub-proxy-middleware.svg
-[travis-url]: https://travis-ci.org/macacajs/datahub-proxy-middleware
 [coveralls-image]: https://img.shields.io/coveralls/macacajs/datahub-proxy-middleware.svg
 [coveralls-url]: https://coveralls.io/r/macacajs/datahub-proxy-middleware?branch=master
 [download-image]: https://img.shields.io/npm/dm/datahub-proxy-middleware.svg
@@ -22,9 +19,8 @@
 
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/1011681?v=4" width="100px;"/><br/><sub><b>xudafeng</b></sub>](https://github.com/xudafeng)<br/>|[<img src="https://avatars.githubusercontent.com/u/11460601?v=4" width="100px;"/><br/><sub><b>zivyangll</b></sub>](https://github.com/zivyangll)<br/>|[<img src="https://avatars.githubusercontent.com/u/17233599?v=4" width="100px;"/><br/><sub><b>Chan-Chun</b></sub>](https://github.com/Chan-Chun)<br/>|[<img src="https://avatars.githubusercontent.com/u/2139038?v=4" width="100px;"/><br/><sub><b>zhangyuheng</b></sub>](https://github.com/zhangyuheng)<br/>|[<img src="https://avatars.githubusercontent.com/u/15025212?v=4" width="100px;"/><br/><sub><b>zhuyali</b></sub>](https://github.com/zhuyali)<br/>|
-| :---: | :---: | :---: | :---: | :---: |
-
+| [<img src="https://avatars.githubusercontent.com/u/1011681?v=4" width="100px;"/><br/><sub><b>xudafeng</b></sub>](https://github.com/xudafeng)<br/> | [<img src="https://avatars.githubusercontent.com/u/11460601?v=4" width="100px;"/><br/><sub><b>zivyangll</b></sub>](https://github.com/zivyangll)<br/> | [<img src="https://avatars.githubusercontent.com/u/17233599?v=4" width="100px;"/><br/><sub><b>Chan-Chun</b></sub>](https://github.com/Chan-Chun)<br/> | [<img src="https://avatars.githubusercontent.com/u/2139038?v=4" width="100px;"/><br/><sub><b>zhangyuheng</b></sub>](https://github.com/zhangyuheng)<br/> | [<img src="https://avatars.githubusercontent.com/u/15025212?v=4" width="100px;"/><br/><sub><b>zhuyali</b></sub>](https://github.com/zhuyali)<br/> |
+| :------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------: |
 
 This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Thu Mar 18 2021 13:45:58 GMT+0800`.
 
@@ -48,8 +44,8 @@ const datahubConfig = {
       port: 8080,
       hostname: 'localhost',
       pathOptions: {
-        start: true
-      }
+        start: true,
+      },
     },
   },
 };
@@ -57,7 +53,7 @@ const datahubConfig = {
 datahubMiddleware(app)(datahubConfig);
 ```
 
-*notice* version 6 has a break change that needs special attention, see [more details](https://github.com/pillarjs/path-to-regexp).
+_notice_ version 6 has a break change that needs special attention, see [more details](https://github.com/pillarjs/path-to-regexp).
 
 ## Use with webpack-dev-server
 

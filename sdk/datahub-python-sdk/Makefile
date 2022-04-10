@@ -3,7 +3,6 @@ install:
 	pip install sphinx
 	pip install twine
 	pip install pylint
-	pip install tox-travis
 	pip install coveralls
 doc:
 	sphinx-build -b html docsrc docs

@@ -12,7 +12,6 @@ logs/
 .idea
 .vscode
 .npmignore
-.travis.yml
 .gitignore
 .git
 .eslintrc
