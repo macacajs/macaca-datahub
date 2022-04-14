@@ -26,4 +26,3 @@ module.exports = agent => {
     socket.emit(data);
   });
 };
-
