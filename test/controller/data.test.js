@@ -1,9 +1,6 @@
 'use strict';
 
-const {
-  app,
-  assert,
-} = require('egg-mock/bootstrap');
+const { app, assert } = require('egg-mock/bootstrap');
 
 describe('test/app/controller/data.test.js', () => {
   let ctx;
@@ -42,7 +39,8 @@ describe('test/app/controller/data.test.js', () => {
   });
 
   it('GET /data/baz/api/path', async () => {
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -50,15 +48,15 @@ describe('test/app/controller/data.test.js', () => {
         contextConfig: {},
         data: { success: true },
       });
-    const body = await app.httpRequest()
-      .get('/data/baz/api/path');
-    assert(body.status === 200);
+    const body = await app.httpRequest().get('/data/baz/api/path');
+    assert(body.status === 300);
     assert(body.req.method === 'GET');
-    assert(body.text === '{\"success\":true}');
+    assert(body.text === '{"success":true}');
   });
 
   it('GET /data/baz/api/path support query.__datahub_scene', async () => {
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -66,7 +64,8 @@ describe('test/app/controller/data.test.js', () => {
         contextConfig: {},
         data: { id: 1 },
       });
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -74,23 +73,22 @@ describe('test/app/controller/data.test.js', () => {
         contextConfig: {},
         data: { success: true },
       });
-    const body = await app.httpRequest()
-      .get('/data/baz/api/path?__datahub_scene=id_1');
+    const body = await app.httpRequest().get('/data/baz/api/path?__datahub_scene=id_1');
     assert(body.status === 200);
     assert(body.req.method === 'GET');
-    assert(body.text === '{\"id\":1}');
+    assert(body.text === '{"id":1}');
   });
 
   it('GET /data/baz/api/path project with empty', async () => {
-    const body = await app.httpRequest()
-      .get('/data/baz/api/path111');
+    const body = await app.httpRequest().get('/data/baz/api/path111');
     assert(body.status === 400);
     assert(body.req.method === 'GET');
     assert(body.text === '{}');
   });
 
   it('GET /data/baz/api/path project modify contextConfig', async () => {
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -104,15 +102,15 @@ describe('test/app/controller/data.test.js', () => {
         },
         data: { success: true },
       });
-    const body = await app.httpRequest()
-      .get('/data/baz/api/path');
+    const body = await app.httpRequest().get('/data/baz/api/path');
     assert(body.status === 204);
     assert(body.header.name === 'DataHub');
     assert(body.text === '');
   });
 
   it('GET /data/baz/api/path project modify proxy', async () => {
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -120,25 +118,23 @@ describe('test/app/controller/data.test.js', () => {
         contextConfig: {},
         data: { success: true },
       });
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .put(`/api/interface/${interfaceUniqId}`)
       .send({
         proxyConfig: {
-          proxyList: [
-            { proxyUrl: 'http://datahubjs.com' },
-            { proxyUrl: 'http://www.b.com' },
-          ],
+          proxyList: [{ proxyUrl: 'http://datahubjs.com' }, { proxyUrl: 'http://www.b.com' }],
           activeIndex: 0,
           enabled: false,
         },
       });
-    const { body: createBody } = await app.httpRequest()
-      .get('/data/baz/api/path');
+    const { body: createBody } = await app.httpRequest().get('/data/baz/api/path');
     assert.deepStrictEqual(createBody, {
       success: true,
     });
 
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post(`/api/interface/${interfaceUniqId}`)
       .send({
         proxyConfig: {
@@ -146,12 +142,12 @@ describe('test/app/controller/data.test.js', () => {
           enabled: true,
         },
       });
-    await app.httpRequest()
-      .get('/data/baz/api/path');
+    await app.httpRequest().get('/data/baz/api/path');
   });
 
   it('GET /data/baz/api/path get data with search', async () => {
-    await app.httpRequest()
+    await app
+      .httpRequest()
       .post('/api/scene/')
       .send({
         interfaceUniqId,
@@ -159,8 +155,7 @@ describe('test/app/controller/data.test.js', () => {
         contextConfig: {},
         data: { success: true },
       });
-    const { body: createBody } = await app.httpRequest()
-      .get('/data/baz/api/path?test=test');
+    const { body: createBody } = await app.httpRequest().get('/data/baz/api/path?test=test');
     assert.deepStrictEqual(createBody, {
       success: true,
     });
