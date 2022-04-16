@@ -135,6 +135,10 @@ Through the seamless integration of the [switchScene(scenario) API](https://maca
   <img src="https://macacajs.github.io/macaca-datahub/assets/1556087370670-c4d89f7f-2c06-4e10-915f-99562f80fac9.png" width="75%" />
 </div>
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=macacajs/macaca-datahub)](https://star-history.com/#macacajs/macaca-datahub)
+
 ## License
 
 The MIT License (MIT)
