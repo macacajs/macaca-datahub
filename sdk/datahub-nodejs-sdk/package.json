@@ -7,7 +7,7 @@
     "client"
   ],
   "bin": {
-    "datahub-nodejs-sdk": "./bin/datahub-nodejs-sdk"
+    "datahub-nodejs-sdk": "./bin/datahub-nodejs-sdk.js"
   },
   "main": "index.js",
   "repository": {
@@ -38,9 +38,6 @@
     "hooks": {
       "pre-commit": "npm run lint"
     }
-  },
-  "engines": {
-    "node": ">=8"
   },
   "license": "MIT"
 }
