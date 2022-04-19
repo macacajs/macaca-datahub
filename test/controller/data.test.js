@@ -49,7 +49,7 @@ describe('test/app/controller/data.test.js', () => {
         data: { success: true },
       });
     const body = await app.httpRequest().get('/data/baz/api/path');
-    assert(body.status === 300);
+    assert(body.status === 200);
     assert(body.req.method === 'GET');
     assert(body.text === '{"success":true}');
   });
