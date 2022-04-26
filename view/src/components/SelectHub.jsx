@@ -1,25 +1,17 @@
-'use strict';
+import React, { PureComponent } from 'react';
 
-import React, {
-  PureComponent,
-} from 'react';
-
-import {
-  Menu,
-  Dropdown,
-} from 'antd';
+import { Menu, Dropdown } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 
 export default class SelectHub extends PureComponent {
-  render () {
+  render() {
     if (!this.props.allProjects) {
       return null;
     }
 
-    const list = this.props.allProjects
-      .map(item => item.projectName);
-    const projectName = this.props.projectName;
+    const list = this.props.allProjects.map((item) => item.projectName);
+    const { projectName } = this.props;
 
     if (list.length < 2) {
       return null;
@@ -27,24 +19,21 @@ export default class SelectHub extends PureComponent {
 
     const menu = (
       <Menu>
-        {list.map((item, key) => {
-          return (
-            <Menu.Item key={key} data-accessbilityid={`dropdonw-list-${key}`}>
-              <a href={`./${item}`}>{item}</a>
-            </Menu.Item>
-          );
-        })}
+        {list.map((item, key) => (
+          <Menu.Item key={key} data-accessbilityid={`dropdonw-list-${key}`}>
+            <a href={`./${item}`}>{item}</a>
+          </Menu.Item>
+        ))}
       </Menu>
     );
     return (
       <span style={{ marginLeft: '20px' }}>
         <Dropdown overlay={menu}>
           <span data-accessbilityid="dropdonw-list">
-            { projectName } <DownOutlined />
+            {projectName} <DownOutlined />
           </span>
         </Dropdown>
       </span>
     );
   }
 }
-

@@ -92,7 +92,7 @@ class SchemaFormComponent extends Component {
   render() {
     const { visible, onCancel, onOk, confirmLoading, schemaData, schemaFormType } = this.props;
 
-    const formatMessage = this.formatMessage;
+    const { formatMessage } = this;
     const schemaObject = schemaData.find((i) => i.type === schemaFormType) || {};
     const stageData = schemaObject.data && schemaObject.data.schemaData;
     const schemaTableData = this.state.stageData && genSchemaList(this.state.stageData);
@@ -102,7 +102,7 @@ class SchemaFormComponent extends Component {
         width="95%"
         wrapClassName="schema-modal"
         visible={visible}
-        destroyOnClose={true}
+        destroyOnClose
         title={
           <span>
             Schema&nbsp;&nbsp;

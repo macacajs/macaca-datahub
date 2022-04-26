@@ -4,11 +4,4 @@ import * as sceneService from './scene';
 import * as schemaService from './schema';
 import * as groupService from './group';
 
-export {
-  projectService,
-  interfaceService,
-  sceneService,
-  schemaService,
-  groupService,
-};
-
+export { projectService, interfaceService, sceneService, schemaService, groupService };

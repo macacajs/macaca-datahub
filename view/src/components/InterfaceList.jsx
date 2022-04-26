@@ -1,22 +1,6 @@
-'use strict';
+import React, { Component } from 'react';
 
-import React, {
-  Component,
-} from 'react';
-
-import {
-  Row,
-  Col,
-  Input,
-  Upload,
-  message,
-  Tooltip,
-  Popconfirm,
-  Popover,
-  Collapse,
-} from 'antd';
-
-const { Panel } = Collapse;
+import { Row, Col, Input, Upload, message, Tooltip, Popconfirm, Popover, Collapse } from 'antd';
 
 import {
   DeleteOutlined,
@@ -28,10 +12,7 @@ import {
   PlusCircleFilled,
 } from '@ant-design/icons';
 
-import {
-  injectIntl,
-  FormattedMessage,
-} from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 import InterfaceForm from './forms/InterfaceForm';
 import GroupForm from './forms/GroupForm';
@@ -41,7 +22,9 @@ import { interfaceService, groupService } from '../service';
 import './InterfaceList.less';
 import './InterfaceList.module.less';
 
-const Search = Input.Search;
+const { Panel } = Collapse;
+
+const { Search } = Input;
 
 const globalProxy = window.context && window.context.globalProxy;
 
@@ -57,13 +40,13 @@ class InterfaceList extends Component {
     stageData: null,
     addInterfaceInputIsVisible: false,
     editGroupNameIndex: -1, // 编辑态分组索引，默认 -1
-  }
+  };
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.groupInputRefs = [];
   }
 
-  componentDidUpdate = () => {
+  componentDidUpdate() {
     if (this.state.addInterfaceInputIsVisible) {
       this.input.focus();
     }
@@ -72,39 +55,39 @@ class InterfaceList extends Component {
     }
   }
 
-  formatMessage = id => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => this.props.intl.formatMessage({ id });
 
   showGroupForm = () => {
     this.setState({
       groupFormVisible: true,
     });
-  }
+  };
 
   hideGroupForm = () => {
     this.setState({
       groupFormVisible: false,
     });
-  }
+  };
 
   showCreateForm = () => {
     this.setState({
       stageData: null,
       interfaceFormVisible: true,
     });
-  }
+  };
 
-  showUpdateForm = async value => {
+  showUpdateForm = async (value) => {
     this.setState({
       stageData: value,
       interfaceFormVisible: true,
     });
-  }
+  };
 
   closeInterfaceForm = () => {
     this.setState({
       interfaceFormVisible: false,
     });
-  }
+  };
 
   confirmGroupForm = async ({ groupName }) => {
     this.setState({
@@ -122,11 +105,14 @@ class InterfaceList extends Component {
     });
 
     if (res.success) {
-      this.setState({
-        groupFormVisible: false,
-      }, this.props.updateInterfaceList);
+      this.setState(
+        {
+          groupFormVisible: false,
+        },
+        this.props.updateInterfaceList,
+      );
     }
-  }
+  };
 
   updateGroupName = async ({ uniqId, groupNameNew }) => {
     if (!groupNameNew) {
@@ -146,15 +132,13 @@ class InterfaceList extends Component {
       });
       this.props.updateInterfaceList();
     }
-  }
+  };
 
   confirmInterfaceForm = async ({ pathname, description, method, groupUniqId }) => {
     this.setState({
       interfaceFormLoading: true,
     });
-    const apiName = this.state.stageData
-      ? 'updateInterface'
-      : 'createInterface';
+    const apiName = this.state.stageData ? 'updateInterface' : 'createInterface';
     const res = await interfaceService[apiName]({
       uniqId: this.state.stageData && this.state.stageData.uniqId,
       pathname,
@@ -164,18 +148,16 @@ class InterfaceList extends Component {
     });
 
     // Add Global Proxy
-    if (res.data &&
-      res.data.uniqId &&
-      apiName === 'createInterface' &&
-      globalProxy
-    ) {
+    if (res.data && res.data.uniqId && apiName === 'createInterface' && globalProxy) {
       await interfaceService.updateInterface({
         uniqId: res.data.uniqId,
         proxyConfig: {
           enabled: false,
-          proxyList: [{
-            proxyUrl: globalProxy,
-          }],
+          proxyList: [
+            {
+              proxyUrl: globalProxy,
+            },
+          ],
         },
       });
     }
@@ -184,19 +166,22 @@ class InterfaceList extends Component {
       interfaceFormLoading: false,
     });
     if (res.success) {
-      this.setState({
-        interfaceFormVisible: false,
-      }, () => {
-        this.props.updateInterfaceList();
-      });
+      this.setState(
+        {
+          interfaceFormVisible: false,
+        },
+        () => {
+          this.props.updateInterfaceList();
+        },
+      );
     }
-  }
+  };
 
-  deleteInterface = async uniqId => {
+  deleteInterface = async (uniqId) => {
     await interfaceService.deleteInterface({ uniqId });
 
     await this.props.updateInterfaceList();
-  }
+  };
 
   deleteInterfaceGroup = async (value) => {
     if (value.interfaceList.length !== 0) {
@@ -211,47 +196,45 @@ class InterfaceList extends Component {
       message.success(this.formatMessage('group.deleteGroupSuccess'));
     }
     await this.props.updateInterfaceList();
-  }
+  };
 
-  downloadInterface = value => {
+  downloadInterface = (value) => {
     location.href = interfaceService.getDownloadAddress({
       uniqId: value.uniqId,
     });
-  }
+  };
 
-  uploadProps = () => {
-    return {
-      accept: 'text',
-      action: interfaceService.uploadServer,
-      showUploadList: false,
-      headers: {
-        authorization: 'authorization-text',
-      },
-      onChange (info) {
-        if (info.file.status === 'done') {
-          if (info.file.response.success) {
-            message.success(`${info.file.name} file uploaded successfully`);
-            location.reload();
-          } else {
-            message.error(info.file.response.message);
-          }
-        } else if (info.file.status === 'error') {
-          message.error(`${info.file.name} file upload failed.`);
+  uploadProps = () => ({
+    accept: 'text',
+    action: interfaceService.uploadServer,
+    showUploadList: false,
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status === 'done') {
+        if (info.file.response.success) {
+          message.success(`${info.file.name} file uploaded successfully`);
+          location.reload();
+        } else {
+          message.error(info.file.response.message);
         }
-      },
-    };
-  }
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  });
 
   filterInterface = (e) => {
     const filter = e.target.value.toLowerCase();
     this.setState({
       filterString: filter,
     });
-  }
+  };
 
   renderInterfaceList = () => {
-    const unControlled = this.props.unControlled;
-    const formatMessage = this.formatMessage;
+    const { unControlled } = this.props;
+    const { formatMessage } = this;
     const { interfaceGroupList } = this.props;
 
     return (
@@ -262,162 +245,163 @@ class InterfaceList extends Component {
         className="interface-group-collapse"
         expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       >
-        {
-          interfaceGroupList.map((interfaceGroup, index) => {
-            return (
-              <Panel
-                className="interface-group-collapse-panel"
-                header={
-                  this.state.editGroupNameIndex === index ? (
-                    <Input
-                      style={{ width: '70%' }}
-                      defaultValue={interfaceGroup.groupName}
-                      ref={(groupInputRef) => { this.groupInputRefs[index] = groupInputRef; }}
-                      onBlur={(e) => {
-                        this.updateGroupName({
-                          uniqId: interfaceGroup.groupUniqId,
-                          groupNameNew: e.target.value,
-                        });
-                      }}
-                      onPressEnter={(e) => {
-                        this.updateGroupName({
-                          uniqId: interfaceGroup.groupUniqId,
-                          groupNameNew: e.target.value,
-                        });
-                      }}
-                    />
-                  ) : (
-                    <span>{interfaceGroup.groupName}</span>
-                  )
-                }
-                key={index}
-                extra={
-                  !unControlled ? (
-                    <span
-                      className="interface-group-control"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <EditOutlined
-                        className="interface-group-control-edit"
-                        onClick={() => {
-                          this.setState({ editGroupNameIndex: index });
-                        }}
-                      />
-                      <Popconfirm
-                        placement="right"
-                        title={formatMessage('common.deleteTip')}
-                        onConfirm={() => this.deleteInterfaceGroup(interfaceGroup)}
-                        okText={formatMessage('common.confirm')}
-                        cancelText={formatMessage('common.cancel')}
-                      >
-                        <DeleteOutlined style={{ color: '#f5222d' }} />
-                      </Popconfirm>
-                    </span>) : (
-                    <span />
-                  )
-                }
-              >
-                <ul>
-                  {
-                    interfaceGroup.interfaceList.filter(value =>
-                      value.pathname.toLowerCase().includes(this.state.filterString) ||
-                      value.description.toLowerCase().includes(this.state.filterString)
-                    ).map((value, index) => {
-                      const isSelected = value.uniqId === this.props.selectedInterface.uniqId;
-                      const isOpenCompactView = this.props.experimentConfig.isOpenCompactView;
+        {interfaceGroupList.map((interfaceGroup, index) => (
+          <Panel
+            className="interface-group-collapse-panel"
+            header={
+              this.state.editGroupNameIndex === index ? (
+                <Input
+                  style={{ width: '70%' }}
+                  defaultValue={interfaceGroup.groupName}
+                  ref={(groupInputRef) => {
+                    this.groupInputRefs[index] = groupInputRef;
+                  }}
+                  onBlur={(e) => {
+                    this.updateGroupName({
+                      uniqId: interfaceGroup.groupUniqId,
+                      groupNameNew: e.target.value,
+                    });
+                  }}
+                  onPressEnter={(e) => {
+                    this.updateGroupName({
+                      uniqId: interfaceGroup.groupUniqId,
+                      groupNameNew: e.target.value,
+                    });
+                  }}
+                />
+              ) : (
+                <span>{interfaceGroup.groupName}</span>
+              )
+            }
+            key={index}
+            extra={
+              !unControlled ? (
+                <span className="interface-group-control" onClick={(e) => e.stopPropagation()}>
+                  <EditOutlined
+                    className="interface-group-control-edit"
+                    onClick={() => {
+                      this.setState({ editGroupNameIndex: index });
+                    }}
+                  />
+                  <Popconfirm
+                    placement="right"
+                    title={formatMessage('common.deleteTip')}
+                    onConfirm={() => this.deleteInterfaceGroup(interfaceGroup)}
+                    okText={formatMessage('common.confirm')}
+                    cancelText={formatMessage('common.cancel')}
+                  >
+                    <DeleteOutlined style={{ color: '#f5222d' }} />
+                  </Popconfirm>
+                </span>
+              ) : (
+                <span />
+              )
+            }
+          >
+            <ul>
+              {interfaceGroup.interfaceList
+                .filter(
+                  (value) =>
+                    value.pathname.toLowerCase().includes(this.state.filterString) ||
+                    value.description.toLowerCase().includes(this.state.filterString),
+                )
+                .map((value, index) => {
+                  const isSelected = value.uniqId === this.props.selectedInterface.uniqId;
+                  const { isOpenCompactView } = this.props.experimentConfig;
 
-                      return (
-                        <li
-                          key={index}
-                          data-accessbilityid={`project-add-api-list-${index}`}
-                          className={[isSelected ? 'clicked' : '', isOpenCompactView ? 'is-compact-view' : ''].join(' ')}
-                          onClick={() => this.props.setSelectedInterface(value.uniqId)}
-                        >
-                          <div className="interface-item">
-                            <h3 className="interface-item-title" title={value.pathname}>{value.pathname}</h3>
-                            <p className="interface-item-desc" title={value.description}>{value.description}</p>
-                            <p className="interface-item-method">
-                              <span className="interface-item-method-name">method: </span>
-                              <span className="interface-item-method-value">{value.method}</span>
-                            </p>
-                          </div>
-                          {!unControlled && <div className="interface-control" style={{fontSize: '16px'}}>
-                            {this.props.experimentConfig.isOpenDownloadAndUpload ? <span>
-                              <Upload name={ value.uniqId } {...this.uploadProps()}>
+                  return (
+                    <li
+                      key={index}
+                      data-accessbilityid={`project-add-api-list-${index}`}
+                      className={[isSelected ? 'clicked' : '', isOpenCompactView ? 'is-compact-view' : ''].join(' ')}
+                      onClick={() => this.props.setSelectedInterface(value.uniqId)}
+                    >
+                      <div className="interface-item">
+                        <h3 className="interface-item-title" title={value.pathname}>
+                          {value.pathname}
+                        </h3>
+                        <p className="interface-item-desc" title={value.description}>
+                          {value.description}
+                        </p>
+                        <p className="interface-item-method">
+                          <span className="interface-item-method-name">method: </span>
+                          <span className="interface-item-method-value">{value.method}</span>
+                        </p>
+                      </div>
+                      {!unControlled && (
+                        <div className="interface-control" style={{ fontSize: '16px' }}>
+                          {this.props.experimentConfig.isOpenDownloadAndUpload ? (
+                            <span>
+                              <Upload name={value.uniqId} {...this.uploadProps()}>
                                 <UploadOutlined className="upload-icon" />
                               </Upload>
                               <DownloadOutlined
                                 className="download-icon"
                                 onClick={() => this.downloadInterface(value)}
                               />
-                            </span> : null}
-                            <Tooltip title={formatMessage('interfaceList.updateInterface')}>
-                              <SettingOutlined
-                                className="setting-icon"
-                                onClick={() => this.showUpdateForm(value)}
-                              />
-                            </Tooltip>
-                            <Popconfirm
-                              title={formatMessage('common.deleteTip')}
-                              onConfirm={() => this.deleteInterface(value.uniqId)}
-                              okText={formatMessage('common.confirm')}
-                              cancelText={formatMessage('common.cancel')}
-                            >
-                              <DeleteOutlined style={{color: '#f5222d'}} className="delete-icon" />
-                            </Popconfirm>
-                          </div>}
-                        </li>
-                      );
-                    })
-                  }
-                </ul>
-              </Panel>
-            );
-          })
-        }
+                            </span>
+                          ) : null}
+                          <Tooltip title={formatMessage('interfaceList.updateInterface')}>
+                            <SettingOutlined className="setting-icon" onClick={() => this.showUpdateForm(value)} />
+                          </Tooltip>
+                          <Popconfirm
+                            title={formatMessage('common.deleteTip')}
+                            onConfirm={() => this.deleteInterface(value.uniqId)}
+                            okText={formatMessage('common.confirm')}
+                            cancelText={formatMessage('common.cancel')}
+                          >
+                            <DeleteOutlined style={{ color: '#f5222d' }} className="delete-icon" />
+                          </Popconfirm>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+            </ul>
+          </Panel>
+        ))}
       </Collapse>
     );
-  }
+  };
 
-  render () {
-    const formatMessage = this.formatMessage;
-    const unControlled = this.props.unControlled;
+  render() {
+    const { formatMessage } = this;
+    const { unControlled } = this.props;
     const interfaceListClassNames = ['interface-list'];
     if (unControlled) interfaceListClassNames.push('uncontrolled');
     return (
       <div className={`${interfaceListClassNames.join(' ')}`}>
-        {!unControlled && <Row className="interface-filter-row">
-          <Col span={20}>
-            <Search
-              data-accessbilityid="project-search-api"
-              placeholder={formatMessage('interfaceList.searchInterface')}
-              onChange={this.filterInterface}
-            />
-          </Col>
-          <Col span={3} offset={1} className="add-button">
-            <Popover
-              overlayClassName="popover-content"
-              content={
-                <ul className="add-item">
-                  <li onClick={this.showCreateForm}>
-                    <FormattedMessage id="interfaceList.addInterface" />
-                  </li>
-                  <li onClick={this.showGroupForm}>
-                    <FormattedMessage id="group.create" />
-                  </li>
-                </ul>
-              }
-              placement="bottom"
-            >
-              <PlusCircleFilled
-                className="add-btn"
-                data-accessbilityid="project-add-api-list-btn"
+        {!unControlled && (
+          <Row className="interface-filter-row">
+            <Col span={20}>
+              <Search
+                data-accessbilityid="project-search-api"
+                placeholder={formatMessage('interfaceList.searchInterface')}
+                onChange={this.filterInterface}
               />
-            </Popover>
-          </Col>
-        </Row>}
+            </Col>
+            <Col span={3} offset={1} className="add-button">
+              <Popover
+                overlayClassName="popover-content"
+                content={
+                  <ul className="add-item">
+                    <li onClick={this.showCreateForm}>
+                      <FormattedMessage id="interfaceList.addInterface" />
+                    </li>
+                    <li onClick={this.showGroupForm}>
+                      <FormattedMessage id="group.create" />
+                    </li>
+                  </ul>
+                }
+                placement="bottom"
+              >
+                <PlusCircleFilled className="add-btn" data-accessbilityid="project-add-api-list-btn" />
+              </Popover>
+            </Col>
+          </Row>
+        )}
 
-        { this.renderInterfaceList() }
+        {this.renderInterfaceList()}
 
         <InterfaceForm
           visible={this.state.interfaceFormVisible}

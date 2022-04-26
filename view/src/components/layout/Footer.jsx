@@ -6,31 +6,29 @@ import { GlobalOutlined } from '@ant-design/icons';
 import './footer.less';
 import Experiment from '../Experiment';
 
-export default ({
+export default function ({
   links,
   currentLocale,
   showSideItems = false,
   changeLang,
   updateExperimentConfig,
   experimentConfig,
-}) => {
+}) {
   const langList = ['zh-CN', 'en-US'];
   const menu = (
     <Menu>
       {langList
         .filter((lang) => lang !== currentLocale)
-        .map((lang) => {
-          return (
-            <Menu.Item
-              key={lang}
-              onClick={({ key }) => {
-                changeLang(key);
-              }}
-            >
-              {lang}
-            </Menu.Item>
-          );
-        })}
+        .map((lang) => (
+          <Menu.Item
+            key={lang}
+            onClick={({ key }) => {
+              changeLang(key);
+            }}
+          >
+            {lang}
+          </Menu.Item>
+        ))}
     </Menu>
   );
 
@@ -44,7 +42,7 @@ export default ({
         <li>
           <Dropdown overlay={menu} placement="top">
             <a rel="noopener noreferrer">
-              {<GlobalOutlined />} {currentLocale}
+              <GlobalOutlined /> {currentLocale}
             </a>
           </Dropdown>
         </li>
@@ -56,4 +54,4 @@ export default ({
       </ul>
     </div>
   );
-};
+}

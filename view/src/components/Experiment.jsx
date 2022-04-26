@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 
 import { Drawer, Switch } from 'antd';
@@ -66,7 +64,7 @@ class Experiment extends Component {
     });
   };
 
-  render () {
+  render() {
     return (
       <div className={styles.wrapper}>
         <Drawer
@@ -136,7 +134,7 @@ class Experiment extends Component {
         </Drawer>
         <a data-accessbilityid="experiment-container" onClick={() => this.setState({ showPanel: true })}>
           <ExperimentOutlined />
-          {'Lab'}
+          Lab
         </a>
       </div>
     );

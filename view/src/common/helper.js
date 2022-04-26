@@ -1,13 +1,11 @@
-'use strict';
-
 import lodash from 'lodash';
 import semver from 'semver';
 import deepMerge from 'deepmerge';
 
 const _ = lodash.merge({}, lodash);
 
-const compareServerVersion = () => {
-  return new Promise((resolve, reject) => {
+const compareServerVersion = () =>
+  new Promise((resolve, reject) => {
     const serverPkg = 'https://unpkg.com/macaca-datahub@latest/package.json';
     fetch(serverPkg)
       .then((res) => res.json())
@@ -20,15 +18,13 @@ const compareServerVersion = () => {
         });
       });
   });
-};
 
-const guid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+const guid = () =>
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     const v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
-};
 
 const getSchemaChildren = (properties, requiredList = [], result) => {
   if (!properties) return null;

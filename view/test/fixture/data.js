@@ -1,8 +1,6 @@
 export const schemaData = {
   type: 'object',
-  required: [
-    'success',
-  ],
+  required: ['success'],
   properties: {
     success: {
       type: 'boolean',
@@ -11,17 +9,10 @@ export const schemaData = {
     data: {
       type: 'array',
       description: 'data field',
-      required: [
-        'age',
-        'key',
-        'name',
-        'address',
-      ],
+      required: ['age', 'key', 'name', 'address'],
       items: {
         type: 'object',
-        required: [
-          'name',
-        ],
+        required: ['name'],
         properties: {
           key: {
             type: 'string',
@@ -62,4 +53,3 @@ export const failScene = {
   success: false,
   name: 'datahub',
 };
-

@@ -1,48 +1,33 @@
-'use strict';
-
 import React from 'react';
 
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-  Breadcrumb,
-} from 'antd';
+import { Button, Breadcrumb } from 'antd';
 
 import { BookOutlined } from '@ant-design/icons';
 
+import deepMerge from 'deepmerge';
 import InterfaceSceneList from './InterfaceSceneList';
 import InterfaceProxyConfig from './InterfaceProxyConfig';
 import InterfaceSchema from './InterfaceSchema';
-import deepMerge from 'deepmerge';
 
 import './index.less';
 import './index.module.less';
 
-const projectName = window.context.projectName;
+import { sceneService, schemaService, interfaceService } from '../../service';
 
-import {
-  sceneService,
-  schemaService,
-  interfaceService,
-} from '../../service';
+import { queryParse, serialize, jsonToSchema } from '../../common/helper';
 
-import {
-  queryParse,
-  serialize,
-  jsonToSchema,
-} from '../../common/helper';
+const { projectName } = window.context;
 
 class InterfaceDetail extends React.Component {
   state = {
     selectedScene: {},
     sceneList: [],
     schemaData: [],
-  }
+  };
 
-  componentWillMount () {
+  componentWillMount() {
     this.fetchSceneList();
   }
 
@@ -51,7 +36,7 @@ class InterfaceDetail extends React.Component {
       uniqId: this.props.selectedInterface.uniqId,
       currentScene: scene,
     });
-  }
+  };
 
   changeSelectedScene = async (value) => {
     const params = queryParse(location.hash);
@@ -59,11 +44,11 @@ class InterfaceDetail extends React.Component {
 
     await this.updateSceneFetch(value.sceneName);
 
-    const selectedScene = this.state.sceneList.filter(i => i.sceneName === value.sceneName)[0];
+    const selectedScene = this.state.sceneList.filter((i) => i.sceneName === value.sceneName)[0];
     this.setState({
       selectedScene,
     });
-  }
+  };
 
   fetchSceneList = async () => {
     const res = await sceneService.getSceneList({ interfaceUniqId: this.props.selectedInterface.uniqId });
@@ -72,7 +57,7 @@ class InterfaceDetail extends React.Component {
       selectedScene: res.data && this.getDefaultScene(res.data),
     });
     this.fetchSchema();
-  }
+  };
 
   getInitResSchema = (sceneData, schemaData) => {
     let resIndex = -1;
@@ -101,12 +86,10 @@ class InterfaceDetail extends React.Component {
     } else {
       schemaData[resIndex] = deepMerge(result, schemaData[resIndex]);
     }
-  }
+  };
 
   fetchSchema = async () => {
-    const sceneData = this.state.sceneList
-      .filter(item => item.format === 'json')
-      .map(item => item.data);
+    const sceneData = this.state.sceneList.filter((item) => item.format === 'json').map((item) => item.data);
     const res = await schemaService.getSchema({ interfaceUniqId: this.props.selectedInterface.uniqId });
     const schemaData = res.data || [];
 
@@ -115,14 +98,14 @@ class InterfaceDetail extends React.Component {
     this.setState({
       schemaData,
     });
-  }
+  };
 
-  getDefaultScene = data => {
+  getDefaultScene = (data) => {
     if (!Array.isArray(data)) return {};
     const params = queryParse(location.hash);
 
     if (params.scene) {
-      const result = data.find(item => item.sceneName === params.scene);
+      const result = data.find((item) => item.sceneName === params.scene);
 
       if (result) {
         // If the params.scene are different from the currentScene, the params.scene needs to be updated
@@ -133,27 +116,25 @@ class InterfaceDetail extends React.Component {
       }
     }
 
-    return data.find(value => {
-      return value.sceneName === this.props.selectedInterface.currentScene;
-    }) || {};
-  }
+    return data.find((value) => value.sceneName === this.props.selectedInterface.currentScene) || {};
+  };
 
   deleteScene = async (value) => {
     await sceneService.deleteScene({
       uniqId: value.uniqId,
     });
     await this.updateInterFaceAndScene();
-  }
+  };
 
   updateInterFaceAndScene = async () => {
     await this.props.updateInterfaceList();
     await this.fetchSceneList();
-  }
+  };
 
   toggleProxy = async () => {
     const { enabled = false } = this.props.selectedInterface.proxyConfig;
     const flag = !enabled;
-    const selectedInterface = this.props.selectedInterface;
+    const { selectedInterface } = this.props;
     await interfaceService.updateInterface({
       uniqId: this.props.selectedInterface.uniqId,
       proxyConfig: {
@@ -162,7 +143,7 @@ class InterfaceDetail extends React.Component {
       },
     });
     await this.props.updateInterfaceList();
-  }
+  };
 
   toggleGlobalProxy = async () => {
     const enabled = !this.props.globalProxyEnabled;
@@ -171,10 +152,10 @@ class InterfaceDetail extends React.Component {
       enabled,
     });
     await this.props.updateInterfaceList();
-  }
+  };
 
-  changeProxyList = async newList => {
-    const selectedInterface = this.props.selectedInterface;
+  changeProxyList = async (newList) => {
+    const { selectedInterface } = this.props;
     const payload = {
       uniqId: selectedInterface.uniqId,
       proxyConfig: {
@@ -184,24 +165,24 @@ class InterfaceDetail extends React.Component {
     };
     await interfaceService.updateInterface(payload);
     await this.props.updateInterfaceList();
-  }
+  };
 
-  deleteProxy = async index => {
-    const selectedInterface = this.props.selectedInterface;
+  deleteProxy = async (index) => {
+    const { selectedInterface } = this.props;
     const { proxyList = [] } = selectedInterface.proxyConfig;
     proxyList.splice(index, 1);
     await this.changeProxyList(proxyList);
-  }
+  };
 
-  addProxy = async value => {
-    const selectedInterface = this.props.selectedInterface;
+  addProxy = async (value) => {
+    const { selectedInterface } = this.props;
     const { proxyList = [] } = selectedInterface.proxyConfig;
     proxyList.push(value);
     await this.changeProxyList(proxyList);
-  }
+  };
 
-  selectProxy = async index => {
-    const selectedInterface = this.props.selectedInterface;
+  selectProxy = async (index) => {
+    const { selectedInterface } = this.props;
     await interfaceService.updateInterface({
       uniqId: selectedInterface.uniqId,
       proxyConfig: {
@@ -210,10 +191,10 @@ class InterfaceDetail extends React.Component {
       },
     });
     await this.props.updateInterfaceList();
-  }
+  };
 
   toggleValidation = async (type, value) => {
-    const selectedInterface = this.props.selectedInterface;
+    const { selectedInterface } = this.props;
     const res = await schemaService.updateSchema({
       interfaceUniqId: selectedInterface.uniqId,
       type,
@@ -221,10 +202,10 @@ class InterfaceDetail extends React.Component {
     });
     await this.fetchSchema();
     return res;
-  }
+  };
 
   updateSchemaData = async ({ type, data }) => {
-    const selectedInterface = this.props.selectedInterface;
+    const { selectedInterface } = this.props;
     const res = await schemaService.updateSchema({
       interfaceUniqId: selectedInterface.uniqId,
       type,
@@ -232,13 +213,13 @@ class InterfaceDetail extends React.Component {
     });
     await this.fetchSchema();
     return res;
-  }
+  };
 
   toDocPage = () => {
     location.href = `//${location.host}/doc/${projectName}`;
-  }
+  };
 
-  render () {
+  render() {
     const { selectedInterface } = this.props;
     const previewLink = `//${location.host}/data/${projectName}/${this.props.selectedInterface.pathname}`;
     return (
@@ -246,23 +227,20 @@ class InterfaceDetail extends React.Component {
         <div className="interface-detail-navigation">
           <Breadcrumb>
             <Breadcrumb.Item>
-              <a href="/dashboard"><FormattedMessage id="topNav.allProject" /></a>
+              <a href="/dashboard">
+                <FormattedMessage id="topNav.allProject" />
+              </a>
             </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              {window.context && window.context.projectName}
-            </Breadcrumb.Item>
+            <Breadcrumb.Item>{window.context && window.context.projectName}</Breadcrumb.Item>
             <Breadcrumb.Item>
               <FormattedMessage id="topNav.projectConfig" />
             </Breadcrumb.Item>
           </Breadcrumb>
         </div>
         <div className="interface-detail-content">
-          <Button
-            className="scene-doc-button"
-            onClick={this.toDocPage}
-          >
+          <Button className="scene-doc-button" onClick={this.toDocPage}>
             <BookOutlined />
-            <FormattedMessage id="topNav.documentation"/>
+            <FormattedMessage id="topNav.documentation" />
           </Button>
           <InterfaceSceneList
             experimentConfig={this.props.experimentConfig}

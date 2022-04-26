@@ -50,41 +50,35 @@ class InterfaceSchema extends Component {
     }
   };
 
-  getColumns = () => {
-    return [
-      {
-        title: this.props.intl.formatMessage({ id: 'schemaData.field' }),
-        dataIndex: 'field',
-        width: '30%',
-        key: 'field',
-        render: (text, record) => <span>{text}</span>,
-      },
-      {
-        title: this.props.intl.formatMessage({ id: 'schemaData.type' }),
-        dataIndex: 'type',
-        width: '15%',
-        key: 'type',
-        render: (text, record, index) => {
-          return <span className="text-capitalize">{text}</span>;
-        },
-      },
-      {
-        title: this.props.intl.formatMessage({ id: 'schemaData.required' }),
-        dataIndex: 'required',
-        width: '15%',
-        key: 'required',
-        render: (text, record, index) => {
-          return <Checkbox checked={text} disabled></Checkbox>;
-        },
-      },
-      {
-        title: this.props.intl.formatMessage({ id: 'schemaData.description' }),
-        width: '40%',
-        dataIndex: 'description',
-        key: 'description',
-      },
-    ];
-  };
+  getColumns = () => [
+    {
+      title: this.props.intl.formatMessage({ id: 'schemaData.field' }),
+      dataIndex: 'field',
+      width: '30%',
+      key: 'field',
+      render: (text, record) => <span>{text}</span>,
+    },
+    {
+      title: this.props.intl.formatMessage({ id: 'schemaData.type' }),
+      dataIndex: 'type',
+      width: '15%',
+      key: 'type',
+      render: (text, record, index) => <span className="text-capitalize">{text}</span>,
+    },
+    {
+      title: this.props.intl.formatMessage({ id: 'schemaData.required' }),
+      dataIndex: 'required',
+      width: '15%',
+      key: 'required',
+      render: (text, record, index) => <Checkbox checked={text} disabled></Checkbox>,
+    },
+    {
+      title: this.props.intl.formatMessage({ id: 'schemaData.description' }),
+      width: '40%',
+      dataIndex: 'description',
+      key: 'description',
+    },
+  ];
 
   showSchemaForm = (type) => {
     this.setState({
@@ -115,8 +109,8 @@ class InterfaceSchema extends Component {
   };
 
   render() {
-    const props = this.props;
-    const unControlled = props.unControlled;
+    const { props } = this;
+    const { unControlled } = props;
     const columns = this.getColumns();
     const enableRequestSchemaValidation = this.isValidationEnabled('request');
     const enableResponseSchemaValidation = this.isValidationEnabled('response');

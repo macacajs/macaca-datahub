@@ -88,9 +88,9 @@ class InterfaceProxyConfig extends Component {
     );
   };
 
-  render () {
-    const props = this.props;
-    const formatMessage = this.formatMessage;
+  render() {
+    const { props } = this;
+    const { formatMessage } = this;
     const { enabled, proxyList = [] } = props.proxyConfig;
     const globalSwitchProps = { checked: props.globalProxyEnabled };
     const switchProps = { checked: enabled };

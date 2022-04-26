@@ -7,7 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import SceneForm from '../forms/SceneForm';
 import { sceneService } from '../../service';
 
-const Search = Input.Search;
+const { Search } = Input;
 
 class InterfaceSceneList extends Component {
   state = {
@@ -97,16 +97,13 @@ class InterfaceSceneList extends Component {
   };
 
   renderSceneList = () => {
-    const formatMessage = this.formatMessage;
+    const { formatMessage } = this;
     const { sceneList, selectedScene, experimentConfig } = this.props;
-    const disabled = this.props.disabled;
-    const isOpenRunJsMode = experimentConfig && experimentConfig.isOpenRunJsMode;
+    const { disabled } = this.props;
     return (
       <Row>
         {sceneList
-          .filter((value) => {
-            return value.sceneName.toLowerCase().includes(this.state.filterString);
-          })
+          .filter((value) => value.sceneName.toLowerCase().includes(this.state.filterString))
           .map((value, index) => {
             const isAvtive = selectedScene.uniqId === value.uniqId;
             const classNames = isAvtive ? ['common-list-item', 'common-list-item-active'] : ['common-list-item'];
@@ -153,9 +150,9 @@ class InterfaceSceneList extends Component {
   };
 
   render() {
-    const formatMessage = this.formatMessage;
-    const disabled = this.props.disabled;
-    const selectedScene = this.props.selectedScene;
+    const { formatMessage } = this;
+    const { disabled } = this.props;
+    const { selectedScene } = this.props;
     const contextConfig = selectedScene && selectedScene.contextConfig;
 
     let showResInfo = false;

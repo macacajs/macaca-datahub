@@ -1,33 +1,25 @@
-'use strict';
-
 import assert from 'assert';
 
-import {
-  driver,
-  BASE_URL,
-} from './helper';
+import { driver, BASE_URL } from './helper';
 
 describe('test/datahub-api-list.test.js', () => {
   describe('project api list render testing', () => {
-    before(() => {
-      return driver
-        .initWindow({
-          width: 960,
-          height: 720,
-          deviceScaleFactor: 2,
-          userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 Language/zh-CN',
-        });
-    });
+    before(() =>
+      driver.initWindow({
+        width: 960,
+        height: 720,
+        deviceScaleFactor: 2,
+        userAgent:
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 Language/zh-CN',
+      }),
+    );
 
     afterEach(function () {
-      return driver
-        .sleep(1000)
-        .coverage()
-        .saveScreenshots(this);
+      return driver.sleep(1000).coverage().saveScreenshots(this);
     });
 
-    after(() => {
-      return driver
+    after(() =>
+      driver
         // delete project
         .getUrl(`${BASE_URL}/dashboard`)
         .waitForElementByCss('[data-accessbilityid="dashboard-content-card-0"] .delete-icon')
@@ -38,11 +30,11 @@ describe('test/datahub-api-list.test.js', () => {
         .sleep(1500)
         // quit
         .openReporter(false)
-        .quit();
-    });
+        .quit(),
+    );
 
-    it('add project should be ok', () => {
-      return driver
+    it('add project should be ok', () =>
+      driver
         .getUrl(`${BASE_URL}/dashboard`)
         .waitForElementByCss('[data-accessbilityid="dashboard-folder-add"]')
         .click()
@@ -55,11 +47,10 @@ describe('test/datahub-api-list.test.js', () => {
         .formInput('DataHub Mock Data')
         .sleep(1500)
         .waitForElementByCss('button.ant-btn.ant-btn-primary')
-        .click();
-    });
+        .click());
 
-    it('add api should be ok', () => {
-      return driver
+    it('add api should be ok', () =>
+      driver
         .getUrl(`${BASE_URL}/project/datahubview`)
         // add init api GET
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-btn"]')
@@ -107,7 +98,6 @@ describe('test/datahub-api-list.test.js', () => {
         .hasText('init')
         .sleep(1500)
 
-
         // add result api POST
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-btn"]')
         .click()
@@ -136,24 +126,22 @@ describe('test/datahub-api-list.test.js', () => {
         .click()
         .elementByCss('#pathname')
         .text()
-        .then(value => assert.equal(value, ''))
+        .then((value) => assert.equal(value, ''))
         .sleep(1500)
         .elementByCss('#description')
         .text()
-        .then(value => assert.equal(value, ''));
-    });
+        .then((value) => assert.equal(value, '')));
 
-    it('search api should be ok', () => {
-      return driver
+    it('search api should be ok', () =>
+      driver
         .getUrl(`${BASE_URL}/project/datahubview`)
         .elementByCss('[data-accessbilityid="project-search-api"]')
         .formInput('result')
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-0"] h3')
-        .hasText('result');
-    });
+        .hasText('result'));
 
-    it('modify api should be ok', () => {
-      return driver
+    it('modify api should be ok', () =>
+      driver
         .getUrl(`${BASE_URL}/project/datahubview`)
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-0"] .anticon-setting')
         .click()
@@ -175,12 +163,11 @@ describe('test/datahub-api-list.test.js', () => {
         .sleep(1500)
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-0"] h3')
         .hasText('new_init')
-        .sleep(1500);
-    });
+        .sleep(1500));
 
     // delete on add api successfully
-    it('delete api should be ok', () => {
-      return driver
+    it('delete api should be ok', () =>
+      driver
         .getUrl(`${BASE_URL}/project/datahubview`)
         // delete init all api
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-2"] .anticon-delete')
@@ -198,7 +185,6 @@ describe('test/datahub-api-list.test.js', () => {
         .waitForElementByCss('[data-accessbilityid="project-add-api-list-0"] .anticon-delete')
         .click()
         .waitForElementByCss('.ant-popover-buttons .ant-btn-primary')
-        .click();
-    });
+        .click());
   });
 });

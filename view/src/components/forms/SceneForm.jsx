@@ -65,7 +65,7 @@ function SceneFormComponent(props) {
       width="84%"
       wrapClassName="code-modal scene-form-modal"
       visible={visible}
-      destroyOnClose={true}
+      destroyOnClose
       title={formatMessage(stageData.uniqId ? 'sceneList.updateScene' : 'sceneList.createScene')}
       okText={formatMessage('common.confirm')}
       cancelText={formatMessage('common.cancel')}
@@ -90,7 +90,6 @@ function SceneFormComponent(props) {
           })
           .catch((errorInfo) => {
             message.warn(formatMessage('common.input.invalid'));
-            return;
           });
       }}
       confirmLoading={confirmLoading}

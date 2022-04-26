@@ -1,5 +1,3 @@
-'use strict';
-
 import { webpackHelper } from 'macaca-wd';
 
 const { driver } = webpackHelper;
@@ -15,14 +13,11 @@ driver.configureHttp({
 exports.driver = driver;
 exports.BASE_URL = BASE_URL;
 
-exports.setMonacoEditor = (d) => {
+exports.setMonacoEditor = (d) =>
   /* eslint-disable */
-  return `document.querySelector('.MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
-  /* eslint-enable */
-};
+  `document.querySelector('.MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
+/* eslint-enable */
 
-exports.setSceneMonacoEditor = (d) => {
+exports.setSceneMonacoEditor = (d) =>
   /* eslint-disable */
-  return `document.querySelector('.res-data .MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
-  /* eslint-enable */
-};
+  `document.querySelector('.res-data .MonacoEditor').MonacoEditor.setValue(\'${JSON.stringify(d)}\')`;
