@@ -1,12 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 
-const Icon = (props) => {
-  const {
-    className, type, width,
-    height, fill, radius,
-    style = {}, ...others
-  } = props;
+function Icon(props) {
+  const { className, type, width, height, fill, radius, style = {}, ...others } = props;
   return (
     <svg
       className={classnames('icon-svg', className)}
@@ -23,6 +19,6 @@ const Icon = (props) => {
       <use xlinkHref={`#${type}`} />
     </svg>
   );
-};
+}
 
 export default Icon;

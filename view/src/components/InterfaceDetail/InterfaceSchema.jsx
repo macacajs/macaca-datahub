@@ -29,15 +29,23 @@ class InterfaceSchema extends Component {
     });
   };
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   isValidationEnabled = (type) => {
-    const { data = {} } = this.props.schemaData.find((i) => i.type === type) || {};
+    const { data = {} } =
+      this.props.schemaData.find((i) => {
+        return i.type === type;
+      }) || {};
     return data.enableSchemaValidate;
   };
 
   getDataSource = (type) => {
-    const { data = {} } = this.props.schemaData.find((i) => i.type === type) || {};
+    const { data = {} } =
+      this.props.schemaData.find((i) => {
+        return i.type === type;
+      }) || {};
     if (!data.schemaData) return [];
     if (!data.schemaData.properties && !data.schemaData.items) {
       return [];
@@ -57,7 +65,9 @@ class InterfaceSchema extends Component {
         dataIndex: 'field',
         width: '30%',
         key: 'field',
-        render: (text, record) => <span>{text}</span>,
+        render: (text, record) => {
+          return <span>{text}</span>;
+        },
       },
       {
         title: this.props.intl.formatMessage({ id: 'schemaData.type' }),
@@ -115,8 +125,8 @@ class InterfaceSchema extends Component {
   };
 
   render() {
-    const props = this.props;
-    const unControlled = props.unControlled;
+    const { props } = this;
+    const { unControlled } = props;
     const columns = this.getColumns();
     const enableRequestSchemaValidation = this.isValidationEnabled('request');
     const enableResponseSchemaValidation = this.isValidationEnabled('response');
@@ -130,7 +140,9 @@ class InterfaceSchema extends Component {
           {!unControlled && (
             <Checkbox
               checked={enableRequestSchemaValidation}
-              onChange={(e) => props.toggleValidation('request', e.target.checked)}
+              onChange={(e) => {
+                return props.toggleValidation('request', e.target.checked);
+              }}
             >
               {this.formatMessage('schemaData.enableValidation')}
             </Checkbox>
@@ -138,7 +150,9 @@ class InterfaceSchema extends Component {
           {!unControlled && (
             <Checkbox
               checked={this.state.expandedAllRowKeysForRequest}
-              onChange={(e) => this.changeExpandedAllRowKeysForRequest(e.target.checked)}
+              onChange={(e) => {
+                return this.changeExpandedAllRowKeysForRequest(e.target.checked);
+              }}
             >
               {this.formatMessage('schemaData.enableExpandedAllRowKeys')}
             </Checkbox>
@@ -149,7 +163,9 @@ class InterfaceSchema extends Component {
               size="small"
               style={{ marginBottom: '5px' }}
               data-accessbilityid="project-api-schema-edit-btn"
-              onClick={() => this.showSchemaForm('request')}
+              onClick={() => {
+                return this.showSchemaForm('request');
+              }}
             >
               {' '}
               {this.formatMessage('schemaData.edit')}
@@ -175,7 +191,9 @@ class InterfaceSchema extends Component {
           {!unControlled && (
             <Checkbox
               checked={enableResponseSchemaValidation}
-              onChange={(e) => props.toggleValidation('response', e.target.checked)}
+              onChange={(e) => {
+                return props.toggleValidation('response', e.target.checked);
+              }}
             >
               {this.formatMessage('schemaData.enableValidation')}
             </Checkbox>
@@ -183,7 +201,9 @@ class InterfaceSchema extends Component {
           {!unControlled && (
             <Checkbox
               checked={this.state.expandedAllRowKeysForResponse}
-              onChange={(e) => this.changeExpandedAllRowKeysForResponse(e.target.checked)}
+              onChange={(e) => {
+                return this.changeExpandedAllRowKeysForResponse(e.target.checked);
+              }}
             >
               {this.formatMessage('schemaData.enableExpandedAllRowKeys')}
             </Checkbox>
@@ -194,7 +214,9 @@ class InterfaceSchema extends Component {
               size="small"
               style={{ marginBottom: '5px' }}
               data-accessbilityid="project-api-schema-edit-btn"
-              onClick={() => this.showSchemaForm('response')}
+              onClick={() => {
+                return this.showSchemaForm('response');
+              }}
             >
               {' '}
               {this.formatMessage('schemaData.edit')}

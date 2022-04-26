@@ -88,22 +88,24 @@ function Home(props) {
         <Row type="flex" justify="center">
           <Col span={18}>
             <Row className="desc-icons">
-              {features.map(({ text, icon, experiment = false }) => (
-                <Col key={text} span={4}>
-                  {icon}
-                  <div className="text">
-                    {formatMessage({ id: text })}
-                    {experiment && (
-                      <ExperimentOutlined
-                        style={{
-                          fontSize: '12px',
-                          transform: 'scale(.6)',
-                        }}
-                      />
-                    )}
-                  </div>
-                </Col>
-              ))}
+              {features.map(({ text, icon, experiment = false }) => {
+                return (
+                  <Col key={text} span={4}>
+                    {icon}
+                    <div className="text">
+                      {formatMessage({ id: text })}
+                      {experiment && (
+                        <ExperimentOutlined
+                          style={{
+                            fontSize: '12px',
+                            transform: 'scale(.6)',
+                          }}
+                        />
+                      )}
+                    </div>
+                  </Col>
+                );
+              })}
             </Row>
           </Col>
         </Row>

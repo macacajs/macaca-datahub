@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 
 import { Drawer, Switch } from 'antd';
@@ -37,7 +35,9 @@ class Experiment extends Component {
     showPanel: false,
   };
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   toggleDownloadAndUpload = (value) => {
     setExperimentConfig({
@@ -66,7 +66,7 @@ class Experiment extends Component {
     });
   };
 
-  render () {
+  render() {
     return (
       <div className={styles.wrapper}>
         <Drawer
@@ -134,9 +134,14 @@ class Experiment extends Component {
             </a>
           </p>
         </Drawer>
-        <a data-accessbilityid="experiment-container" onClick={() => this.setState({ showPanel: true })}>
+        <a
+          data-accessbilityid="experiment-container"
+          onClick={() => {
+            return this.setState({ showPanel: true });
+          }}
+        >
           <ExperimentOutlined />
-          {'Lab'}
+          Lab
         </a>
       </div>
     );

@@ -1,22 +1,21 @@
-'use strict';
-
 import 'whatwg-fetch';
 import { message } from 'antd';
 import debug from 'debug';
+
 const logger = debug('datahub:request');
 const COMMON_HEADER = {
   'x-datahub-client': 'datahub-view',
 };
 
 const verbs = {
-  GET (url) {
+  GET(url) {
     return fetch(url, {
       credentials: 'same-origin',
       headers: COMMON_HEADER,
     });
   },
 
-  POST (url, params) {
+  POST(url, params) {
     return fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
@@ -28,7 +27,7 @@ const verbs = {
     });
   },
 
-  PUT (url, params) {
+  PUT(url, params) {
     return fetch(url, {
       method: 'PUT',
       credentials: 'same-origin',
@@ -40,7 +39,7 @@ const verbs = {
     });
   },
 
-  DELETE (url) {
+  DELETE(url) {
     return fetch(url, {
       headers: COMMON_HEADER,
       method: 'DELETE',
@@ -70,4 +69,3 @@ export default async (url, method = 'GET', params = {}) => {
   }
   return res;
 };
-

@@ -6,13 +6,13 @@ import { Layout } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import SelectHub from '../SelectHub';
-import Icon from '../../components/Icon';
+import Icon from '../Icon';
 
 import './header.less';
 
-const Header = Layout.Header;
+const { Header } = Layout;
 
-export default ({ links, pageConfig, context }) => {
+export default function ({ links, pageConfig, context }) {
   return (
     <Header className="header">
       <a href="/" className="title-con">
@@ -53,4 +53,4 @@ export default ({ links, pageConfig, context }) => {
       </ul>
     </Header>
   );
-};
+}

@@ -29,7 +29,9 @@ function SceneFormComponent(props) {
   const monacoEditorRef = useRef(null);
   const monacoEditorResHeaderRef = useRef(null);
 
-  const formatMessage = (id) => props.intl.formatMessage({ id });
+  const formatMessage = (id) => {
+    return props.intl.formatMessage({ id });
+  };
 
   const validateCode = (format) => {
     const monacoEditorInstance = monacoEditorRef.current;
@@ -65,7 +67,7 @@ function SceneFormComponent(props) {
       width="84%"
       wrapClassName="code-modal scene-form-modal"
       visible={visible}
-      destroyOnClose={true}
+      destroyOnClose
       title={formatMessage(stageData.uniqId ? 'sceneList.updateScene' : 'sceneList.createScene')}
       okText={formatMessage('common.confirm')}
       cancelText={formatMessage('common.cancel')}
@@ -90,7 +92,6 @@ function SceneFormComponent(props) {
           })
           .catch((errorInfo) => {
             message.warn(formatMessage('common.input.invalid'));
-            return;
           });
       }}
       confirmLoading={confirmLoading}
@@ -124,7 +125,12 @@ function SceneFormComponent(props) {
               {stageData.uniqId ? (
                 stageData.format
               ) : (
-                <Radio.Group onChange={(e) => onChangeMode(e.target.value)} defaultValue={stageData.format || 'json'}>
+                <Radio.Group
+                  onChange={(e) => {
+                    return onChangeMode(e.target.value);
+                  }}
+                  defaultValue={stageData.format || 'json'}
+                >
                   <Radio value="json">JSON</Radio>
                   <Radio value="javascript">JavaScript</Radio>
                 </Radio.Group>

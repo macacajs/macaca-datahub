@@ -1,25 +1,19 @@
-'use strict';
+import React, { PureComponent } from 'react';
 
-import React, {
-  PureComponent,
-} from 'react';
-
-import {
-  Menu,
-  Dropdown,
-} from 'antd';
+import { Menu, Dropdown } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 
 export default class SelectHub extends PureComponent {
-  render () {
+  render() {
     if (!this.props.allProjects) {
       return null;
     }
 
-    const list = this.props.allProjects
-      .map(item => item.projectName);
-    const projectName = this.props.projectName;
+    const list = this.props.allProjects.map((item) => {
+      return item.projectName;
+    });
+    const { projectName } = this.props;
 
     if (list.length < 2) {
       return null;
@@ -40,11 +34,10 @@ export default class SelectHub extends PureComponent {
       <span style={{ marginLeft: '20px' }}>
         <Dropdown overlay={menu}>
           <span data-accessbilityid="dropdonw-list">
-            { projectName } <DownOutlined />
+            {projectName} <DownOutlined />
           </span>
         </Dropdown>
       </span>
     );
   }
 }
-
