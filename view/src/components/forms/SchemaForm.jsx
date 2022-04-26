@@ -26,7 +26,10 @@ class SchemaFormComponent extends Component {
 
     if (this.state.stageData && this.state.schemaFormType === schemaFormType) return;
 
-    const schemaObject = schemaData.find((i) => i.type === schemaFormType) || {};
+    const schemaObject =
+      schemaData.find((i) => {
+        return i.type === schemaFormType;
+      }) || {};
     const stageData = schemaObject.data && schemaObject.data.schemaData;
 
     this.setState({
@@ -35,7 +38,9 @@ class SchemaFormComponent extends Component {
     });
   }
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   validateSchema = () => {
     let [data, error] = [{}, null];
@@ -92,8 +97,11 @@ class SchemaFormComponent extends Component {
   render() {
     const { visible, onCancel, onOk, confirmLoading, schemaData, schemaFormType } = this.props;
 
-    const formatMessage = this.formatMessage;
-    const schemaObject = schemaData.find((i) => i.type === schemaFormType) || {};
+    const { formatMessage } = this;
+    const schemaObject =
+      schemaData.find((i) => {
+        return i.type === schemaFormType;
+      }) || {};
     const stageData = schemaObject.data && schemaObject.data.schemaData;
     const schemaTableData = this.state.stageData && genSchemaList(this.state.stageData);
     return (
@@ -102,7 +110,7 @@ class SchemaFormComponent extends Component {
         width="95%"
         wrapClassName="schema-modal"
         visible={visible}
-        destroyOnClose={true}
+        destroyOnClose
         title={
           <span>
             Schema&nbsp;&nbsp;
@@ -158,9 +166,11 @@ class SchemaFormComponent extends Component {
               dataSource={schemaTableData && schemaTableData.schema}
               bordered
               columns={this.props.columns}
-              onRow={(record) => ({
-                onClick: this.handleClickTableRow,
-              })}
+              onRow={(record) => {
+                return {
+                  onClick: this.handleClickTableRow,
+                };
+              }}
             />
           </div>
         </Form>

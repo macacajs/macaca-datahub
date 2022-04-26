@@ -45,7 +45,9 @@ class Project extends React.Component {
   getDefaultSelectedInterface(interfaceGroupList) {
     if (!interfaceGroupList.length) return {};
 
-    const interfaceGroup = interfaceGroupList.find((item) => !!item.interfaceList.length);
+    const interfaceGroup = interfaceGroupList.find((item) => {
+      return !!item.interfaceList.length;
+    });
 
     return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
   }
@@ -65,13 +67,16 @@ class Project extends React.Component {
     });
   }
 
-  fetchInterfaceList = async () => await interfaceService.getInterfaceList();
+  fetchInterfaceList = async () => {
+    return await interfaceService.getInterfaceList();
+  };
 
-  fetchGroupList = async () =>
-    await groupService.getGroupList({
+  fetchGroupList = async () => {
+    return await groupService.getGroupList({
       belongedUniqId: projectUniqId,
       groupType: 'Interface',
     });
+  };
 
   updateInterfaceList = async () => {
     const groupListData = await this.fetchGroupList();
@@ -90,7 +95,9 @@ class Project extends React.Component {
     let result = null;
 
     if (this.state.selectedInterface && this.state.selectedInterface.uniqId) {
-      result = data.interfaceList.find((value) => value.uniqId === this.state.selectedInterface.uniqId);
+      result = data.interfaceList.find((value) => {
+        return value.uniqId === this.state.selectedInterface.uniqId;
+      });
     }
 
     if (!result) {
@@ -101,7 +108,10 @@ class Project extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface = this.state.interfaceList.find((i) => i.uniqId === uniqId) || {};
+    const selectedInterface =
+      this.state.interfaceList.find((i) => {
+        return i.uniqId === uniqId;
+      }) || {};
 
     this.setState({
       selectedInterface,
@@ -151,7 +161,9 @@ class Project extends React.Component {
   };
 
   render() {
-    const globalProxyEnabled = this.state.interfaceList.every((item) => item.proxyConfig.enabled);
+    const globalProxyEnabled = this.state.interfaceList.every((item) => {
+      return item.proxyConfig.enabled;
+    });
 
     return (
       <Layout>

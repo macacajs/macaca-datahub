@@ -1,4 +1,0 @@
---reporter macaca-reporter
---require @babel/register
---recursive
---timeout 100000

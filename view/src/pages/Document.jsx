@@ -46,7 +46,9 @@ class Document extends React.Component {
   getDefaultSelectedInterface(interfaceGroupList) {
     if (!interfaceGroupList.length) return {};
 
-    const interfaceGroup = interfaceGroupList.find((item) => !!item.interfaceList.length);
+    const interfaceGroup = interfaceGroupList.find((item) => {
+      return !!item.interfaceList.length;
+    });
 
     return interfaceGroup ? interfaceGroup.interfaceList[0] : {};
   }
@@ -70,7 +72,9 @@ class Document extends React.Component {
     });
   }
 
-  initInterfaceList = async () => await interfaceService.getInterfaceList();
+  initInterfaceList = async () => {
+    return await interfaceService.getInterfaceList();
+  };
 
   fetchSchemaAndScene = async (interfaceUniqId) => {
     if (interfaceUniqId) {
@@ -94,7 +98,10 @@ class Document extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface = this.state.interfaceList.find((i) => i.uniqId === uniqId) || {};
+    const selectedInterface =
+      this.state.interfaceList.find((i) => {
+        return i.uniqId === uniqId;
+      }) || {};
 
     this.setState({
       selectedInterface,
@@ -127,7 +134,9 @@ class Document extends React.Component {
   render() {
     const params = queryParse(location.hash);
     const { sceneList } = this.state;
-    const sceneData = sceneList.find((item) => item.sceneName === params.scene);
+    const sceneData = sceneList.find((item) => {
+      return item.sceneName === params.scene;
+    });
     let { currentScene } = this.state;
 
     if (sceneData && sceneData.sceneName) {
@@ -172,17 +181,19 @@ class Document extends React.Component {
               <FormattedMessage id="sceneList.sceneData" />
             </h1>
             <Tabs onChange={this.changeSceneDoc} animated={false} activeKey={currentScene}>
-              {sceneList.map((sceneData, index) => (
-                <TabPane size="small" tab={sceneData.sceneName} key={sceneData.sceneName}>
-                  <MonacoEditor
-                    className="scene-doc-editor"
-                    language={sceneData.format === 'javascript' ? 'javascript' : 'json'}
-                    value={getCode(sceneData)}
-                    theme="vs-light"
-                    readOnly
-                  />
-                </TabPane>
-              ))}
+              {sceneList.map((sceneData, index) => {
+                return (
+                  <TabPane size="small" tab={sceneData.sceneName} key={sceneData.sceneName}>
+                    <MonacoEditor
+                      className="scene-doc-editor"
+                      language={sceneData.format === 'javascript' ? 'javascript' : 'json'}
+                      value={getCode(sceneData)}
+                      theme="vs-light"
+                      readOnly
+                    />
+                  </TabPane>
+                );
+              })}
             </Tabs>
           </section>
         </Content>

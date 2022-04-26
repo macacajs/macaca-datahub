@@ -6,13 +6,15 @@ import { injectIntl } from 'react-intl';
 
 function ProxyFormComponent(props) {
   const { visible, onCancel, onOk, confirmLoading } = props;
-  const formatMessage = (id) => props.intl.formatMessage({ id });
+  const formatMessage = (id) => {
+    return props.intl.formatMessage({ id });
+  };
   const [form] = Form.useForm();
 
   return (
     <Modal
       visible={visible}
-      destroyOnClose={true}
+      destroyOnClose
       title={formatMessage('proxyConfig.addProxyUrl')}
       okText={formatMessage('common.confirm')}
       cancelText={formatMessage('common.cancel')}
@@ -30,7 +32,6 @@ function ProxyFormComponent(props) {
           })
           .catch((errorInfo) => {
             message.warn(formatMessage('common.input.invalid'));
-            return;
           });
       }}
       confirmLoading={confirmLoading}

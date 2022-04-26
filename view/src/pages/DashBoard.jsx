@@ -30,7 +30,9 @@ class DashBoard extends Component {
     stageData: null,
   };
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   async componentWillMount() {
     await this.fetchProjects();
@@ -111,82 +113,98 @@ class DashBoard extends Component {
     });
   };
 
-  uploadProps = () => ({
-    accept: 'text',
-    action: projectService.uploadServer,
-    showUploadList: false,
-    headers: {
-      authorization: 'authorization-text',
-    },
-    onChange(info) {
-      if (info.file.status === 'done') {
-        if (info.file.response.success) {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else {
-          message.error(info.file.response.message);
+  uploadProps = () => {
+    return {
+      accept: 'text',
+      action: projectService.uploadServer,
+      showUploadList: false,
+      headers: {
+        authorization: 'authorization-text',
+      },
+      onChange(info) {
+        if (info.file.status === 'done') {
+          if (info.file.response.success) {
+            message.success(`${info.file.name} file uploaded successfully`);
+          } else {
+            message.error(info.file.response.message);
+          }
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} file upload failed.`);
         }
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  });
+      },
+    };
+  };
 
   renderProjectList() {
     const { formatMessage } = this;
     const { listData } = this.state;
 
-    return listData.map((item, index) => (
-      <Col span={8} key={index}>
-        <div className="content">
-          <Card
-            title={item.description}
-            data-accessbilityid={`dashboard-content-card-${index}`}
-            bordered={false}
-            style={{ color: '#000' }}
-          >
-            <Row type="flex">
-              <Col span={24} className="main-icon">
-                <a href={`/project/${item.projectName}`}>
-                  <InboxOutlined />
-                </a>
-              </Col>
-              <Row type="flex" className="sub-info">
-                <Col span={15} key={item.projectName}>
-                  {item.projectName}
-                  <span className="main-info">
-                    <FileOutlined />
-                    {item.capacity && item.capacity.count}
-                    <HddOutlined />
-                    {item.capacity && item.capacity.size}
-                  </span>
+    return listData.map((item, index) => {
+      return (
+        <Col span={8} key={index}>
+          <div className="content">
+            <Card
+              title={item.description}
+              data-accessbilityid={`dashboard-content-card-${index}`}
+              bordered={false}
+              style={{ color: '#000' }}
+            >
+              <Row type="flex">
+                <Col span={24} className="main-icon">
+                  <a href={`/project/${item.projectName}`}>
+                    <InboxOutlined />
+                  </a>
                 </Col>
-                <Col span={9} style={{ textAlign: 'right' }}>
-                  <Tooltip title={formatMessage('project.update')}>
-                    <SettingOutlined className="setting-icon" onClick={() => this.updateProject(item)} />
-                  </Tooltip>
-                  {this.props.experimentConfig.isOpenDownloadAndUpload ? (
-                    <span>
-                      <Upload name={item.uniqId} {...this.uploadProps()}>
-                        <UploadOutlined className="setting-icon" />
-                      </Upload>
-                      <DownloadOutlined className="setting-icon" onClick={() => this.downloadProject(item)} />
+                <Row type="flex" className="sub-info">
+                  <Col span={15} key={item.projectName}>
+                    {item.projectName}
+                    <span className="main-info">
+                      <FileOutlined />
+                      {item.capacity && item.capacity.count}
+                      <HddOutlined />
+                      {item.capacity && item.capacity.size}
                     </span>
-                  ) : null}
-                  <Popconfirm
-                    title={formatMessage('common.deleteTip')}
-                    onConfirm={() => this.deleteProject(item.uniqId)}
-                    okText={formatMessage('common.confirm')}
-                    cancelText={formatMessage('common.cancel')}
-                  >
-                    <DeleteOutlined className="delete-icon" />
-                  </Popconfirm>
-                </Col>
+                  </Col>
+                  <Col span={9} style={{ textAlign: 'right' }}>
+                    <Tooltip title={formatMessage('project.update')}>
+                      <SettingOutlined
+                        className="setting-icon"
+                        onClick={() => {
+                          return this.updateProject(item);
+                        }}
+                      />
+                    </Tooltip>
+                    {this.props.experimentConfig.isOpenDownloadAndUpload ? (
+                      <span>
+                        <Upload name={item.uniqId} {...this.uploadProps()}>
+                          <UploadOutlined className="setting-icon" />
+                        </Upload>
+                        <DownloadOutlined
+                          className="setting-icon"
+                          onClick={() => {
+                            return this.downloadProject(item);
+                          }}
+                        />
+                      </span>
+                    ) : null}
+                    <Popconfirm
+                      title={formatMessage('common.deleteTip')}
+                      onConfirm={() => {
+                        return this.deleteProject(item.uniqId);
+                      }}
+                      okText={formatMessage('common.confirm')}
+                      cancelText={formatMessage('common.cancel')}
+                    >
+                      <DeleteOutlined className="delete-icon" />
+                    </Popconfirm>
+                  </Col>
+                </Row>
               </Row>
-            </Row>
-          </Card>
-        </div>
-      </Col>
-    ));
+            </Card>
+          </div>
+        </Col>
+      );
+    });
   }
 
   render() {

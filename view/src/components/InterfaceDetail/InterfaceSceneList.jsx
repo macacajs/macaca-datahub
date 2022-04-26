@@ -7,7 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import SceneForm from '../forms/SceneForm';
 import { sceneService } from '../../service';
 
-const Search = Input.Search;
+const { Search } = Input;
 
 class InterfaceSceneList extends Component {
   state = {
@@ -17,7 +17,9 @@ class InterfaceSceneList extends Component {
     stageData: {},
   };
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   showSceneForm = () => {
     this.setState({
@@ -97,10 +99,9 @@ class InterfaceSceneList extends Component {
   };
 
   renderSceneList = () => {
-    const formatMessage = this.formatMessage;
+    const { formatMessage } = this;
     const { sceneList, selectedScene, experimentConfig } = this.props;
-    const disabled = this.props.disabled;
-    const isOpenRunJsMode = experimentConfig && experimentConfig.isOpenRunJsMode;
+    const { disabled } = this.props;
     return (
       <Row>
         {sceneList
@@ -122,20 +123,28 @@ class InterfaceSceneList extends Component {
                   <div
                     className="common-list-item-name"
                     title={`${formatMessage('sceneList.sceneName')} ${value.sceneName}`}
-                    onClick={() => !disabled && this.props.changeSelectedScene(value)}
+                    onClick={() => {
+                      return !disabled && this.props.changeSelectedScene(value);
+                    }}
                   >
                     {value.sceneName}
                   </div>
                   {!disabled && (
                     <div className="common-list-item-operation">
                       <Tooltip title={formatMessage('sceneList.updateScene')}>
-                        <EditOutlined onClick={() => this.showUpdateForm(value)} />
+                        <EditOutlined
+                          onClick={() => {
+                            return this.showUpdateForm(value);
+                          }}
+                        />
                       </Tooltip>
                       <Tooltip title={this.formatMessage('sceneList.deleteScene')}>
                         <Popconfirm
                           placement="right"
                           title={formatMessage('common.deleteTip')}
-                          onConfirm={() => this.props.deleteScene(value)}
+                          onConfirm={() => {
+                            return this.props.deleteScene(value);
+                          }}
                           okText={formatMessage('common.confirm')}
                           cancelText={formatMessage('common.cancel')}
                         >
@@ -153,9 +162,9 @@ class InterfaceSceneList extends Component {
   };
 
   render() {
-    const formatMessage = this.formatMessage;
-    const disabled = this.props.disabled;
-    const selectedScene = this.props.selectedScene;
+    const { formatMessage } = this;
+    const { disabled } = this.props;
+    const { selectedScene } = this.props;
     const contextConfig = selectedScene && selectedScene.contextConfig;
 
     let showResInfo = false;

@@ -23,7 +23,9 @@ class InterfaceProxyConfig extends Component {
     lg: 3,
   };
 
-  formatMessage = (id) => this.props.intl.formatMessage({ id });
+  formatMessage = (id) => {
+    return this.props.intl.formatMessage({ id });
+  };
 
   showProxyForm = () => {
     this.setState({
@@ -62,7 +64,12 @@ class InterfaceProxyConfig extends Component {
           return (
             <Col key={index} data-accessbilityid={`project-api-proxy-list-${index}`} {...this.defaultColProps}>
               <div className={classNames.join(' ')}>
-                <div className="common-list-item-name" onClick={() => !disabled && this.props.selectProxy(index)}>
+                <div
+                  className="common-list-item-name"
+                  onClick={() => {
+                    return !disabled && this.props.selectProxy(index);
+                  }}
+                >
                   <Popover content={value.proxyUrl}>{value.proxyUrl}</Popover>
                 </div>
                 {!disabled && (
@@ -71,7 +78,9 @@ class InterfaceProxyConfig extends Component {
                       <Popconfirm
                         placement="right"
                         title={this.formatMessage('common.deleteTip')}
-                        onConfirm={() => this.props.deleteProxy(index)}
+                        onConfirm={() => {
+                          return this.props.deleteProxy(index);
+                        }}
                         okText={this.formatMessage('common.confirm')}
                         cancelText={this.formatMessage('common.cancel')}
                       >
@@ -88,9 +97,9 @@ class InterfaceProxyConfig extends Component {
     );
   };
 
-  render () {
-    const props = this.props;
-    const formatMessage = this.formatMessage;
+  render() {
+    const { props } = this;
+    const { formatMessage } = this;
     const { enabled, proxyList = [] } = props.proxyConfig;
     const globalSwitchProps = { checked: props.globalProxyEnabled };
     const switchProps = { checked: enabled };

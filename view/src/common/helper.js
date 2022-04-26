@@ -1,5 +1,3 @@
-'use strict';
-
 import lodash from 'lodash';
 import semver from 'semver';
 import deepMerge from 'deepmerge';
@@ -10,7 +8,9 @@ const compareServerVersion = () => {
   return new Promise((resolve, reject) => {
     const serverPkg = 'https://unpkg.com/macaca-datahub@latest/package.json';
     fetch(serverPkg)
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((res) => {
         const latestVesion = res.version;
         const currentVersion = window.pageConfig.version;
