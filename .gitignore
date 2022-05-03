@@ -12,4 +12,5 @@ logs/
 *.tgz
 data/
 docs_dist/
+target/
 test/fixtures/unittest_export_data/
