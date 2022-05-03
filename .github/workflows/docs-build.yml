@@ -1,34 +1,29 @@
 name: Docs Build
 
 on:
-  # allows to manually run the job at any time
   workflow_dispatch:
   
-  # run on every push on the master branch
   push:
     branches:
       - master
+    paths:
+      - 'docs/**'
 
 jobs:
   docs-build:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout Git Source
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Set node version to 16
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - name: Install deps
-        run: |
-          npm install vuepress -D
-          npm install macaca-ecosystem -D
+      - name: Install dependencies
+        run: npm i vuepress macaca-ecosystem -D
 
       - name: Build docs
         run: npm run docs:build
