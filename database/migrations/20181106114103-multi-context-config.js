@@ -2,13 +2,34 @@
 
 module.exports = {
   up: async (db, Sequelize) => {
-    await db.addColumn('interfaces', 'multiContextConfig', {
-      type: Sequelize.JSON,
-      defaultValue: {},
-    });
+    const transaction = await db.sequelize.transaction();
+
+    try {
+      await db.addColumn(
+        'interfaces',
+        'multiContextConfig',
+        {
+          type: Sequelize.JSON,
+          defaultValue: {},
+        },
+        { transaction },
+      );
+
+      await transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+    }
   },
 
-  down: async db => {
-    await db.removeColumn('interfaces', 'multiContextConfig');
+  down: async (db) => {
+    const transaction = await db.sequelize.transaction();
+
+    try {
+      await db.removeColumn('interfaces', 'multiContextConfig', { transaction });
+
+      await transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+    }
   },
 };
