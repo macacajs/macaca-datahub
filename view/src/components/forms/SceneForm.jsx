@@ -16,6 +16,13 @@ const getCode = (stageData) => {
 function SceneFormComponent(props) {
   const { visible, onCancel, onOk, onChangeMode, confirmLoading, stageData, experimentConfig } = props;
   const [form] = Form.useForm();
+
+  form.setFieldsValue({
+    sceneName: stageData.sceneName,
+    responseDelay: (stageData.contextConfig && stageData.contextConfig.responseDelay) || 0,
+    responseStatus: (stageData.contextConfig && stageData.contextConfig.responseStatus) || 200,
+  });
+
   let showResInfo = false;
   if (stageData.contextConfig) {
     const { responseDelay, responseStatus, responseHeaders } = stageData.contextConfig;
@@ -96,15 +103,7 @@ function SceneFormComponent(props) {
       }}
       confirmLoading={confirmLoading}
     >
-      <Form
-        layout="vertical"
-        form={form}
-        initialValues={{
-          sceneName: stageData.sceneName,
-          responseDelay: (stageData.contextConfig && stageData.contextConfig.responseDelay) || 0,
-          responseStatus: (stageData.contextConfig && stageData.contextConfig.responseStatus) || 200,
-        }}
-      >
+      <Form layout="vertical" form={form}>
         <Form.Item
           name="sceneName"
           label={formatMessage('sceneList.sceneName')}
