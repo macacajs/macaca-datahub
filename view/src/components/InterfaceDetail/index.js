@@ -1,22 +1,15 @@
 import React from 'react';
-
 import { FormattedMessage } from 'react-intl';
-
 import { Button, Breadcrumb } from 'antd';
-
 import { BookOutlined } from '@ant-design/icons';
-
 import deepMerge from 'deepmerge';
 import InterfaceSceneList from './InterfaceSceneList';
 import InterfaceProxyConfig from './InterfaceProxyConfig';
 import InterfaceSchema from './InterfaceSchema';
-
+import { sceneService, schemaService, interfaceService } from '../../service';
+import { queryParse, serialize, jsonToSchema } from '../../common/helper';
 import './index.less';
 import './index.module.less';
-
-import { sceneService, schemaService, interfaceService } from '../../service';
-
-import { queryParse, serialize, jsonToSchema } from '../../common/helper';
 
 const { projectName } = window.context;
 
@@ -36,6 +29,7 @@ class InterfaceDetail extends React.Component {
       uniqId: this.props.selectedInterface.uniqId,
       currentScene: scene,
     });
+    await this.props.updateInterfaceList();
   };
 
   changeSelectedScene = async (value) => {
@@ -236,6 +230,7 @@ class InterfaceDetail extends React.Component {
   render() {
     const { selectedInterface } = this.props;
     const previewLink = `//${location.host}/data/${projectName}/${this.props.selectedInterface.pathname}`;
+
     return (
       <div className="interface-detail">
         <div className="interface-detail-navigation">

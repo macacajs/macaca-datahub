@@ -3,7 +3,6 @@ import { Input, Button, Tooltip, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
-
 import SceneForm from '../forms/SceneForm';
 import { sceneService } from '../../service';
 
@@ -109,8 +108,8 @@ class InterfaceSceneList extends Component {
             return value.sceneName.toLowerCase().includes(this.state.filterString);
           })
           .map((value, index) => {
-            const isAvtive = selectedScene.uniqId === value.uniqId;
-            const classNames = isAvtive ? ['common-list-item', 'common-list-item-active'] : ['common-list-item'];
+            const isActive = selectedScene.uniqId === value.uniqId;
+            const classNames = isActive ? ['common-list-item', 'common-list-item-active'] : ['common-list-item'];
             if (disabled) classNames.push('disabled');
             return (
               <Col
@@ -134,6 +133,7 @@ class InterfaceSceneList extends Component {
                       <Tooltip title={formatMessage('sceneList.updateScene')}>
                         <EditOutlined
                           onClick={() => {
+                            console.log(value);
                             return this.showUpdateForm(value);
                           }}
                         />

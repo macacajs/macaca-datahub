@@ -1,20 +1,14 @@
 import React from 'react';
 import debug from 'debug';
 import io from 'socket.io-client';
-
 import { injectIntl } from 'react-intl';
-
 import { Affix, Layout, Tabs, Empty } from 'antd';
-
 import InterfaceList from '../components/InterfaceList';
 import InterfaceDetail from '../components/InterfaceDetail/index';
-
 import RealTime from '../components/RealTime';
 import RealTimeDetail from '../components/RealTimeDetail';
 import Icon from '../components/Icon';
-
 import { interfaceService, groupService } from '../service';
-
 import './Project.less';
 import './Project.module.less';
 
