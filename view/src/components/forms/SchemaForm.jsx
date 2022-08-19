@@ -149,7 +149,6 @@ class SchemaFormComponent extends Component {
               className="schema-monaco-editor"
               language="json"
               value={stageData && JSON.stringify(stageData, null, 2)}
-              theme="vs-light"
               editorDidMount={(editor) => {
                 this.monacoEditorInstance = editor;
                 editor.focus();

@@ -1,14 +1,17 @@
+@import './common/style/color.less';
 @import './common/style/mixin.less';
 @import './common/style/util.less';
 
 body {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  background-color: #f0f2f5;
+  background-color: var(--text-color);
+  color: var(--text-color);
 }
 
 .ant-layout {
   &.ant-layout-has-sider {
-    background: #fff;
+    background: var(--background-color);
+    color: var(--text-color);
   }
 }
 
@@ -17,7 +20,8 @@ body {
 }
 
 .ant-layout-header {
-  background: #fff;
+  background: var(--background-color);
+  color: var(--text-color);
 }
 
 .ant-card-head-title {
@@ -53,7 +57,6 @@ body {
   .main-content {
     display: none !important;
   }
-
 
   .main-content-mobile {
     display: block;

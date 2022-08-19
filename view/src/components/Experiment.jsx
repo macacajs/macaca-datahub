@@ -140,8 +140,7 @@ class Experiment extends Component {
             return this.setState({ showPanel: true });
           }}
         >
-          <ExperimentOutlined />
-          Lab
+          <ExperimentOutlined /> Lab
         </a>
       </div>
     );

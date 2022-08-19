@@ -17,6 +17,7 @@ import Document from './pages/Document';
 import DashBoard from './pages/DashBoard';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import ThemeManager from './common/theme';
 
 import { getExperimentConfig, compareServerVersion } from './common/helper';
 
@@ -24,6 +25,10 @@ import 'react-github-button/assets/style.css';
 
 import './app.less';
 import './app.module.less';
+
+const themeManager = new ThemeManager();
+
+window.themeManager = window.themeManager || themeManager;
 
 const importAll = (r) => {
   return r.keys().forEach(r);

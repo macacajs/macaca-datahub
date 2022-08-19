@@ -188,7 +188,6 @@ class Document extends React.Component {
                       className="scene-doc-editor"
                       language={sceneData.format === 'javascript' ? 'javascript' : 'json'}
                       value={getCode(sceneData)}
-                      theme="vs-light"
                       readOnly
                     />
                   </TabPane>

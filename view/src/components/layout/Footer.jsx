@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Menu, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 
 import './footer.less';
 import Experiment from '../Experiment';
+import ThemeManager from '../../common/theme';
 
 export default function ({
   links,
@@ -15,7 +16,7 @@ export default function ({
   experimentConfig,
 }) {
   const langList = ['zh-CN', 'en-US'];
-  const menu = (
+  const localeMenu = (
     <Menu>
       {langList
         .filter((lang) => {
@@ -36,6 +37,31 @@ export default function ({
     </Menu>
   );
 
+
+  const [currentTheme, setCurrentTheme] = useState(window.themeManager.getTheme());
+  useEffect(() => {
+    window.themeManager.switch(currentTheme);
+  }, [
+    currentTheme,
+  ]);
+
+  const themeMenu = (
+    <Menu>
+      {Object.keys(ThemeManager.THEMES)
+        .filter(theme => theme !== currentTheme)
+        .map((theme) => {
+          return (
+            <Menu.Item
+              key={theme}
+              onClick={({ key }) => setCurrentTheme(key)}
+            >
+              {theme}
+            </Menu.Item>
+          );
+        })}
+    </Menu>
+  );
+
   return (
     <div className="footer-container">
       <a rel="noopener noreferrer" target="_blank" href={links.homepage}>
@@ -44,7 +70,14 @@ export default function ({
       </a>
       <ul className="footer-side-items">
         <li>
-          <Dropdown overlay={menu} placement="top">
+          <Dropdown overlay={themeMenu} placement="top">
+            <a rel="noopener noreferrer">
+              {currentTheme}
+            </a>
+          </Dropdown>
+        </li>
+        <li>
+          <Dropdown overlay={localeMenu} placement="top">
             <a rel="noopener noreferrer">
               <GlobalOutlined /> {currentLocale}
             </a>
