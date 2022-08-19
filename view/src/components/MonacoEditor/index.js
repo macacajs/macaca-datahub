@@ -34,7 +34,6 @@ class MonacoEditor extends React.Component {
         ...this.editorWillMount(),
         ...(className ? { extraEditorClassName: className } : {}),
       };
-      console.log(options)
       this.editor = monaco.editor.create(this.containerElement, options, overrideServices);
       this.editorDidMount(this.editor);
     }
