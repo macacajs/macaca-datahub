@@ -1,0 +1,29 @@
+:root {
+  --background-color: #fff;
+  --text-color: #333;
+  --link-color: #b52;
+}
+
+[prefers-color-scheme="dark"] {
+  --background-color: #111416;
+  --text-color: #ccc;
+  --link-color: #f96;
+}
+
+h1, h2, h3, h4,
+.ant-tabs-tab,
+.ant-modal-title,
+.ant-form-item-required,
+.ant-form-item-label > label,
+.ant-breadcrumb,
+.ant-breadcrumb a,
+.ant-breadcrumb-separator,
+.ant-breadcrumb > span:last-child {
+  color: var(--text-color);
+}
+
+.ant-modal-content,
+.ant-modal-header {
+  color: var(--text-color);
+  background-color: var(--background-color);
+}

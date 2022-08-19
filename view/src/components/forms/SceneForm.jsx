@@ -173,7 +173,6 @@ function SceneFormComponent(props) {
                       ? JSON.stringify(stageData.contextConfig.responseHeaders, null, 2)
                       : '{}'
                   }
-                  theme="vs-light"
                   editorDidMount={(editor) => {
                     monacoEditorResHeaderRef.current = editor;
                   }}
@@ -194,7 +193,6 @@ function SceneFormComponent(props) {
             height="400px"
             language={stageData.format === 'javascript' ? 'javascript' : 'json'}
             value={getCode(stageData)}
-            theme="vs-light"
             editorDidMount={(editor) => {
               monacoEditorRef.current = editor;
               editor.focus();

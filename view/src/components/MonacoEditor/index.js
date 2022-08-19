@@ -23,16 +23,16 @@ class MonacoEditor extends React.Component {
 
   componentDidMount() {
     const value = this.props.value != null ? this.props.value : this.props.defaultValue;
-    const { language, theme, overrideServices, className, readOnly } = this.props;
+    const { language, theme = `vs-${window.themeManager.getTheme()}`, overrideServices, className, readOnly } = this.props;
     if (this.containerElement) {
       const options = {
         language,
         value,
         readOnly,
+        theme,
         ...this.props.options,
         ...this.editorWillMount(),
         ...(className ? { extraEditorClassName: className } : {}),
-        ...(theme ? { theme } : {}),
       };
       this.editor = monaco.editor.create(this.containerElement, options, overrideServices);
       this.editorDidMount(this.editor);
@@ -132,7 +132,7 @@ MonacoEditor.defaultProps = {
   height: '100%',
   value: null,
   defaultValue: '',
-  theme: null,
+  theme: undefined,
   options: monacoEditorDefaultConfig,
   overrideServices: {},
   editorDidMount: noop,

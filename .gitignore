@@ -1,12 +1,10 @@
+.idea/
+.vscode/
 logs/
-npm-debug.log
 node_modules/
 package-lock.json
 coverage/
-.idea/
 run/
-logs/
-.DS_Store
 *.sw*
 *.un~
 *.tgz
