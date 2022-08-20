@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDom from 'react-dom';
-
 import { Alert, Layout } from 'antd';
-
 import { intlShape, addLocaleData, IntlProvider } from 'react-intl';
 
 import zh from 'react-intl/locale-data/zh';

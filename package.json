@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "4.1.7",
+  "version": "4.1.8",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -30,7 +30,6 @@
     "start:use-config": "./bin/datahub.js server -c ./macaca-datahub.config.js --verbose",
     "dev:server": "npm run db:migrate && cross-env ENABLE_JAVASCRIPT=Y ENABLE_REQUEST_PROXY=Y egg-bin dev",
     "dev:view": "cd view && npm run dev",
-    "prepare": "husky install || exit 0",
     "dev": "concurrently \"npm run dev:view\" \"npm run dev:server\"",
     "prepublishOnly": "cd view && npm run build",
     "debug": "egg-bin debug",
@@ -122,6 +121,11 @@
       "prettier --parser=typescript --write",
       "eslint --fix"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "repository": {
     "type": "git",
