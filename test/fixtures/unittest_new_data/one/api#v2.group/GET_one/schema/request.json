@@ -1,0 +1,18 @@
+{
+  "type": "request",
+  "data": {
+    "schemaData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": ""
+        }
+      },
+      "required": []
+    },
+    "enableSchemaValidate": true
+  },
+  "interfaceUniqId": "9797a59e-7188-4dbe-add1-7003c0fe5227",
+  "uniqId": "ff8ba804-d5e1-4bf6-9256-484c9b7f9822"
+}

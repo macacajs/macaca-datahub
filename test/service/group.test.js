@@ -44,7 +44,7 @@ describe('test/app/service/group.test.js', () => {
 
   it('createGroup', async () => {
     let res = await ctx.service.group.createGroup({
-      groupName: 'group1',
+      groupName: 'api/web',
       groupType: 'Interface',
       belongedUniqId: projectUniqId,
     });
@@ -54,7 +54,7 @@ describe('test/app/service/group.test.js', () => {
         uniqId,
       },
     });
-    assert(res.groupName === 'group1');
+    assert(res.groupName === 'api/web');
     assert(res.groupType === 'Interface');
     assert(res.belongedUniqId === projectUniqId);
     assert(res instanceof ctx.model.Group);
