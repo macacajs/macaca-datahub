@@ -57,6 +57,7 @@ module.exports = app => {
       {
         fields: [
           'projectUniqId',
+          'groupUniqId',
           'pathname',
           'method',
         ],

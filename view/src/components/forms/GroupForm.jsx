@@ -39,8 +39,8 @@ function GroupFormComponent(props) {
           rules={[
             {
               required: true,
-              pattern: /^[^\s].*$/,
-              message: formatMessage('group.newGroupInputPlaceholder'),
+              pattern: /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/,
+              message: formatMessage('group.invalidGroupName'),
             },
             { max: 128 },
           ]}

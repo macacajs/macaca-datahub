@@ -6,8 +6,9 @@ class GroupService extends Service {
   async queryGroupByBelongedUniqId({
     belongedUniqId,
     groupType,
-  }) {
+  }, options = {}) {
     return await this.ctx.model.Group.findAll({
+      ...options,
       where: {
         belongedUniqId,
         groupType,

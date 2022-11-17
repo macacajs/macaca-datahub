@@ -87,7 +87,7 @@ describe('test/app/controller/api/group.test.js', () => {
     ]);
     const [{ uniqId: groupUniqId }] = await ctx.model.Group.bulkCreate([
       {
-        groupName: ctx.gettext('defaultGroupName'),
+        groupName: 'default_group',
         groupType: 'Interface',
         belongedUniqId: projectUniqId,
       },
@@ -106,7 +106,7 @@ describe('test/app/controller/api/group.test.js', () => {
     ]);
     const [{ uniqId: groupUniqId }] = await ctx.model.Group.bulkCreate([
       {
-        groupName: ctx.gettext('defaultGroupName'),
+        groupName: 'default_group',
         groupType: 'Interface',
         belongedUniqId: projectUniqId,
       },

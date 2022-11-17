@@ -31,6 +31,14 @@ module.exports = app => {
     indexes: [
       {
         fields: [
+          'belongedUniqId',
+          'groupType',
+          'groupName',
+        ],
+        unique: true,
+      },
+      {
+        fields: [
           'uniqId',
         ],
         unique: true,

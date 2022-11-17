@@ -42,7 +42,7 @@ class ProjectService extends Service {
     });
 
     await ctx.model.Group.create({
-      groupName: ctx.gettext('defaultGroupName'),
+      groupName: 'default_group',
       groupType: 'Interface',
       belongedUniqId: project.uniqId,
     });
