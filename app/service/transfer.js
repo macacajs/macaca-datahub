@@ -77,7 +77,7 @@ class TransferService extends Service {
 
     // compatible with old project data
     const interfaceGroupList = (projectData[0] && projectData[0].interfaceList) ? projectData : [{
-      groupName: ctx.gettext('defaultGroupName'),
+      groupName: 'default_group',
       interfaceList: projectData,
     }];
 

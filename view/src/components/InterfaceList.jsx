@@ -123,6 +123,16 @@ class InterfaceList extends Component {
       });
       return;
     }
+
+    const nameValidReg = /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/;
+    if (!nameValidReg.test(groupNameNew)) {
+      message.warn(this.formatMessage('group.invalidGroupName'));
+      this.setState({
+        editGroupNameIndex: -1,
+      });
+      return;
+    }
+
     const res = await groupService.updateGroupName({
       uniqId,
       groupName: groupNameNew,

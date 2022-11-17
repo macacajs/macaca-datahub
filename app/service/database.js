@@ -56,6 +56,37 @@ class DataBaseService extends Service {
       const constentPath = path.join(baseDir, content);
       const stat = await fs.stat(constentPath);
       if (stat.isFile()) {
+        // 兼容存量数据，新导出的 group 目录会以 .group 结尾
+        if (content.endsWith('.group.json')) {
+          await this.importInterfaceGroup(constentPath);
+        } else {
+          await this.importInterface(constentPath);
+        }
+      }
+      if (stat.isDirectory()) {
+        // 兼容存量数据，新导出的 group 目录会以 .group 结尾
+        if (content.endsWith('.group')) {
+          await this.importInterfaceGroupRelated(constentPath);
+        } else {
+          await this.importScene(path.join(constentPath, 'scene'));
+          await this.importSchema(path.join(constentPath, 'schema'));
+        }
+      }
+    }));
+  }
+
+  async importInterfaceGroup(contentPath) {
+    const buffer = await fs.readFile(contentPath);
+    const data = JSON.parse(buffer);
+    await this.ctx.model.Group.upsert(data);
+  }
+
+  async importInterfaceGroupRelated(baseDir) {
+    const contents = await fs.readdir(baseDir);
+    await Promise.all(contents.map(async content => {
+      const constentPath = path.join(baseDir, content);
+      const stat = await fs.stat(constentPath);
+      if (stat.isFile()) {
         await this.importInterface(constentPath);
       }
       if (stat.isDirectory()) {
@@ -110,26 +141,46 @@ class DataBaseService extends Service {
       JSON.stringify(project, null, 2)
     );
     await this.ensureDir(path.join(this.baseDir, project.projectName));
-    const interfaces = await this.ctx.service.interface.queryInterfaceByProjectUniqId({
-      projectUniqId: project.uniqId,
+    const interfaceGroups = await this.ctx.service.group.queryGroupByBelongedUniqId({
+      belongedUniqId: project.uniqId,
+      groupType: 'Interface',
+    }, {
+      attributes: {
+        exclude: this.excludeAttributes,
+      },
+    });
+    await Promise.all(interfaceGroups.map(groupData => {
+      return this.exportInterfaceGroup(groupData, project.projectName);
+    }));
+  }
+
+  async exportInterfaceGroup(groupData, projectName) {
+    const exportInterfaceGroupName = `${groupData.groupName.replace(/[:/]/g, '#')}.group`;
+    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceGroupName));
+    await fs.writeFile(
+      path.join(this.baseDir, projectName, `${exportInterfaceGroupName}.json`),
+      JSON.stringify(groupData, null, 2)
+    );
+
+    const interfaces = await this.ctx.service.interface.queryInterfaceByGroupUniqId({
+      groupUniqId: groupData.uniqId,
     }, {
       attributes: {
         exclude: this.excludeAttributes,
       },
     });
     await Promise.all(interfaces.map(interfaceData => {
-      return this.exportInterface(interfaceData, project.projectName);
+      return this.exportInterface(interfaceData, projectName, exportInterfaceGroupName);
     }));
   }
 
-  async exportInterface(interfaceData, projectName) {
-    const exportInterfaceName = `${projectName}_${interfaceData.method}_` +
-    `${interfaceData.pathname.replace(/[:/]/g, '#')}`;
-    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName));
-    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName, 'scene'));
-    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceName, 'schema'));
+  async exportInterface(interfaceData, projectName, exportInterfaceGroupName) {
+    const exportInterfaceName = `${interfaceData.method}_${interfaceData.pathname.replace(/[:/]/g, '#')}`;
+    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceGroupName, exportInterfaceName));
+    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceGroupName, exportInterfaceName, 'scene'));
+    await this.ensureDir(path.join(this.baseDir, projectName, exportInterfaceGroupName, exportInterfaceName, 'schema'));
     await fs.writeFile(
-      path.join(this.baseDir, projectName, `${exportInterfaceName}.json`),
+      path.join(this.baseDir, projectName, exportInterfaceGroupName, `${exportInterfaceName}.json`),
       JSON.stringify(interfaceData, null, 2)
     );
     const scenes = await this.ctx.service.scene.querySceneByInterfaceUniqId({
@@ -148,17 +199,18 @@ class DataBaseService extends Service {
     });
     await Promise.all(
       scenes.map(scene => {
-        return this.exportScene(scene, projectName, exportInterfaceName);
+        return this.exportScene(scene, projectName, exportInterfaceGroupName, exportInterfaceName);
       }).concat(schemas.map(schema => {
-        return this.exportSchema(schema, projectName, exportInterfaceName);
+        return this.exportSchema(schema, projectName, exportInterfaceGroupName, exportInterfaceName);
       })));
   }
 
-  async exportScene(scene, projectName, exportInterfaceName) {
+  async exportScene(scene, projectName, exportInterfaceGroupName, exportInterfaceName) {
     await fs.writeFile(
       path.join(
         this.baseDir,
         projectName,
+        exportInterfaceGroupName,
         exportInterfaceName,
         'scene',
         `${scene.sceneName}.json`
@@ -167,11 +219,12 @@ class DataBaseService extends Service {
     );
   }
 
-  async exportSchema(schema, projectName, exportInterfaceName) {
+  async exportSchema(schema, projectName, exportInterfaceGroupName, exportInterfaceName) {
     await fs.writeFile(
       path.join(
         this.baseDir,
         projectName,
+        exportInterfaceGroupName,
         exportInterfaceName,
         'schema',
         `${schema.type}.json`

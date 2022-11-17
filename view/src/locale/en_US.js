@@ -57,6 +57,7 @@ const enUS = {
   'group.deleteGroupSuccess': 'Group deleted successfully.',
   'group.deleteInterfaceGroupWarning':
     'There are interfaces in the group that have not been removed. Please delete or transfer the interfaces first.',
+  'group.invalidGroupName': 'Please input valid group name',
 
   'interfaceList.addInterface': 'Add API',
   'interfaceList.updateInterface': 'Update API',

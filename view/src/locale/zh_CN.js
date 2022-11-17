@@ -56,6 +56,7 @@ const zhCN = {
   'group.selectGroup': '请选择分组',
   'group.deleteGroupSuccess': '分组删除成功',
   'group.deleteInterfaceGroupWarning': '分组中有接口未移出，请先删除或转移接口',
+  'group.invalidGroupName': '请输入合法的分组名称',
 
   'interfaceList.addInterface': '添加接口',
   'interfaceList.updateInterface': '修改接口',

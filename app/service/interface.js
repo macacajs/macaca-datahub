@@ -110,6 +110,23 @@ class InterfaceService extends Service {
     });
   }
 
+  async queryInterfaceByGroupUniqId({
+    groupUniqId,
+  }, options = {}) {
+    return await this.ctx.model.Interface.findAll({
+      ...options,
+      where: {
+        groupUniqId,
+      },
+      order: [
+        [
+          'createdAt',
+          'ASC',
+        ],
+      ],
+    });
+  }
+
   async queryInterfaceDataByProjectUniqId({
     projectUniqId,
   }, options = {}) {
@@ -133,7 +150,7 @@ class InterfaceService extends Service {
     // Inventory data initialization default grouping
     if (!groups.length) {
       const group = await ctx.model.Group.create({
-        groupName: ctx.gettext('defaultGroupName'),
+        groupName: 'default_group',
         groupType: 'Interface',
         belongedUniqId: projectUniqId,
       });

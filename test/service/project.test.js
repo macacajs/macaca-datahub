@@ -57,7 +57,7 @@ describe('test/app/service/project.test.js', () => {
         groupType: 'Interface',
       }
     });
-    assert(defaultInterfaceGroup.groupName === ctx.gettext('defaultGroupName'));
+    assert(defaultInterfaceGroup.groupName === 'default_group');
     assert(defaultInterfaceGroup.groupType === 'Interface');
     assert(defaultInterfaceGroup instanceof ctx.model.Group);
     assert(res.projectName === 'cprojectName');
