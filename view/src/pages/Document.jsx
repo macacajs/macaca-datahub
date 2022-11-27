@@ -95,10 +95,9 @@ class Document extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface =
-      this.state.interfaceList.find((i) => {
-        return i.uniqId === uniqId;
-      }) || {};
+    const selectedInterface = this.state.interfaceList.find((i) => {
+      return i.uniqId === uniqId;
+    }) || {};
 
     this.setState({
       selectedInterface,
@@ -164,7 +163,7 @@ class Document extends React.Component {
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
           <Button className="scene-doc-button" onClick={this.toProjectPage}>
             <SettingOutlined />
-            {__18n('topNav.projectConfig')}
+            {__i18n('项目配置')}
           </Button>
           <h2>
             {this.state.selectedInterface.method
@@ -175,7 +174,7 @@ class Document extends React.Component {
           <InterfaceSchema unControlled schemaData={this.state.schemaData} />
           <section>
             <h1 style={{ marginTop: '20px' }}>
-              {__18n('sceneList.sceneData')}
+              {__i18n('场景数据')}
             </h1>
             <Tabs onChange={this.changeSceneDoc} animated={false} activeKey={currentScene}>
               {sceneList.map((sceneData, index) => {

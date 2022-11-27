@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Form, Input, Modal, Select, Button, Collapse, Breadcrumb, message } from 'antd';
+import {
+  Form, Input, Modal, Select, Button, Collapse, Breadcrumb, message,
+} from 'antd';
 
 import { sceneService } from '../service';
 import './RealTimeDetail.less';

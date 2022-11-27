@@ -28,18 +28,16 @@ class InterfaceSchema extends Component {
   };
 
   isValidationEnabled = (type) => {
-    const { data = {} } =
-      this.props.schemaData.find((i) => {
-        return i.type === type;
-      }) || {};
+    const { data = {} } = this.props.schemaData.find((i) => {
+      return i.type === type;
+    }) || {};
     return data.enableSchemaValidate;
   };
 
   getDataSource = (type) => {
-    const { data = {} } =
-      this.props.schemaData.find((i) => {
-        return i.type === type;
-      }) || {};
+    const { data = {} } = this.props.schemaData.find((i) => {
+      return i.type === type;
+    }) || {};
     if (!data.schemaData) return [];
     if (!data.schemaData.properties && !data.schemaData.items) {
       return [];

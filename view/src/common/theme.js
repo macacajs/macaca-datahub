@@ -14,7 +14,7 @@ class ThemeManager {
     } else {
       this.theme = this.darkModeMediaQuery.matches ? ThemeManager.THEMES.dark : ThemeManager.THEMES.light;
     }
-    this.switch(this.theme); 
+    this.switch(this.theme);
   }
 
   bindEvents() {

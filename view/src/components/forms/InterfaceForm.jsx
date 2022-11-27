@@ -7,7 +7,9 @@ const { Option } = Select;
 export default InterfaceFormComponent;
 
 function InterfaceFormComponent(props) {
-  const { visible, onCancel, onOk, confirmLoading, stageData, groupList } = props;
+  const {
+    visible, onCancel, onOk, confirmLoading, stageData, groupList,
+  } = props;
   const [form] = Form.useForm();
   form.setFieldsValue({
     pathname: stageData && stageData.pathname,

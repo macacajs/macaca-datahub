@@ -24,10 +24,9 @@ class SchemaFormComponent extends Component {
 
     if (this.state.stageData && this.state.schemaFormType === schemaFormType) return;
 
-    const schemaObject =
-      schemaData.find((i) => {
-        return i.type === schemaFormType;
-      }) || {};
+    const schemaObject = schemaData.find((i) => {
+      return i.type === schemaFormType;
+    }) || {};
     const stageData = schemaObject.data && schemaObject.data.schemaData;
 
     this.setState({
@@ -89,12 +88,13 @@ class SchemaFormComponent extends Component {
   };
 
   render() {
-    const { visible, onCancel, onOk, confirmLoading, schemaData, schemaFormType } = this.props;
+    const {
+      visible, onCancel, onOk, confirmLoading, schemaData, schemaFormType,
+    } = this.props;
 
-    const schemaObject =
-      schemaData.find((i) => {
-        return i.type === schemaFormType;
-      }) || {};
+    const schemaObject = schemaData.find((i) => {
+      return i.type === schemaFormType;
+    }) || {};
     const stageData = schemaObject.data && schemaObject.data.schemaData;
     const schemaTableData = this.state.stageData && genSchemaList(this.state.stageData);
     return (
@@ -104,7 +104,7 @@ class SchemaFormComponent extends Component {
         wrapClassName="schema-modal"
         visible={visible}
         destroyOnClose
-        title={
+        title={(
           <span>
             Schema&nbsp;&nbsp;
             <a
@@ -118,7 +118,7 @@ class SchemaFormComponent extends Component {
               syntax docs
             </a>
           </span>
-        }
+        )}
         okText={__i18n('确定')}
         cancelText={__i18n('取消')}
         onCancel={onCancel}

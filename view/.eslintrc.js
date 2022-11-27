@@ -19,6 +19,9 @@ module.exports = {
     },
   },
   plugins: ['babel', 'react'],
+  globals: {
+    __i18n: true,
+  },
   rules: {
     camelcase: 0,
     'no-restricted-syntax': 0,

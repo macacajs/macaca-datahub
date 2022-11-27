@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
-import { Form, Input, Modal, message, Collapse, Radio, Tooltip } from 'antd';
+import {
+  Form, Input, Modal, message, Collapse, Radio, Tooltip,
+} from 'antd';
 import MonacoEditor from '../MonacoEditor';
 import './SceneForm.less';
 
@@ -13,7 +15,9 @@ const getCode = (stageData) => {
 };
 
 function SceneFormComponent(props) {
-  const { visible, onCancel, onOk, onChangeMode, confirmLoading, stageData, experimentConfig } = props;
+  const {
+    visible, onCancel, onOk, onChangeMode, confirmLoading, stageData, experimentConfig,
+  } = props;
   const [form] = Form.useForm();
 
   form.setFieldsValue({
@@ -25,10 +29,9 @@ function SceneFormComponent(props) {
   let showResInfo = false;
   if (stageData.contextConfig) {
     const { responseDelay, responseStatus, responseHeaders } = stageData.contextConfig;
-    showResInfo =
-      (responseDelay && `${responseDelay}` !== '0') ||
-      (responseStatus && `${responseStatus}` !== '200') ||
-      (responseHeaders && JSON.stringify(responseHeaders) !== '{}');
+    showResInfo = (responseDelay && `${responseDelay}` !== '0')
+      || (responseStatus && `${responseStatus}` !== '200')
+      || (responseHeaders && JSON.stringify(responseHeaders) !== '{}');
   }
   const isOpenRunJsMode = experimentConfig && experimentConfig.isOpenRunJsMode;
 

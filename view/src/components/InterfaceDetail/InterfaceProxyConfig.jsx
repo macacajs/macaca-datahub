@@ -99,9 +99,9 @@ class InterfaceProxyConfig extends Component {
     const disabled = !props.selectedInterface.proxyConfig.enabled;
 
     if (
-      window.pageConfig &&
-      window.pageConfig.featureConfig &&
-      window.pageConfig.featureConfig.enableRequestProxy === false
+      window.pageConfig
+      && window.pageConfig.featureConfig
+      && window.pageConfig.featureConfig.enableRequestProxy === false
     ) {
       return null;
     }
