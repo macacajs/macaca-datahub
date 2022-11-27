@@ -12,8 +12,6 @@ import {
   PlusCircleFilled,
 } from '@ant-design/icons';
 
-import { injectIntl, FormattedMessage } from 'react-intl';
-
 import InterfaceForm from './forms/InterfaceForm';
 import GroupForm from './forms/GroupForm';
 
@@ -54,10 +52,6 @@ class InterfaceList extends Component {
       this.groupInputRefs[this.state.editGroupNameIndex].focus(); // 编辑态输入框获取焦点
     }
   }
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
-  };
 
   showGroupForm = () => {
     this.setState({
@@ -126,7 +120,7 @@ class InterfaceList extends Component {
 
     const nameValidReg = /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/;
     if (!nameValidReg.test(groupNameNew)) {
-      message.warn(this.formatMessage('group.invalidGroupName'));
+      message.warn(__i18n('请输入合法的分组名称'));
       this.setState({
         editGroupNameIndex: -1,
       });
@@ -197,7 +191,7 @@ class InterfaceList extends Component {
 
   deleteInterfaceGroup = async (value) => {
     if (value.interfaceList.length !== 0) {
-      message.warn(this.formatMessage('group.deleteInterfaceGroupWarning'));
+      message.warn(__i18n('分组中有接口未移出，请先删除或转移接口'));
       return;
     }
 
@@ -205,7 +199,7 @@ class InterfaceList extends Component {
       uniqId: value.groupUniqId,
     });
     if (res) {
-      message.success(this.formatMessage('group.deleteGroupSuccess'));
+      message.success(__i18n('分组删除成功'));
     }
     await this.props.updateInterfaceList();
   };
@@ -248,7 +242,6 @@ class InterfaceList extends Component {
 
   renderInterfaceList = () => {
     const { unControlled } = this.props;
-    const { formatMessage } = this;
     const { interfaceGroupList } = this.props;
 
     return (
@@ -307,12 +300,12 @@ class InterfaceList extends Component {
                     />
                     <Popconfirm
                       placement="right"
-                      title={formatMessage('common.deleteTip')}
+                      title={__i18n('确定删除？')}
                       onConfirm={() => {
                         return this.deleteInterfaceGroup(interfaceGroup);
                       }}
-                      okText={formatMessage('common.confirm')}
-                      cancelText={formatMessage('common.cancel')}
+                      okText={__i18n('确定')}
+                      cancelText={__i18n('取消')}
                     >
                       <DeleteOutlined style={{ color: '#f5222d' }} />
                     </Popconfirm>
@@ -370,7 +363,7 @@ class InterfaceList extends Component {
                                 />
                               </span>
                             ) : null}
-                            <Tooltip title={formatMessage('interfaceList.updateInterface')}>
+                            <Tooltip title={__i18n('修改接口')}>
                               <SettingOutlined
                                 className="setting-icon"
                                 onClick={() => {
@@ -379,12 +372,12 @@ class InterfaceList extends Component {
                               />
                             </Tooltip>
                             <Popconfirm
-                              title={formatMessage('common.deleteTip')}
+                              title={__i18n('删除')}
                               onConfirm={() => {
                                 return this.deleteInterface(value.uniqId);
                               }}
-                              okText={formatMessage('common.confirm')}
-                              cancelText={formatMessage('common.cancel')}
+                              okText={__i18n('确定')}
+                              cancelText={__i18n('取消')}
                             >
                               <DeleteOutlined style={{ color: '#f5222d' }} className="delete-icon" />
                             </Popconfirm>
@@ -402,7 +395,6 @@ class InterfaceList extends Component {
   };
 
   render() {
-    const { formatMessage } = this;
     const { unControlled } = this.props;
     const interfaceListClassNames = ['interface-list'];
     if (unControlled) interfaceListClassNames.push('uncontrolled');
@@ -413,7 +405,7 @@ class InterfaceList extends Component {
             <Col span={20}>
               <Search
                 data-accessbilityid="project-search-api"
-                placeholder={formatMessage('interfaceList.searchInterface')}
+                placeholder={__i18n('搜索接口')}
                 onChange={this.filterInterface}
               />
             </Col>
@@ -423,10 +415,10 @@ class InterfaceList extends Component {
                 content={
                   <ul className="add-item">
                     <li onClick={this.showCreateForm}>
-                      <FormattedMessage id="interfaceList.addInterface" />
+                      {__i18n('添加接口')}
                     </li>
                     <li onClick={this.showGroupForm}>
-                      <FormattedMessage id="group.create" />
+                      {__i18n('添加分组')}
                     </li>
                   </ul>
                 }
@@ -460,4 +452,4 @@ class InterfaceList extends Component {
   }
 }
 
-export default injectIntl(InterfaceList);
+export default InterfaceList;

@@ -23,8 +23,6 @@ import {
   ExperimentOutlined,
 } from '@ant-design/icons';
 
-import { injectIntl } from 'react-intl';
-
 import './Home.less';
 
 const pkg = require('../../package.json');
@@ -62,7 +60,7 @@ function Home(props) {
               </Col>
               <Col span={12}>
                 <p className="slogan">
-                  <span>DataHub</span> - {formatMessage({ id: 'common.slogan' })}
+                  <span>DataHub</span> - {__i18n('全周期数据环境解决方案，提供命令行工具，支持场景管理，多端接入')}
                 </p>
                 <a className="go-btn" href="/dashboard">
                   <Button
@@ -72,7 +70,7 @@ function Home(props) {
                     size="large"
                     ghost
                   >
-                    {formatMessage({ id: 'home.go' })}
+                    {__i18n('立即开始')}
                   </Button>
                 </a>
                 <a className="go-btn github" target="_blank" href={pkg.links.homepage}>
@@ -93,7 +91,7 @@ function Home(props) {
                   <Col key={text} span={4}>
                     {icon}
                     <div className="text">
-                      {formatMessage({ id: text })}
+                      {text}
                       {experiment && (
                         <ExperimentOutlined
                           style={{
@@ -114,4 +112,4 @@ function Home(props) {
   );
 }
 
-export default injectIntl(Home);
+export default Home;

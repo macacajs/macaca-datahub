@@ -4,8 +4,6 @@ import { Drawer, Switch } from 'antd';
 
 import { ExperimentOutlined } from '@ant-design/icons';
 
-import { injectIntl, FormattedMessage } from 'react-intl';
-
 import { setExperimentConfig } from '../common/helper';
 import styles from './Experiment.module.less';
 
@@ -33,10 +31,6 @@ const compareVersion = (base, target) => {
 class Experiment extends Component {
   state = {
     showPanel: false,
-  };
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
   };
 
   toggleDownloadAndUpload = (value) => {
@@ -70,7 +64,7 @@ class Experiment extends Component {
     return (
       <div className={styles.wrapper}>
         <Drawer
-          title={this.formatMessage('experiment.title')}
+          title={__i18n('实验功能')}
           placement="right"
           onClose={() => {
             this.setState({ showPanel: false });
@@ -81,12 +75,12 @@ class Experiment extends Component {
         >
           <section className={styles.item}>
             <label style={{ verticalAlign: 'middle' }}>
-              <FormattedMessage id="experiment.downloadAndUpload" />
+              {__i18n('上传和下载功能：')}
             </label>
             <Switch
               data-accessbilityid="experiment-donwloadupload-switch"
-              checkedChildren={this.formatMessage('experiment.open')}
-              unCheckedChildren={this.formatMessage('experiment.close')}
+              checkedChildren={__i18n('开')}
+              unCheckedChildren={__i18n('关')}
               onChange={this.toggleDownloadAndUpload}
               defaultChecked={this.props.experimentConfig.isOpenDownloadAndUpload}
             />
@@ -97,12 +91,12 @@ class Experiment extends Component {
           {serverFeatureConfig.enableJavascript && (
             <section className={styles.item}>
               <label style={{ verticalAlign: 'middle' }}>
-                <FormattedMessage id="experiment.runJsMode" />
+              {__i18n('动态执行脚本：')}
               </label>
               <Switch
                 data-accessbilityid="experiment-compactview-switch"
-                checkedChildren={this.formatMessage('experiment.open')}
-                unCheckedChildren={this.formatMessage('experiment.close')}
+                checkedChildren={__i18n('开')}
+                unCheckedChildren={__i18n('关')}
                 onChange={this.toggleRunJsMode}
                 defaultChecked={this.props.experimentConfig.isOpenRunJsMode}
               />
@@ -110,25 +104,25 @@ class Experiment extends Component {
           )}
           <section className={styles.item}>
             <label style={{ verticalAlign: 'middle' }}>
-              <FormattedMessage id="experiment.compactView" />
+              {__i18n('紧凑模式：')}
             </label>
             <Switch
               data-accessbilityid="experiment-compactview-switch"
-              checkedChildren={this.formatMessage('experiment.open')}
-              unCheckedChildren={this.formatMessage('experiment.close')}
+              checkedChildren={__i18n('开')}
+              unCheckedChildren={__i18n('关')}
               onChange={this.toggleCompactView}
               defaultChecked={this.props.experimentConfig.isOpenCompactView}
             />
           </section>
           <hr />
           <p>
-            <FormattedMessage id="experiment.description" />
+            {__i18n('显示一些功能')}
           </p>
           <p>
-            <FormattedMessage id="experiment.tips1" />
+            {__i18n('全局设置')}
           </p>
           <p>
-            <FormattedMessage id="experiment.tips2" />
+            {__i18n('你需要什么功能？')}
             <a href="https://github.com/macacajs/macaca-datahub/issues" target="_blank">
               issue
             </a>
@@ -147,4 +141,4 @@ class Experiment extends Component {
   }
 }
 
-export default injectIntl(Experiment);
+export default Experiment;

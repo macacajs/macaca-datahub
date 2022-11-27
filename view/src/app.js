@@ -2,12 +2,6 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDom from 'react-dom';
 import { Alert, Layout } from 'antd';
-import { intlShape, addLocaleData, IntlProvider } from 'react-intl';
-
-import zh from 'react-intl/locale-data/zh';
-import en from 'react-intl/locale-data/en';
-import zhCN from './locale/zh_CN';
-import enUS from './locale/en_US';
 
 import Home from './pages/Home';
 import Project from './pages/Project';
@@ -32,8 +26,6 @@ const importAll = (r) => {
   return r.keys().forEach(r);
 };
 importAll(require.context('./assets/icons', false, /\.svg$/));
-
-addLocaleData([...en, ...zh]);
 
 const { Content } = Layout;
 
@@ -171,44 +163,9 @@ App.defaultProps = {
   pageConfig: window.pageConfig,
 };
 
-// This is just for <Footer/> component
-// react-intl will use new context API, watch on it
-App.contextTypes = {
-  intl: intlShape.isRequired,
-};
-
-const chooseLocale = () => {
-  const zh = {
-    locale: 'zh-CN',
-    messages: zhCN,
-  };
-  const en = {
-    locale: 'en-US',
-    messages: enUS,
-  };
-  const ua = window.navigator.userAgent;
-  if (ua.indexOf('en-US') !== -1) return en;
-  if (ua.indexOf('zh-CN') !== -1) return zh;
-
-  const language = window.localStorage.DATAHUB_LANGUAGE || window.navigator.language;
-
-  switch (language) {
-    case 'zh-CN':
-    case 'zh-HK':
-    case 'zh-TW':
-    case 'zh':
-      return zh;
-    default:
-      return en;
-  }
-};
-
 if (window.pageConfig) {
-  const { locale, messages } = chooseLocale();
   ReactDom.render(
-    <IntlProvider locale={locale} messages={messages}>
-      <App />
-    </IntlProvider>,
+    <App />,
     document.querySelector('#app'),
   );
 } else {

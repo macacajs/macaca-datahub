@@ -13,8 +13,6 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 
-import { injectIntl, FormattedMessage } from 'react-intl';
-
 import ProjectForm from '../components/forms/ProjectForm';
 
 import { projectService } from '../service';
@@ -28,10 +26,6 @@ class DashBoard extends Component {
     loading: false,
     listData: [],
     stageData: null,
-  };
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
   };
 
   async componentWillMount() {
@@ -136,7 +130,6 @@ class DashBoard extends Component {
   };
 
   renderProjectList() {
-    const { formatMessage } = this;
     const { listData } = this.state;
 
     return listData.map((item, index) => {
@@ -166,7 +159,7 @@ class DashBoard extends Component {
                     </span>
                   </Col>
                   <Col span={9} style={{ textAlign: 'right' }}>
-                    <Tooltip title={formatMessage('project.update')}>
+                    <Tooltip title={__i18n('更新项目')}>
                       <SettingOutlined
                         className="setting-icon"
                         onClick={() => {
@@ -188,12 +181,12 @@ class DashBoard extends Component {
                       </span>
                     ) : null}
                     <Popconfirm
-                      title={formatMessage('common.deleteTip')}
+                      title={__i18n('确定删除？')}
                       onConfirm={() => {
                         return this.deleteProject(item.uniqId);
                       }}
-                      okText={formatMessage('common.confirm')}
-                      cancelText={formatMessage('common.cancel')}
+                      okText={__i18n('确定')}
+                      cancelText={__i18n('取消')}
                     >
                       <DeleteOutlined className="delete-icon" />
                     </Popconfirm>
@@ -216,7 +209,7 @@ class DashBoard extends Component {
               {this.renderProjectList()}
               <Col span={8}>
                 <div className="content">
-                  <Card title={<FormattedMessage id="project.add" />} bordered={false} style={{ color: '#000' }}>
+                  <Card title={__i18n('添加项目')} bordered={false} style={{ color: '#000' }}>
                     <Row type="flex">
                       <Col span={24} className="main-icon">
                         <FolderAddOutlined data-accessbilityid="dashboard-folder-add" onClick={this.showCreateForm} />
@@ -241,4 +234,4 @@ class DashBoard extends Component {
   }
 }
 
-export default injectIntl(DashBoard);
+export default DashBoard;

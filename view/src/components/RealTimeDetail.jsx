@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Form, Input, Modal, Select, Button, Collapse, Breadcrumb, message } from 'antd';
 
-import { injectIntl, FormattedMessage } from 'react-intl';
-
 import { sceneService } from '../service';
 import './RealTimeDetail.less';
 
@@ -14,9 +12,6 @@ const { Option } = Select;
 function SaveSceneFormComponent(props) {
   const { visible, onCancel, onOk, loading } = props;
   const [form] = Form.useForm();
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
   let defaultInterface = '';
   const projectName = window.context && window.context.projectName;
 
@@ -32,9 +27,9 @@ function SaveSceneFormComponent(props) {
     <Modal
       visible={visible}
       destroyOnClose
-      title={formatMessage('sceneList.createScene')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={__i18n('新增场景')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -43,7 +38,7 @@ function SaveSceneFormComponent(props) {
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={loading}
@@ -55,7 +50,7 @@ function SaveSceneFormComponent(props) {
           interfaceUniqId: defaultInterface,
         }}
       >
-        <FormItem name="interfaceUniqId" label={formatMessage('interfaceDetail.selectInterface')}>
+        <FormItem name="interfaceUniqId" label={__i18n('选择接口')}>
           <Select>
             {props.interfaceList.map((interfaceData, index) => {
               return (
@@ -68,11 +63,11 @@ function SaveSceneFormComponent(props) {
         </FormItem>
         <FormItem
           name="sceneName"
-          label={formatMessage('sceneList.sceneName')}
+          label={__i18n('场景名称')}
           rules={[
             {
               required: true,
-              message: formatMessage('sceneList.invalidSceneName'),
+              message: __i18n('格式不正确，请输入中文/字母/数字/中划线/下划线'),
               pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
             },
             { max: 128 },
@@ -85,7 +80,7 @@ function SaveSceneFormComponent(props) {
   );
 }
 
-const SaveSceneForm = injectIntl(SaveSceneFormComponent);
+const SaveSceneForm = SaveSceneFormComponent;
 class RealTimeDetail extends React.Component {
   state = {
     sceneFormVisible: false,
@@ -163,17 +158,17 @@ class RealTimeDetail extends React.Component {
         <Breadcrumb>
           <Breadcrumb.Item>
             <a href="/dashboard">
-              <FormattedMessage id="topNav.allProject" />
+              {__i18n('所有项目')}
             </a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>{window.context && window.context.projectName}</Breadcrumb.Item>
           <Breadcrumb.Item>
-            <FormattedMessage id="topNav.realtimeList" />
+            {__i18n('实时快照')}
           </Breadcrumb.Item>
         </Breadcrumb>
         <section className="save-to" data-accessbilityid="real-time-save-to">
           <Button type="primary" style={{ float: 'right' }} onClick={this.showSceneForm}>
-            <FormattedMessage id="interfaceDetail.saveToScene" />
+            {__i18n('保存为新场景')}
           </Button>
         </section>
 
@@ -208,4 +203,4 @@ class RealTimeDetail extends React.Component {
   }
 }
 
-export default injectIntl(RealTimeDetail);
+export default RealTimeDetail;

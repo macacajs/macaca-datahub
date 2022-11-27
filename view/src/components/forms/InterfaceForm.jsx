@@ -2,11 +2,9 @@ import React from 'react';
 
 import { Modal, Form, Input, Select, message } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
 const { Option } = Select;
 
-export default injectIntl(InterfaceFormComponent);
+export default InterfaceFormComponent;
 
 function InterfaceFormComponent(props) {
   const { visible, onCancel, onOk, confirmLoading, stageData, groupList } = props;
@@ -17,17 +15,14 @@ function InterfaceFormComponent(props) {
     method: (stageData && stageData.method) || 'ALL',
     groupUniqId: (stageData && stageData.groupUniqId) || (groupList[0] && groupList[0].uniqId),
   });
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
 
   return (
     <Modal
       visible={visible}
       destroyOnClose
-      title={formatMessage(stageData ? 'interfaceList.updateInterface' : 'interfaceList.addInterface')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={stageData ? __i18n('修改接口') : __i18n('添加接口')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -36,7 +31,7 @@ function InterfaceFormComponent(props) {
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={confirmLoading}
@@ -44,11 +39,11 @@ function InterfaceFormComponent(props) {
       <Form layout="vertical" form={form}>
         <Form.Item
           name="pathname"
-          label={formatMessage('interfaceList.interfacePathnameInput')}
+          label={__i18n('请输入接口 URL pathname')}
           rules={[
             {
               required: true,
-              message: formatMessage('interfaceList.invalidPathname'),
+              message: __i18n('请输入 pathname'),
               pattern: /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/,
             },
             { max: 128 },
@@ -58,19 +53,19 @@ function InterfaceFormComponent(props) {
         </Form.Item>
         <Form.Item
           name="description"
-          label={formatMessage('interfaceList.interfaceDescription')}
+          label={__i18n('请输入接口描述')}
           rules={[
             {
               required: true,
               pattern: /^[^\s].*$/,
-              message: formatMessage('interfaceList.invalidDescription'),
+              message: __i18n('请输入接口描述'),
             },
             { max: 128 },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="method" label={formatMessage('interfaceList.interfaceMethod')}>
+        <Form.Item name="method" label={__i18n('请选择请求方法')}>
           <Select>
             <Option value="ALL">ALL</Option>
             <Option value="GET">GET</Option>
@@ -79,7 +74,7 @@ function InterfaceFormComponent(props) {
             <Option value="DELETE">DELETE</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="groupUniqId" label={formatMessage('group.selectGroup')}>
+        <Form.Item name="groupUniqId" label={__i18n('请选择分组')}>
           <Select>
             {groupList.map((group) => {
               return (

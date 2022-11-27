@@ -2,23 +2,18 @@ import React from 'react';
 
 import { Modal, Form, Input, message } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
-export default injectIntl(GroupFormComponent);
+export default GroupFormComponent;
 
 function GroupFormComponent(props) {
   const { visible, onCancel, onOk, confirmLoading } = props;
   const [form] = Form.useForm();
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
   return (
     <Modal
       visible={visible}
       destroyOnClose
-      title={formatMessage('group.create')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={__i18n('添加分组')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -27,7 +22,7 @@ function GroupFormComponent(props) {
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={confirmLoading}
@@ -35,12 +30,12 @@ function GroupFormComponent(props) {
       <Form layout="vertical" form={form}>
         <Form.Item
           name="groupName"
-          label={formatMessage('group.newGroupInputPlaceholder')}
+          label={__i18n('请输入分组名')}
           rules={[
             {
               required: true,
               pattern: /^[a-zA-Z0-9_-]([.:a-zA-Z0-9/_-]*[a-zA-Z0-9_-])?$/,
-              message: formatMessage('group.invalidGroupName'),
+              message: __i18n('请输入合法的分组名称'),
             },
             { max: 128 },
           ]}

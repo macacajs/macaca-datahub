@@ -1,7 +1,4 @@
 import React from 'react';
-
-import { FormattedMessage } from 'react-intl';
-
 import { Tabs, Button, Layout } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
@@ -167,7 +164,7 @@ class Document extends React.Component {
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
           <Button className="scene-doc-button" onClick={this.toProjectPage}>
             <SettingOutlined />
-            <FormattedMessage id="topNav.projectConfig" />
+            {__18n('topNav.projectConfig')}
           </Button>
           <h2>
             {this.state.selectedInterface.method
@@ -178,7 +175,7 @@ class Document extends React.Component {
           <InterfaceSchema unControlled schemaData={this.state.schemaData} />
           <section>
             <h1 style={{ marginTop: '20px' }}>
-              <FormattedMessage id="sceneList.sceneData" />
+              {__18n('sceneList.sceneData')}
             </h1>
             <Tabs onChange={this.changeSceneDoc} animated={false} activeKey={currentScene}>
               {sceneList.map((sceneData, index) => {

@@ -2,25 +2,20 @@ import React from 'react';
 
 import { Modal, Form, Input, message } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
 const FormItem = Form.Item;
 
-export default injectIntl(ProjectFormComponent);
+export default ProjectFormComponent;
 
 function ProjectFormComponent(props) {
   const { visible, onCancel, onOk, loading, stageData } = props;
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
   const [form] = Form.useForm();
   return (
     <Modal
       visible={visible}
       destroyOnClose
-      title={stageData ? formatMessage('project.update') : formatMessage('project.create')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={stageData ? __i18n('更新项目') : __i18n('创建新项目')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -29,7 +24,7 @@ function ProjectFormComponent(props) {
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={loading}
@@ -45,11 +40,11 @@ function ProjectFormComponent(props) {
       >
         <FormItem
           name="projectName"
-          label={formatMessage('project.name')}
+          label={__i18n('项目名称')}
           rules={[
             {
               required: true,
-              message: formatMessage('project.name.invalid'),
+              message: __i18n('请输入小写字母或者数字'),
               pattern: /^[a-z0-9_-]+$/,
             },
             { max: 32 },
@@ -59,12 +54,12 @@ function ProjectFormComponent(props) {
         </FormItem>
         <FormItem
           name="description"
-          label={formatMessage('project.description')}
+          label={__i18n('项目描述')}
           rules={[
             {
               required: true,
               pattern: /^[^\s].*$/,
-              message: formatMessage('project.description.invalid'),
+              message: __i18n('请输入项目描述'),
             },
             { max: 32 },
           ]}
@@ -73,12 +68,12 @@ function ProjectFormComponent(props) {
         </FormItem>
         <FormItem
           name="globalProxy"
-          label={formatMessage('project.globalProxy')}
+          label={__i18n('全局项目代理')}
           rules={[
             {
               required: false,
               pattern: /^https?:\/\/.+$/,
-              message: formatMessage('project.globalProxy.invalid'),
+              message: __i18n('请输入 URL'),
             },
           ]}
         >

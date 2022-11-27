@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Button, Breadcrumb } from 'antd';
 import { BookOutlined } from '@ant-design/icons';
 import deepMerge from 'deepmerge';
@@ -237,19 +236,19 @@ class InterfaceDetail extends React.Component {
           <Breadcrumb>
             <Breadcrumb.Item>
               <a href="/dashboard">
-                <FormattedMessage id="topNav.allProject" />
+                {__i18n('所有项目')}
               </a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{window.context && window.context.projectName}</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <FormattedMessage id="topNav.projectConfig" />
+              {__i18n('项目配置')}
             </Breadcrumb.Item>
           </Breadcrumb>
         </div>
         <div className="interface-detail-content">
           <Button className="scene-doc-button" onClick={this.toDocPage}>
             <BookOutlined />
-            <FormattedMessage id="topNav.documentation" />
+            {__i18n('接口文档')}
           </Button>
           <InterfaceSceneList
             experimentConfig={this.props.experimentConfig}

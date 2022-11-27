@@ -3,8 +3,6 @@ import GitHubButton from 'react-github-button';
 
 import { Layout } from 'antd';
 
-import { FormattedMessage } from 'react-intl';
-
 import SelectHub from '../SelectHub';
 import Icon from '../Icon';
 
@@ -36,7 +34,7 @@ export default function ({ links, pageConfig, context }) {
         <li>
           <a href={`${links.issue}?utf8=%E2%9C%93&q=`} target="_blank">
             <h3>
-              <FormattedMessage id="common.issue" />
+              {__i18n('问题反馈')}
             </h3>
           </a>
         </li>
@@ -46,7 +44,7 @@ export default function ({ links, pageConfig, context }) {
             target="_blank"
           >
             <h3>
-              <FormattedMessage id="common.guide" />
+              {__i18n('产品介绍')}
             </h3>
           </a>
         </li>

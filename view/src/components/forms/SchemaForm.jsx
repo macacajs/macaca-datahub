@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { Form, Modal, Table, Alert, message } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
 import { genSchemaList } from '../../common/helper';
 
 import MonacoEditor from '../MonacoEditor';
@@ -37,10 +35,6 @@ class SchemaFormComponent extends Component {
       schemaFormType,
     });
   }
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
-  };
 
   validateSchema = () => {
     let [data, error] = [{}, null];
@@ -97,7 +91,6 @@ class SchemaFormComponent extends Component {
   render() {
     const { visible, onCancel, onOk, confirmLoading, schemaData, schemaFormType } = this.props;
 
-    const { formatMessage } = this;
     const schemaObject =
       schemaData.find((i) => {
         return i.type === schemaFormType;
@@ -126,13 +119,13 @@ class SchemaFormComponent extends Component {
             </a>
           </span>
         }
-        okText={formatMessage('common.confirm')}
-        cancelText={formatMessage('common.cancel')}
+        okText={__i18n('确定')}
+        cancelText={__i18n('取消')}
         onCancel={onCancel}
         onOk={() => {
           const { data, error } = this.validateSchema();
           if (error) {
-            message.warn(formatMessage('schemaData.invalidSchemaData'));
+            message.warn(__i18n('格式错误，请输入 JSON Schema'));
             return;
           }
           const values = {
@@ -156,7 +149,7 @@ class SchemaFormComponent extends Component {
             />
           </div>
           <div className="schema-right-content">
-            <Alert message={formatMessage('schemaData.tableJumpInfo')} type="info" style={{ marginBottom: '12px' }} />
+            <Alert message={__i18n('点击单元格，跳转到 Schema 编辑（支持重复点击）')} type="info" style={{ marginBottom: '12px' }} />
             <Table
               size="small"
               pagination={false}
@@ -178,4 +171,4 @@ class SchemaFormComponent extends Component {
   }
 }
 
-export default injectIntl(SchemaFormComponent);
+export default SchemaFormComponent;

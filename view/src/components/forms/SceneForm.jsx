@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { Form, Input, Modal, message, Collapse, Radio, Tooltip } from 'antd';
-import { injectIntl } from 'react-intl';
 import MonacoEditor from '../MonacoEditor';
 import './SceneForm.less';
 
@@ -35,10 +34,6 @@ function SceneFormComponent(props) {
 
   const monacoEditorRef = useRef(null);
   const monacoEditorResHeaderRef = useRef(null);
-
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
 
   const validateCode = (format) => {
     const monacoEditorInstance = monacoEditorRef.current;
@@ -75,9 +70,9 @@ function SceneFormComponent(props) {
       wrapClassName="code-modal scene-form-modal"
       visible={visible}
       destroyOnClose
-      title={formatMessage(stageData.uniqId ? 'sceneList.updateScene' : 'sceneList.createScene')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={__i18n(stageData.uniqId ? 'sceneList.updateScene' : 'sceneList.createScene')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -85,7 +80,7 @@ function SceneFormComponent(props) {
           .then((values) => {
             const { data, responseHeaders, error } = validateCode(stageData.format);
             if (error) {
-              message.warn(formatMessage('sceneList.invalidSceneData'));
+              message.warn(__i18n('格式错误，请输入 JSON 数据'));
               return;
             }
             values.data = data;
@@ -98,7 +93,7 @@ function SceneFormComponent(props) {
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={confirmLoading}
@@ -106,11 +101,11 @@ function SceneFormComponent(props) {
       <Form layout="vertical" form={form}>
         <Form.Item
           name="sceneName"
-          label={formatMessage('sceneList.sceneName')}
+          label={__i18n('场景名称')}
           rules={[
             {
               required: true,
-              message: formatMessage('sceneList.invalidSceneName'),
+              message: __i18n('格式不正确，请输入中文/字母/数字/中划线/下划线'),
               pattern: /^[\u4e00-\u9fa5-_a-zA-Z0-9]+$/,
             },
             { max: 128 },
@@ -119,7 +114,7 @@ function SceneFormComponent(props) {
           <Input style={{ display: 'inline' }} />
         </Form.Item>
         {isOpenRunJsMode && (
-          <Form.Item name="sceneFormat" className="res-format" label={formatMessage('sceneList.sceneFormat')}>
+          <Form.Item name="sceneFormat" className="res-format" label={__i18n('响应格式')}>
             <span>
               {stageData.uniqId ? (
                 stageData.format
@@ -139,13 +134,13 @@ function SceneFormComponent(props) {
         )}
         {stageData.format !== 'javascript' && (
           <Collapse defaultActiveKey={showResInfo ? '0' : ''}>
-            <Panel header={formatMessage('sceneList.rewriteResponse')} key="0">
+            <Panel header={__i18n('设置响应延迟时间、响应头、状态码')} key="0">
               <Form.Item
                 name="responseDelay"
-                label={formatMessage('contextConfig.responseDelayField')}
+                label={__i18n('增加响应延迟时间，单位秒')}
                 rules={[
                   {
-                    message: formatMessage('contextConfig.invalidDelay'),
+                    message: __i18n('请输入延迟时间，单位秒'),
                     pattern: /^[0-9]{1,2}(\.\d)?$/,
                   },
                 ]}
@@ -154,17 +149,17 @@ function SceneFormComponent(props) {
               </Form.Item>
               <Form.Item
                 name="responseStatus"
-                label={`${formatMessage('contextConfig.responseStatus')} 200-50x`}
+                label={`${__i18n('修改响应状态码')} 200-50x`}
                 rules={[
                   {
                     pattern: /^[1-5]\d{2}$/,
-                    message: formatMessage('contextConfig.invalidStatus'),
+                    message: __i18n('请输入状态码'),
                   },
                 ]}
               >
                 <Input maxLength={3} />
               </Form.Item>
-              <Form.Item label={formatMessage('sceneList.rewriteResponseHeader')}>
+              <Form.Item label={__i18n('覆盖响应头（JSON 格式）')}>
                 <MonacoEditor
                   height="120px"
                   language="json"
@@ -181,11 +176,11 @@ function SceneFormComponent(props) {
             </Panel>
           </Collapse>
         )}
-        <Form.Item className="res-data" label={formatMessage('sceneList.responseData')}>
+        <Form.Item className="res-data" label={__i18n('响应数据')}>
           {stageData.format !== 'javascript' && (
-            <Tooltip title={formatMessage('sceneList.jsonFormatTip')}>
+            <Tooltip title={__i18n('输入合法的Object, 点击转JSON')}>
               <div className="json-format-btn" onClick={objectCodeToJsonCode}>
-                {formatMessage('sceneList.jsonFormat')}
+                {__i18n('格式化JSON')}
               </div>
             </Tooltip>
           )}
@@ -204,4 +199,4 @@ function SceneFormComponent(props) {
   );
 }
 
-export default injectIntl(SceneFormComponent);
+export default SceneFormComponent;
