@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   srcDirs: [
-    'view/**/*.*',
+    'view/src/**/*.*',
   ],
   distDir: path.resolve(__dirname, 'view/src/locale'),
   tokenName: '__i18n',

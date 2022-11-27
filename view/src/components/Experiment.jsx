@@ -91,7 +91,7 @@ class Experiment extends Component {
           {serverFeatureConfig.enableJavascript && (
             <section className={styles.item}>
               <label style={{ verticalAlign: 'middle' }}>
-              {__i18n('动态执行脚本：')}
+                {__i18n('动态执行脚本：')}
               </label>
               <Switch
                 data-accessbilityid="experiment-compactview-switch"

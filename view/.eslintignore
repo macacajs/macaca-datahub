@@ -3,3 +3,4 @@
 **/dist
 **/reports
 **/coverage
+src/locale/en-US.js

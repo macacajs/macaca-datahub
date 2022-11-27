@@ -163,10 +163,9 @@ class InterfaceSceneList extends Component {
     let showResInfo = false;
     if (contextConfig) {
       const { responseDelay, responseStatus, responseHeaders } = contextConfig;
-      showResInfo =
-        (responseDelay && responseDelay.toString() !== '0') ||
-        (responseStatus && responseStatus.toString() !== '200') ||
-        (responseHeaders && JSON.stringify(responseHeaders) !== '{}');
+      showResInfo = (responseDelay && responseDelay.toString() !== '0')
+        || (responseStatus && responseStatus.toString() !== '200')
+        || (responseHeaders && JSON.stringify(responseHeaders) !== '{}');
     }
 
     const enablePreviewLink = ['GET', 'ALL'].includes(this.props.interfaceData.method);

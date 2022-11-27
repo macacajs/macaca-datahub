@@ -37,7 +37,6 @@ export default function ({
     </Menu>
   );
 
-
   const [currentTheme, setCurrentTheme] = useState(window.themeManager.getTheme());
   useEffect(() => {
     window.themeManager.switch(currentTheme);
@@ -48,12 +47,12 @@ export default function ({
   const themeMenu = (
     <Menu>
       {Object.keys(ThemeManager.THEMES)
-        .filter(theme => theme !== currentTheme)
+        .filter(theme => { return theme !== currentTheme; })
         .map((theme) => {
           return (
             <Menu.Item
               key={theme}
-              onClick={({ key }) => setCurrentTheme(key)}
+              onClick={({ key }) => { return setCurrentTheme(key); }}
             >
               {theme}
             </Menu.Item>

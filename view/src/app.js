@@ -113,14 +113,14 @@ class App extends React.Component {
         {window.pageConfig.version[0] === '1' && (
           <Alert
             banner
-            message={
+            message={(
               <div>
                 <span>{`Your DataHub server version is ${window.pageConfig.version}, please upgrade to datahub@2: `}</span>
                 <a target="_blank" href="https://github.com/macacajs/macaca-datahub/issues/77">
                   https://github.com/macacajs/macaca-datahub/issues/77
                 </a>
               </div>
-            }
+            )}
             type="warning"
             showIcon
           />
@@ -128,14 +128,14 @@ class App extends React.Component {
         {this.state.shouldUpdate && !localStorage.getItem(this.getCloseTipFlag()) && (
           <Alert
             banner
-            message={
+            message={(
               <div>
                 <span>{`Your DataHub server version is ${window.pageConfig.version}, please upgrade to datahub@${this.state.latestVesion} `}</span>
                 <a target="_blank" href="https://www.npmjs.com/package/macaca-datahub">
                   https://www.npmjs.com/package/macaca-datahub
                 </a>
               </div>
-            }
+            )}
             type="warning"
             closable
             showIcon

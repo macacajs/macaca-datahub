@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Row, Col, Card, Upload, message, Tooltip, Popconfirm } from 'antd';
+import {
+  Row, Col, Card, Upload, message, Tooltip, Popconfirm,
+} from 'antd';
 
 import {
   FolderAddOutlined,

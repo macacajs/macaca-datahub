@@ -2,7 +2,9 @@ import React from 'react';
 import classnames from 'classnames';
 
 function Icon(props) {
-  const { className, type, width, height, fill, radius, style = {}, ...others } = props;
+  const {
+    className, type, width, height, fill, radius, style = {}, ...others
+  } = props;
   return (
     <svg
       className={classnames('icon-svg', className)}

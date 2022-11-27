@@ -101,10 +101,9 @@ class Project extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface =
-      this.state.interfaceList.find((i) => {
-        return i.uniqId === uniqId;
-      }) || {};
+    const selectedInterface = this.state.interfaceList.find((i) => {
+      return i.uniqId === uniqId;
+    }) || {};
 
     this.setState({
       selectedInterface,
