@@ -189,7 +189,7 @@ class InterfaceSchema extends Component {
                 return props.toggleValidation('response', e.target.checked);
               }}
             >
-              {__i18n('schemaData.enableValidation')}
+              {__i18n('开启字段校验')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -199,7 +199,7 @@ class InterfaceSchema extends Component {
                 return this.changeExpandedAllRowKeysForResponse(e.target.checked);
               }}
             >
-              {__i18n('schemaData.enableExpandedAllRowKeys')}
+              {__i18n('展开所有')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -213,7 +213,7 @@ class InterfaceSchema extends Component {
               }}
             >
               {' '}
-              {__i18n('schemaData.edit')}
+              {__i18n('编辑')}
             </Button>
           )}
           {responseSchemaData && responseSchemaData.schema && this.state.expandedAllRowKeysForResponse ? (

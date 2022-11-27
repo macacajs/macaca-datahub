@@ -1,13 +1,4 @@
 module.exports = {
-  "common.cancel": "common.cancel",
-  "common.confirm": "common.confirm",
-  "common.deleteTip": "common.deleteTip",
-  "experiment.close": "experiment.close",
-  "experiment.open": "experiment.open",
-  "interfaceDetail.previewData": "interfaceDetail.previewData",
-  "schemaData.edit": "schemaData.edit",
-  "schemaData.enableExpandedAllRowKeys": "schemaData.enableExpandedAllRowKeys",
-  "schemaData.enableValidation": "schemaData.enableValidation",
   "上传和下载功能：": "Download and Upload: ",
   "产品介绍": "Guide",
   "代理模式": "Proxy mode",
@@ -40,7 +31,9 @@ module.exports = {
   "字段": "field",
   "实时快照": "Realtime snapshot",
   "实验功能": "Experiment",
+  "展开所有": "Expand all row",
   "开": "Open",
+  "开启字段校验": "Enable field validation",
   "所有项目": "All projects",
   "接口列表": "API list",
   "接口文档": "Documentation",
@@ -83,5 +76,5 @@ module.exports = {
   "项目名称": "Hub name",
   "项目描述": "Hub description",
   "项目配置": "Project config",
-  "预览场景数据：": "Preview scene data: "
+  "预览场景数据": "Preview scene data"
 };

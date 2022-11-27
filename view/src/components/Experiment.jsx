@@ -95,8 +95,8 @@ class Experiment extends Component {
               </label>
               <Switch
                 data-accessbilityid="experiment-compactview-switch"
-                checkedChildren={__i18n('experiment.open')}
-                unCheckedChildren={__i18n('experiment.close')}
+                checkedChildren={__i18n('开')}
+                unCheckedChildren={__i18n('关')}
                 onChange={this.toggleRunJsMode}
                 defaultChecked={this.props.experimentConfig.isOpenRunJsMode}
               />
@@ -108,8 +108,8 @@ class Experiment extends Component {
             </label>
             <Switch
               data-accessbilityid="experiment-compactview-switch"
-              checkedChildren={__i18n('experiment.open')}
-              unCheckedChildren={__i18n('experiment.close')}
+              checkedChildren={__i18n('开')}
+              unCheckedChildren={__i18n('关')}
               onChange={this.toggleCompactView}
               defaultChecked={this.props.experimentConfig.isOpenCompactView}
             />

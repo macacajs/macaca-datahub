@@ -372,12 +372,12 @@ class InterfaceList extends Component {
                               />
                             </Tooltip>
                             <Popconfirm
-                              title={__i18n('common.deleteTip')}
+                              title={__i18n('删除')}
                               onConfirm={() => {
                                 return this.deleteInterface(value.uniqId);
                               }}
-                              okText={__i18n('common.confirm')}
-                              cancelText={__i18n('common.cancel')}
+                              okText={__i18n('确定')}
+                              cancelText={__i18n('取消')}
                             >
                               <DeleteOutlined style={{ color: '#f5222d' }} className="delete-icon" />
                             </Popconfirm>

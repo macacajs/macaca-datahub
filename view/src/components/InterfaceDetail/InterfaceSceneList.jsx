@@ -177,12 +177,12 @@ class InterfaceSceneList extends Component {
         </h1>
         {enablePreviewLink ? (
           <a href={this.props.previewLink} target="_blank">
-            {__i18n('预览场景数据：')}
+            {__i18n('预览场景数据')}
             {`/${window.context.projectName}/${this.props.interfaceData.pathname}`}
           </a>
         ) : (
           <span>
-            {__i18n('interfaceDetail.previewData')}
+            {__i18n('预览场景数据')}
             {`/${window.context.projectName}/${this.props.interfaceData.pathname}`}
             &nbsp;&nbsp;
             <Tooltip title={__i18n('仅支持 ALL 和 GET 方法预览')}>
