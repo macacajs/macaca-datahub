@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Input, Button, Tooltip, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Row, Col } from 'react-flexbox-grid';
-import { injectIntl, FormattedMessage } from 'react-intl';
 import SceneForm from '../forms/SceneForm';
 import { sceneService } from '../../service';
 
@@ -14,10 +13,6 @@ class InterfaceSceneList extends Component {
     sceneFormLoading: false,
     filterString: '',
     stageData: {},
-  };
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
   };
 
   showSceneForm = () => {
@@ -98,8 +93,7 @@ class InterfaceSceneList extends Component {
   };
 
   renderSceneList = () => {
-    const { formatMessage } = this;
-    const { sceneList, selectedScene, experimentConfig } = this.props;
+    const { sceneList, selectedScene } = this.props;
     const { disabled } = this.props;
     return (
       <Row>
@@ -121,7 +115,7 @@ class InterfaceSceneList extends Component {
                 <div className={classNames.join(' ')}>
                   <div
                     className="common-list-item-name"
-                    title={`${formatMessage('sceneList.sceneName')} ${value.sceneName}`}
+                    title={`${__i18n('场景名称')} ${value.sceneName}`}
                     onClick={() => {
                       return !disabled && this.props.changeSelectedScene(value);
                     }}
@@ -130,7 +124,7 @@ class InterfaceSceneList extends Component {
                   </div>
                   {!disabled && (
                     <div className="common-list-item-operation">
-                      <Tooltip title={formatMessage('sceneList.updateScene')}>
+                      <Tooltip title={__i18n('更新场景')}>
                         <EditOutlined
                           onClick={() => {
                             console.log(value);
@@ -138,15 +132,15 @@ class InterfaceSceneList extends Component {
                           }}
                         />
                       </Tooltip>
-                      <Tooltip title={this.formatMessage('sceneList.deleteScene')}>
+                      <Tooltip title={__i18n('删除场景')}>
                         <Popconfirm
                           placement="right"
-                          title={formatMessage('common.deleteTip')}
+                          title={__i18n('确定删除？')}
                           onConfirm={() => {
                             return this.props.deleteScene(value);
                           }}
-                          okText={formatMessage('common.confirm')}
-                          cancelText={formatMessage('common.cancel')}
+                          okText={__i18n('确定')}
+                          cancelText={__i18n('取消')}
                         >
                           <DeleteOutlined />
                         </Popconfirm>
@@ -162,7 +156,6 @@ class InterfaceSceneList extends Component {
   };
 
   render() {
-    const { formatMessage } = this;
     const { disabled } = this.props;
     const { selectedScene } = this.props;
     const contextConfig = selectedScene && selectedScene.contextConfig;
@@ -180,19 +173,19 @@ class InterfaceSceneList extends Component {
     return (
       <section>
         <h1>
-          <FormattedMessage id="sceneList.title" />
+          {__i18n('场景管理')}
         </h1>
         {enablePreviewLink ? (
           <a href={this.props.previewLink} target="_blank">
-            {formatMessage('interfaceDetail.previewData')}
+            {__i18n('预览场景数据：')}
             {`/${window.context.projectName}/${this.props.interfaceData.pathname}`}
           </a>
         ) : (
           <span>
-            {formatMessage('interfaceDetail.previewData')}
+            {__i18n('interfaceDetail.previewData')}
             {`/${window.context.projectName}/${this.props.interfaceData.pathname}`}
             &nbsp;&nbsp;
-            <Tooltip title={formatMessage('interfaceDetail.previewDataTip')}>
+            <Tooltip title={__i18n('仅支持 ALL 和 GET 方法预览')}>
               <QuestionCircleOutlined />
             </Tooltip>
           </span>
@@ -200,15 +193,15 @@ class InterfaceSceneList extends Component {
         {contextConfig && showResInfo ? (
           <div className="res-info">
             <div className="res-header-info">
-              <span>{formatMessage('sceneList.responseDelayShowInfo')}：</span>
+              <span>{__i18n('响应延迟时间')}：</span>
               <span>{contextConfig.responseDelay}s</span>
             </div>
             <div className="res-header-info">
-              <span>{formatMessage('sceneList.responseStatusShowInfo')}：</span>
+              <span>{__i18n('响应状态码')}：</span>
               <span>{contextConfig.responseStatus}</span>
             </div>
             <div className="res-header-info">
-              <span>{formatMessage('sceneList.responseDataShowInfo')}：</span>
+              <span>{__i18n('响应头数据')}：</span>
               <span>{JSON.stringify(contextConfig.responseHeaders)}</span>
             </div>
           </div>
@@ -220,7 +213,7 @@ class InterfaceSceneList extends Component {
           <Col {...this.defaultColProps}>
             <Search
               disabled={disabled}
-              placeholder={formatMessage('sceneList.searchScene')}
+              placeholder={__i18n('搜索场景')}
               onChange={this.filterScene}
             />
           </Col>
@@ -232,17 +225,13 @@ class InterfaceSceneList extends Component {
               onClick={this.showSceneForm}
             >
               <PlusCircleOutlined />
-              {formatMessage('sceneList.createScene')}
+              {__i18n('新增场景')}
             </Button>
           </Col>
         </Row>
 
         <div>
-          {disabled ? (
-            <FormattedMessage id="sceneList.switchSceneDisabledHint" />
-          ) : (
-            <FormattedMessage id="sceneList.switchSceneHint" />
-          )}
+          {disabled ? __i18n('如需使用场景数据，请关闭代理模式') : __i18n('点击场景进行切换：')}
         </div>
 
         {this.renderSceneList()}
@@ -261,4 +250,4 @@ class InterfaceSceneList extends Component {
   }
 }
 
-export default injectIntl(InterfaceSceneList);
+export default InterfaceSceneList;

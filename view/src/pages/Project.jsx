@@ -1,7 +1,6 @@
 import React from 'react';
 import debug from 'debug';
 import io from 'socket.io-client';
-import { injectIntl } from 'react-intl';
 import { Affix, Layout, Tabs, Empty } from 'antd';
 import InterfaceList from '../components/InterfaceList';
 import InterfaceDetail from '../components/InterfaceDetail/index';
@@ -177,9 +176,7 @@ class Project extends React.Component {
               data-accessbilityid="tabs-container"
             >
               <TabPane
-                tab={this.props.intl.formatMessage({
-                  id: 'project.interfaceList',
-                })}
+                tab={__i18n('接口列表')}
                 key={interfaceTabSymbol}
               >
                 <InterfaceList
@@ -192,9 +189,7 @@ class Project extends React.Component {
                 />
               </TabPane>
               <TabPane
-                tab={this.props.intl.formatMessage({
-                  id: 'project.realtimeList',
-                })}
+                tab={__i18n('实时快照')}
                 key={realTimeTabSymbol}
               >
                 <RealTime
@@ -222,7 +217,7 @@ class Project extends React.Component {
               <Empty
                 className="add-api-hint"
                 image={<Icon type="empty" height={120} />}
-                description={this.props.intl.formatMessage({ id: 'project.createApi' })}
+                description={__i18n('暂无数据，请先添加接口')}
               />
             </div>
           )}
@@ -238,4 +233,4 @@ class Project extends React.Component {
   }
 }
 
-export default injectIntl(Project);
+export default Project;

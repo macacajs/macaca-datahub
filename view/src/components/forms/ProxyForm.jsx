@@ -2,22 +2,17 @@ import React from 'react';
 
 import { Form, Input, Modal, message } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
 function ProxyFormComponent(props) {
   const { visible, onCancel, onOk, confirmLoading } = props;
-  const formatMessage = (id) => {
-    return props.intl.formatMessage({ id });
-  };
   const [form] = Form.useForm();
 
   return (
     <Modal
       visible={visible}
       destroyOnClose
-      title={formatMessage('proxyConfig.addProxyUrl')}
-      okText={formatMessage('common.confirm')}
-      cancelText={formatMessage('common.cancel')}
+      title={__i18n('添加代理 Url 地址')}
+      okText={__i18n('确定')}
+      cancelText={__i18n('取消')}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -25,13 +20,13 @@ function ProxyFormComponent(props) {
           .then((values) => {
             const { proxyUrl } = values;
             if (!/^https?:\/\/.+$/.test(proxyUrl)) {
-              message.warn(formatMessage('proxyConfig.invalidProxyUrl'));
+              message.warn(__i18n('请输入 Url'));
               return;
             }
             onOk(values);
           })
           .catch((errorInfo) => {
-            message.warn(formatMessage('common.input.invalid'));
+            message.warn(__i18n('请修改输入的内容'));
           });
       }}
       confirmLoading={confirmLoading}
@@ -54,4 +49,4 @@ function ProxyFormComponent(props) {
   );
 }
 
-export default injectIntl(ProxyFormComponent);
+export default ProxyFormComponent;

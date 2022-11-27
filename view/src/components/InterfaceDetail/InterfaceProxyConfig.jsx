@@ -6,8 +6,6 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 import { Row, Col } from 'react-flexbox-grid';
 
-import { injectIntl } from 'react-intl';
-
 import ProxyForm from '../forms/ProxyForm';
 
 class InterfaceProxyConfig extends Component {
@@ -21,10 +19,6 @@ class InterfaceProxyConfig extends Component {
     sm: 12,
     md: 6,
     lg: 3,
-  };
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
   };
 
   showProxyForm = () => {
@@ -74,15 +68,15 @@ class InterfaceProxyConfig extends Component {
                 </div>
                 {!disabled && (
                   <div className="common-list-item-operation">
-                    <Tooltip title={this.formatMessage('common.delete')}>
+                    <Tooltip title={__i18n('删除')}>
                       <Popconfirm
                         placement="right"
-                        title={this.formatMessage('common.deleteTip')}
+                        title={__i18n('确定删除？')}
                         onConfirm={() => {
                           return this.props.deleteProxy(index);
                         }}
-                        okText={this.formatMessage('common.confirm')}
-                        cancelText={this.formatMessage('common.cancel')}
+                        okText={__i18n('确定')}
+                        cancelText={__i18n('取消')}
                       >
                         <DeleteOutlined />
                       </Popconfirm>
@@ -99,7 +93,6 @@ class InterfaceProxyConfig extends Component {
 
   render() {
     const { props } = this;
-    const { formatMessage } = this;
     const { enabled, proxyList = [] } = props.proxyConfig;
     const globalSwitchProps = { checked: props.globalProxyEnabled };
     const switchProps = { checked: enabled };
@@ -115,12 +108,12 @@ class InterfaceProxyConfig extends Component {
 
     return (
       <section>
-        <h1>{formatMessage('interfaceDetail.proxyConfig')}</h1>
+        <h1>{__i18n('代理模式')}</h1>
         <Row>
           <Col {...this.defaultColProps} style={{ lineHeight: '30px' }}>
             <Switch data-accessbilityid="project-api-solo-switch" {...switchProps} onChange={props.toggleProxy} />
             <span style={{ marginLeft: '10px', verticalAlign: 'middle' }}>
-              {formatMessage(`proxyConfig.enable.${enabled || false}`)}
+              {__i18n(`proxyConfig.enable.${enabled || false}`)}
             </span>
           </Col>
           <Col {...this.defaultColProps}>
@@ -130,7 +123,7 @@ class InterfaceProxyConfig extends Component {
               type="primary"
               onClick={this.showProxyForm}
             >
-              {formatMessage('proxyConfig.addProxyUrl')}
+              {__i18n('添加代理 Url 地址')}
             </Button>
           </Col>
           <Col {...this.defaultColProps}>
@@ -140,11 +133,11 @@ class InterfaceProxyConfig extends Component {
               onChange={props.toggleGlobalProxy}
             />
             <span style={{ marginLeft: '10px', verticalAlign: 'middle' }}>
-              {formatMessage(`proxyConfig.globalEnable.${props.globalProxyEnabled || false}`)}
+              {__i18n(`proxyConfig.globalEnable.${props.globalProxyEnabled || false}`)}
             </span>
           </Col>
         </Row>
-        <div>{proxyList.length ? formatMessage('proxyConfig.switchProxyUrlHint') : ''}</div>
+        <div>{proxyList.length ? __i18n('点击 Url 进行切换：') : ''}</div>
         {this.renderProxyList()}
         <ProxyForm
           visible={this.state.proxyFormVisible}
@@ -157,4 +150,4 @@ class InterfaceProxyConfig extends Component {
   }
 }
 
-export default injectIntl(InterfaceProxyConfig);
+export default InterfaceProxyConfig;

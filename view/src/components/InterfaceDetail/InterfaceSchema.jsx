@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { Table, Button, Checkbox } from 'antd';
 
-import { injectIntl } from 'react-intl';
-
 import SchemaForm from '../forms/SchemaForm';
 import { genSchemaList } from '../../common/helper';
 
@@ -27,10 +25,6 @@ class InterfaceSchema extends Component {
     this.setState({
       expandedAllRowKeysForRequest: checked,
     });
-  };
-
-  formatMessage = (id) => {
-    return this.props.intl.formatMessage({ id });
   };
 
   isValidationEnabled = (type) => {
@@ -61,7 +55,7 @@ class InterfaceSchema extends Component {
   getColumns = () => {
     return [
       {
-        title: this.props.intl.formatMessage({ id: 'schemaData.field' }),
+        title: __i18n('字段'),
         dataIndex: 'field',
         width: '30%',
         key: 'field',
@@ -70,7 +64,7 @@ class InterfaceSchema extends Component {
         },
       },
       {
-        title: this.props.intl.formatMessage({ id: 'schemaData.type' }),
+        title: __i18n('类型'),
         dataIndex: 'type',
         width: '15%',
         key: 'type',
@@ -79,7 +73,7 @@ class InterfaceSchema extends Component {
         },
       },
       {
-        title: this.props.intl.formatMessage({ id: 'schemaData.required' }),
+        title: __i18n('是否必需'),
         dataIndex: 'required',
         width: '15%',
         key: 'required',
@@ -88,7 +82,7 @@ class InterfaceSchema extends Component {
         },
       },
       {
-        title: this.props.intl.formatMessage({ id: 'schemaData.description' }),
+        title: __i18n('参数说明'),
         width: '40%',
         dataIndex: 'description',
         key: 'description',
@@ -136,7 +130,7 @@ class InterfaceSchema extends Component {
     return (
       <section>
         <div className="api-schema-req">
-          <h1>{this.formatMessage('interfaceDetail.requestSchema')}</h1>
+          <h1>{__i18n('请求字段描述')}</h1>
           {!unControlled && (
             <Checkbox
               checked={enableRequestSchemaValidation}
@@ -144,7 +138,7 @@ class InterfaceSchema extends Component {
                 return props.toggleValidation('request', e.target.checked);
               }}
             >
-              {this.formatMessage('schemaData.enableValidation')}
+              {__i18n('是否开启校验')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -154,7 +148,7 @@ class InterfaceSchema extends Component {
                 return this.changeExpandedAllRowKeysForRequest(e.target.checked);
               }}
             >
-              {this.formatMessage('schemaData.enableExpandedAllRowKeys')}
+              {__i18n('是否展开所有行')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -168,7 +162,7 @@ class InterfaceSchema extends Component {
               }}
             >
               {' '}
-              {this.formatMessage('schemaData.edit')}
+              {__i18n('编辑')}
             </Button>
           )}
           {requestSchemaData && requestSchemaData.schema && this.state.expandedAllRowKeysForRequest ? (
@@ -187,7 +181,7 @@ class InterfaceSchema extends Component {
           )}
         </div>
         <div className="api-schema-res">
-          <h1 style={{ marginTop: '24px' }}>{this.formatMessage('interfaceDetail.responseSchema')}</h1>
+          <h1 style={{ marginTop: '24px' }}>{__i18n('响应字段描述')}</h1>
           {!unControlled && (
             <Checkbox
               checked={enableResponseSchemaValidation}
@@ -195,7 +189,7 @@ class InterfaceSchema extends Component {
                 return props.toggleValidation('response', e.target.checked);
               }}
             >
-              {this.formatMessage('schemaData.enableValidation')}
+              {__i18n('schemaData.enableValidation')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -205,7 +199,7 @@ class InterfaceSchema extends Component {
                 return this.changeExpandedAllRowKeysForResponse(e.target.checked);
               }}
             >
-              {this.formatMessage('schemaData.enableExpandedAllRowKeys')}
+              {__i18n('schemaData.enableExpandedAllRowKeys')}
             </Checkbox>
           )}
           {!unControlled && (
@@ -219,7 +213,7 @@ class InterfaceSchema extends Component {
               }}
             >
               {' '}
-              {this.formatMessage('schemaData.edit')}
+              {__i18n('schemaData.edit')}
             </Button>
           )}
           {responseSchemaData && responseSchemaData.schema && this.state.expandedAllRowKeysForResponse ? (
@@ -252,4 +246,4 @@ class InterfaceSchema extends Component {
   }
 }
 
-export default injectIntl(InterfaceSchema);
+export default InterfaceSchema;
