@@ -25,7 +25,7 @@ module.exports = {
   "响应格式": "Scene format",
   "响应状态码": "Response status",
   "场景名称": "Scene name",
-  "场景数据": "场景数据",
+  "场景数据": "Scene data",
   "场景管理": "Manage Scene",
   "增加响应延迟时间，单位秒": "response delay in seconds",
   "如需使用场景数据，请关闭代理模式": "To use scene data, please disable proxy mode",
