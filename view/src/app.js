@@ -10,6 +10,7 @@ import DashBoard from './pages/DashBoard';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ThemeManager from './common/theme';
+import en from './locale/en-US';
 
 import { getExperimentConfig, compareServerVersion } from './common/helper';
 
@@ -21,6 +22,14 @@ import './app.module.less';
 const themeManager = new ThemeManager();
 
 window.themeManager = window.themeManager || themeManager;
+
+const language = window.localStorage.DATAHUB_LANGUAGE || window.navigator.language;
+window.__i18n = window.__i18n || function(key) {
+  if (language.startsWith('zh')) {
+    return key;
+  }
+  return en[key];
+};
 
 const importAll = (r) => {
   return r.keys().forEach(r);
@@ -150,7 +159,6 @@ class App extends React.Component {
           updateExperimentConfig={this.updateExperimentConfig}
           showSideItems={window.pageConfig && window.pageConfig.pageId !== 'home'}
           changeLang={this.changeLang}
-          currentLocale={this.context.intl.locale}
           links={pkg.links}
         />
       </Layout>

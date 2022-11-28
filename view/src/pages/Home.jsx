@@ -28,26 +28,25 @@ import './Home.less';
 const pkg = require('../../package.json');
 
 function Home(props) {
-  const { formatMessage } = props.intl;
   const features = [
-    { text: 'home.icon.cloud', icon: <CloudOutlined /> },
-    { text: 'home.icon.team', icon: <TeamOutlined /> },
-    { text: 'home.icon.snapshot', icon: <CameraOutlined /> },
-    { text: 'home.icon.dataflow', icon: <SyncOutlined /> },
-    { text: 'home.icon.quick', icon: <RocketOutlined /> },
-    { text: 'home.icon.scene', icon: <EyeOutlined /> },
-    { text: 'home.icon.continues', icon: <ClockCircleOutlined /> },
-    { text: 'home.icon.document', icon: <BookOutlined /> },
-    { text: 'home.icon.versioning', icon: <ForkOutlined /> },
-    { text: 'home.icon.setting', icon: <ToolOutlined /> },
-    { text: 'home.icon.database', icon: <DatabaseOutlined /> },
-    { text: 'home.icon.save', icon: <SaveOutlined /> },
-    { text: 'home.icon.decentration', icon: <DisconnectOutlined /> },
-    { text: 'home.icon.api', icon: <ApiOutlined /> },
-    { text: 'home.icon.cli', icon: <CodeOutlined /> },
-    { text: 'home.icon.i18n', icon: <GlobalOutlined /> },
-    { text: 'home.icon.github', icon: <GithubOutlined /> },
-    { text: 'home.icon.download', icon: <DownloadOutlined />, experiment: true },
+    { text: __i18n('云端部署'), icon: <CloudOutlined /> },
+    { text: __i18n('团队协同'), icon: <TeamOutlined /> },
+    { text: __i18n('请求快照'), icon: <CameraOutlined /> },
+    { text: __i18n('数据流管理'), icon: <SyncOutlined /> },
+    { text: __i18n('开箱即用'), icon: <RocketOutlined /> },
+    { text: __i18n('多场景管理'), icon: <EyeOutlined /> },
+    { text: __i18n('全周期覆盖'), icon: <ClockCircleOutlined /> },
+    { text: __i18n('文档自动生成'), icon: <BookOutlined /> },
+    { text: __i18n('数据版本化'), icon: <ForkOutlined /> },
+    { text: __i18n('响应设置'), icon: <ToolOutlined /> },
+    { text: __i18n('数据备份'), icon: <DatabaseOutlined /> },
+    { text: __i18n('快速录入'), icon: <SaveOutlined /> },
+    { text: __i18n('去中心化'), icon: <DisconnectOutlined /> },
+    { text: __i18n('开放API'), icon: <ApiOutlined /> },
+    { text: __i18n('命令行工具'), icon: <CodeOutlined /> },
+    { text: __i18n('多语言支持'), icon: <GlobalOutlined /> },
+    { text: __i18n('开源开放'), icon: <GithubOutlined /> },
+    { text: __i18n('导出导入'), icon: <DownloadOutlined />, experiment: true },
   ];
   return (
     <Row type="flex" justify="center">
