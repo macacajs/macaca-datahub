@@ -16,6 +16,7 @@ const defaultOptions = {
   socketIoPort: 9300,
   enableJavascript: true,
   enableRequestProxy: true,
+  enableDatahubLogger: false,
 };
 
 class DataHub {
@@ -42,6 +43,9 @@ class DataHub {
     }
     if (options.enableRequestProxy) {
       process.env.ENABLE_REQUEST_PROXY = 'Y';
+    }
+    if (options.enableDatahubLogger) {
+      process.env.ENABLE_DATAHUB_LOGGER = 'Y';
     }
 
     if (options.store) {
