@@ -10,4 +10,5 @@ module.exports = {
   },
   enableJavascript: true,
   enableRequestProxy: true,
+  enableDatahubLogger: false,
 };
