@@ -2,7 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDom from 'react-dom';
 import { Alert, Layout } from 'antd';
-
+import locale from 'easy-i18n-cli/src/web/locale';
 import Home from './pages/Home';
 import Project from './pages/Project';
 import Document from './pages/Document';
@@ -23,13 +23,12 @@ const themeManager = new ThemeManager();
 
 window.themeManager = window.themeManager || themeManager;
 
-const language = window.localStorage.DATAHUB_LANGUAGE || window.navigator.language;
-window.__i18n = window.__i18n || function(key) {
-  if (language.startsWith('zh')) {
-    return key;
-  }
-  return en[key];
-};
+window.__i18n = window.__i18n || locale({
+  en,
+  getLanguage() {
+    return window.localStorage.DATAHUB_LANGUAGE || window.navigator.language;
+  },
+});
 
 const importAll = (r) => {
   return r.keys().forEach(r);
