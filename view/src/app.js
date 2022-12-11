@@ -2,7 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDom from 'react-dom';
 import { Alert, Layout } from 'antd';
-import locale from 'easy-i18n-cli/src/web/locale';
+import locale from 'easy-i18n-cli/src/locale';
 import Home from './pages/Home';
 import Project from './pages/Project';
 import Document from './pages/Document';
