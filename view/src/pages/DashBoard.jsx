@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
-import {
-  Row, Col, Card, Upload, message, Tooltip, Popconfirm,
-} from 'antd';
-
+import { Row, Col, Card, Upload, message, Tooltip, Popconfirm } from 'antd';
 import {
   FolderAddOutlined,
   InboxOutlined,
@@ -14,11 +10,8 @@ import {
   UploadOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-
 import ProjectForm from '../components/forms/ProjectForm';
-
 import { projectService } from '../service';
-
 import './DashBoard.less';
 
 class DashBoard extends Component {

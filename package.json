@@ -1,6 +1,6 @@
 {
   "name": "macaca-datahub",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Continuous data provider for development, testing, staging and production.",
   "bin": {
     "datahub": "./bin/datahub.js",
@@ -75,7 +75,7 @@
     "semver": "^5.5.0",
     "sequelize-cli": "^5.4.0",
     "socket.io": "^2.0.4",
-    "sqlite3": "5.0.11",
+    "sqlite3": "^5.1.4",
     "stream-wormhole": "^1.1.0",
     "uuid": "^3.3.2",
     "xutil": "^1.0.11",

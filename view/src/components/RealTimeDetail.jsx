@@ -1,9 +1,5 @@
 import React from 'react';
-
-import {
-  Form, Input, Modal, Select, Button, Collapse, Breadcrumb, message,
-} from 'antd';
-
+import { Form, Input, Modal, Select, Button, Collapse, Breadcrumb, message } from 'antd';
 import { sceneService } from '../service';
 import './RealTimeDetail.less';
 
@@ -159,14 +155,10 @@ class RealTimeDetail extends React.Component {
       <div className="real-time-detail">
         <Breadcrumb>
           <Breadcrumb.Item>
-            <a href="/dashboard">
-              {__i18n('所有项目')}
-            </a>
+            <a href="/dashboard">{__i18n('所有项目')}</a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>{window.context && window.context.projectName}</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            {__i18n('实时快照')}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item>{__i18n('实时快照')}</Breadcrumb.Item>
         </Breadcrumb>
         <section className="save-to" data-accessbilityid="real-time-save-to">
           <Button type="primary" style={{ float: 'right' }} onClick={this.showSceneForm}>

@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
-
 import { Menu, Dropdown } from 'antd';
-
 import { DownOutlined } from '@ant-design/icons';
 
 export default class SelectHub extends PureComponent {

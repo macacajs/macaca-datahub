@@ -1,11 +1,8 @@
 import React from 'react';
 import GitHubButton from 'react-github-button';
-
 import { Layout } from 'antd';
-
 import SelectHub from '../SelectHub';
 import Icon from '../Icon';
-
 import './header.less';
 
 const { Header } = Layout;

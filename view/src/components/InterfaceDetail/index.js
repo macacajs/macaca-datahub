@@ -235,14 +235,10 @@ class InterfaceDetail extends React.Component {
         <div className="interface-detail-navigation">
           <Breadcrumb>
             <Breadcrumb.Item>
-              <a href="/dashboard">
-                {__i18n('所有项目')}
-              </a>
+              <a href="/dashboard">{__i18n('所有项目')}</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{window.context && window.context.projectName}</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              {__i18n('项目配置')}
-            </Breadcrumb.Item>
+            <Breadcrumb.Item>{__i18n('项目配置')}</Breadcrumb.Item>
           </Breadcrumb>
         </div>
         <div className="interface-detail-content">

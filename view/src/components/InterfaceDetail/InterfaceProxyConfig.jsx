@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-
 import { Switch, Button, Popover, Tooltip, Popconfirm } from 'antd';
-
 import { DeleteOutlined } from '@ant-design/icons';
-
 import { Row, Col } from 'react-flexbox-grid';
-
 import ProxyForm from '../forms/ProxyForm';
 
 class InterfaceProxyConfig extends Component {
@@ -99,9 +95,9 @@ class InterfaceProxyConfig extends Component {
     const disabled = !props.selectedInterface.proxyConfig.enabled;
 
     if (
-      window.pageConfig
-      && window.pageConfig.featureConfig
-      && window.pageConfig.featureConfig.enableRequestProxy === false
+      window.pageConfig &&
+      window.pageConfig.featureConfig &&
+      window.pageConfig.featureConfig.enableRequestProxy === false
     ) {
       return null;
     }
@@ -113,7 +109,7 @@ class InterfaceProxyConfig extends Component {
           <Col {...this.defaultColProps} style={{ lineHeight: '30px' }}>
             <Switch data-accessbilityid="project-api-solo-switch" {...switchProps} onChange={props.toggleProxy} />
             <span style={{ marginLeft: '10px', verticalAlign: 'middle' }}>
-              {__i18n(`proxyConfig.enable.${enabled || false}`)}
+              {enabled ? __i18n('代理模式已开启，自动转发请求') : __i18n('代理模式已关闭')}
             </span>
           </Col>
           <Col {...this.defaultColProps}>
@@ -133,7 +129,7 @@ class InterfaceProxyConfig extends Component {
               onChange={props.toggleGlobalProxy}
             />
             <span style={{ marginLeft: '10px', verticalAlign: 'middle' }}>
-              {__i18n(`proxyConfig.globalEnable.${props.globalProxyEnabled || false}`)}
+              {props.globalProxyEnabled ? __i18n('全部接口已开启代理') : __i18n('全部接口已关闭代理')}
             </span>
           </Col>
         </Row>

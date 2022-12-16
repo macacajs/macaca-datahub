@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
 import { Menu, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
-
 import './footer.less';
 import Experiment from '../Experiment';
 import ThemeManager from '../../common/theme';

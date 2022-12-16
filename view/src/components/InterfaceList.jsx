@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
-import {
-  Row, Col, Input, Upload, message, Tooltip, Popconfirm, Popover, Collapse,
-} from 'antd';
-
+import { Row, Col, Input, Upload, message, Tooltip, Popconfirm, Popover, Collapse } from 'antd';
 import {
   DeleteOutlined,
   SettingOutlined,
@@ -13,12 +9,9 @@ import {
   EditOutlined,
   PlusCircleFilled,
 } from '@ant-design/icons';
-
 import InterfaceForm from './forms/InterfaceForm';
 import GroupForm from './forms/GroupForm';
-
 import { interfaceService, groupService } from '../service';
-
 import './InterfaceList.less';
 import './InterfaceList.module.less';
 
@@ -321,8 +314,8 @@ class InterfaceList extends Component {
                 {interfaceGroup.interfaceList
                   .filter((value) => {
                     return (
-                      value.pathname.toLowerCase().includes(this.state.filterString)
-                      || value.description.toLowerCase().includes(this.state.filterString)
+                      value.pathname.toLowerCase().includes(this.state.filterString) ||
+                      value.description.toLowerCase().includes(this.state.filterString)
                     );
                   })
                   .map((value, index) => {
@@ -414,16 +407,12 @@ class InterfaceList extends Component {
             <Col span={3} offset={1} className="add-button">
               <Popover
                 overlayClassName="popover-content"
-                content={(
+                content={
                   <ul className="add-item">
-                    <li onClick={this.showCreateForm}>
-                      {__i18n('添加接口')}
-                    </li>
-                    <li onClick={this.showGroupForm}>
-                      {__i18n('添加分组')}
-                    </li>
+                    <li onClick={this.showCreateForm}>{__i18n('添加接口')}</li>
+                    <li onClick={this.showGroupForm}>{__i18n('添加分组')}</li>
                   </ul>
-                )}
+                }
                 placement="bottom"
               >
                 <PlusCircleFilled className="add-btn" data-accessbilityid="project-add-api-list-btn" />

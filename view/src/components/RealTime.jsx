@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Badge } from 'antd';
-
 import './RealTime.less';
 
 export default class RealTime extends React.Component {
