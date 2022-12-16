@@ -11,11 +11,8 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ThemeManager from './common/theme';
 import en from './locale/en-US';
-
 import { getExperimentConfig, compareServerVersion } from './common/helper';
-
 import 'react-github-button/assets/style.css';
-
 import './app.less';
 import './app.module.less';
 

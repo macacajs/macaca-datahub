@@ -101,9 +101,10 @@ class Project extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface = this.state.interfaceList.find((i) => {
-      return i.uniqId === uniqId;
-    }) || {};
+    const selectedInterface =
+      this.state.interfaceList.find((i) => {
+        return i.uniqId === uniqId;
+      }) || {};
 
     this.setState({
       selectedInterface,
@@ -174,10 +175,7 @@ class Project extends React.Component {
               animated={false}
               data-accessbilityid="tabs-container"
             >
-              <TabPane
-                tab={__i18n('接口列表')}
-                key={interfaceTabSymbol}
-              >
+              <TabPane tab={__i18n('接口列表')} key={interfaceTabSymbol}>
                 <InterfaceList
                   selectedInterface={this.state.selectedInterface}
                   setSelectedInterface={this.setSelectedInterface}
@@ -187,10 +185,7 @@ class Project extends React.Component {
                   groupList={this.state.groupList}
                 />
               </TabPane>
-              <TabPane
-                tab={__i18n('实时快照')}
-                key={realTimeTabSymbol}
-              >
+              <TabPane tab={__i18n('实时快照')} key={realTimeTabSymbol}>
                 <RealTime
                   realTimeDataList={this.state.realTimeDataList}
                   realTimeIndex={this.state.realTimeIndex || 0}

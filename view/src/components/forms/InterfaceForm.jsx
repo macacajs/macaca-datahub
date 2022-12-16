@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { Modal, Form, Input, Select, message } from 'antd';
 
 const { Option } = Select;
-
-export default InterfaceFormComponent;
 
 function InterfaceFormComponent(props) {
   const {
@@ -91,3 +88,5 @@ function InterfaceFormComponent(props) {
     </Modal>
   );
 }
+
+export default InterfaceFormComponent;

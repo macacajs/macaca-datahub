@@ -1,16 +1,11 @@
 import React from 'react';
 import { Tabs, Button, Layout } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
-
 import MonacoEditor from '../components/MonacoEditor';
-
 import { queryParse, serialize } from '../common/helper';
-
 import InterfaceList from '../components/InterfaceList';
 import InterfaceSchema from '../components/InterfaceDetail/InterfaceSchema';
-
 import { sceneService, schemaService, interfaceService, groupService } from '../service';
-
 import './Document.less';
 
 const { TabPane } = Tabs;
@@ -95,9 +90,10 @@ class Document extends React.Component {
   };
 
   setSelectedInterface = async (uniqId) => {
-    const selectedInterface = this.state.interfaceList.find((i) => {
-      return i.uniqId === uniqId;
-    }) || {};
+    const selectedInterface =
+      this.state.interfaceList.find((i) => {
+        return i.uniqId === uniqId;
+      }) || {};
 
     this.setState({
       selectedInterface,
@@ -173,9 +169,7 @@ class Document extends React.Component {
           <h3 style={{ color: 'gray' }}>{this.state.selectedInterface.description || '-'}</h3>
           <InterfaceSchema unControlled schemaData={this.state.schemaData} />
           <section>
-            <h1 style={{ marginTop: '20px' }}>
-              {__i18n('场景数据')}
-            </h1>
+            <h1 style={{ marginTop: '20px' }}>{__i18n('场景数据')}</h1>
             <Tabs onChange={this.changeSceneDoc} animated={false} activeKey={currentScene}>
               {sceneList.map((sceneData, index) => {
                 return (

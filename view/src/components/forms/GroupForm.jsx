@@ -1,8 +1,5 @@
 import React from 'react';
-
 import { Modal, Form, Input, message } from 'antd';
-
-export default GroupFormComponent;
 
 function GroupFormComponent(props) {
   const { visible, onCancel, onOk, confirmLoading } = props;
@@ -46,3 +43,5 @@ function GroupFormComponent(props) {
     </Modal>
   );
 }
+
+export default GroupFormComponent;

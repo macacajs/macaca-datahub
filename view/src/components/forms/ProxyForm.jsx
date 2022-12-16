@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Form, Input, Modal, message } from 'antd';
 
 function ProxyFormComponent(props) {

@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { Modal, Form, Input, message } from 'antd';
 
 const FormItem = Form.Item;
-
-export default ProjectFormComponent;
 
 function ProjectFormComponent(props) {
   const { visible, onCancel, onOk, loading, stageData } = props;
@@ -83,3 +80,5 @@ function ProjectFormComponent(props) {
     </Modal>
   );
 }
+
+export default ProjectFormComponent;

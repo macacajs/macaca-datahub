@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
-
 import {
   RocketOutlined,
   GithubOutlined,
@@ -22,7 +21,6 @@ import {
   DownloadOutlined,
   ExperimentOutlined,
 } from '@ant-design/icons';
-
 import './Home.less';
 
 const pkg = require('../../package.json');

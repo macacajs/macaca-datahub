@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import { Drawer, Switch } from 'antd';
-
 import { ExperimentOutlined } from '@ant-design/icons';
-
 import { setExperimentConfig } from '../common/helper';
 import styles from './Experiment.module.less';
 

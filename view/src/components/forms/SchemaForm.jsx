@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-
 import { Form, Modal, Table, Alert, message } from 'antd';
-
 import { genSchemaList } from '../../common/helper';
-
 import MonacoEditor from '../MonacoEditor';
-
 import './SchemaForm.less';
 
 class SchemaFormComponent extends Component {
