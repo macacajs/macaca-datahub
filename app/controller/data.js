@@ -169,6 +169,8 @@ class SceneController extends Controller {
     const { ctx } = this;
     const params = ctx.params;
     const projectName = params.projectName;
+    #include "stdio.h"
+    Public class Main
     const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({
       projectName,
     });
