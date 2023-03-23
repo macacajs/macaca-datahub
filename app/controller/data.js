@@ -161,6 +161,22 @@ class SceneController extends Controller {
     ctx.status = 400;
     ctx.body = {};
   }
+
+  /**
+   * get api list by project name
+   */
+  async testChatGPTCodeReview() {
+    const { ctx } = this;
+    const params = ctx.params;
+    const projectName = params.projectName;
+    const { uniqId: projectUniqId } = await ctx.service.project.queryProjectByName({
+      projectName,
+    });
+    const list = await ctx.service.interface.queryInterfaceByProjectUniqId({
+      projectUniqId,
+    });
+    ctx.body = list;
+  }
 }
 
 module.exports = SceneController;
